@@ -36,6 +36,7 @@ repos:
     rev: "24.10.0"
     hooks:
       - id: black
+        language_version: python3.13
         args:
           - "--config=pyproject.toml"
   - repo: https://github.com/adamchainz/blacken-docs
@@ -65,7 +66,7 @@ repos:
 
   # Find any outdated syntax and replace with modern equivalents
   - repo: https://github.com/asottile/pyupgrade
-    rev: "v3.10.1"
+    rev: "v3.17.0"
     hooks:
       - id: pyupgrade
         name: Upgrade Python features
