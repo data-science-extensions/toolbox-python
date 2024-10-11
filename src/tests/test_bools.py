@@ -16,8 +16,8 @@ from unittest import TestCase
 # ## Python Third Party Imports ----
 import pytest
 
-# ##  Local Module Imports ----
-from python_helpers.bools import strtobool
+# ## Local First Party Imports ----
+from toolbox_python.bools import strtobool
 
 
 # ---------------------------------------------------------------------------- #
