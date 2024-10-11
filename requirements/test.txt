@@ -1,0 +1,8 @@
+requests
+pytest
+pytest-clarity
+pytest-cov
+pytest-sugar
+pytest-icdiff
+pytest-xdist
+mypy

@@ -1,0 +1,7 @@
+mkdocs
+mkdocs-material
+mkdocstrings
+mkdocs-coverage
+mkdocs-autorefs
+livereload
+mike

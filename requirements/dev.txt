@@ -1,0 +1,8 @@
+black
+blacken-docs
+pre-commit
+isort
+codespell
+pyupgrade
+pylint
+pycln
