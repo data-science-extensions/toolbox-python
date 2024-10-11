@@ -4,6 +4,22 @@ on: [push, pull_request]
 
 jobs:
 
+  debug:
+
+    name: Run checks
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Check variables
+        run: |
+          echo "github.event_name: ${{ github.event_name }}"
+          echo "github.actor: ${{ github.actor }}"
+          echo "github.ref_type: ${{ github.ref_type }}"
+          echo "github.ref_name: ${{ github.ref_name }}"
+          echo "github.base_ref: ${{ github.base_ref }}"
+          echo "github.head_ref: ${{ github.head_ref }}"
+
   check:
 
     if: github.ref_name != 'main'
@@ -31,7 +47,7 @@ jobs:
 
   ci:
 
-    if: github.ref_name == 'main'
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
     name: Run Checks on '${{ matrix.os }}' with '${{ matrix.python-version }}'
     runs-on: ubuntu-latest
 
