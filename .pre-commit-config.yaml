@@ -1,0 +1,111 @@
+# See https://pre-commit.com for more info
+# See https://pre-commit.com/hooks.html for more hooks
+# See https://www.youtube.com/watch?v=psjz6rwzMdk for how-to on pre-commits
+
+repos:
+  # Fixes
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: "v5.0.0"
+    hooks:
+      # File name fixes
+      - id: check-case-conflict
+
+      # Generic file fixes
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+      - id: end-of-file-fixer
+
+      # File-type specific fixes
+      - id: check-json
+      - id: check-toml
+      - id: check-yaml
+        args:
+          - "--unsafe"
+
+      # Python-specific fixes
+      - id: debug-statements
+        language_version: python3
+
+      # Git fixes
+      - id: no-commit-to-branch
+        args:
+          - "--branch=main"
+
+  # Linter
+  - repo: https://github.com/psf/black
+    rev: "24.10.0"
+    hooks:
+      - id: black
+        args:
+          - "--config=pyproject.toml"
+  - repo: https://github.com/adamchainz/blacken-docs
+    rev: "1.19.0"
+    hooks:
+      - id: blacken-docs
+        additional_dependencies:
+          - "black>=23.3"
+
+  # Run MyPy type checks
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: "v1.11.2"
+    hooks:
+      - id: mypy
+        files: src/python_helpers
+        args:
+          - "--config-file=pyproject.toml"
+
+  # Reorder Python imports
+  - repo: https://github.com/pycqa/isort
+    rev: "5.13.2"
+    hooks:
+      - id: isort
+        name: isort (python)
+        args:
+          - "--settings-file=pyproject.toml"
+
+  # Find any outdated syntax and replace with modern equivalents
+  - repo: https://github.com/asottile/pyupgrade
+    rev: "v3.10.1"
+    hooks:
+      - id: pyupgrade
+        name: Upgrade Python features
+        args:
+          - "--py39-plus"
+
+  # Check spelling
+  - repo: https://github.com/codespell-project/codespell
+    rev: "v2.3.0"
+    hooks:
+    - id: codespell
+      additional_dependencies:
+        - tomli
+      args:
+        - "--toml=pyproject.toml"
+        - "--skip=*.js,*.html,*.css,./docs/assets/coverage/*"
+
+  # Remove unused import statements
+  - repo: https://github.com/hadialqattan/pycln
+    rev: "v2.4.0"
+    hooks:
+      - id: pycln
+        args:
+          - "--all"
+
+  # Check poetry configs
+  - repo: https://github.com/python-poetry/poetry
+    rev: "1.8.0"
+    hooks:
+      - id: poetry-check
+
+  # Run Pylint
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: pipenv run pylint
+        language: system
+        types: [python]
+        args:
+          - "--rcfile=pyproject.toml"
+          - "-rn" # Only display messages
+          - "-sn" # Don't display the score
