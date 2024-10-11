@@ -1,6 +1,9 @@
-name: CI
+name: CD
 
-on: [push, pull_request]
+on:
+  release:
+    types:
+      - published
 
 jobs:
 
@@ -75,10 +78,10 @@ jobs:
           echo "github.event.release.url: ${{ github.event.release.url }}"
           echo "github.event.release.zipball_url: ${{ github.event.release.zipball_url }}"
 
-  check:
+  test:
 
-    if: github.ref_name != 'main'
-    name: Run checks
+    name: Run Tests
+    if: ${{ always() }}
     runs-on: ubuntu-latest
 
     steps:
@@ -100,37 +103,47 @@ jobs:
       - name: Run checks
         run: make check
 
-  ci:
+  deploy:
 
-    if: github.event_name == 'pull_request' && github.base_ref == 'main'
-    name: Run Checks on '${{ matrix.os }}' with '${{ matrix.python-version }}'
-    runs-on: ubuntu-latest
+      name: Deploy to PyPI
+      needs:
+        - test
+      if: ${{ always() && needs.test.result == 'success' }}
+      runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ['3.9', '3.10', '3.12', '3.13']
-      fail-fast: false
-      max-parallel: 5
+      steps:
 
-    steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
 
-      - name: Checkout repository
-        uses: actions/checkout@v3
+        - name: Set up Python
+          uses: actions/setup-python@v4
+          with:
+            python-version: '3.13'
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
+        - name: Install Poetry
+          run: make install-poetry
 
-      - name: Install Pip
-        run: make install-pip
+        - name: Install dependencies
+          run: make install
 
-      - name: Install Poetry
-        run: make install-poetry
+        - name: Bump version
+          run: make bump-version
+          env:
+            VERSION: ${{ github.event.release.tag_name }}
 
-      - name: Install dependencies
-        run: make install-dev-test
+        - name: Build package
+          run: poetry build
 
-      - name: Run checks
-        run: make check
+        - name: Configure poetry
+          run: poetry config pypi-token.pypi ${PYPI_TOKEN}
+          env:
+            PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+
+        - name: Publish package
+          run: poetry publish --dry-run
+
+        # - name: Deploy to PyPI
+        #   run: make deploy-package
+        #   env:
+        #     PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
