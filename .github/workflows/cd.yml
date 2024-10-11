@@ -1,0 +1,149 @@
+name: CD
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+
+  debug:
+
+    name: Run Debugging
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Check variables
+        run: |
+          echo "github.action: ${{ github.action }}"
+          echo "github.action_path: ${{ github.action_path }}"
+          echo "github.action_ref: ${{ github.action_ref }}"
+          echo "github.action_repository: ${{ github.action_repository }}"
+          echo "github.action_status: ${{ github.action_status }}"
+          echo "github.actor: ${{ github.actor }}"
+          echo "github.actor_id: ${{ github.actor_id }}"
+          echo "github.api_url: ${{ github.api_url }}"
+          echo "github.base_ref: ${{ github.base_ref }}"
+          echo "github.env: ${{ github.env }}"
+          echo "github.event_name: ${{ github.event_name }}"
+          echo "github.event_path: ${{ github.event_path }}"
+          echo "github.graphql_url: ${{ github.graphql_url }}"
+          echo "github.head_ref: ${{ github.head_ref }}"
+          echo "github.job: ${{ github.job }}"
+          echo "github.job_workflow_sha: ${{ github.job_workflow_sha }}"
+          echo "github.path: ${{ github.path }}"
+          echo "github.ref: ${{ github.ref }}"
+          echo "github.ref_name: ${{ github.ref_name }}"
+          echo "github.ref_protected: ${{ github.ref_protected }}"
+          echo "github.ref_type: ${{ github.ref_type }}"
+          echo "github.repository: ${{ github.repository }}"
+          echo "github.repository_id: ${{ github.repository_id }}"
+          echo "github.repository_owner: ${{ github.repository_owner }}"
+          echo "github.repository_owner_id: ${{ github.repository_owner_id }}"
+          echo "github.repositoryUrl: ${{ github.repositoryUrl }}"
+          echo "github.retention_days: ${{ github.retention_days }}"
+          echo "github.run_attempt: ${{ github.run_attempt }}"
+          echo "github.run_id: ${{ github.run_id }}"
+          echo "github.run_number: ${{ github.run_number }}"
+          echo "github.secret_source: ${{ github.secret_source }}"
+          echo "github.server_url: ${{ github.server_url }}"
+          echo "github.sha: ${{ github.sha }}"
+          echo "github.token: ${{ github.token }}"
+          echo "github.triggering_actor: ${{ github.triggering_actor }}"
+          echo "github.workflow: ${{ github.workflow }}"
+          echo "github.workflow_ref: ${{ github.workflow_ref }}"
+          echo "github.workflow_sha: ${{ github.workflow_sha }}"
+          echo "github.workspace: ${{ github.workspace }}"
+          echo "github.event.action: ${{ github.event.action }}"
+          echo "github.event.enterprise: ${{ github.event.enterprise }}"
+          echo "github.event.organization: ${{ github.event.organization }}"
+          echo "github.event.repository: ${{ github.event.repository }}"
+          echo "github.event.sender: ${{ github.event.sender }}"
+          echo "github.event.release.assets_url: ${{ github.event.release.assets_url }}"
+          echo "github.event.release.author: ${{ github.event.release.author }}"
+          echo "github.event.release.body: ${{ github.event.release.body }}"
+          echo "github.event.release.created_at: ${{ github.event.release.created_at }}"
+          echo "github.event.release.draft: ${{ github.event.release.draft }}"
+          echo "github.event.release.html_url: ${{ github.event.release.html_url }}"
+          echo "github.event.release.id: ${{ github.event.release.id }}"
+          echo "github.event.release.name: ${{ github.event.release.name }}"
+          echo "github.event.release.node_id: ${{ github.event.release.node_id }}"
+          echo "github.event.release.prerelease: ${{ github.event.release.prerelease }}"
+          echo "github.event.release.published_at: ${{ github.event.release.published_at }}"
+          echo "github.event.release.tag_name: ${{ github.event.release.tag_name }}"
+          echo "github.event.release.tarball_url: ${{ github.event.release.tarball_url }}"
+          echo "github.event.release.target_commitish: ${{ github.event.release.target_commitish }}"
+          echo "github.event.release.upload_url: ${{ github.event.release.upload_url }}"
+          echo "github.event.release.url: ${{ github.event.release.url }}"
+          echo "github.event.release.zipball_url: ${{ github.event.release.zipball_url }}"
+
+  test:
+
+    name: Run Tests
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Install Poetry
+        run: make install-poetry
+
+      - name: Install dependencies
+        run: make install-dev-test
+
+      - name: Run checks
+        run: make check
+
+  deploy:
+
+      name: Deploy to PyPI
+      needs:
+        - test
+      if: ${{ always() && needs.test.result == 'success' }}
+      runs-on: ubuntu-latest
+
+      steps:
+
+        - name: Checkout repository
+          uses: actions/checkout@v3
+
+        - name: Set up Python
+          uses: actions/setup-python@v4
+          with:
+            python-version: '3.13'
+
+        - name: Install Poetry
+          run: make install-poetry
+
+        - name: Install dependencies
+          run: make install
+
+        - name: Bump version
+          run: make bump-version
+          env:
+            VERSION: ${{ github.event.release.tag_name }}
+
+        - name: Build package
+          run: poetry build
+
+        - name: Configure poetry
+          run: poetry config pypi-token.pypi ${PYPI_TOKEN}
+          env:
+            PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+
+        - name: Publish package
+          run: poetry publish --dry-run
+
+        # - name: Deploy to PyPI
+        #   run: make deploy-package
+        #   env:
+        #     PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
