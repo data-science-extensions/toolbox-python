@@ -43,29 +43,20 @@ install-python-and-pip: install-python install-pip upgrade-pip
 
 #* Poetry
 
-.PHONY: install-poetry
+.PHONY: poetry-installs
 install-poetry:
 	$(PYTHON) -m pip install poetry
-	$(PYTHON) -m pip install --upgrade poetry
 	poetry --version
-
-.PHONY: install
 install:
 	poetry install --no-interaction --only main
-
-.PHONY: install-dev
 install-dev:
 	poetry install --no-interaction --with dev
-
-.PHONY: install-docs
 install-docs:
 	poetry install --no-interaction --with docs
-
-.PHONY: install-test
 install-test:
 	poetry install --no-interaction --with test
-
-.PHONY: install-all
+install-dev-test:
+	poetry install --no-interaction --with dev,test
 install-all:
 	poetry install --no-interaction --with dev,docs,test
 
