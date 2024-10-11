@@ -14,3 +14,5 @@ poetry add --group="docs" $(cat requirements/docs.txt)
 poetry add --group="test" $(cat requirements/test.txt)
 poetry install
 poetry shell
+pre-commit install
+pre-commit autoupdate
