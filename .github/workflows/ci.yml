@@ -85,7 +85,7 @@ jobs:
 
   check:
 
-    if: github.event_name == 'push' && github.ref_name != 'main'
+    if: github.ref_type == 'branch' && github.event_name == 'push' && github.ref_name != 'main'
     name: Run checks
     runs-on: ubuntu-latest
 
