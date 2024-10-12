@@ -40,6 +40,7 @@ Issues = "https://github.com/data-science-extensions/toolbox-python/issues"
 [tool.poetry.dependencies]
 python = ">3.9,<4.0"
 typeguard = "^4.3.0"
+more-itertools = "^10.5.0"
 
 [tool.poetry.group.dev]
 optional = true
