@@ -61,6 +61,8 @@ collection = Union[list, tuple, set]
 str_collection = Union[str, str_list, str_tuple, str_set]
 any_list = list[Any]
 any_tuple = tuple[Any]
+any_set = set[Any]
+any_collection = any_list | any_tuple | any_set
 
 dict_any = dict[
     Union[str, int],
