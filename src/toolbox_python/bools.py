@@ -34,6 +34,14 @@
 
 
 # ---------------------------------------------------------------------------- #
+#  Exports                                                                  ####
+# ---------------------------------------------------------------------------- #
+
+
+__all__: list[str] = ["strtobool"]
+
+
+# ---------------------------------------------------------------------------- #
 #  Constants                                                                ####
 # ---------------------------------------------------------------------------- #
 
@@ -52,14 +60,6 @@ _MAP: dict[str, bool] = {
     "off": False,
     "0": False,
 }
-
-
-# ---------------------------------------------------------------------------- #
-#  Exports                                                                  ####
-# ---------------------------------------------------------------------------- #
-
-
-__all__: list[str] = ["strtobool"]
 
 
 # ---------------------------------------------------------------------------- #
@@ -82,8 +82,6 @@ def strtobool(value: str) -> bool:
             The string value to convert. Valid input options are defined in [`_MAP`][python_helpers.bools._MAP]
 
     Raises:
-        TypeError:
-            If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
         ValueError:
             If the value parse'ed in to `value` is not a valid value to be able to convert to a `#!py bool` value.
 

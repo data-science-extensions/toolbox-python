@@ -57,5 +57,5 @@ class TestBools(TestCase):
 
     def test_strtobool_5(self) -> None:
         _input = 5
-        with pytest.raises((ValueError, KeyError)):
+        with pytest.raises(ValueError):
             _output: bool = strtobool(_input)
