@@ -15,9 +15,11 @@ from unittest import TestCase
 
 # ## Python Third Party Imports ----
 import pytest
+from parameterized import parameterized
 
 # ## Local First Party Imports ----
-from toolbox_python.bools import strtobool
+from tests.setup import name_func_nested_list
+from toolbox_python.bools import _MAP, strtobool
 
 
 # ---------------------------------------------------------------------------- #
@@ -28,34 +30,19 @@ from toolbox_python.bools import strtobool
 
 
 class TestBools(TestCase):
+
     def setUp(self) -> None:
         pass
 
-    def test_strtobool_1(self) -> None:
-        _input = "true"
+    @parameterized.expand(
+        input=((_bool, _str) for _str, _bool in _MAP.items()),
+        name_func=name_func_nested_list,
+    )
+    def test_strtobool(self, _expected: bool, _input: str) -> None:
         _output: bool = strtobool(_input)
-        _expected = True
         assert _output == _expected
 
-    def test_strtobool_2(self) -> None:
-        _input = "t"
-        _output: bool = strtobool(_input)
-        _expected = True
-        assert _output == _expected
-
-    def test_strtobool_3(self) -> None:
-        _input = "false"
-        _output: bool = strtobool(_input)
-        _expected = False
-        assert _output == _expected
-
-    def test_strtobool_4(self) -> None:
-        _input = "f"
-        _output: bool = strtobool(_input)
-        _expected = False
-        assert _output == _expected
-
-    def test_strtobool_5(self) -> None:
+    def test_strtobool_raises(self) -> None:
         _input = 5
         with pytest.raises(ValueError):
             _output: bool = strtobool(_input)
