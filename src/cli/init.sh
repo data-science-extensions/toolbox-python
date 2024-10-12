@@ -9,10 +9,10 @@ poetry init --no-interaction --name="toolbox-python" --description="Helper files
 poetry env use $(pyenv which python 3.13.0)
 poetry add typeguard
 poetry add $(cat requirements/root.txt)
-poetry add --group="dev" $(cat requirements/dev.txt)
-poetry add --group="docs" $(cat requirements/docs.txt)
-poetry add --group="test" $(cat requirements/test.txt)
-poetry install
+poetry add --optional --group="dev" $(cat requirements/dev.txt)
+poetry add --optional --group="docs" $(cat requirements/docs.txt)
+poetry add --optional --group="test" $(cat requirements/test.txt)
+poetry install --with dev,docs,test
 poetry shell
 pre-commit install
 pre-commit autoupdate
