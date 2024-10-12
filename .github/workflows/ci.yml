@@ -82,7 +82,9 @@ jobs:
         run: |
           git status
           git branch
-          git log
+          git checkout -B main --track origin/main
+          git status
+          git branch
 
   check:
 
