@@ -82,7 +82,7 @@ def is_value_of_type(value: Any, check_type: type | tuple[type]) -> bool:
 
 
 def is_all_values_of_type(values: ITERABLE, check_type: type | tuple[type]) -> bool:
-    return all([isinstance(value, check_type) for value in values])
+    return all(isinstance(value, check_type) for value in values)
 
 
 def is_value_in_iterable(value: SCALAR, iterable: ITERABLE) -> bool:
@@ -90,11 +90,11 @@ def is_value_in_iterable(value: SCALAR, iterable: ITERABLE) -> bool:
 
 
 def is_all_values_in_iterable(values: ITERABLE, iterable: ITERABLE) -> bool:
-    return all([value in iterable for value in values])
+    return all(value in iterable for value in values)
 
 
 def is_any_values_in_iterable(values: ITERABLE, iterable: ITERABLE) -> bool:
-    return any([value in iterable for value in values])
+    return any(value in iterable for value in values)
 
 
 ### Aliases ----

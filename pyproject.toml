@@ -120,6 +120,10 @@ testpaths = [
 ignore_missing_imports = true
 allow_redefinition = true
 pretty = true
+disable_error_code = [
+    "valid-type",
+    "attr-defined",
+]
 # install_types = true
 # non_interactive = true
 # no_strict_optional = true

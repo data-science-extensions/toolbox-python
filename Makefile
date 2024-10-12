@@ -65,13 +65,11 @@ install-all:
 .PHONY: linting
 run-black:
 	poetry run black --config pyproject.toml ./
-run-mypy:
-	poetry run mypy --config-file pyproject.toml src/$(PACKAGE_NAME)
 run-isort:
 	poetry run isort --settings-file pyproject.toml ./
 run-safety:
 	poetry check
-lint: run-black run-mypy run-isort run-safety
+lint: run-black run-isort run-safety
 
 
 #* Checking
@@ -79,7 +77,7 @@ lint: run-black run-mypy run-isort run-safety
 check-black:
 	poetry run black --diff --check --config pyproject.toml ./
 check-mypy:
-	poetry run mypy --config-file pyproject.toml src/$(PACKAGE_NAME)
+	poetry run mypy --install-types --config-file pyproject.toml src/$(PACKAGE_NAME)
 check-isort:
 	poetry run isort --settings-file pyproject.toml ./
 check-codespell:

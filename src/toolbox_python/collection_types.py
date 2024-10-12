@@ -57,11 +57,11 @@ str_dict = dict[str, str]
 str_list_tuple = Union[str_list, str_tuple]
 int_list = list[int]
 int_tuple = tuple[int, ...]
-collection = Union[list, tuple, set]
-str_collection = Union[str, str_list, str_tuple, str_set]
 any_list = list[Any]
-any_tuple = tuple[Any]
+any_tuple = tuple[Any, ...]
 any_set = set[Any]
+collection = Union[any_list, any_tuple, any_set]
+str_collection = Union[str, str_list, str_tuple, str_set]
 any_collection = any_list | any_tuple | any_set
 
 dict_any = dict[
