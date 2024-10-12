@@ -30,12 +30,12 @@ classifiers = [
     "Topic :: Utilities",
 ]
 
-# [tool.poetry.urls]
-# Homepage = "..."
-# Documentation = "..."
-# Repository = "..."
-# Changelog = "..."
-# Issues = "..."
+[tool.poetry.urls]
+Homepage = "https://github.com/data-science-extensions/toolbox-python"
+Documentation = "https://github.com/data-science-extensions/toolbox-python"
+Repository = "https://github.com/data-science-extensions/toolbox-python"
+Changelog = "https://github.com/data-science-extensions/toolbox-python/releases"
+Issues = "https://github.com/data-science-extensions/toolbox-python/issues"
 
 [tool.poetry.dependencies]
 python = ">3.9,<4.0"
