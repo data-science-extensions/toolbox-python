@@ -18,6 +18,11 @@ jobs:
 
     steps:
 
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+
       - name: Check variables
         run: |
           echo "github.action: ${{ github.action }}"
@@ -82,6 +87,11 @@ jobs:
           echo "github.event.release.url: ${{ github.event.release.url }}"
           echo "github.event.release.zipball_url: ${{ github.event.release.zipball_url }}"
 
+      - name: Check Git
+        run: |
+          git status
+          git branch
+
   test:
 
     name: Run Tests
@@ -119,6 +129,8 @@ jobs:
 
         - name: Checkout repository
           uses: actions/checkout@v3
+          with:
+            ref: main
 
         - name: Set up Python
           uses: actions/setup-python@v4
