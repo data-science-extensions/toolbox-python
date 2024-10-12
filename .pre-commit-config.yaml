@@ -51,8 +51,9 @@ repos:
     rev: "v1.11.2"
     hooks:
       - id: mypy
-        files: src/python_helpers
+        files: src/toolbox_python
         args:
+          - "--install-types"
           - "--config-file=pyproject.toml"
 
   # Reorder Python imports

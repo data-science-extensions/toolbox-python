@@ -79,7 +79,7 @@ def strtobool(value: str) -> bool:
 
     Params:
         value (str):
-            The string value to convert. Valid input options are defined in [`_MAP`][python_helpers.bools._MAP]
+            The string value to convert. Valid input options are defined in [`_MAP`][toolbox_python.bools._MAP]
 
     Raises:
         ValueError:
