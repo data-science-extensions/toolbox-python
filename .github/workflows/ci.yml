@@ -75,6 +75,12 @@ jobs:
           echo "github.event.release.url: ${{ github.event.release.url }}"
           echo "github.event.release.zipball_url: ${{ github.event.release.zipball_url }}"
 
+      - name: Check Git
+        run: |
+          git status
+          git branch
+          git log
+
   check:
 
     if: github.ref_name != 'main'
