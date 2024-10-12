@@ -132,16 +132,21 @@ jobs:
           env:
             VERSION: ${{ github.event.release.tag_name }}
 
-        - name: Build package
-          run: poetry build
-
         - name: Configure poetry
           run: poetry config pypi-token.pypi ${PYPI_TOKEN}
           env:
             PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
 
+        - name: Build package
+          run: poetry build --output="dist"
+
+        - name: Upload assets
+          uses: softprops/action-gh-release@v2
+          with:
+            files: dist/*
+
         - name: Publish package
-          run: poetry publish --dry-run
+          run: poetry publish --dist-dir="dist"
 
         # - name: Deploy to PyPI
         #   run: make deploy-package
