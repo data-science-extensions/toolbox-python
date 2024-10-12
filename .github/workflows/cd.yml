@@ -18,6 +18,11 @@ jobs:
 
     steps:
 
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+
       - name: Check variables
         run: |
           echo "github.action: ${{ github.action }}"
