@@ -19,7 +19,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any
+from typing import Any, Union
 
 # ## Local First Party Imports ----
 from toolbox_python.collection_types import collection
@@ -62,7 +62,7 @@ __all__: list[str] = [
 
 
 ITERABLE = collection
-SCALAR = str | int | float
+SCALAR = Union[str, int, float]
 
 
 # ---------------------------------------------------------------------------- #
@@ -77,11 +77,13 @@ SCALAR = str | int | float
 ## --------------------------------------------------------------------------- #
 
 
-def is_value_of_type(value: Any, check_type: type | tuple[type]) -> bool:
+def is_value_of_type(value: Any, check_type: Union[type, tuple[type]]) -> bool:
     return isinstance(value, check_type)
 
 
-def is_all_values_of_type(values: ITERABLE, check_type: type | tuple[type]) -> bool:
+def is_all_values_of_type(
+    values: ITERABLE, check_type: Union[type, tuple[type]]
+) -> bool:
     return all(isinstance(value, check_type) for value in values)
 
 
@@ -110,7 +112,7 @@ is_all_in = is_all_values_in_iterable
 ## --------------------------------------------------------------------------- #
 
 
-def assert_value_of_type(value: Any, check_type: type | tuple[type]) -> None:
+def assert_value_of_type(value: Any, check_type: Union[type, tuple[type]]) -> None:
     if not is_type(value=value, check_type=check_type):
         raise TypeError(
             f"Values '{value}' is not correct type: '{type(value)}'. "
@@ -118,7 +120,9 @@ def assert_value_of_type(value: Any, check_type: type | tuple[type]) -> None:
         )
 
 
-def assert_all_values_of_type(values: ITERABLE, check_type: type | tuple[type]) -> None:
+def assert_all_values_of_type(
+    values: ITERABLE, check_type: Union[type, tuple[type]]
+) -> None:
     if not is_all_type(values=values, check_type=check_type):
         invalid_values = [value for value in values if not is_type(value, check_type)]
         invalid_types = [

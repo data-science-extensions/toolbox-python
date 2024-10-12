@@ -11,7 +11,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Callable
+from typing import Callable, Union
 
 # ## Local First Party Imports ----
 from toolbox_python.collection_types import any_collection
@@ -43,7 +43,7 @@ def name_func_flat_list(
 def name_func_nested_list(
     func: Callable,
     idx: int,
-    params: list[any_collection] | tuple[any_collection],
+    params: Union[list[any_collection], tuple[any_collection]],
 ) -> str:
     return f"{func.__name__}_{int(idx)+1:02}_{params[0][0]}_{params[0][1]}"
 
