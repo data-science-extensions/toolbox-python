@@ -105,12 +105,12 @@ pytest:
 #* Git
 
 .PHONY: configure-git
-configure-git: git-add-credentials git-add-gitlab-origin
+configure-git: git-add-credentials
 
 .PHONY: git-add-credentials
 git-add-credentials:
 	git config --global user.name ${GITHUB_ACTOR}
-	git config --global user.email "${GITLAB_USER_EMAIL}@users.noreply.github.com"
+	git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 
 .PHONY: git-refresh-current-branch
 git-refresh-current-branch:
@@ -130,10 +130,6 @@ git-switch-to-main-branch:
 git-switch-to-docs-branch:
 	git checkout -B docs-site --track origin/docs-site
 
-.PHONY: clean-git-config
-clean-git-config:
-	git remote remove gitlab_origin
-
 
 #* Deploy Package
 # See: https://github.com/monim67/poetry-bumpversion
@@ -148,14 +144,14 @@ bump-version:
 update-git:
 	git add .
 	git commit --message="Bump to version \`$(VERSION)\` [skip ci]" --allow-empty
-	git push gitlab_origin --force --no-verify
+	git push --force --no-verify
 	git status
 
 .PHONY: poetry-build
 poetry-build:
 	poetry build
 
-.PHONY: poetry-configure
+.PHONY: poetry-configure-credentials
 poetry-configure:
 	poetry config pypi-token.pypi ${PYPI_TOKEN}
 
@@ -180,7 +176,7 @@ build-docs-static:
 update-git-docs:
 	git add .
 	git commit -m "Build docs [skip ci]"
-	git push gitlab_origin --force --no-verify --push-option ci.skip
+	git push --force --no-verify --push-option ci.skip
 
 .PHONY: docs-check-versions
 docs-check-versions:
@@ -188,15 +184,15 @@ docs-check-versions:
 
 .PHONY: build-docs-mike
 build-docs-mike:
-	poetry run mike --debug deploy --alias-type=copy --update-aliases --push --remote=gitlab_origin --branch=docs-site --deploy-prefix=web $(VERSION) latest
+	poetry run mike --debug deploy --alias-type=copy --update-aliases --push --branch=docs-site --deploy-prefix=web $(VERSION) latest
 
 .PHONY: docs-delete-version
 docs-delete-version:
-	poetry run mike --debug delete --remote=gitlab_origin --branch=docs-site --deploy-prefix=web $(VERSION)
+	poetry run mike --debug delete --branch=docs-site --deploy-prefix=web $(VERSION)
 
 .PHONY: docs-set-default
 docs-set-default:
-	poetry run mike --debug set-default --remote=gitlab_origin --branch=docs-site --push --deploy-prefix=web latest
+	poetry run mike --debug set-default --branch=docs-site --push --deploy-prefix=web latest
 
 .PHONY: build-static-docs
 build-static-docs: build-docs-static update-git-docs

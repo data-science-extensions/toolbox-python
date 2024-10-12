@@ -125,21 +125,43 @@ jobs:
           with:
             python-version: '3.13'
 
+        - name: Check VERSION
+          run: |
+            if [ -z "${VERSION}" ]; then
+              echo "/$VERSION is missing. Please try again."
+              exit 1
+            fi
+          env:
+            VERSION: ${{ github.event.release.tag_name }}
+
         - name: Install Poetry
           run: make install-poetry
 
         - name: Install dependencies
           run: make install
 
+        - name: Configure poetry
+          run: make poetry-configure
+          env:
+            PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+
+        - name: Set up Git
+          run: |
+            make configure-git
+            make git-switch-to-main-branch
+            make git-refresh-current-branch
+          env:
+            GITHUB_ACTOR: ${{ github.actor }}
+
         - name: Bump version
           run: make bump-version
           env:
             VERSION: ${{ github.event.release.tag_name }}
 
-        - name: Configure poetry
-          run: poetry config pypi-token.pypi ${PYPI_TOKEN}
+        - name: Update Git
+          run: make update-git
           env:
-            PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+            VERSION: ${{ github.event.release.tag_name }}
 
         - name: Build package
           run: poetry build --output="dist"
