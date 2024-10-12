@@ -119,6 +119,8 @@ jobs:
 
         - name: Checkout repository
           uses: actions/checkout@v3
+          with:
+            ref: main
 
         - name: Set up Python
           uses: actions/setup-python@v4
