@@ -5,6 +5,10 @@ on:
     types:
       - published
 
+# Sets permissions of the GITHUB_TOKEN to allow assets to be uploaded to the release
+permissions:
+  contents: write
+
 jobs:
 
   debug:
