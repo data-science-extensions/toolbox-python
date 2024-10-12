@@ -78,6 +78,7 @@ pytest-sugar = "^1.0.0"
 pytest-icdiff = "^0.9"
 pytest-xdist = "^3.6.1"
 mypy = "^1.11.2"
+parameterized = "^0.9.0"
 
 [tool.black]
 color = true
