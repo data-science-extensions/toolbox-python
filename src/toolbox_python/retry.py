@@ -154,7 +154,7 @@ def retry(
             )
     if print_or_log == "log":
         stk: inspect.FrameInfo = inspect.stack()[2]
-        mod: ModuleType | None = inspect.getmodule(stk[0])
+        mod: Union[ModuleType, None] = inspect.getmodule(stk[0])
         if mod is not None:
             log: Optional[Logger] = logging.getLogger(mod.__name__)
     else:
