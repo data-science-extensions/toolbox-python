@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "toolbox-python"
-version = "0.6.1"
+version = "0.7.1"
 description = "Helper files/functions/classes for generic Python processes"
 readme = "README.md"
 license = "MIT"
