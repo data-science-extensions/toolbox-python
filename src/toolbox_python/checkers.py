@@ -22,7 +22,7 @@
 from typing import Any, Union
 
 # ## Local First Party Imports ----
-from toolbox_python.collection_types import collection
+from toolbox_python.collection_types import collection, str_collection
 
 
 ## --------------------------------------------------------------------------- #
@@ -156,3 +156,83 @@ assert_all_type = assert_all_values_of_type
 assert_in = assert_value_in_iterable
 assert_any_in = assert_any_values_in_iterable
 assert_all_in = assert_all_values_in_iterable
+
+
+## --------------------------------------------------------------------------- #
+##  `*_contains()`                                                          ####
+## --------------------------------------------------------------------------- #
+
+
+def any_element_contains(iterable: str_collection, check: str) -> bool:
+    """
+    !!! note "Summary"
+        Check to see if any element in a given iterable contains a given string value.
+        !!! warning "Note: This check _is_ case sensitive."
+
+    ???+ abstract "Details"
+        This function is helpful for doing a quick check to see if any element in a `#!py list` contains a given `#!py str` value. For example, checking if any column header contains a specific string value.
+
+    Params:
+        iterable (Union[List[str], Tuple[str], Set[str]]):
+            The iterables to check within. Because this function uses an `#!py in` operation to check if `check` string exists in the elements of `iterable`, therefore all elements of `iterable` must be `#!py str` type.
+        check (str):
+            The string value to check exists in any of the elements in `iterable`.
+
+    Returns:
+        (bool):
+            `#!py True` if at least one element in `iterable` contains `check` string; `#!py False` if no elements contain `check`.
+
+    ???+ example "Examples"
+        Please see: [Examples](../../usage/examples/)
+    """
+    assert all(isinstance(elem, str) for elem in iterable)
+    return any(check in elem for elem in iterable)
+
+
+def all_elements_contains(iterable: str_collection, check: str) -> bool:
+    """
+    !!! note "Summary"
+        Check to see if all elements in a given iterable contains a given string value.
+        !!! warning "Note: This check _is_ case sensitive."
+
+    ???+ abstract "Details"
+        This function is helpful for doing a quick check to see if all element in a `#!py list` contains a given `#!py str` value. For example, checking if all columns in a DataFrame contains a specific string value.
+
+    Params:
+        iterable (Union[List[str], Tuple[str], Set[str]]):
+            The iterables to check within. Because this function uses an `#!py in` operation to check if `check` string exists in the elements of `iterable`, therefore all elements of `iterable` must be `#!py str` type.
+        check (str):
+            The string value to check exists in any of the elements in `iterable`.
+
+    Returns:
+        (bool):
+            `#!py True` if all elements in `iterable` contains `check` string; `#!py False` otherwise.
+
+    ???+ example "Examples"
+        Please see: [Examples](../../usage/examples/)
+    """
+    assert all(isinstance(elem, str) for elem in iterable)
+    return all(check in elem for elem in iterable)
+
+
+def get_elements_containing(iterable: str_collection, check: str) -> tuple[str, ...]:
+    """
+    !!! note "Summary"
+        Extract all elements in a given iterable which contains a given string value.
+        !!! warning "Note: This check _is_ case sensitive."
+
+    Params:
+        iterable (Union[List[str], Tuple[str], Set[str]]):
+            The iterables to check within. Because this function uses an `#!py in` operation to check if `check` string exists in the elements of `iterable`, therefore all elements of `iterable` must be `#!py str` type.
+        check (str):
+            The string value to check exists in any of the elements in `iterable`.
+
+    Returns:
+        (tuple):
+            A `#!py tuple` containing all the string elements from `iterable` which contains the `check` string.
+
+    ???+ example "Examples"
+        Please see: [Examples](../../usage/examples/)
+    """
+    assert all(isinstance(elem, str) for elem in iterable)
+    return tuple(elem for elem in iterable if check in elem)

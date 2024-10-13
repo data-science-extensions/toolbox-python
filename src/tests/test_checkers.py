@@ -11,7 +11,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any
+from typing import Any, Union
 from unittest import TestCase
 
 # ## Python Third Party Imports ----
@@ -19,8 +19,10 @@ import pytest
 from parameterized import parameterized
 
 # ## Local First Party Imports ----
-from tests.setup import name_func_predefined_name
+from tests.setup import name_func_nested_list, name_func_predefined_name
 from toolbox_python.checkers import (
+    all_elements_contains,
+    any_element_contains,
     assert_all_in,
     assert_all_type,
     assert_all_values_in_iterable,
@@ -31,6 +33,7 @@ from toolbox_python.checkers import (
     assert_type,
     assert_value_in_iterable,
     assert_value_of_type,
+    get_elements_containing,
     is_all_in,
     is_all_type,
     is_all_values_in_iterable,
@@ -42,6 +45,7 @@ from toolbox_python.checkers import (
     is_value_in_iterable,
     is_value_of_type,
 )
+from toolbox_python.collection_types import str_tuple
 
 
 ## --------------------------------------------------------------------------- #
@@ -181,9 +185,73 @@ class TestSuite(TestCase):
 
 
 ## --------------------------------------------------------------------------- #
-##  Major Objects                                                           ####
+##  Contains                                                                ####
 ## --------------------------------------------------------------------------- #
 
 
-### Comment ----
-...
+class TestContains(TestCase):
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        values: tuple[str, ...] = ("key_SYSTEM", "key_CLUSTER", "key_GROUP", "key_NODE")
+        cls.list_values = list(values)
+        cls.tuple_values = tuple(values)
+        cls.set_values = set(values)
+        cls.values: dict[str, Union[list, tuple, set]] = {
+            "list": cls.list_values,
+            "tuple": cls.tuple_values,
+            "set": cls.set_values,
+        }
+
+    @parameterized.expand(
+        input=(
+            ("list", "CLUSTER", True),
+            ("tuple", "CLUSTER", True),
+            ("set", "CLUSTER", True),
+            ("list", "cluster", False),
+            ("tuple", "nothing", False),
+            ("set", "KEY", False),
+        ),
+        name_func=name_func_nested_list,
+    )
+    def test_any_element_contains(self, _typ: str, _val: str, _exp: bool) -> None:
+        assert any_element_contains(self.values[_typ], _val) == _exp
+
+    @parameterized.expand(
+        input=(
+            ("list", "key", True),
+            ("tuple", "key", True),
+            ("set", "key", True),
+            ("list", "cluster", False),
+            ("tuple", "nothing", False),
+            ("set", "KEY", False),
+        ),
+        name_func=name_func_nested_list,
+    )
+    def test_all_elements_contains(self, _typ: str, _val: str, _exp: bool) -> None:
+        assert all_elements_contains(self.values[_typ], _val) == _exp
+
+    @parameterized.expand(
+        input=(
+            ("list", "key", "tuple_values"),
+            ("tuple", "key", "tuple_values"),
+            ("set", "key", "tuple_values"),
+            ("list", "cluster", tuple()),
+            ("tuple", "nothing", tuple()),
+            ("set", "KEY", tuple()),
+            ("tuple", "C", ("key_CLUSTER",)),
+            ("tuple", "O", ("key_GROUP", "key_NODE")),
+            ("tuple", "E", ("key_SYSTEM", "key_CLUSTER", "key_NODE")),
+        ),
+        name_func=name_func_nested_list,
+    )
+    def test_get_elements_containing(
+        self, _typ: str, _val: str, _exp: str_tuple
+    ) -> None:
+        if _exp == "tuple_values":
+            _exp = self.tuple_values
+        _out: str_tuple = get_elements_containing(self.values[_typ], _val)
+        if _typ == "set" and _val == "key":
+            _out = tuple(sorted(_out))
+            _exp = tuple(sorted(_exp))
+        assert _out == _exp
