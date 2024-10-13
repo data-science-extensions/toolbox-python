@@ -12,6 +12,7 @@
 
 # ## Python StdLib Imports ----
 import logging
+from typing import Union
 from unittest import TestCase
 
 # ## Python Third Party Imports ----
@@ -185,7 +186,7 @@ class TestListColumnsOutput(TestCase):
         return words[:num_words]
 
     def test_1(self) -> None:
-        output: str | None = list_columns(
+        output: Union[str, None] = list_columns(
             self.get_list_of_words(4 * 5),
             print_output=False,
         )
@@ -202,7 +203,7 @@ class TestListColumnsOutput(TestCase):
         assert output == expected
 
     def test_2(self) -> None:
-        output: str | None = list_columns(
+        output: Union[str, None] = list_columns(
             self.get_list_of_words(3),
             print_output=False,
         )
@@ -210,7 +211,7 @@ class TestListColumnsOutput(TestCase):
         assert output == expected
 
     def test_3(self) -> None:
-        output: str | None = list_columns(
+        output: Union[str, None] = list_columns(
             self.get_list_of_words(5),
             cols_wide=2,
             columnwise=True,
