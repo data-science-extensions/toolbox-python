@@ -124,7 +124,7 @@ def flat_list(*inputs: Any) -> any_list:
         Please see: [Examples](../../usage/examples/)
 
     ??? tip "See Also"
-        - [`flatten()`][python_helpers.lists.flatten]
+        - [`flatten()`][toolbox_python.lists.flatten]
     """
     return flatten(list(inputs))
 

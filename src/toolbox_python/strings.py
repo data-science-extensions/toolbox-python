@@ -140,8 +140,8 @@ def str_contains(check_string: str, sub_string: str) -> bool:
         Please see: [Examples](../../usage/examples/)
 
     ??? tip "See Also"
-        - [`str_contains_any()`][python_helpers.strings.str_contains_any]
-        - [`str_contains_all()`][python_helpers.strings.str_contains_all]
+        - [`str_contains_any()`][toolbox_python.strings.str_contains_any]
+        - [`str_contains_all()`][toolbox_python.strings.str_contains_all]
     """
     return sub_string in check_string
 
@@ -172,8 +172,8 @@ def str_contains_any(
         Please see: [Examples](../../usage/examples/)
 
     ??? tip "See Also"
-        - [`str_contains()`][python_helpers.strings.str_contains]
-        - [`str_contains_all()`][python_helpers.strings.str_contains_all]
+        - [`str_contains()`][toolbox_python.strings.str_contains]
+        - [`str_contains_all()`][toolbox_python.strings.str_contains_all]
     """
     return any(
         str_contains(
@@ -210,8 +210,8 @@ def str_contains_all(
         Please see: [Examples](../../usage/examples/)
 
     ??? tip "See Also"
-        - [`str_contains()`][python_helpers.strings.str_contains]
-        - [`str_contains_any()`][python_helpers.strings.str_contains_any]
+        - [`str_contains()`][toolbox_python.strings.str_contains]
+        - [`str_contains_any()`][toolbox_python.strings.str_contains_any]
     """
     return all(
         str_contains(
