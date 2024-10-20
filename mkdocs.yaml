@@ -50,14 +50,14 @@ nav:
   - Modules:
       - docs/code/index.md
       - Classes: docs/code/classes.md
-  #     - Defaults: docs/code/defaults.md
       - Bools: docs/code/bools.md
-  #     - Lists: docs/code/lists.md
-  #     - Iterables: docs/code/iterables.md
-  #     - Dictionaries: docs/code/dictionaries.md
+      - Lists: docs/code/lists.md
   #     - Strings: docs/code/strings.md
+  #     - Dictionaries: docs/code/dictionaries.md
+  #     - Iterables: docs/code/iterables.md
   #     - Output: docs/code/output.md
   #     - Retry: docs/code/retry.md
+  #     - Defaults: docs/code/defaults.md
 
 
 markdown_extensions:

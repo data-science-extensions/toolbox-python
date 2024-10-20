@@ -20,9 +20,9 @@
 
 """
 !!! note "Summary"
-    The `lists` module is used how to manipulate and enhance Python lists.
+    The `lists` module is used to manipulate and enhance Python `#!py list`'s.
 !!! abstract "Details"
-    Note that functions in this module will only take-in and manipulate existing `#!py list` objects, and also output `#!py list` objects. It will not sub-class the base `#!py list` object, or create new '`#!py list`-like' objects. It will always remain pure python types at it's core.
+    Note that functions in this module will only take-in and manipulate existing `#!py list` objects, and also output `#!py list` objects. It will not sub-class the base `#!py list` object, or create new '`#!py list`-like' objects. It will always maintain pure python types at it's core.
 """
 
 
@@ -66,8 +66,8 @@ __all__: list[str] = ["flatten", "flat_list", "product"]
 
 @typechecked
 def flatten(
-    list_of_lists: any_list,
-    base_type: Optional[Any] = None,
+    list_of_lists: list[any_list],
+    base_type: Optional[type] = None,
     levels: Optional[int] = None,
 ) -> any_list:
     """
@@ -81,18 +81,28 @@ def flatten(
         [more_itertools.collapse]: https://more-itertools.readthedocs.io/en/stable/api.html#more_itertools.collapse
 
     Params:
-        list_of_lists (List[Any]):
+        list_of_lists (list[any_list]):
             The input `#!py list` of `#!py list`'s that you'd like to flatten to a single-level `#!py list`.
+        base_type (Optional[type], optional):
+            Binary and text strings are not considered iterable and will not be collapsed. To avoid collapsing other types, specify `base_type`.
+            Defaults to `#!py None`.
+        levels (Optional[int], optional):
+            Specify `levels` to stop flattening after a certain nested level.
+            Defaults to `#!py None`.
 
     Raises:
         TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
-        (List[Any]):
+        (any_list):
             The updated `#!py list`.
 
     ???+ example "Examples"
         Please see: [Examples](../../usage/examples/)
+
+    ??? tip "See Also"
+        - [`more_itertools`](https://more-itertools.readthedocs.io/en/stable/api.html)
+        - [`more_itertools.collapse()`](https://more-itertools.readthedocs.io/en/stable/api.html#more_itertools.collapse)
     """
     return list(
         itertools_collapse(
@@ -107,7 +117,7 @@ def flatten(
 def flat_list(*inputs: Any) -> any_list:
     """
     !!! note "Summary"
-        Take in any number of inputs, and output them all in to a single flat list.
+        Take in any number of inputs, and output them all in to a single flat `#!py list`.
 
     Params:
         inputs (Any):
@@ -117,8 +127,8 @@ def flat_list(*inputs: Any) -> any_list:
         TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
-        (List[Any]):
-            The input having been coerced to a single flat list.
+        (any_list):
+            The input having been coerced to a single flat `#!py list`.
 
     ???+ example "Examples"
         Please see: [Examples](../../usage/examples/)
@@ -144,14 +154,15 @@ def product(*iterables) -> list[any_tuple]:
         iterables (Any):
             The input `#!py iterables` that you'd like to expand out.
 
-    Raises:
-        TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
-
     Returns:
-        (List[Tuple[Any]]):
-            The updated `#!py list`.
+        (list[tuple[Any, ...]]):
+            The updated `#!py list` list of `#!py tuple`'s representing the Cartesian product of the provided iterables.
 
     ???+ example "Examples"
         Please see: [Examples](../../usage/examples/)
+
+    ??? tip "See Also"
+        - [itertools](https://docs.python.org/3/library/itertools.html)
+        - [itertools.product()](https://docs.python.org/3/library/itertools.html#itertools.product)
     """
     return list(itertools_product(*iterables))
