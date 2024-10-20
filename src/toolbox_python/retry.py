@@ -140,7 +140,7 @@ def retry(
     ???+ example "Examples"
         Please see: [Examples](../../usage/examples/)
 
-    !!! success "Credit"
+    ??? success "Credit"
         Inspiration from:
 
         - https://pypi.org/project/retry/

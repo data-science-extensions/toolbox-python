@@ -84,10 +84,10 @@ def flatten(
         list_of_lists (list[any_list]):
             The input `#!py list` of `#!py list`'s that you'd like to flatten to a single-level `#!py list`.
         base_type (Optional[type], optional):
-            Binary and text strings are not considered iterable and will not be collapsed. To avoid collapsing other types, specify `base_type`.
+            Binary and text strings are not considered iterable and will not be collapsed. To avoid collapsing other types, specify `base_type`.<br>
             Defaults to `#!py None`.
         levels (Optional[int], optional):
-            Specify `levels` to stop flattening after a certain nested level.
+            Specify `levels` to stop flattening after a certain nested level.<br>
             Defaults to `#!py None`.
 
     Raises:
