@@ -83,10 +83,10 @@ def str_replace(
     Params:
         old_string (str):
             The old string to be replaced.
-        replace_chars (str):
+        replace_chars (str, optional):
             The characters that need replacing.<br>
             Defaults to `#!py string.punctuation + string.whitespace`.
-        replace_with (str):
+        replace_with (str, optional):
             The value to replace the characters with.<br>
             Defaults to `""`.
 
@@ -100,11 +100,11 @@ def str_replace(
     ???+ example "Examples"
         Please see: [Examples](../../usage/examples/)
 
-    !!! success "Credit"
+    ??? success "Credit"
         Full credit goes to:<br>
         https://stackoverflow.com/questions/23996118/replace-special-characters-in-a-string-python#answer-23996414
 
-    !!! tip "See Also"
+    ??? tip "See Also"
         - [`re`](https://docs.python.org/3/library/re.html)
     """
     chars: str = re.escape(replace_chars)
@@ -118,8 +118,9 @@ def str_contains(check_string: str, sub_string: str) -> bool:
         Check whether one string contains another string.
 
     ???+ abstract "Details"
-        Super simple execution:
-        ```py linenums="1"
+        This is a super simple one-line function.
+
+        ```py linenums="1" title="Example"
         return True if sub_string in check_string else False
         ```
 
@@ -158,7 +159,7 @@ def str_contains_any(
     Params:
         check_string (str):
             The main string to check.
-        sub_strings (Union[Tuple[str, ...], List[str]]):
+        sub_strings (str_list_tuple):
             The collection of substrings to check.
 
     Raises:
@@ -196,7 +197,7 @@ def str_contains_all(
     Params:
         check_string (str):
             The main string to check.
-        sub_strings (Union[Tuple[str, ...], List[str]]):
+        sub_strings (str_list_tuple):
             The collection of substrings to check.
 
     Raises:
@@ -236,13 +237,13 @@ def str_separate_number_chars(text: str) -> str_list:
             The string to split.
 
     Returns:
-        (List[str]):
+        (str_list):
             The updated list, with each element of the list containing either entirely characters or entirely numbers.
 
     ???+ example "Examples"
         Please see: [Examples](../../usage/examples/)
 
-    !!! success "Credit"
+    ??? success "Credit"
         Full credit goes to:<br>
         https://stackoverflow.com/questions/3340081/product-code-looks-like-abcd2343-how-to-split-by-letters-and-numbers#answer-63362709.
 
