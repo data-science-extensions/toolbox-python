@@ -67,6 +67,9 @@ def get_full_class_name(obj: Any) -> str:
     !!! note "Summary"
         This function is designed to extract the full name of a class, including the name of the module from which it was loaded.
 
+    ???+ abstract "Details"
+        Note, this is designed to retrieve the underlying _class name_ of an object, not the _instance name_ of an object. This is useful for debugging purposes, or for logging.
+
     Params:
         obj (Any):
             The object for which you want to retrieve the full name.
@@ -75,7 +78,7 @@ def get_full_class_name(obj: Any) -> str:
         (str):
             The full name of the class of the object.
 
-    !!! success "Credit"
+    ??? success "Credit"
         Full credit goes to:<br>
         https://stackoverflow.com/questions/18176602/how-to-get-the-name-of-an-exception-that-was-caught-in-python#answer-58045927
 

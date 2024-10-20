@@ -49,7 +49,7 @@ nav:
   #     - Examples: docs/usage/examples.md
   - Modules:
       - docs/code/index.md
-  #     - Classes: docs/code/classes.md
+      - Classes: docs/code/classes.md
   #     - Defaults: docs/code/defaults.md
       - Bools: docs/code/bools.md
   #     - Lists: docs/code/lists.md
