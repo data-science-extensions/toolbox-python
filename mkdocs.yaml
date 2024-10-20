@@ -1,0 +1,132 @@
+site_name: Python Toolbox
+site_description: Helper files/functions/classes for generic Python processes
+site_author: "[Chris Mahoney](mailto:chris@mahoneyconsultingservices.com)"
+site_dir: web
+repo_name: toolbox-python
+repo_url: https://github.com/data-science-extensions/toolbox-python
+edit_uri: edit/main/docs/
+
+watch:
+  - src/toolbox_python
+  - docs/
+  - README.md
+
+theme:
+  name: material
+  # favicon: https://upload.wikimedia.org/wikipedia/commons/archive/c/c3/20220821155028%21Python-logo-notext.svg
+  favicon: assets/icons/python.svg
+  # coverpage_icon: https://upload.wikimedia.org/wikipedia/commons/archive/c/c3/20220821155028%21Python-logo-notext.svg
+  coverpage_icon: /assets/icons/python.svg
+  custom_dir: docs/overrides
+  palette:
+    # primary: teal
+    primary: blue grey
+    accent: indigo
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - navigation.instant
+    - search.highlight
+    - search.suggest
+    - toc.follow
+    - content.action.edit
+    - content.action.view
+  logo: assets/icons/python.svg
+  icon:
+    repo: material/gitlab
+    # logo: fontawesome/brands/python
+    edit: material/file-edit-outline
+    view: material/file-eye-outline
+
+nav:
+  - Home: docs/index.md
+  # - Usage:
+  #     - Overview: docs/usage/overview.md
+  #     - Examples: docs/usage/examples.md
+  - Modules:
+      - docs/code/index.md
+  #     - Classes: docs/code/classes.md
+  #     - Defaults: docs/code/defaults.md
+      - Bools: docs/code/bools.md
+  #     - Lists: docs/code/lists.md
+  #     - Iterables: docs/code/iterables.md
+  #     - Dictionaries: docs/code/dictionaries.md
+  #     - Strings: docs/code/strings.md
+  #     - Output: docs/code/output.md
+  #     - Retry: docs/code/retry.md
+
+
+markdown_extensions:
+  - admonition
+  - meta
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: "🔗"
+  - pymdownx.emoji
+  - pymdownx.magiclink
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.progressbar
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+extra:
+  version:
+    provider: mike
+    default: latest
+
+extra_css:
+  - assets/css/style.css
+  - assets/css/admonitions.css
+  - assets/css/code_chunks.css
+  - https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css
+
+plugins:
+  - search:
+      lang: en
+  - autorefs
+  - mike:
+      version_selector: true
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths:
+            - src
+          options:
+            allow_inspection: true
+            docstring_style: google
+            docstring_options:
+              replace_admonitions: no
+            show_root_heading: true
+            show_root_toc_entry: false
+            show_root_full_path: true
+            show_source: true
+            show_object_full_path: false
+            separate_signature: true
+            show_signature_annotations: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            show_category_heading: true
+            show_if_no_docstring: true
+            heading_level: 3
+            members_order: source
+            group_by_category: false
+            filters:
+              - "!^__all__"
