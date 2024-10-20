@@ -22,7 +22,7 @@
 !!! note "Summary"
     The `dictionaries` module is used how to manipulate and enhance Python dictionaries.
 !!! abstract "Details"
-    Note that functions in this module will only take-in and manipulate existing `#!py dict` objects, and also output `#!py dict` objects. It will not sub-class the base `#!py dict` object, or create new '`#!py dict`-like' objects. It will always remain pure python types at it's core.
+    Note that functions in this module will only take-in and manipulate existing `#!py dict` objects, and also output `#!py dict` objects. It will not sub-class the base `#!py dict` object, or create new '`#!py dict`-like' objects. It will always maintain pure python types at it's core.
 """
 
 
@@ -68,7 +68,7 @@ def dict_reverse_keys_and_values(
         Take the `key` and `values` of a dictionary, and reverse them.
 
     ???+ info "Details"
-        This process is simple enough if the `values` are atomic types, like `#!py str`, `#!py int`, or `#!py float` types. But it is a little more tricky when the `values` are more comples types, like `#!py list` or `#!py dict`; here we need to use some recursion.
+        This process is simple enough if the `values` are atomic types, like `#!py str`, `#!py int`, or `#!py float` types. But it is a little more tricky when the `values` are more complex types, like `#!py list` or `#!py dict`; here we need to use some recursion.
 
     Params:
         dictionary (dict_any):
