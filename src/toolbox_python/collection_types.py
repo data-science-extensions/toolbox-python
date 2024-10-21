@@ -28,14 +28,19 @@ from typing import Any, Literal, Union
 
 
 __all__: list[str] = [
+    "any_collection",
     "any_list",
+    "any_list_tuple",
+    "any_set",
     "any_tuple",
     "collection",
     "dict_any",
     "dict_str_int",
     "int_list",
     "int_tuple",
+    "iterable",
     "log_levels",
+    "scalar",
     "str_collection",
     "str_dict",
     "str_list",
@@ -60,9 +65,12 @@ int_tuple = tuple[int, ...]
 any_list = list[Any]
 any_tuple = tuple[Any, ...]
 any_set = set[Any]
+any_list_tuple = Union[any_list, any_tuple]
 collection = Union[any_list, any_tuple, any_set]
 str_collection = Union[str, str_list, str_tuple, str_set]
 any_collection = Union[any_list, any_tuple, any_set]
+scalar = Union[str, int, float, bool]
+iterable = Union[list, tuple, set, dict]
 
 dict_any = dict[
     Union[str, int],
