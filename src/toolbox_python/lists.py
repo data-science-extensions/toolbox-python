@@ -40,14 +40,14 @@
 
 # ## Python StdLib Imports ----
 from itertools import product as itertools_product
-from typing import Any, Optional
+from typing import Any, Optional, Union
 
 # ## Python Third Party Imports ----
 from more_itertools import collapse as itertools_collapse
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from toolbox_python.collection_types import any_list, any_tuple
+from toolbox_python.collection_types import any_list, any_tuple, collection, scalar
 
 
 # ---------------------------------------------------------------------------- #
@@ -66,7 +66,7 @@ __all__: list[str] = ["flatten", "flat_list", "product"]
 
 @typechecked
 def flatten(
-    list_of_lists: list[any_list],
+    list_of_lists: Union[scalar, collection],
     base_type: Optional[type] = None,
     levels: Optional[int] = None,
 ) -> any_list:
