@@ -167,7 +167,7 @@ deploy-package: poetry-configure poetry-publish
 
 #* Docs
 .PHONY: docs
-run-docs-static:
+serve-docs-static:
 	poetry run mkdocs serve
 build-docs-static:
 	poetry run mkdocs build
