@@ -54,7 +54,7 @@ nav:
       - Lists: docs/code/lists.md
       - Strings: docs/code/strings.md
       - Dictionaries: docs/code/dictionaries.md
-  #     - Iterables: docs/code/iterables.md
+      - Checkers: docs/code/checkers.md
   #     - Output: docs/code/output.md
   #     - Retry: docs/code/retry.md
   #     - Defaults: docs/code/defaults.md
