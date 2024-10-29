@@ -98,7 +98,7 @@ def flatten(
             The updated `#!py list`.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
+        <!-- Please see: [Examples](../../usage/examples/) -->
 
     ??? tip "See Also"
         - [`more_itertools`](https://more-itertools.readthedocs.io/en/stable/api.html)
@@ -131,7 +131,7 @@ def flat_list(*inputs: Any) -> any_list:
             The input having been coerced to a single flat `#!py list`.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
+        <!-- Please see: [Examples](../../usage/examples/) -->
 
     ??? tip "See Also"
         - [`flatten()`][toolbox_python.lists.flatten]
@@ -159,7 +159,7 @@ def product(*iterables) -> list[any_tuple]:
             The updated `#!py list` list of `#!py tuple`'s representing the Cartesian product of the provided iterables.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
+        <!-- Please see: [Examples](../../usage/examples/) -->
 
     ??? tip "See Also"
         - [itertools](https://docs.python.org/3/library/itertools.html)

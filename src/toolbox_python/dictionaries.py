@@ -83,7 +83,7 @@ def dict_reverse_keys_and_values(
             The updated `#!py dict`.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
+        <!-- Please see: [Examples](../../usage/examples/) -->
     """
     output_dict: dict_str_int = dict()
     for key, value in dictionary.items():

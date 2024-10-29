@@ -98,7 +98,7 @@ def str_replace(
             The new formatted string.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
+        <!-- Please see: [Examples](../../usage/examples/) -->
 
     ??? success "Credit"
         Full credit goes to:<br>
@@ -138,7 +138,7 @@ def str_contains(check_string: str, sub_string: str) -> bool:
             `#!py True` if `#!py sub_string` in `#!py check_string`
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
+        <!-- Please see: [Examples](../../usage/examples/) -->
 
     ??? tip "See Also"
         - [`str_contains_any()`][toolbox_python.strings.str_contains_any]
@@ -170,7 +170,7 @@ def str_contains_any(
             `#!py True` if `#!py any` of the strings in `#!py sub_strings` are contained within `#!py check_string`.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
+        <!-- Please see: [Examples](../../usage/examples/) -->
 
     ??? tip "See Also"
         - [`str_contains()`][toolbox_python.strings.str_contains]
@@ -208,7 +208,7 @@ def str_contains_all(
             `#!py True` if `#!py all` of the strings in `#!py sub_strings` are contained within `#!py check_string`.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
+        <!-- Please see: [Examples](../../usage/examples/) -->
 
     ??? tip "See Also"
         - [`str_contains()`][toolbox_python.strings.str_contains]
@@ -241,7 +241,7 @@ def str_separate_number_chars(text: str) -> str_list:
             The updated list, with each element of the list containing either entirely characters or entirely numbers.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
+        <!-- Please see: [Examples](../../usage/examples/) -->
 
     ??? success "Credit"
         Full credit goes to:<br>

@@ -78,12 +78,12 @@ def get_full_class_name(obj: Any) -> str:
         (str):
             The full name of the class of the object.
 
+    ???+ example "Examples"
+        <!-- Please see: [Examples](../../usage/examples/) -->
+
     ??? success "Credit"
         Full credit goes to:<br>
         https://stackoverflow.com/questions/18176602/how-to-get-the-name-of-an-exception-that-was-caught-in-python#answer-58045927
-
-    ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
     """
     module: str = obj.__class__.__module__
     if module is None or module == str.__class__.__module__:

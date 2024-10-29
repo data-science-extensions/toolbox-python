@@ -138,7 +138,7 @@ def retry(
             The result from the underlying function, if any.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
+        <!-- Please see: [Examples](../../usage/examples/) -->
 
     ??? success "Credit"
         Inspiration from:

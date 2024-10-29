@@ -77,7 +77,7 @@ class Defaults:
         This class will handle that process.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
+        <!-- Please see: [Examples](../../usage/examples/) -->
 
     ??? success "Credit"
         Inspiration from:<br>
