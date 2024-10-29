@@ -277,8 +277,8 @@ def list_columns(
     ???+ example "Examples"
 
         ```{.py .python linenums="1" title="Import packages"}
-        from python_helpers.output import list_columns
-        import requests
+        >>> from toolbox_python.output import list_columns
+        >>> import requests
         ```
 
         ```{.py .python linenums="1" title="Define function to fetch list of words"}

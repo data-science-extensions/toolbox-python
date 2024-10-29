@@ -148,7 +148,7 @@ def retry(
     ???+ example "Examples"
 
         ```{.py .python linenums="1" title="Imports"}
-        >>> from python_helpers.retry import retry
+        >>> from toolbox_python.retry import retry
         ```
 
         ```{.py .python linenums="1" title="Example 1: No error"}
