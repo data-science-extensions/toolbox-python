@@ -4,15 +4,6 @@
         members:
             -
 
-## Module-level attributes
-
-::: toolbox_python.checkers
-    options:
-        show_root_heading: false
-        members:
-            - ITERABLE
-            - SCALAR
-
 
 ## `is_*()` functions
 

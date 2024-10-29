@@ -25,17 +25,13 @@ from typing import Any, Union
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from toolbox_python.collection_types import (
-    any_collection,
-    iterable,
-    scalar,
-    str_collection,
-)
+from toolbox_python.collection_types import any_collection, scalar, str_collection
 
 
 ## --------------------------------------------------------------------------- #
 ##  Exports                                                                 ####
 ## --------------------------------------------------------------------------- #
+
 
 __all__: list[str] = [
     "all_elements_contains",
