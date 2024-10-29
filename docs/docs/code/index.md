@@ -13,7 +13,7 @@ There are six modules used in this package:
 | [Dictionaries](./dictionaries.md) | The `dictionaries` module is used how to manipulate and enhance Python dictionaries.<br>Note that functions in this module will only take-in and manipulate existing `#!py dict` objects, and also output `#!py dict` objects. It will not sub-class the base `#!py dict` object, or create new '`#!py dict`-like' objects. It will always remain pure python types at it's core.
 | [Checkers](./checkers.md)         | Check certain values against other objects.
 | [Output](./output.md)             | The `output` module is for streamlining how data is outputted.<br>This includes `#!py print()`'ing to the terminal and `#!py log()`'ing to files.
-<!-- | [Retry](./retry.md)               | The `retry` module is for enabling automatic retrying of a given function when a specific `Exception` is thrown. -->
+| [Retry](./retry.md)               | The `retry` module is for enabling automatic retrying of a given function when a specific `Exception` is thrown.
 <!-- | [Defaults](./defaults.md)         | The `defaults` module is used how to set and control default values for our various Python processes. -->
 
 ## Testing

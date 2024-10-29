@@ -56,7 +56,7 @@ nav:
       - Dictionaries: docs/code/dictionaries.md
       - Checkers: docs/code/checkers.md
       - Output: docs/code/output.md
-  #     - Retry: docs/code/retry.md
+      - Retry: docs/code/retry.md
   #     - Defaults: docs/code/defaults.md
 
 
