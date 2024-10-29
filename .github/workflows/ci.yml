@@ -103,7 +103,7 @@ jobs:
         run: make install-poetry
 
       - name: Install dependencies
-        run: make install-dev-test
+        run: make install-all
 
       - name: Run checks
         run: make check
