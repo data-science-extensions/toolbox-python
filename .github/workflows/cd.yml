@@ -117,6 +117,13 @@ jobs:
       - name: Run checks
         run: make check
 
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./cov-report/xml/cov-report.xml
+          verbose: true
+
   deploy:
 
       name: Deploy to PyPI
