@@ -44,8 +44,8 @@ theme:
 
 nav:
   - Home: docs/index.md
-  # - Usage:
-  #     - Overview: docs/usage/overview.md
+  - Usage:
+      - Overview: docs/usage/overview.md
   #     - Examples: docs/usage/examples.md
   - Modules:
       - docs/code/index.md
