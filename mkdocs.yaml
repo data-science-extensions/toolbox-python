@@ -55,7 +55,7 @@ nav:
       - Strings: docs/code/strings.md
       - Dictionaries: docs/code/dictionaries.md
       - Checkers: docs/code/checkers.md
-  #     - Output: docs/code/output.md
+      - Output: docs/code/output.md
   #     - Retry: docs/code/retry.md
   #     - Defaults: docs/code/defaults.md
 
@@ -110,6 +110,9 @@ plugins:
           paths:
             - src
           options:
+            # extensions:
+            #   - griffe_inherited_docstrings
+            #   - docstring_inheritance.griffe
             allow_inspection: true
             docstring_style: google
             docstring_options:
