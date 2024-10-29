@@ -14,7 +14,7 @@ There are six modules used in this package:
 | [Checkers](./checkers.md)         | Check certain values against other objects.
 | [Output](./output.md)             | The `output` module is for streamlining how data is outputted.<br>This includes `#!py print()`'ing to the terminal and `#!py log()`'ing to files.
 | [Retry](./retry.md)               | The `retry` module is for enabling automatic retrying of a given function when a specific `Exception` is thrown.
-<!-- | [Defaults](./defaults.md)         | The `defaults` module is used how to set and control default values for our various Python processes. -->
+| [Defaults](./defaults.md)         | The `defaults` module is used how to set and control default values for our various Python processes.
 
 ## Testing
 

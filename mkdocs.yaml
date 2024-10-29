@@ -57,7 +57,7 @@ nav:
       - Checkers: docs/code/checkers.md
       - Output: docs/code/output.md
       - Retry: docs/code/retry.md
-  #     - Defaults: docs/code/defaults.md
+      - Defaults: docs/code/defaults.md
 
 
 markdown_extensions:
