@@ -304,7 +304,7 @@ jobs:
 
   deploy-docs:
 
-    name: Build Docs
+    name: Deploy Docs
     needs: build-docs
     runs-on: ubuntu-latest
 
@@ -332,10 +332,11 @@ jobs:
 
       - name: Upload artifacts
         id: upload-artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           name: web
           path: '.' #<-- All files in the branch
+          retention-days: 1
 
       - name: Deploy Pages
         uses: actions/deploy-pages@v4
