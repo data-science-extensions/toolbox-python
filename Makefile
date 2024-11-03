@@ -177,7 +177,7 @@ serve-docs-versioned:
 build-docs-static:
 	poetry run mkdocs build --clean
 build-docs-versioned:
-	poetry run mike --debug deploy --update-aliases --push --branch=docs-site --deploy-prefix=web $(VERSION) latest
+	poetry run mike --debug deploy --update-aliases --push --branch=docs-site $(VERSION) latest
 update-git-docs:
 	git add .
 	git commit -m "Build docs [skip ci]"

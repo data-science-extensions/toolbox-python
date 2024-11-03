@@ -103,7 +103,6 @@ plugins:
   - mike:
       version_selector: true
       alias_type: copy
-      deploy_prefix: web
   - mkdocstrings:
       default_handler: python
       handlers:
