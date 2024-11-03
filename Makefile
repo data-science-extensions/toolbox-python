@@ -175,16 +175,16 @@ serve-docs-static:
 build-docs-static:
 	poetry run mkdocs build
 build-docs-mike:
-	poetry run mike --debug deploy --alias-type=copy --update-aliases --push --branch=docs-site --deploy-prefix=web $(VERSION) latest
+	poetry run mike --debug deploy --update-aliases --push --branch=docs-site $(VERSION) latest
 update-git-docs:
 	git add .
 	git commit -m "Build docs [skip ci]"
 	git push --force --no-verify --push-option ci.skip
 docs-check-versions:
-	poetry run mike --debug list --branch=docs-site --deploy-prefix=web
+	poetry run mike --debug list --branch=docs-site
 docs-delete-version:
-	poetry run mike --debug delete --branch=docs-site --deploy-prefix=web $(VERSION)
+	poetry run mike --debug delete --branch=docs-site $(VERSION)
 docs-set-default:
-	poetry run mike --debug set-default --branch=docs-site --push --deploy-prefix=web latest
+	poetry run mike --debug set-default --branch=docs-site --push latest
 build-static-docs: build-docs-static update-git-docs
 build-versioned-docs: build-docs-mike docs-set-default

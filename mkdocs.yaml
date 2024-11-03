@@ -102,6 +102,7 @@ plugins:
   - autorefs
   - mike:
       version_selector: true
+      alias_type: copy
   - mkdocstrings:
       default_handler: python
       handlers:
