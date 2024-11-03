@@ -83,10 +83,10 @@ def str_replace(
     Params:
         old_string (str):
             The old string to be replaced.
-        replace_chars (str):
+        replace_chars (str, optional):
             The characters that need replacing.<br>
             Defaults to `#!py string.punctuation + string.whitespace`.
-        replace_with (str):
+        replace_with (str, optional):
             The value to replace the characters with.<br>
             Defaults to `""`.
 
@@ -98,13 +98,49 @@ def str_replace(
             The new formatted string.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
 
-    !!! success "Credit"
+        ```{.py .python linenums="1" title="Set up"}
+        >>> from toolbox_python.strings import str_replace
+        >>> long_string = "This long string"
+        >>> complex_sentence = "Because my pizza was cold, I put it in the microwave."
+        ```
+
+        ```{.py .python linenums="1" title="Example 1: Replace all spaces (` `) with underscore (`_`)"}
+        >>> print(str_replace(long_string, " ", "_"))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        "This_long_string"
+        ```
+        !!! success "Conclusion: Successful conversion."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 2: Remove all punctuation and white space"}
+        >>> print(str_replace(complex_sentence))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        "BecausemylunchwascoldIputitinthemicrowave"
+        ```
+        !!! success "Conclusion: Successful conversion."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 3: Invalid `old_string` input"}
+        >>> print(str_replace(123))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        TypeError: ...
+        ```
+        !!! failure "Conclusion: Invalid input."
+        !!! observation "Note: The same error will occur if `replace_chars` or `replace_with` are not of type `str`."
+        </div>
+
+    ??? success "Credit"
         Full credit goes to:<br>
         https://stackoverflow.com/questions/23996118/replace-special-characters-in-a-string-python#answer-23996414
 
-    !!! tip "See Also"
+    ??? tip "See Also"
         - [`re`](https://docs.python.org/3/library/re.html)
     """
     chars: str = re.escape(replace_chars)
@@ -118,8 +154,9 @@ def str_contains(check_string: str, sub_string: str) -> bool:
         Check whether one string contains another string.
 
     ???+ abstract "Details"
-        Super simple execution:
-        ```py linenums="1"
+        This is a super simple one-line function.
+
+        ```py linenums="1" title="Example"
         return True if sub_string in check_string else False
         ```
 
@@ -137,11 +174,46 @@ def str_contains(check_string: str, sub_string: str) -> bool:
             `#!py True` if `#!py sub_string` in `#!py check_string`
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
+
+        ```{.py .python linenums="1" title="Set up"}
+        >>> from toolbox_python.strings import str_contains
+        >>> long_string = "This long string"
+        ```
+
+        ```{.py .python linenums="1" title="Example 1: String is contained"}
+        >>> print(str_contains(long_string, "long"))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        True
+        ```
+        !!! success "Conclusion: `#!py long_string` contains `#!py "long"`."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 2: String is not contained"}
+        >>> print(str_contains(long_string, "short"))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        False
+        ```
+        !!! success "Conclusion: `#!py long_string` does not contain `#!py "short"`."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 3: Invalid `check_string` input"}
+        >>> print(str_contains(123, "short"))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        TypeError: ...
+        ```
+        !!! failure "Conclusion: Invalid input."
+        !!! observation "Note: The same error will occur if `sub_string` is not of type `str`."
+        </div>
 
     ??? tip "See Also"
-        - [`str_contains_any()`][python_helpers.strings.str_contains_any]
-        - [`str_contains_all()`][python_helpers.strings.str_contains_all]
+        - [`str_contains_any()`][toolbox_python.strings.str_contains_any]
+        - [`str_contains_all()`][toolbox_python.strings.str_contains_all]
     """
     return sub_string in check_string
 
@@ -158,7 +230,7 @@ def str_contains_any(
     Params:
         check_string (str):
             The main string to check.
-        sub_strings (Union[Tuple[str, ...], List[str]]):
+        sub_strings (str_list_tuple):
             The collection of substrings to check.
 
     Raises:
@@ -169,11 +241,46 @@ def str_contains_any(
             `#!py True` if `#!py any` of the strings in `#!py sub_strings` are contained within `#!py check_string`.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
+
+        ```{.py .python linenums="1" title="Set up"}
+        >>> from toolbox_python.strings import str_contains_any
+        >>> long_string = "This long string"
+        ```
+
+        ```{.py .python linenums="1" title="Example 1: Contains any"}
+        >>> print(str_contains_any(long_string, ["long", "short"]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        True
+        ```
+        !!! success "Conclusion: `#!py long_string` contains either `#!py "long"` or `#!py "short"`."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 2: Contains none"}
+        >>> print(str_contains_any(long_string, ["this", "that"]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        False
+        ```
+        !!! success "Conclusion: `#!py long_string` contains neither `#!py "this"` nor `#!py "that"`."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 3: Invalid `check_string` input"}
+        >>> print(str_contains_any(123, ["short", "long"]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        TypeError: ...
+        ```
+        !!! failure "Conclusion: Invalid input."
+        !!! observation "Note: The same error will occur if any of the elements in `sub_strings` are not of type `str`."
+        </div>
 
     ??? tip "See Also"
-        - [`str_contains()`][python_helpers.strings.str_contains]
-        - [`str_contains_all()`][python_helpers.strings.str_contains_all]
+        - [`str_contains()`][toolbox_python.strings.str_contains]
+        - [`str_contains_all()`][toolbox_python.strings.str_contains_all]
     """
     return any(
         str_contains(
@@ -196,7 +303,7 @@ def str_contains_all(
     Params:
         check_string (str):
             The main string to check.
-        sub_strings (Union[Tuple[str, ...], List[str]]):
+        sub_strings (str_list_tuple):
             The collection of substrings to check.
 
     Raises:
@@ -207,11 +314,56 @@ def str_contains_all(
             `#!py True` if `#!py all` of the strings in `#!py sub_strings` are contained within `#!py check_string`.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
+
+        ```{.py .python linenums="1" title="Set up"}
+        >>> from toolbox_python.strings import str_contains_all
+        >>> long_string = "This long string"
+        ```
+
+        ```{.py .python linenums="1" title="Example 1: Contains all"}
+        >>> print(str_contains_all(long_string, ["long", "string"]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        True
+        ```
+        !!! success "Conclusion: `#!py long_string` contains both `#!py "long"` and `#!py "string"`."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 2: Contains some"}
+        >>> print(str_contains_all(long_string, ["long", "something"]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        False
+        ```
+        !!! failure "Conclusion: `#!py long_string` contains `#!py "long"` but not `#!py "something"`."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 3: Contains none"}
+        >>> print(str_contains_all(long_string, ["this", "that"]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        False
+        ```
+        !!! failure "Conclusion: `#!py long_string` contains neither `#!py "this"` nor `#!py "that"`."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 4: Invalid `check_string` input"}
+        >>> print(str_contains_all(123, ["short", "long"]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        TypeError: ...
+        ```
+        !!! failure "Conclusion: Invalid input."
+        !!! observation "Note: The same error will occur if any of the elements in `sub_strings` are not of type `str`."
+        </div>
 
     ??? tip "See Also"
-        - [`str_contains()`][python_helpers.strings.str_contains]
-        - [`str_contains_any()`][python_helpers.strings.str_contains_any]
+        - [`str_contains()`][toolbox_python.strings.str_contains]
+        - [`str_contains_any()`][toolbox_python.strings.str_contains_any]
     """
     return all(
         str_contains(
@@ -222,6 +374,7 @@ def str_contains_all(
     )
 
 
+@typechecked
 def str_separate_number_chars(text: str) -> str_list:
     """
     !!! note "Summary"
@@ -235,14 +388,72 @@ def str_separate_number_chars(text: str) -> str_list:
         text (str):
             The string to split.
 
+    Raises:
+        TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
+
     Returns:
-        (List[str]):
+        (str_list):
             The updated list, with each element of the list containing either entirely characters or entirely numbers.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
 
-    !!! success "Credit"
+        ```{.py .python linenums="1" title="Set up"}
+        >>> from toolbox_python.strings import str_contains_all
+        >>> simple_string = "-12.1grams"
+        >>> complex_string = "abcd2343 abw34324 abc3243-23A 123"
+        ```
+
+        ```{.py .python linenums="1" title="Example 1: Simple split"}
+        >>> print(str_separate_number_chars(simple_string))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        ["-12.1", "grams"]
+        ```
+        !!! success "Conclusion: Successful split."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 2: Complex split"}
+        >>> print(str_separate_number_chars(complex_string))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [
+            "abcd",
+            "2343",
+            "abw",
+            "34324",
+            "abc",
+            "3243",
+            "-23",
+            "A",
+            "123",
+        ]
+        ```
+        !!! success "Conclusion: Successful split."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 3: `text` does not contain any numbers"}
+        >>> print(str_separate_number_chars("abcd"))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        ["abcd"]
+        ```
+        !!! success "Conclusion: No numbers in `#!py text`, so returns a single-element long list."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 4: Invalid `text` input"}
+        >>> print(str_separate_number_chars(123))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        TypeError: ...
+        ```
+        !!! failure "Conclusion: Invalid input."
+        </div>
+
+    ??? success "Credit"
         Full credit goes to:<br>
         https://stackoverflow.com/questions/3340081/product-code-looks-like-abcd2343-how-to-split-by-letters-and-numbers#answer-63362709.
 

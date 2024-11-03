@@ -90,7 +90,10 @@ check-pytest:
 	poetry run pytest --config-file pyproject.toml
 check-pycln:
 	poetry run pycln --config="pyproject.toml" src/$(PACKAGE_NAME)
-check: check-black check-mypy check-pycln check-isort check-codespell check-pylint check-pytest
+check-mkdocs:
+	poetry run mkdocs build --site-dir="temp"
+	if [ -d "temp" ]; then rm --recursive temp; fi
+check: check-black check-mypy check-pycln check-isort check-codespell check-pylint check-mkdocs check-pytest
 
 
 #* Testing
@@ -164,36 +167,24 @@ build-package: poetry-build
 deploy-package: poetry-configure poetry-publish
 
 
-#* Deploy Docs
 
-.PHONY: build-docs-static
+#* Docs
+.PHONY: docs
+serve-docs-static:
+	poetry run mkdocs serve
 build-docs-static:
 	poetry run mkdocs build
-
-.PHONY: update-git-docs
+build-docs-mike:
+	poetry run mike --debug deploy --update-aliases --push --branch=docs-site $(VERSION) latest
 update-git-docs:
 	git add .
 	git commit -m "Build docs [skip ci]"
 	git push --force --no-verify --push-option ci.skip
-
-.PHONY: docs-check-versions
 docs-check-versions:
-	poetry run mike --debug list --branch=docs-site --deploy-prefix=web
-
-.PHONY: build-docs-mike
-build-docs-mike:
-	poetry run mike --debug deploy --alias-type=copy --update-aliases --push --branch=docs-site --deploy-prefix=web $(VERSION) latest
-
-.PHONY: docs-delete-version
+	poetry run mike --debug list --branch=docs-site
 docs-delete-version:
-	poetry run mike --debug delete --branch=docs-site --deploy-prefix=web $(VERSION)
-
-.PHONY: docs-set-default
+	poetry run mike --debug delete --branch=docs-site $(VERSION)
 docs-set-default:
-	poetry run mike --debug set-default --branch=docs-site --push --deploy-prefix=web latest
-
-.PHONY: build-static-docs
+	poetry run mike --debug set-default --branch=docs-site --push latest
 build-static-docs: build-docs-static update-git-docs
-
-.PHONY: build-versioned-docs
 build-versioned-docs: build-docs-mike docs-set-default

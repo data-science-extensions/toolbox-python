@@ -77,9 +77,96 @@ class Defaults:
         This class will handle that process.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
 
-    !!! success "Credit"
+        ```{.py .python linenums="1" title="Set up data for examples"}
+        >>> from toolbox_python.defaults import Defaults
+        >>> defaults = Defaults()
+        ```
+
+        ```{.py .python linenums="1" title="Example 1: Call direct from class"}
+        >>> print(Defaults()(value="this"))
+        ```
+        <div class="result" markdown>
+        ```{.txt .text title="Terminal"}
+        "this"
+        ```
+        !!! success "Conclusion: Successfully printed default value direct from class."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 2: Call from instantiated class"}
+        >>> print(defaults(value="that"))
+        ```
+        <div class="result" markdown>
+        ```{.txt .text title="Terminal"}
+        "that"
+        ```
+        !!! success "Conclusion: Successfully printed default value from instantiated class."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 3: Cast to `bool`"}
+        >>> print(defaults(value="True", cast=bool))
+        ```
+        <div class="result" markdown>
+        ```{.txt .text title="Terminal"}
+        True
+        ```
+        !!! success "Conclusion: Successfully casted to `#!py bool`."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 4: Cast to `int`"}
+        >>> print(defaults(value="1", cast=int))
+        ```
+        <div class="result" markdown>
+        ```{.txt .text title="Terminal"}
+        1
+        ```
+        !!! success "Conclusion: Successfully casted to `#!py int`."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 5: Cast to `str`"}
+        >>> print(defaults(value=1, cast=str))
+        ```
+        <div class="result" markdown>
+        ```{.txt .text title="Terminal"}
+        "1"
+        ```
+        !!! success "Conclusion: Successfully casted to `#!py str`."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 6: Cast to string `'str'`"}
+        >>> print(defaults(value=1, cast="str"))
+        ```
+        <div class="result" markdown>
+        ```{.txt .text title="Terminal"}
+        "1"
+        ```
+        !!! success "Conclusion: Successfully casted to `#!py str`."
+        !!! observation "Note: The only difference between this and the previous example is the type of the `cast` parameter. Here, it is a string representation of the type, whereas in the previous example, we parse'ed in the actual `str` class."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 7: Invalid cast type"}
+        >>> print(defaults(value="next", cast="bad_type"))
+        ```
+        <div class="result" markdown>
+        ```{.txt .text title="Terminal"}
+        AttributeError: The value for `type` is invalid: `bad_type`.
+        Must be a valid type: ['bool', 'dict', 'int', 'float', 'list', 'str', 'tuple']
+        ```
+        !!! failure "Conclusion: Invalid cast type."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 8: All blank values"}
+        >>> print(defaults(value=None, cast=None))
+        ```
+        <div class="result" markdown>
+        ```{.txt .text title="Terminal"}
+        AttributeError: Both `value` and `default` are blank: 'None', 'None'.
+        If `value` is blank, then `default` cannot be blank.
+        ```
+        !!! failure "Conclusion: Both `value` and `default` are blank."
+        </div>
+
+    ??? success "Credit"
         Inspiration from:<br>
         https://github.com/henriquebastos/python-decouple/
     """
@@ -90,7 +177,7 @@ class Defaults:
             Nothing is initialised when this class is instantiated.
             Use the [`__call__()`][toolbox_python.defaults.Defaults.__call__] method instead.
 
-        !!! tip "See Also"
+        ??? tip "See Also"
             - [`Defaults.__call__()`][toolbox_python.defaults.Defaults.__call__]
         """
         return None
@@ -100,7 +187,7 @@ class Defaults:
         !!! note "Summary"
             When this class is called, it will pass through all parameters to the internal [`.get()`][toolbox_python.defaults.Defaults.get] method.
 
-        !!! tip "See Also"
+        ??? tip "See Also"
             - [`Defaults.get()`][toolbox_python.defaults.Defaults.get]
         """
         return self.get(*args, **kwargs)
@@ -141,7 +228,7 @@ class Defaults:
             value (Any):
                 The updated/defaulted/casted value.
 
-        !!! tip "See Also"
+        ??? tip "See Also"
             - [`Defaults._validate_value_and_default()`][toolbox_python.defaults.Defaults._validate_value_and_default]
             - [`Defaults._validate_type()`][toolbox_python.defaults.Defaults._validate_type]
         """
@@ -185,7 +272,7 @@ class Defaults:
             self (Defaults):
                 If both `value` and `default` are not both `#!py None`, then return `self`.
 
-        !!! tip "See Also"
+        ??? tip "See Also"
             - [`Defaults.get()`][toolbox_python.defaults.Defaults.get]
         """
         if value is None and default is None:
@@ -216,7 +303,7 @@ class Defaults:
             self (Defaults):
                 If the type is valid, return `self`.
 
-        !!! tip "See Also"
+        ??? tip "See Also"
             - [`Defaults.get()`][toolbox_python.defaults.Defaults.get]
         """
         valid_types: list[str] = [

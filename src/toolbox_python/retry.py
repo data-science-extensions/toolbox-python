@@ -109,6 +109,14 @@ def retry(
     !!! note "Summary"
         Retry a given function a number of times. Catching any known exceptions when they are given. And retrurning any output to either a terminal or a log file.
 
+    !!! deprecation "Deprecated"
+        This function is deprecated. Please use the [`retry()`][func] decorator from the [`stamina`][docs] package instead.<br>
+        For more info, see: [Docs][docs], [GitHub][github], [PyPi][pypi].
+        [func]: https://stamina.hynek.me/en/stable/api.html#stamina.retry
+        [docs]: https://stamina.hynek.me/en/stable/index.html
+        [github]: https://github.com/hynek/stamina/
+        [pypi]: https://pypi.org/project/stamina/
+
     ???+ abstract "Details"
         This function should always be implemented as a decorator.<br>
         It is written based on the premise that a certain process may fail and return a given message, but that is known and expected, and you just want to wait a second or so then retry again.<br>
@@ -138,9 +146,41 @@ def retry(
             The result from the underlying function, if any.
 
     ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
 
-    !!! success "Credit"
+        ```{.py .python linenums="1" title="Imports"}
+        >>> from toolbox_python.retry import retry
+        ```
+
+        ```{.py .python linenums="1" title="Example 1: No error"}
+        >>> @retry(tries=5, delay=1, print_or_log="print")
+        >>> def simple_func(var1:str="this")->str:
+        ...     return var1
+        >>> simple_func()
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        # No error
+        ```
+        </div>
+
+        ```{.py .python linenums="1" title="Example 2: Expected error"}
+        >>> @retry(exceptions=TypeError, tries=5, delay=1, print_or_log="print")
+        >>> def failing_func(var1:str="that")->None:
+        ...     raise ValueError("Incorrect value")
+        >>> failing_func()
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        Caught an expected error at iteration 1: `ValueError`. Retrying in 1 seconds...
+        Caught an expected error at iteration 2: `ValueError`. Retrying in 1 seconds...
+        Caught an expected error at iteration 3: `ValueError`. Retrying in 1 seconds...
+        Caught an expected error at iteration 4: `ValueError`. Retrying in 1 seconds...
+        Caught an expected error at iteration 5: `ValueError`. Retrying in 1 seconds...
+        RuntimeError: Still could not write after 5 iterations. Please check.
+        ```
+        </div>
+
+    ??? success "Credit"
         Inspiration from:
 
         - https://pypi.org/project/retry/

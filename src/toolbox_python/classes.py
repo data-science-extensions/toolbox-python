@@ -67,6 +67,9 @@ def get_full_class_name(obj: Any) -> str:
     !!! note "Summary"
         This function is designed to extract the full name of a class, including the name of the module from which it was loaded.
 
+    ???+ abstract "Details"
+        Note, this is designed to retrieve the underlying _class name_ of an object, not the _instance name_ of an object. This is useful for debugging purposes, or for logging.
+
     Params:
         obj (Any):
             The object for which you want to retrieve the full name.
@@ -75,12 +78,36 @@ def get_full_class_name(obj: Any) -> str:
         (str):
             The full name of the class of the object.
 
-    !!! success "Credit"
+    ???+ example "Examples"
+
+        ```{.py .python linenums="1" title="Set up"}
+        >>> from toolbox_python.classes import get_full_class_name
+        ```
+
+        ```{.py .python linenums="1" title="Example 1: Check the name of a standard class"}
+        >>> print(get_full_class_name(str))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        str
+        ```
+        !!! success "Conclusion: Successful class name extraction."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 2: Check the name of an imported class"}
+        >>> from random import Random
+        >>> print(get_full_class_name(Random))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        random.Random
+        ```
+        !!! success "Conclusion: Successful class name extraction."
+        </div>
+
+    ??? success "Credit"
         Full credit goes to:<br>
         https://stackoverflow.com/questions/18176602/how-to-get-the-name-of-an-exception-that-was-caught-in-python#answer-58045927
-
-    ???+ example "Examples"
-        Please see: [Examples](../../usage/examples/)
     """
     module: str = obj.__class__.__module__
     if module is None or module == str.__class__.__module__:

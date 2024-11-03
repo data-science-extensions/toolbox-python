@@ -28,7 +28,9 @@ from toolbox_python.checkers import (
     assert_all_values_in_iterable,
     assert_all_values_of_type,
     assert_any_in,
+    assert_any_type,
     assert_any_values_in_iterable,
+    assert_any_values_of_type,
     assert_in,
     assert_type,
     assert_value_in_iterable,
@@ -39,7 +41,9 @@ from toolbox_python.checkers import (
     is_all_values_in_iterable,
     is_all_values_of_type,
     is_any_in,
+    is_any_type,
     is_any_values_in_iterable,
+    is_any_values_of_type,
     is_in,
     is_type,
     is_value_in_iterable,
@@ -78,41 +82,153 @@ class TestSuite(TestCase):
 
     @parameterized.expand(
         (
-            ("str", "a"),
-            ("int", 1),
-            ("float", 2.5),
-            ("bool", True),
-            ("tuple", (1, 2)),
-            ("list", ["a", "a"]),
-            ("set", {1.0, 1.0}),
+            ("str_1", "a", str, True),
+            ("str_2", 1, str, False),
+            ("str_3", "a", (str, int), True),
+            ("str_4", 2.5, (str, int), False),
+            ("int_1", 1, int, True),
+            ("int_2", "a", int, False),
+            ("int_3", 1, (str, int), True),
+            ("int_4", 2.5, (str, int), False),
+            ("float_1", 2.5, float, True),
+            ("float_2", "a", float, False),
+            ("float_3", 2.5, (str, float), True),
+            ("float_4", 1, (str, float), False),
+            ("bool_1", True, bool, True),
+            ("bool_2", "a", bool, False),
+            ("bool_3", True, (str, bool), True),
+            ("bool_4", 1, (str, bool), False),
+            ("tuple_1", (1, 2), tuple, True),
+            ("tuple_2", "a", tuple, False),
+            ("tuple_3", (1, 2), (tuple, list), True),
+            ("tuple_4", {"a", "b"}, (tuple, list), False),
+            ("list_1", ["a", "a"], list, True),
+            ("list_2", "a", list, False),
+            ("list_3", ["a", "a"], (tuple, list), True),
+            ("list_4", {1, 2}, (tuple, list), False),
+            ("set_1", {1.0, 1.0}, set, True),
+            ("set_2", "a", set, False),
+            ("set_3", {1.0, 1.0}, (tuple, set), True),
+            ("set_4", [1, 2], (tuple, set), False),
         ),
         name_func=name_func_predefined_name,
     )
-    def test_is_value_of_type(self, _nam: str, _val: Any) -> None:
-        _typ = eval(_nam)
-        assert is_value_of_type(_val, _typ)
-        assert is_type(_val, _typ)
-        assert_type(_val, _typ)
-        assert_value_of_type(_val, _typ)
+    def test_is_value_of_type(
+        self,
+        _nam: str,
+        _val: Any,
+        _typ: Union[type, tuple[type, ...]],
+        _res: bool,
+    ) -> None:
+        assert is_value_of_type(_val, _typ) == _res
+        assert is_type(_val, _typ) == _res
+        if _res:
+            assert_type(_val, _typ)
+            assert_value_of_type(_val, _typ)
+        else:
+            with pytest.raises(TypeError):
+                assert_type(_val, _typ)
+                assert_value_of_type(_val, _typ)
 
     @parameterized.expand(
         (
-            ("str", ("a", "b", "c")),
-            ("int", (1, 2, 3)),
-            ("float", (1.0, 2.0, 3.0)),
-            ("bool", (True, False, True)),
-            ("tuple", ((1, 2), (3, 4), (5, 6))),
-            ("list", (["a", "b"], ["c", "d"], ["e", "f"])),
-            ("set", ({1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0})),
+            ("str_1", ("a", "b", "c"), str, True),
+            ("str_2", ("a", "b", 1), str, False),
+            ("str_3", ("a", "b", "c"), (str, int), True),
+            ("str_4", ("a", 1, "c"), (str, float), False),
+            ("int_1", (1, 2, 3), int, True),
+            ("int_2", (1, 2, 3.0), int, False),
+            ("int_3", (1, 2, 3), (int, float), True),
+            ("int_4", (1, 2.0, 3), (int, str), False),
+            ("float_1", (1.0, 2.0, 3.0), float, True),
+            ("float_2", (1.0, 2.0, 3), float, False),
+            ("float_3", (1.0, 2.0, 3.0), (float, int), True),
+            ("float_4", (1.0, 2, 3.0), (float, str), False),
+            ("bool_1", (True, False, True), bool, True),
+            ("bool_2", (True, False, 2.5), bool, False),
+            ("bool_3", (True, False, True), (bool, float), True),
+            ("bool_4", (True, 2.5, True), (bool, str), False),
+            ("tuple_1", ((1, 2), (3, 4), (5, 6)), tuple, True),
+            ("tuple_2", ((1, 2), (3, 4), [5, 6.0]), tuple, False),
+            ("tuple_3", ((1, 2), (3, 4), (5, 6)), (tuple, list), True),
+            ("tuple_4", ((1, 2), [3, 4], (5, 6)), (tuple, str), False),
+            ("list_1", (["a", "b"], ["c", "d"], ["e", "f"]), list, True),
+            ("list_2", (["a", "b"], ["c", "d"], {5, 6.0}), list, False),
+            ("list_3", (["a", "b"], ["c", "d"], ["e", "f"]), (tuple, list), True),
+            ("list_4", (["a", "b"], {3, 4}, ["e", "f"]), (tuple, str), False),
+            ("set_1", ({1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}), set, True),
+            ("set_2", ({1.0, 2.0}, {3.0, 4.0}, [5.0, 6.0]), set, False),
+            ("set_3", ({1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}), (tuple, set), True),
+            ("set_4", ({1.0, 2.0}, [3.0, 4.0], {5.0, 6.0}), (tuple, str), False),
         ),
         name_func=name_func_predefined_name,
     )
-    def test_is_all_values_of_type(self, _nam: str, _vals: Any) -> None:
-        _typ = eval(_nam)
-        assert is_all_values_of_type(_vals, _typ)
-        assert is_all_type(_vals, _typ)
-        assert_all_values_of_type(_vals, _typ)
-        assert_all_type(_vals, _typ)
+    def test_is_all_values_of_type(
+        self,
+        _nam: str,
+        _vals: Any,
+        _typ: Union[type, tuple[type, ...]],
+        _res: bool,
+    ) -> None:
+        assert is_all_values_of_type(_vals, _typ) == _res
+        assert is_all_type(_vals, _typ) == _res
+        if _res:
+            assert_all_values_of_type(_vals, _typ)
+            assert_all_type(_vals, _typ)
+        else:
+            with pytest.raises(TypeError):
+                assert_all_values_of_type(_vals, _typ)
+                assert_all_type(_vals, _typ)
+
+    @parameterized.expand(
+        (
+            ("str_1", (1, "a", 2.5, True, (1, 2), [3, 4], {5, 6}), str, True),
+            ("str_2", (1, 2.5, True, (1, 2), [3, 4], {5, 6}), str, False),
+            ("str_3", ("a", True, (1, 2), [3, 4], {5, 6}), (str, int), True),
+            ("str_4", (2.5, (1, 2), [3, 4], {5, 6}), (str, int), False),
+            ("int_1", (1, "a", 2.5, True, (1, 2), [3, 4], {5, 6}), int, True),
+            ("int_2", ("a", 2.5, (1, 2), [3, 4], {5, 6}), int, False),
+            ("int_3", (1, True, (1, 2), [3, 4], {5, 6}), (int, float), True),
+            ("int_4", ("a", (1, 2), [3, 4], {5, 6}), (int, float), False),
+            ("float_1", (1, "a", 2.5, True, (1, 2), [3, 4], {5, 6}), float, True),
+            ("float_2", (1, "a", True, (1, 2), [3, 4], {5, 6}), float, False),
+            ("float_3", (1, "a", 2.5, (1, 2), [3, 4], {5, 6}), (float, bool), True),
+            ("float_4", (1, "a", [3, 4], {5, 6}), (float, bool), False),
+            ("bool_1", (1, "a", 2.5, True, (1, 2), [3, 4], {5, 6}), bool, True),
+            ("bool_2", (1, "a", 2.5, (1, 2), [3, 4], {5, 6}), bool, False),
+            ("bool_3", (1, "a", True, (1, 2), [3, 4], {5, 6}), (bool, float), True),
+            ("bool_4", (1, "a", (1, 2), [3, 4], {5, 6}), (bool, float), False),
+            ("tuple_1", (1, "a", 2.5, True, (1, 2), [3, 4], {5, 6}), tuple, True),
+            ("tuple_2", (1, "a", 2.5, True, [3, 4], {5, 6}), tuple, False),
+            ("tuple_3", (1, "a", 2.5, True, (1, 2), {5, 6}), (tuple, list), True),
+            ("tuple_4", (1, "a", 2.5, True, {5, 6}), (tuple, list), False),
+            ("list_1", (1, "a", 2.5, True, (1, 2), [3, 4], {5, 6}), list, True),
+            ("list_2", (1, "a", 2.5, True, (1, 2), {5, 6}), list, False),
+            ("list_3", (1, "a", 2.5, True, [3, 4], {5, 6}), (list, tuple), True),
+            ("list_4", (1, "a", 2.5, True, {5, 6}), (list, tuple), False),
+            ("set_1", (1, "a", 2.5, True, (1, 2), [3, 4], {5, 6}), set, True),
+            ("set_2", (1, "a", 2.5, True, (1, 2), [3, 4]), set, False),
+            ("set_3", (1, "a", 2.5, True, (1, 2), {5, 6}), (set, list), True),
+            ("set_4", (1, "a", 2.5, True, (1, 2)), (set, list), False),
+        ),
+        name_func=name_func_predefined_name,
+    )
+    def test_is_any_values_of_type(
+        self,
+        _nam: str,
+        _vals: Any,
+        _typ: Union[type, tuple[type, ...]],
+        _res: bool,
+    ) -> None:
+        assert is_any_values_of_type(_vals, _typ) == _res
+        assert is_any_type(_vals, _typ) == _res
+        if _res:
+            assert_any_values_of_type(_vals, _typ)
+            assert_any_type(_vals, _typ)
+        else:
+            with pytest.raises(TypeError):
+                assert_any_values_of_type(_vals, _typ)
+                assert_any_type(_vals, _typ)
 
     @parameterized.expand(
         (

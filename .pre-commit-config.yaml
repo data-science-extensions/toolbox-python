@@ -40,7 +40,7 @@ repos:
         args:
           - "--config=pyproject.toml"
   - repo: https://github.com/adamchainz/blacken-docs
-    rev: "1.19.0"
+    rev: "1.19.1"
     hooks:
       - id: blacken-docs
         additional_dependencies:
@@ -48,7 +48,7 @@ repos:
 
   # Run MyPy type checks
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.11.2"
+    rev: "v1.13.0"
     hooks:
       - id: mypy
         files: src/toolbox_python
@@ -67,7 +67,7 @@ repos:
 
   # Find any outdated syntax and replace with modern equivalents
   - repo: https://github.com/asottile/pyupgrade
-    rev: "v3.17.0"
+    rev: "v3.19.0"
     hooks:
       - id: pyupgrade
         name: Upgrade Python features

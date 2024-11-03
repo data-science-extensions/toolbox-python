@@ -110,9 +110,12 @@ class TestPrintOrLogOutput(TestCase):
         assert self.caplog.records[0].message == "Message for: critical"
         self.caplog.clear()
 
-    def test_none_output(self) -> None:
-        result: None = print_or_log_output("Test `None`", print_or_log=None)
-        assert result is None
+    def test_invalid_input(self) -> None:
+        with pytest.raises(TypeCheckError):
+            print_or_log_output(
+                message=f"{self.message} none",
+                print_or_log="invalid",
+            )
 
     def test_raises_type_error(self) -> None:
         with pytest.raises(TypeError):
