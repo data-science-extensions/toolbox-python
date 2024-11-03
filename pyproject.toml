@@ -68,6 +68,7 @@ mkdocs-coverage = "^1.1"
 mkdocs-autorefs = "^1.2"
 livereload = "^2.7"
 mike = "^2.1"
+black = "^24.10"
 
 [tool.poetry.group.test]
 optional = true
