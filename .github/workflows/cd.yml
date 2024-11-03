@@ -124,7 +124,7 @@ jobs:
           files: ./cov-report/xml/cov-report.xml
           verbose: true
 
-  deploy:
+  deploy-package:
 
       name: Deploy to PyPI
       needs:
@@ -193,7 +193,51 @@ jobs:
         - name: Publish package
           run: poetry publish --dist-dir="dist"
 
-        # - name: Deploy to PyPI
-        #   run: make deploy-package
-        #   env:
-        #     PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+  deploy-docs:
+
+      name: Deploy to GitHub Pages
+      needs:
+        - test
+        - deploy-package
+      if: ${{ always() && needs.test.result == 'success' && needs.deploy-package.result == 'success' }}
+      runs-on: ubuntu-latest
+
+      steps:
+
+        - name: Checkout repository
+          uses: actions/checkout@v3
+          with:
+            ref: main
+
+        - name: Set up Python
+          uses: actions/setup-python@v5
+          with:
+            python-version: '3.13'
+
+        - name: Install Poetry
+          run: make install-poetry
+
+        - name: Install dependencies
+          run: make install-docs
+
+        - name: Set up Git
+          run: |
+            make configure-git
+            make git-switch-to-main-branch
+            make git-refresh-current-branch
+            # 👇 Commented out for first-deployment run 👇
+            # make git-switch-to-docs-branch
+            # git remote update
+            # git fetch --verbose
+            # git fetch --verbose --tags
+            # git pull  --verbose
+            # git status --verbose
+            # git branch --list --verbose
+            # git tag --list --sort=-creatordate
+          env:
+            GITHUB_ACTOR: ${{ github.actor }}
+
+        - name: Build documentation
+          run: make build-versioned-docs
+          env:
+            VERSION: ${{ github.event.release.tag_name }}
