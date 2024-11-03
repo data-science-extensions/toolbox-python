@@ -98,7 +98,90 @@ def flatten(
             The updated `#!py list`.
 
     ???+ example "Examples"
-        <!-- Please see: [Examples](../../usage/examples/) -->
+
+        ```{.py .python linenums="1" title="Set up"}
+        >>> from toolbox_python.lists import flatten
+        ```
+
+        ```{.py .python linenums="1" title="Example 1: Basic list, same input & output"}
+        >>> print(flatten([0, 1, 2, 3]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 2: List containing two lists"}
+        >>> print(flatten([[0, 1], [2, 3]]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 3: List containing a list and other data"}
+        >>> print(flatten([0, 1, [2, 3]]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 4: List containing two lists and other data"}
+        >>> print(flatten([[0, 1], [2, 3], 4, 5]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3, 4, 5]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 5: List containing a list, a tuple, and other data"}
+        >>> print(flatten([[0, 1], (2, 3), 4, 5]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3, 4, 5]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 6: List containing up to three levels deep"}
+        >>> print(flatten([[0, 1], [2, 3, [4, 5]]]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3, 4, 5]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 7: List containing up to three levels deep, plus other data"}
+        >>> print(flatten([[0, 1], [2, 3, [4, 5]], 6, 7]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3, 4, 5, 6, 7]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 8: List containing up to four levels deep"}
+        >>> print(flatten([[0, 1], [2, 3, [4, [5]]]]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3, 4, 5]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
 
     ??? tip "See Also"
         - [`more_itertools`](https://more-itertools.readthedocs.io/en/stable/api.html)
@@ -131,7 +214,90 @@ def flat_list(*inputs: Any) -> any_list:
             The input having been coerced to a single flat `#!py list`.
 
     ???+ example "Examples"
-        <!-- Please see: [Examples](../../usage/examples/) -->
+
+        ```{.py .python linenums="1" title="Set up"}
+        >>> from toolbox_python.lists import flat_list
+        ```
+
+        ```{.py .python linenums="1" title="Example 1: Basic input & output"}
+        >>> print(flat_list(0, 1, 2, 3))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 2: Multiple lists"}
+        >>> print(flat_list([0, 1], [2, 3]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 3: List and other data"}
+        >>> print(flat_list(0, 1, [2, 3]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 4: Multiple lists and other data"}
+        >>> print(flat_list([0, 1], [2, 3], 4, 5))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3, 4, 5]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 5: List and a tuple and other data"}
+        >>> print(flat_list([0, 1], (2, 3), 4, 5))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3, 4, 5]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 6: List and a nested list"}
+        >>> print(flat_list([0, 1], [2, 3, [4, 5]]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3, 4, 5]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 7: List and a nested list and other data"}
+        >>> print(flat_list([0, 1], [2, 3, [4, 5]], 6, 7))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3, 4, 5, 6, 7]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 8: Deep nested lists"}
+        >>> print(flat_list([0, 1], [2, 3, [4, [5]]]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [0, 1, 2, 3, 4, 5]
+        ```
+        !!! success "Conclusion: Successful flattening."
+        </div>
 
     ??? tip "See Also"
         - [`flatten()`][toolbox_python.lists.flatten]
@@ -159,7 +325,69 @@ def product(*iterables) -> list[any_tuple]:
             The updated `#!py list` list of `#!py tuple`'s representing the Cartesian product of the provided iterables.
 
     ???+ example "Examples"
-        <!-- Please see: [Examples](../../usage/examples/) -->
+
+        ```{.py .python linenums="1" title="Set up"}
+        >>> from toolbox_python.lists import product
+        ```
+
+        ```{.py .python linenums="1" title="Example 1: Basic input & output"}
+        >>> print(product([1], [11], [111]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [
+            (1, 11, 111),
+        ]
+        ```
+        !!! success "Conclusion: Successful conversion."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 2: Multiple lists"}
+        >>> print(product([1, 2], [11], [111]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [
+            (1, 11, 111),
+            (2, 11, 111),
+        ]
+        ```
+        !!! success "Conclusion: Successful conversion."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 3: List and other data"}
+        >>> print(product([1, 2], [11], [111, 222]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [
+            (1, 11, 111),
+            (1, 11, 222),
+            (2, 11, 111),
+            (2, 11, 222),
+        ]
+        ```
+        !!! success "Conclusion: Successful conversion."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 4: Multiple lists and other data"}
+        >>> print(product([1, 2], [11, 22], [111, 222]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        [
+            (1, 11, 111),
+            (1, 11, 222),
+            (1, 22, 111),
+            (1, 22, 222),
+            (2, 11, 111),
+            (2, 11, 222),
+            (2, 22, 111),
+            (2, 22, 222),
+        ]
+        ```
+        !!! success "Conclusion: Successful conversion."
+        </div>
 
     ??? tip "See Also"
         - [itertools](https://docs.python.org/3/library/itertools.html)

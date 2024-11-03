@@ -79,7 +79,31 @@ def get_full_class_name(obj: Any) -> str:
             The full name of the class of the object.
 
     ???+ example "Examples"
-        <!-- Please see: [Examples](../../usage/examples/) -->
+
+        ```{.py .python linenums="1" title="Set up"}
+        >>> from toolbox_python.classes import get_full_class_name
+        ```
+
+        ```{.py .python linenums="1" title="Example 1: Check the name of a standard class"}
+        >>> print(get_full_class_name(str))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        str
+        ```
+        !!! success "Conclusion: Successful class name extraction."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 2: Check the name of an imported class"}
+        >>> from random import Random
+        >>> print(get_full_class_name(Random))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        random.Random
+        ```
+        !!! success "Conclusion: Successful class name extraction."
+        </div>
 
     ??? success "Credit"
         Full credit goes to:<br>

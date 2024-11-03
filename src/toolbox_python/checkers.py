@@ -111,7 +111,8 @@ def is_value_of_type(
         ```{.sh .shell title="Output"}
         True
         ```
-        !!! success "Conclusion: The value is of type `#!py int`"
+        !!! success "Conclusion: The value is of type `#!py int`."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Check if value is of type `#!py str`"}
@@ -121,7 +122,8 @@ def is_value_of_type(
         ```{.sh .shell title="Output"}
         False
         ```
-        !!! failure "Conclusion: The value is not of type `#!py str`"
+        !!! failure "Conclusion: The value is not of type `#!py str`."
+
         </div>
 
     ??? tip "See Also"
@@ -168,7 +170,8 @@ def is_all_values_of_type(
         ```{.sh .shell title="Output"}
         True
         ```
-        !!! success "Conclusion: All values are of type `#!py int`"
+        !!! success "Conclusion: All values are of type `#!py int`."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Check if all values are of type `#!py str`"}
@@ -178,7 +181,8 @@ def is_all_values_of_type(
         ```{.sh .shell title="Output"}
         False
         ```
-        !!! failure "Conclusion: Not all values are of type `#!py str`"
+        !!! failure "Conclusion: Not all values are of type `#!py str`."
+
         </div>
 
     ??? tip "See Also"
@@ -227,7 +231,8 @@ def is_any_values_of_type(
         ```{.sh .shell title="Output"}
         True
         ```
-        !!! success "Conclusion: At least one value is of type `#!py str`"
+        !!! success "Conclusion: At least one value is of type `#!py str`."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Check if any value is of type `#!py dict`"}
@@ -237,7 +242,8 @@ def is_any_values_of_type(
         ```{.sh .shell title="Output"}
         False
         ```
-        !!! failure "Conclusion: No values are of type `#!py dict`"
+        !!! failure "Conclusion: No values are of type `#!py dict`."
+
         </div>
 
     ??? tip "See Also"
@@ -286,7 +292,8 @@ def is_value_in_iterable(
         ```{.sh .shell title="Output"}
         True
         ```
-        !!! success "Conclusion: The value is in the iterable"
+        !!! success "Conclusion: The value is in the iterable."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Check if value is not in the iterable"}
@@ -296,7 +303,8 @@ def is_value_in_iterable(
         ```{.sh .shell title="Output"}
         False
         ```
-        !!! failure "Conclusion: The value is not in the iterable"
+        !!! failure "Conclusion: The value is not in the iterable."
+
         </div>
 
     ??? tip "See Also"
@@ -343,7 +351,8 @@ def is_all_values_in_iterable(
         ```{.sh .shell title="Output"}
         True
         ```
-        !!! success "Conclusion: All values are in the iterable"
+        !!! success "Conclusion: All values are in the iterable."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Check if all values are not in the iterable"}
@@ -353,7 +362,8 @@ def is_all_values_in_iterable(
         ```{.sh .shell title="Output"}
         False
         ```
-        !!! failure "Conclusion: Not all values are in the iterable"
+        !!! failure "Conclusion: Not all values are in the iterable."
+
         </div>
 
     ??? tip "See Also"
@@ -402,7 +412,8 @@ def is_any_values_in_iterable(
         ```{.sh .shell title="Output"}
         True
         ```
-        !!! success "Conclusion: At least one value is in the iterable"
+        !!! success "Conclusion: At least one value is in the iterable."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Check if any value is not in the iterable"}
@@ -412,7 +423,8 @@ def is_any_values_in_iterable(
         ```{.sh .shell title="Output"}
         False
         ```
-        !!! failure "Conclusion: None of the values are in the iterable"
+        !!! failure "Conclusion: None of the values are in the iterable."
+
         </div>
 
     ??? tip "See Also"
@@ -475,7 +487,8 @@ def assert_value_of_type(
         ```{.sh .shell title="Output"}
         (no output, no exception raised)
         ```
-        !!! success "Conclusion: The value is of type `#!py int`"
+        !!! success "Conclusion: The value is of type `#!py int`."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Assert that value is of type str"}
@@ -487,7 +500,8 @@ def assert_value_of_type(
           ...
         TypeError: Value '42' is not correct type: 'int'. Must be: 'str'
         ```
-        !!! failure "Conclusion: The value is not of type `#!py str`"
+        !!! failure "Conclusion: The value is not of type `#!py str`."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 3: Assert that value is of type int or float"}
@@ -497,7 +511,8 @@ def assert_value_of_type(
         ```{.sh .shell title="Output"}
         (no output, no exception raised)
         ```
-        !!! success "Conclusion: The value is of type `#!py int` or `#!py float`"
+        !!! success "Conclusion: The value is of type `#!py int` or `#!py float`."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 4: Assert that value is of type str or dict"}
@@ -509,7 +524,8 @@ def assert_value_of_type(
           ...
         TypeError: Value '42' is not correct type: 'int'. Must be: 'str' or 'dict'.
         ```
-        !!! failure "Conclusion: The value is not of type `#!py str` or `#!py dict`"
+        !!! failure "Conclusion: The value is not of type `#!py str` or `#!py dict`."
+
         </div>
 
     ??? tip "See Also"
@@ -562,7 +578,8 @@ def assert_all_values_of_type(
         ```{.sh .shell title="Output"}
         (no output, no exception raised)
         ```
-        !!! success "Conclusion: All values are of type `#!py int`"
+        !!! success "Conclusion: All values are of type `#!py int`."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Assert that all values are of type str"}
@@ -574,7 +591,8 @@ def assert_all_values_of_type(
             ...
         TypeError: Some elements [1, 2, 3] have the incorrect type ['int', 'int', 'int']. Must be 'str'
         ```
-        !!! failure "Conclusion: Not all values are of type `#!py str`"
+        !!! failure "Conclusion: Not all values are of type `#!py str`."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 3: Assert that all values are of type int or float"}
@@ -584,7 +602,8 @@ def assert_all_values_of_type(
         ```{.sh .shell title="Output"}
         (no output, no exception raised)
         ```
-        !!! success "Conclusion: All values are of type `#!py int` or `#!py float`"
+        !!! success "Conclusion: All values are of type `#!py int` or `#!py float`."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 4: Assert that all values are of type str or dict"}
@@ -596,7 +615,8 @@ def assert_all_values_of_type(
             ...
         TypeError: Some elements [1, 2, 3] have the incorrect type ['int', 'int', 'int']. Must be: 'str' or 'dict'
         ```
-        !!! failure "Conclusion: Not all values are of type `#!py str` or `#!py dict`"
+        !!! failure "Conclusion: Not all values are of type `#!py str` or `#!py dict`."
+
         </div>
 
     ??? tip "See Also"
@@ -660,7 +680,8 @@ def assert_any_values_of_type(
         ```{.sh .shell title="Output"}
         (no output, no exception raised)
         ```
-        !!! success "Conclusion: At least one value is of type `#!py str`"
+        !!! success "Conclusion: At least one value is of type `#!py str`."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Assert that any value is of type dict"}
@@ -672,7 +693,8 @@ def assert_any_values_of_type(
             ...
         TypeError: None of the elements in [1, 'a', 3.0] have the correct type. Must be: 'dict'
         ```
-        !!! failure "Conclusion: None of the values are of type `#!py dict`"
+        !!! failure "Conclusion: None of the values are of type `#!py dict`."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 3: Assert that any value is of type int or float"}
@@ -682,7 +704,8 @@ def assert_any_values_of_type(
         ```{.sh .shell title="Output"}
         (no output, no exception raised)
         ```
-        !!! success "Conclusion: At least one value is of type `#!py int` or `#!py float`"
+        !!! success "Conclusion: At least one value is of type `#!py int` or `#!py float`."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 4: Assert that any value is of type dict or list"}
@@ -694,7 +717,8 @@ def assert_any_values_of_type(
             ...
         TypeError: None of the elements in [1, 'a', 3.0] have the correct type. Must be: 'dict' or 'list'
         ```
-        !!! failure "Conclusion: None of the values are of type `#!py dict` or `#!py list`"
+        !!! failure "Conclusion: None of the values are of type `#!py dict` or `#!py list`."
+
         </div>
 
     ??? tip "See Also"
@@ -751,7 +775,8 @@ def assert_value_in_iterable(
         ```{.sh .shell title="Output"}
         (no output, no exception raised)
         ```
-        !!! success "Conclusion: The value is in the iterable"
+        !!! success "Conclusion: The value is in the iterable."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Assert that value is not in the iterable"}
@@ -763,7 +788,8 @@ def assert_value_in_iterable(
             ...
         LookupError: Value '4' not found in iterable: [1, 2, 3]
         ```
-        !!! failure "Conclusion: The value is not in the iterable"
+        !!! failure "Conclusion: The value is not in the iterable."
+
         </div>
 
     ??? tip "See Also"
@@ -811,7 +837,8 @@ def assert_any_values_in_iterable(
         ```{.sh .shell title="Output"}
         (no output, no exception raised)
         ```
-        !!! success "Conclusion: At least one value is in the iterable"
+        !!! success "Conclusion: At least one value is in the iterable."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Assert that any value is not in the iterable"}
@@ -823,7 +850,8 @@ def assert_any_values_in_iterable(
             ...
         LookupError: None of the values in [4, 5] can be found in [1, 2, 3]
         ```
-        !!! failure "Conclusion: None of the values are in the iterable"
+        !!! failure "Conclusion: None of the values are in the iterable."
+
         </div>
 
     ??? tip "See Also"
@@ -873,7 +901,8 @@ def assert_all_values_in_iterable(
         ```{.sh .shell title="Output"}
         (no output, no exception raised)
         ```
-        !!! success "Conclusion: All values are in the iterable"
+        !!! success "Conclusion: All values are in the iterable."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Assert that all values are not in the iterable"}
@@ -885,7 +914,8 @@ def assert_all_values_in_iterable(
             ...
         LookupError: Some values [4] are missing from [1, 2, 3]
         ```
-        !!! failure "Conclusion: Not all values are in the iterable"
+        !!! failure "Conclusion: Not all values are in the iterable."
+
         </div>
 
     ??? tip "See Also"
@@ -955,7 +985,8 @@ def any_element_contains(
         ```{.sh .shell title="Output"}
         True
         ```
-        !!! success "Conclusion: At least one element contains `'an'`"
+        !!! success "Conclusion: At least one element contains `'an'`."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Check if any element contains 'xy'"}
@@ -965,7 +996,8 @@ def any_element_contains(
         ```{.sh .shell title="Output"}
         False
         ```
-        !!! failure "Conclusion: No elements contain `'xy'`"
+        !!! failure "Conclusion: No elements contain `'xy'`."
+
         </div>
     """
     return any(check in elem for elem in iterable)
@@ -1010,7 +1042,8 @@ def all_elements_contains(iterable: str_collection, check: str) -> bool:
         ```{.sh .shell title="Output"}
         True
         ```
-        !!! success "Conclusion: All elements contain `'a'`"
+        !!! success "Conclusion: All elements contain `'a'`."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Check if all elements contain 'e'"}
@@ -1020,7 +1053,8 @@ def all_elements_contains(iterable: str_collection, check: str) -> bool:
         ```{.sh .shell title="Output"}
         False
         ```
-        !!! failure "Conclusion: Not all elements contain `'e'`"
+        !!! failure "Conclusion: Not all elements contain `'e'`."
+
         </div>
     """
     return all(check in elem for elem in iterable)
@@ -1062,7 +1096,8 @@ def get_elements_containing(iterable: str_collection, check: str) -> tuple[str, 
         ```{.sh .shell title="Output"}
         ('banana',)
         ```
-        !!! success "Conclusion: The element(s) containing `'an'` are extracted"
+        !!! success "Conclusion: The element(s) containing `'an'` are extracted."
+
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Extract elements containing 'xy'"}
@@ -1072,7 +1107,8 @@ def get_elements_containing(iterable: str_collection, check: str) -> tuple[str, 
         ```{.sh .shell title="Output"}
         ()
         ```
-        !!! failure "Conclusion: No elements contain `'xy'`"
+        !!! failure "Conclusion: No elements contain `'xy'`."
+
         </div>
     """
     return tuple(elem for elem in iterable if check in elem)

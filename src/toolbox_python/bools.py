@@ -38,7 +38,7 @@
 # ---------------------------------------------------------------------------- #
 
 
-__all__: list[str] = ["strtobool"]
+__all__: list[str] = ["strtobool", "STR_TO_BOOL_MAP"]
 
 
 # ---------------------------------------------------------------------------- #
@@ -46,7 +46,7 @@ __all__: list[str] = ["strtobool"]
 # ---------------------------------------------------------------------------- #
 
 
-_MAP: dict[str, bool] = {
+STR_TO_BOOL_MAP: dict[str, bool] = {
     "y": True,
     "yes": True,
     "t": True,
@@ -76,14 +76,14 @@ Summary:
 def strtobool(value: str) -> bool:
     """
     !!! note "Summary"
-        Convert a `#!py str` in to a `#!py bool` value.
+        Convert a `#!py str` value in to a `#!py bool` value.
 
     ???+ abstract "Details"
-        This process is necessary because the `distutils` module was completely deprecated in Python 3.12.
+        This process is necessary because the `d`istutils` module was completely deprecated in Python 3.12.
 
     Params:
         value (str):
-            The string value to convert. Valid input options are defined in [`_MAP`][toolbox_python.bools._MAP]
+            The string value to convert. Valid input options are defined in [`STR_TO_BOOL_MAP`][toolbox_python.bools.STR_TO_BOOL_MAP]
 
     Raises:
         ValueError:
@@ -93,14 +93,60 @@ def strtobool(value: str) -> bool:
         (bool):
             A `#!py True` or `#!py False` value, having successfully converted `value`.
 
+    ???+ example "Examples"
+
+        ```{.py .python linenums="1" title="Set up"}
+        from toolbox_python.bools import strtobool
+        ```
+
+        ```{.py .python linenums="1" title="Example 1: `true` conversions"}
+        >>> print(strtobool("true"))
+        >>> print(strtobool("t"))
+        >>> print(strtobool("1"))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        True
+        True
+        True
+        ```
+        !!! success "Conclusion: Successful conversion."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 2: `false` conversions"}
+        >>> print(strtobool("false"))
+        >>> print(strtobool("f"))
+        >>> print(strtobool("0"))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        False
+        False
+        False
+        ```
+        !!! success "Conclusion: Successful conversion."
+        </div>
+
+        ```{.py .python linenums="1" title="Example 3: invalid value"}
+        >>> print(strtobool(5))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        ValueError: Invalid bool value: '5'.
+        For `True`, must be one of: ['y', 'yes', 't', 'true', 'on', '1']
+        For `False`, must be one of: ['n', 'no', 'f', 'false', 'off', '0']
+        ```
+        !!! failure "Conclusion: Invalid type."
+        </div>
+
     ??? question "References"
         - [PEP632](https://peps.python.org/pep-0632/#migration-advice)
     """
     try:
-        return _MAP[str(value).lower()]
+        return STR_TO_BOOL_MAP[str(value).lower()]
     except KeyError as exc:
         raise ValueError(
             f"Invalid bool value: '{value}'.\n"
-            f"For `True`, must be one of: {[key for key, val in _MAP.items() if val]}\n"
-            f"For `False`, must be one of: {[key for key, val in _MAP.items() if not val]}"
+            f"For `True`, must be one of: {[key for key, val in STR_TO_BOOL_MAP.items() if val]}\n"
+            f"For `False`, must be one of: {[key for key, val in STR_TO_BOOL_MAP.items() if not val]}"
         ) from exc

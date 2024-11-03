@@ -87,74 +87,83 @@ class Defaults:
         >>> print(Defaults()(value="this"))
         ```
         <div class="result" markdown>
-        ```{.sh .shell title="Terminal"}
+        ```{.txt .text title="Terminal"}
         "this"
         ```
+        !!! success "Conclusion: Successfully printed default value direct from class."
         </div>
 
         ```{.py .python linenums="1" title="Example 2: Call from instantiated class"}
         >>> print(defaults(value="that"))
         ```
         <div class="result" markdown>
-        ```{.sh .shell title="Terminal"}
+        ```{.txt .text title="Terminal"}
         "that"
         ```
+        !!! success "Conclusion: Successfully printed default value from instantiated class."
         </div>
 
         ```{.py .python linenums="1" title="Example 3: Cast to `bool`"}
         >>> print(defaults(value="True", cast=bool))
         ```
         <div class="result" markdown>
-        ```{.sh .shell title="Terminal"}
+        ```{.txt .text title="Terminal"}
         True
         ```
+        !!! success "Conclusion: Successfully casted to `#!py bool`."
         </div>
 
         ```{.py .python linenums="1" title="Example 4: Cast to `int`"}
         >>> print(defaults(value="1", cast=int))
         ```
         <div class="result" markdown>
-        ```{.sh .shell title="Terminal"}
+        ```{.txt .text title="Terminal"}
         1
         ```
+        !!! success "Conclusion: Successfully casted to `#!py int`."
         </div>
 
         ```{.py .python linenums="1" title="Example 5: Cast to `str`"}
         >>> print(defaults(value=1, cast=str))
         ```
         <div class="result" markdown>
-        ```{.sh .shell title="Terminal"}
+        ```{.txt .text title="Terminal"}
         "1"
         ```
+        !!! success "Conclusion: Successfully casted to `#!py str`."
         </div>
 
         ```{.py .python linenums="1" title="Example 6: Cast to string `'str'`"}
         >>> print(defaults(value=1, cast="str"))
         ```
         <div class="result" markdown>
-        ```{.sh .shell title="Terminal"}
+        ```{.txt .text title="Terminal"}
         "1"
         ```
+        !!! success "Conclusion: Successfully casted to `#!py str`."
+        !!! observation "Note: The only difference between this and the previous example is the type of the `cast` parameter. Here, it is a string representation of the type, whereas in the previous example, we parse'ed in the actual `str` class."
         </div>
 
         ```{.py .python linenums="1" title="Example 7: Invalid cast type"}
         >>> print(defaults(value="next", cast="bad_type"))
         ```
         <div class="result" markdown>
-        ```{.sh .shell title="Terminal"}
+        ```{.txt .text title="Terminal"}
         AttributeError: The value for `type` is invalid: `bad_type`.
         Must be a valid type: ['bool', 'dict', 'int', 'float', 'list', 'str', 'tuple']
         ```
+        !!! failure "Conclusion: Invalid cast type."
         </div>
 
         ```{.py .python linenums="1" title="Example 8: All blank values"}
         >>> print(defaults(value=None, cast=None))
         ```
         <div class="result" markdown>
-        ```{.sh .shell title="Terminal"}
+        ```{.txt .text title="Terminal"}
         AttributeError: Both `value` and `default` are blank: 'None', 'None'.
         If `value` is blank, then `default` cannot be blank.
         ```
+        !!! failure "Conclusion: Both `value` and `default` are blank."
         </div>
 
     ??? success "Credit"
