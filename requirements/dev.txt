@@ -6,3 +6,4 @@ codespell
 pyupgrade
 pylint
 pycln
+ipykernel

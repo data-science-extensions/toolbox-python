@@ -54,6 +54,7 @@ codespell = "^2.3"
 pyupgrade = "^3.17"
 pylint = "^3.3"
 pycln = "^2.4"
+ipykernel = "^6.29"
 
 [tool.poetry.group.docs]
 optional = true
