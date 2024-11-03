@@ -2,6 +2,8 @@ site_name: Python Toolbox
 site_description: Helper files/functions/classes for generic Python processes
 site_author: "[Chris Mahoney](mailto:chris@mahoneyconsultingservices.com)"
 site_dir: web
+docs_dir: docs
+remote_branch: docs-site
 repo_name: toolbox-python
 repo_url: https://github.com/data-science-extensions/toolbox-python
 edit_uri: edit/main/docs/
@@ -13,10 +15,8 @@ watch:
 
 theme:
   name: material
-  # favicon: https://upload.wikimedia.org/wikipedia/commons/archive/c/c3/20220821155028%21Python-logo-notext.svg
-  favicon: assets/icons/python.svg
-  # coverpage_icon: https://upload.wikimedia.org/wikipedia/commons/archive/c/c3/20220821155028%21Python-logo-notext.svg
-  coverpage_icon: /assets/icons/python.svg
+  favicon: assets/images/python.svg
+  coverpage_icon: /assets/images/python.svg
   custom_dir: docs/overrides
   palette:
     # primary: teal
@@ -35,7 +35,7 @@ theme:
     - toc.follow
     - content.action.edit
     - content.action.view
-  logo: assets/icons/python.svg
+  logo: assets/images/python.svg
   icon:
     repo: material/gitlab
     # logo: fontawesome/brands/python
@@ -43,20 +43,20 @@ theme:
     view: material/file-eye-outline
 
 nav:
-  - Home: docs/index.md
+  - Home: index.md
   - Usage:
-      - Overview: docs/usage/overview.md
+      - Overview: usage/overview.md
   - Modules:
-      - docs/code/index.md
-      - Classes: docs/code/classes.md
-      - Bools: docs/code/bools.md
-      - Lists: docs/code/lists.md
-      - Strings: docs/code/strings.md
-      - Dictionaries: docs/code/dictionaries.md
-      - Checkers: docs/code/checkers.md
-      - Output: docs/code/output.md
-      - Retry: docs/code/retry.md
-      - Defaults: docs/code/defaults.md
+      - code/index.md
+      - Classes: code/classes.md
+      - Bools: code/bools.md
+      - Lists: code/lists.md
+      - Strings: code/strings.md
+      - Dictionaries: code/dictionaries.md
+      - Checkers: code/checkers.md
+      - Output: code/output.md
+      - Retry: code/retry.md
+      - Defaults: code/defaults.md
 
 
 markdown_extensions:
@@ -91,9 +91,9 @@ extra:
     default: latest
 
 extra_css:
-  - assets/css/style.css
-  - assets/css/admonitions.css
-  - assets/css/code_chunks.css
+  - assets/stylesheets/style.css
+  - assets/stylesheets/admonitions.css
+  - assets/stylesheets/code_chunks.css
   - https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css
 
 plugins:
