@@ -170,13 +170,13 @@ deploy-package: poetry-configure poetry-publish
 
 #* Docs
 .PHONY: docs
-serve-docs-static:
+docs-serve-static:
 	poetry run mkdocs serve
-serve-docs-versioned:
+docs-serve-versioned:
 	poetry run mike serve --branch=docs-site
-build-docs-static:
+docs-build-static:
 	poetry run mkdocs build --clean
-build-docs-versioned:
+docs-build-versioned:
 	poetry run mike --debug deploy --update-aliases --push --branch=docs-site $(VERSION) latest
 update-git-docs:
 	git add .
@@ -188,5 +188,5 @@ docs-delete-version:
 	poetry run mike --debug delete --branch=docs-site --deploy-prefix=web $(VERSION)
 docs-set-default:
 	poetry run mike --debug set-default --branch=docs-site --deploy-prefix=web --push latest
-build-static-docs: build-docs-static update-git-docs
-build-versioned-docs: build-docs-mike docs-set-default
+build-static-docs: docs-build-static update-git-docs
+build-versioned-docs: docs-build-versioned docs-set-default
