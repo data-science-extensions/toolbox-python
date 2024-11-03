@@ -5,10 +5,6 @@ on:
     types:
       - published
 
-# Sets permissions of the GITHUB_TOKEN to allow assets to be uploaded to the release
-permissions:
-  contents: write
-
 jobs:
 
   debug:
@@ -19,7 +15,7 @@ jobs:
     steps:
 
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
 
@@ -101,7 +97,7 @@ jobs:
     steps:
 
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -124,27 +120,32 @@ jobs:
           files: ./cov-report/xml/cov-report.xml
           verbose: true
 
-  deploy-package:
+  build-package:
 
-      name: Deploy to PyPI
-      needs:
-        - test
+      name: Build Package
+      needs: test
       if: ${{ always() && needs.test.result == 'success' }}
       runs-on: ubuntu-latest
+
+      permissions:
+        contents: write  #<-- to allow assets to be uploaded to the release
 
       steps:
 
         - name: Checkout repository
-          uses: actions/checkout@v3
+          id: checkout-repository
+          uses: actions/checkout@v4
           with:
             ref: main
 
-        - name: Set up Python
+        - name: Setup Python
+          id: setup-python
           uses: actions/setup-python@v5
           with:
             python-version: '3.13'
 
         - name: Check VERSION
+          id: check-version
           run: |
             if [ -z "${VERSION}" ]; then
               echo "/$VERSION is missing. Please try again."
@@ -154,17 +155,20 @@ jobs:
             VERSION: ${{ github.event.release.tag_name }}
 
         - name: Install Poetry
+          id: install-poetry
           run: make install-poetry
 
         - name: Install dependencies
           run: make install
 
         - name: Configure poetry
+          id: configure-poetry
           run: make poetry-configure
           env:
             PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
 
-        - name: Set up Git
+        - name: Setup Git
+          id: setup-git
           run: |
             make configure-git
             make git-switch-to-main-branch
@@ -173,71 +177,149 @@ jobs:
             GITHUB_ACTOR: ${{ github.actor }}
 
         - name: Bump version
+          id: bump-version
           run: make bump-version
           env:
             VERSION: ${{ github.event.release.tag_name }}
 
         - name: Update Git
+          id: update-git
           run: make update-git
           env:
             VERSION: ${{ github.event.release.tag_name }}
 
         - name: Build package
+          id: build-package
           run: poetry build --output="dist"
 
         - name: Upload assets
+          id: upload-assets
           uses: softprops/action-gh-release@v2
           with:
             files: dist/*
 
-        - name: Publish package
-          run: poetry publish --dist-dir="dist"
+        - name: Upload artifacts
+          id: upload-artifacts
+          uses: actions/upload-artifact@v4
+          with:
+            name: dist
+            path: dist
+
+  deploy-package:
+
+    name: Deploy to PyPI
+    needs: build-package
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        id: checkout-repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Python
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install Poetry
+        id: install-poetry
+        run: make install-poetry
+
+      - name: Publish package
+        id: publish-package
+        run: poetry publish --dist-dir="dist"
+
+      - name: Check
+        id: check
+        run: echo 'Package deployed to PyPI 👉 https://pypi.org/project/toolbox-python/'
+
+  build-docs:
+
+    name: Build Docs
+    needs:
+      - test
+      - deploy-package
+    if: ${{ always() && needs.test.result == 'success' && needs.deploy-package.result == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        id: checkout-repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Python
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install Poetry
+        id: install-poetry
+        run: make install-poetry
+
+      - name: Install dependencies
+        id: install-dependencies
+        run: make install-docs
+
+      - name: Setup Git
+        id: setup-git
+        run: |
+          make configure-git
+          make git-switch-to-main-branch
+          make git-refresh-current-branch
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+
+      - name: Build docs
+        id: build-docs
+        run: make build-versioned-docs
+        env:
+          VERSION: ${{ github.event.release.tag_name }}
 
   deploy-docs:
 
-      name: Deploy to GitHub Pages
-      needs:
-        - test
-        - deploy-package
-      if: ${{ always() && needs.test.result == 'success' && needs.deploy-package.result == 'success' }}
-      runs-on: ubuntu-latest
+    name: Build Docs
+    needs: build-docs
+    runs-on: ubuntu-latest
 
-      steps:
+    permissions:
+      pages: write     #<-- to deploy to Pages
+      id-token: write  #<-- to verify the deployment originates from an appropriate source
 
-        - name: Checkout repository
-          uses: actions/checkout@v3
-          with:
-            ref: main
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy-pages.outputs.page_url }}
 
-        - name: Set up Python
-          uses: actions/setup-python@v5
-          with:
-            python-version: '3.13'
+    steps:
 
-        - name: Install Poetry
-          run: make install-poetry
+      - name: Checkout repository
+        id: checkout-repository
+        uses: actions/checkout@v4
+        with:
+          ref: docs-site
+          fetch-depth: 5
+          show-progress: true
+          set-safe-directory: false
 
-        - name: Install dependencies
-          run: make install-docs
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
-        - name: Set up Git
-          run: |
-            make configure-git
-            make git-switch-to-main-branch
-            make git-refresh-current-branch
-            # 👇 Commented out for first-deployment run 👇
-            # make git-switch-to-docs-branch
-            # git remote update
-            # git fetch --verbose
-            # git fetch --verbose --tags
-            # git pull  --verbose
-            # git status --verbose
-            # git branch --list --verbose
-            # git tag --list --sort=-creatordate
-          env:
-            GITHUB_ACTOR: ${{ github.actor }}
+      - name: Upload artifacts
+        id: upload-artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: web
+          path: '.' #<-- All files in the branch
 
-        - name: Build documentation
-          run: make build-versioned-docs
-          env:
-            VERSION: ${{ github.event.release.tag_name }}
+      - name: Deploy Pages
+        uses: actions/deploy-pages@v4
+        id: deploy-pages
+        with:
+          artifact_name: web
