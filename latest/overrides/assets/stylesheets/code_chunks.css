@@ -1,0 +1,44 @@
+:root>* {
+    --dim: 1.5em;
+}
+
+.highlight span.filename {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    font-size: 1em;
+}
+
+.py span.filename::before,
+.python span.filename::before {
+    content: '';
+    display: inline-block;
+    width: var(--dim);
+    height: var(--dim);
+    margin-right: 1em;
+    background-size: var(--dim) var(--dim);
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/archive/c/c3/20220821155028%21Python-logo-notext.svg');
+}
+
+.txt span.filename::before,
+.text span.filename::before,
+.shell span.filename::before,
+.sh span.filename::before {
+    content: '';
+    display: inline-block;
+    width: var(--dim);
+    height: var(--dim);
+    margin-right: 1em;
+    background-size: var(--dim) var(--dim);
+    background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 19V7H4v12h16m0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16m-7 14v-2h5v2h-5m-3.42-4L5.57 9H8.4l3.3 3.3c.39.39.39 1.03 0 1.42L8.42 17H5.59l3.99-4Z"/></svg>');
+}
+
+.log span.filename::before {
+    content: '';
+    display: inline-block;
+    width: var(--dim);
+    height: var(--dim);
+    margin-right: 1em;
+    background-size: var(--dim) var(--dim);
+    background-image: url('https://raw.githubusercontent.com/vscode-icons/vscode-icons/0927fc72a1d655c12ec60178df88bef6da3b883d/icons/file_type_log.svg');
+}
