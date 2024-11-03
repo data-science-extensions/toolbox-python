@@ -183,10 +183,10 @@ update-git-docs:
 	git commit -m "Build docs [skip ci]"
 	git push --force --no-verify --push-option ci.skip
 docs-check-versions:
-	poetry run mike --debug list --branch=docs-site --deploy-prefix=web
+	poetry run mike --debug list --branch=docs-site
 docs-delete-version:
-	poetry run mike --debug delete --branch=docs-site --deploy-prefix=web $(VERSION)
+	poetry run mike --debug delete --branch=docs-site $(VERSION)
 docs-set-default:
-	poetry run mike --debug set-default --branch=docs-site --deploy-prefix=web --push latest
+	poetry run mike --debug set-default --branch=docs-site --push latest
 build-static-docs: docs-build-static update-git-docs
 build-versioned-docs: docs-build-versioned docs-set-default
