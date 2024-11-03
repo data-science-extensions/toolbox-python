@@ -1,4 +1,5 @@
 <center>
+<p align="center">
 
 # <u>`toolbox-python`</u>
 
@@ -17,8 +18,8 @@
 [![CI](https://github.com/data-science-extensions/toolbox-python/actions/workflows/ci.yml/badge.svg?event=pull_request)][github-ci]
 [![CD](https://github.com/data-science-extensions/toolbox-python/actions/workflows/cd.yml/badge.svg?event=release)][github-cd]
 
+</p>
 </center>
-
 
 ### Introduction
 
