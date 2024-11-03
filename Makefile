@@ -172,6 +172,8 @@ deploy-package: poetry-configure poetry-publish
 .PHONY: docs
 serve-docs-static:
 	poetry run mkdocs serve
+serve-docs-mike:
+	poetry run mike serve --branch=docs-site
 build-docs-static:
 	poetry run mkdocs build
 build-docs-mike:
