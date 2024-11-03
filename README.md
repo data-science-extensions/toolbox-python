@@ -1,4 +1,3 @@
-<center>
 <p align="center">
 
 # <u>`toolbox-python`</u>
@@ -19,7 +18,6 @@
 [![CD](https://github.com/data-science-extensions/toolbox-python/actions/workflows/cd.yml/badge.svg?event=release)][github-cd]
 
 </p>
-</center>
 
 ### Introduction
 
