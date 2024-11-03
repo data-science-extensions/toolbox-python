@@ -172,11 +172,11 @@ deploy-package: poetry-configure poetry-publish
 .PHONY: docs
 serve-docs-static:
 	poetry run mkdocs serve
-serve-docs-mike:
+serve-docs-versioned:
 	poetry run mike serve --branch=docs-site
 build-docs-static:
 	poetry run mkdocs build
-build-docs-mike:
+build-docs-versioned:
 	poetry run mike --debug deploy --update-aliases --push --branch=docs-site $(VERSION) latest
 update-git-docs:
 	git add .
