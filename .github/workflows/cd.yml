@@ -328,7 +328,22 @@ jobs:
           set-safe-directory: false
 
       - name: Setup Pages
+        id: setup-pages
         uses: actions/configure-pages@v5
+
+      - name: Add CNAME
+        id: add-cname
+        run: |
+          if [ -f CNAME ]; then rm CNAME; fi;
+          echo "${CNAME_URL}" > CNAME
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git add CNAME
+          git commit -m "Update CNAME file [skip ci]" || echo "No changes to commit"
+          git push origin docs-site || echo "No changes to push"
+        env:
+          CNAME_URL: data-science-extensions.com
+          GITHUB_ACTOR: ${{ github.actor }}
 
       - name: Upload artifacts
         id: upload-artifacts
