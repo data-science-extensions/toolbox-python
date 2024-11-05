@@ -15,7 +15,7 @@ watch:
 
 theme:
   name: material
-  favicon: assets/images/python.svg
+  favicon: ./assets/images/python.svg
   coverpage_icon: ./assets/images/python.svg
   custom_dir: docs/overrides
   palette:
