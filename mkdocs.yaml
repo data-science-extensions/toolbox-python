@@ -16,7 +16,7 @@ watch:
 theme:
   name: material
   favicon: assets/images/python.svg
-  coverpage_icon: /assets/images/python.svg
+  coverpage_icon: ./assets/images/python.svg
   custom_dir: docs/overrides
   palette:
     # primary: teal
@@ -35,7 +35,7 @@ theme:
     - toc.follow
     - content.action.edit
     - content.action.view
-  logo: assets/images/python.svg
+  logo: ./assets/images/python.svg
   icon:
     repo: material/gitlab
     # logo: fontawesome/brands/python
