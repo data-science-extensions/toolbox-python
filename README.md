@@ -1,22 +1,51 @@
+<h1 align="center"><u><code>toolbox-python</code></u></h1>
+
 <p align="center">
-
-# <u>`toolbox-python`</u>
-
-[![version](https://img.shields.io/pypi/v/toolbox-python?label=version&logo=python&logoColor=ffde57)][pypi]
-[![github-release](https://img.shields.io/github/v/release/data-science-extensions/toolbox-python?logo=github)][github-release]
-[![implementation](https://img.shields.io/pypi/implementation/toolbox-python?logo=pypi)][pypi]
-[![python-versions](https://img.shields.io/pypi/pyversions/toolbox-python)][pypi]
-[![os](https://img.shields.io/static/v1?label=os&message=ubuntu+|+macos+|+windows&color=blue&logo=ubuntu&logoColor=green)][github-ci]
-[![pypi-status](https://img.shields.io/pypi/status/toolbox-python)][pypi]
-[![pypi-format](https://img.shields.io/pypi/format/toolbox-python)][pypi]
-[![github-license](https://img.shields.io/github/license/data-science-extensions/toolbox-python)][github-license]
-[![pypi-downloads](https://img.shields.io/pypi/dm/toolbox-python)][pypi]
-[![codecov-repo](https://codecov.io/gh/data-science-extensions/toolbox-python/graph/badge.svg)][codecov-repo]
-[![style](https://img.shields.io/static/v1?label=style&message=black&color=black&logo=windows-terminal&logoColor=white)](https://github.com/psf/black)<br>
-[![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/data-science-extensions/toolbox-python)<br>
-[![CI](https://github.com/data-science-extensions/toolbox-python/actions/workflows/ci.yml/badge.svg?event=pull_request)][github-ci]
-[![CD](https://github.com/data-science-extensions/toolbox-python/actions/workflows/cd.yml/badge.svg?event=release)][github-cd]
-
+<a href="https://github.com/data-science-extensions/toolbox-python/releases">
+    <img src="https://img.shields.io/github/v/release/data-science-extensions/toolbox-python?logo=github" alt="github-release">
+</a>
+<a href="https://pypi.org/project/toolbox-python">
+    <img src="https://img.shields.io/pypi/implementation/toolbox-python?logo=pypi&logoColor=ffde57" alt="implementation">
+</a>
+<a href="https://pypi.org/project/toolbox-python">
+    <img src="https://img.shields.io/pypi/v/toolbox-python?label=version&logo=python&logoColor=ffde57&color=blue" alt="version">
+</a>
+<a href="https://pypi.org/project/toolbox-python">
+    <img src="https://img.shields.io/pypi/pyversions/toolbox-python?logo=python&logoColor=ffde57" alt="python-versions">
+</a>
+<br>
+<a href="https://github.com/data-science-extensions/toolbox-python/actions/workflows/ci.yml">
+    <img src="https://img.shields.io/static/v1?label=os&message=ubuntu+|+macos+|+windows&color=blue&logo=ubuntu&logoColor=green" alt="os">
+</a>
+<a href="https://pypi.org/project/toolbox-python">
+    <img src="https://img.shields.io/pypi/status/toolbox-python?color=green" alt="pypi-status">
+</a>
+<a href="https://pypi.org/project/toolbox-python">
+    <img src="https://img.shields.io/pypi/format/toolbox-python?color=green" alt="pypi-format">
+</a>
+<a href="https://github.com/data-science-extensions/toolbox-python/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/data-science-extensions/toolbox-python?color=green" alt="github-license">
+</a>
+<a href="https://piptrends.com/package/toolbox-python">
+    <img src="https://img.shields.io/pypi/dm/toolbox-python?color=green" alt="pypi-downloads">
+</a>
+<a href="https://codecov.io/gh/data-science-extensions/toolbox-python">
+    <img src="https://codecov.io/gh/data-science-extensions/toolbox-python/graph/badge.svg" alt="codecov-repo">
+</a>
+<a href="https://github.com/psf/black">
+    <img src="https://img.shields.io/static/v1?label=style&message=black&color=black&logo=windows-terminal&logoColor=white" alt="style">
+</a>
+<br>
+<a href="https://github.com/data-science-extensions/toolbox-python">
+    <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="contributions">
+</a>
+<br>
+<a href="https://github.com/data-science-extensions/toolbox-python/actions/workflows/ci.yml">
+    <img src="https://github.com/data-science-extensions/toolbox-python/actions/workflows/ci.yml/badge.svg?event=pull_request" alt="CI">
+</a>
+<a href="https://github.com/data-science-extensions/toolbox-python/actions/workflows/cd.yml">
+    <img src="https://github.com/data-science-extensions/toolbox-python/actions/workflows/cd.yml/badge.svg?event=release" alt="CD">
+</a>
 </p>
 
 ### Introduction
@@ -32,7 +61,7 @@ For reference, these URL's are used:
 |---|---|---|
 | Git Repo | GitHub | https://github.com/data-science-extensions/toolbox-python |
 | Python Package | PyPI | https://pypi.org/project/toolbox-python |
-| Package Docs | ... | ... |
+| Package Docs | Pages | https://data-science-extensions.com/python-toolbox/ |
 
 
 ### Installation
