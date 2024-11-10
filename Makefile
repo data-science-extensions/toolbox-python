@@ -8,41 +8,28 @@ VERSION_NO_PATCH := "$(shell echo $(VERSION) | cut --delimiter '.' --fields 1-2)
 
 
 #* Environment
-
-.PHONY: install-build-essentials
+.PHONY: check-environment
 update-build-essentials:
 	sudo apt-get install build-essential
-
-.PHONY: update-environment
 update-environment:
 	sudo apt-get update --yes
 	sudo apt-get upgrade --yes
-
-.PHONY: install-git
 install-git:
 	sudo apt-get install git --yes
 
 
 #* Python
-
-.PHONY: install-python
+.PHONY: prepare-python
 install-python:
 	sudo apt-get install python3-venv --yes
-
-.PHONY: install-pip
 install-pip:
 	sudo apt-get install python3-pip --yes
-
-.PHONY: upgrade-pip
 upgrade-pip:
 	$(PYTHON) -m pip install --upgrade pip
-
-.PHONY: install-python-and-pip
 install-python-and-pip: install-python install-pip upgrade-pip
 
 
 #* Poetry
-
 .PHONY: poetry-installs
 install-poetry:
 	$(PYTHON) -m pip install poetry
@@ -104,16 +91,11 @@ pytest:
 
 
 #* Git
-
-.PHONY: configure-git
-configure-git: git-add-credentials
-
-.PHONY: git-add-credentials
+.PHONY: git-processes
 git-add-credentials:
 	git config --global user.name ${GITHUB_ACTOR}
 	git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-
-.PHONY: git-refresh-current-branch
+configure-git: git-add-credentials
 git-refresh-current-branch:
 	git remote update
 	git fetch --verbose
@@ -122,14 +104,14 @@ git-refresh-current-branch:
 	git status --verbose
 	git branch --list --verbose
 	git tag --list --sort=-creatordate
-
-.PHONY: git-switch-to-main-branch
 git-switch-to-main-branch:
 	git checkout -B main --track origin/main
-
-.PHONY: git-switch-to-docs-branch
 git-switch-to-docs-branch:
 	git checkout -B docs-site --track origin/docs-site
+git-check-add-docs-remote:
+	@if ! git remote -v | grep -q '^docs'; then \
+		git remote add docs https://github.com/data-science-extensions/website.git; \
+	fi
 
 
 #* Deploy Package
@@ -173,20 +155,20 @@ deploy-package: poetry-configure poetry-publish
 docs-serve-static:
 	poetry run mkdocs serve
 docs-serve-versioned:
-	poetry run mike serve --branch=docs-site
+	poetry run mike serve --remote=docs --branch=docs-site
 docs-build-static:
 	poetry run mkdocs build --clean
 docs-build-versioned:
-	poetry run mike --debug deploy --update-aliases --push --branch=docs-site $(VERSION) latest
+	poetry run mike --debug deploy --update-aliases --remote=docs --branch=docs-site --push $(VERSION) latest
 update-git-docs:
 	git add .
 	git commit -m "Build docs [skip ci]"
 	git push --force --no-verify --push-option ci.skip
 docs-check-versions:
-	poetry run mike --debug list --branch=docs-site
+	poetry run mike --debug list --remote=docs --branch=docs-site
 docs-delete-version:
-	poetry run mike --debug delete --branch=docs-site $(VERSION)
+	poetry run mike --debug delete --remote=docs --branch=docs-site $(VERSION)
 docs-set-default:
-	poetry run mike --debug set-default --branch=docs-site --push latest
+	poetry run mike --debug set-default --remote=docs --branch=docs-site --push latest
 build-static-docs: docs-build-static update-git-docs
-build-versioned-docs: docs-build-versioned docs-set-default
+build-versioned-docs: git-check-add-docs-remote docs-build-versioned docs-set-default
