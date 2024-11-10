@@ -1,0 +1,56 @@
+/* For adding left-border but excluding the function/method declaration line */
+/*
+div.doc-contents:not(.first) {
+    padding-left: 25px;
+    border-left: 4px solid rgba(230, 230, 230);
+}
+*/
+
+/* For adding left-border but including the function/method declaration line */
+div.doc-class,
+div.doc-method,
+div.doc-attribute,
+div.doc-function {
+    padding-left: 15px;
+    border-left: 4px solid rgba(230, 230, 230);
+}
+
+div.doc-object:is(div.doc-module) {
+    margin-bottom: 100px;
+}
+
+div.doc-object div.doc-class,
+div.doc-object div.doc-method,
+div.doc-object div.doc-attribute,
+div.doc-object div.doc-function {
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.anchor {
+    transition: all .3s;
+    background: url(/assets/icon_link.svg) 50%/contain no-repeat;
+    /* background: url(/assets/images/icon_anchor.svg) 50%/contain no-repeat; */
+    /* opacity: 1; */
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    max-height: 2rem;
+    vertical-align: middle;
+    border-bottom: 0;
+    margin-left: .25rem;
+    margin-top: -.25rem;
+    border-bottom: 0
+}
+
+article div.doc-class {
+    margin-bottom: 100px;
+}
+
+.md-typeset table:not([class]) th {
+    padding: .2em .5em !important;
+}
+
+.md-typeset table:not([class]) td {
+    padding: .2em .5em !important;
+}
