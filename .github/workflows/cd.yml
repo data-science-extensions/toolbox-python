@@ -263,9 +263,9 @@ jobs:
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
 
-      # - name: Publish package
-      #   id: publish-package
-      #   run: poetry publish --dist-dir="dist"
+      - name: Publish package
+        id: publish-package
+        run: poetry publish --dist-dir="dist"
 
       - name: Check
         id: check
