@@ -84,10 +84,11 @@ check: check-black check-mypy check-pycln check-isort check-codespell check-pyli
 
 
 #* Testing
-
 .PHONY: pytest
 pytest:
 	poetry run pytest --config-file pyproject.toml
+copy-coverage-report:
+	cp --recursive --update "./cov-report/html/." "./docs/code/coverage/"
 
 
 #* Git
@@ -113,19 +114,6 @@ git-switch-to-main-branch:
 	git checkout -B main --track origin/main
 git-switch-to-docs-branch:
 	git checkout -B docs-site --track origin/docs-site
-git-check-add-docs-remote:
-	@if git remote -v | grep -q '^docs'; then \
-		git remote remove docs; \
-	fi
-	echo ${DSE_ACCESS_TOKEN}
-	git remote add docs https://${GITHUB_ACTOR}:${DSE_ACCESS_TOKEN}@github.com/data-science-extensions/website.git
-git-test:
-	echo ${DSE_ACCESS_TOKEN}
-	echo $(DSE_ACCESS_TOKEN)
-	git remote -v
-	git remote add docs https://${GITHUB_ACTOR}:${DSE_ACCESS_TOKEN}@github.com/data-science-extensions/website.git
-	git remote -v
-
 
 
 #* Deploy Package
@@ -169,24 +157,23 @@ deploy-package: poetry-configure poetry-publish
 docs-serve-static:
 	poetry run mkdocs serve
 docs-serve-versioned:
-	poetry run mike serve --remote=docs --branch=docs-site
+	poetry run mike serve --branch=docs-site
 docs-build-static:
 	poetry run mkdocs build --clean
 docs-build-versioned:
 	git config --global --list
 	git config --local --list
 	git remote -v
-	echo ${DSE_ACCESS_TOKEN}
-	poetry run mike --debug deploy --update-aliases --remote=docs --branch=docs-site --push $(VERSION) latest
+	poetry run mike --debug deploy --update-aliases --branch=docs-site --push $(VERSION) latest
 update-git-docs:
 	git add .
 	git commit -m "Build docs [skip ci]"
 	git push --force --no-verify --push-option ci.skip
 docs-check-versions:
-	poetry run mike --debug list --remote=docs --branch=docs-site
+	poetry run mike --debug list --branch=docs-site
 docs-delete-version:
-	poetry run mike --debug delete --remote=docs --branch=docs-site $(VERSION)
+	poetry run mike --debug delete --branch=docs-site $(VERSION)
 docs-set-default:
-	poetry run mike --debug set-default --remote=docs --branch=docs-site --push latest
+	poetry run mike --debug set-default --branch=docs-site --push latest
 build-static-docs: docs-build-static update-git-docs
 build-versioned-docs: git-check-add-docs-remote docs-build-versioned docs-set-default
