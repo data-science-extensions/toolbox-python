@@ -2,7 +2,7 @@
 
 ## Overview
 
-There are six modules used in this package:
+These are the modules used in this package:
 
 | Module                            | Description |
 |-----------------------------------|-------------|
@@ -39,8 +39,8 @@ Tests are run in matrix against:
     1. `windows-latest`
     1. `macos-latest`
 
-### Latest Code Coverage
+## Coverage
 
 <div style="position:relative; border:none; width:100%; height:100%; display:block; overflow:auto;">
-    <iframe src="../../assets/coverage/index.html" style="width:100%; height:400px;"></iframe>
+    <iframe src="./coverage/index.html" style="width:100%; height:600px;"></iframe>
 </div>
