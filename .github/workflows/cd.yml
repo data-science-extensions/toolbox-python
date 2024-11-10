@@ -104,6 +104,9 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write  #<-- to allow push changes to the repository
+
     steps:
 
       - name: Checkout repository
