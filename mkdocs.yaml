@@ -103,7 +103,6 @@ plugins:
   - mike:
       version_selector: true
       alias_type: copy
-      deploy_prefix: toolbox-python
   - mkdocstrings:
       default_handler: python
       handlers:
