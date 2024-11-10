@@ -31,8 +31,8 @@ classifiers = [
 ]
 
 [tool.poetry.urls]
-Homepage = "https://github.com/data-science-extensions/toolbox-python"
-Documentation = "https://github.com/data-science-extensions/toolbox-python"
+Homepage = "https://data-science-extensions.com/python-toolbox"
+Documentation = "https://data-science-extensions.com/python-toolbox"
 Repository = "https://github.com/data-science-extensions/toolbox-python"
 Changelog = "https://github.com/data-science-extensions/toolbox-python/releases"
 Issues = "https://github.com/data-science-extensions/toolbox-python/issues"
