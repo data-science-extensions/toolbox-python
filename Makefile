@@ -95,6 +95,8 @@ pytest:
 git-add-credentials:
 	git config --global user.name ${GITHUB_ACTOR}
 	git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+	git config --local user.name ${GITHUB_ACTOR}
+	git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 	git config --global --list
 	git config --local --list
 	git remote -v
