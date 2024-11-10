@@ -102,7 +102,8 @@ jobs:
 
       - name: Check Make
         env:
-          DSE_ACCESS_TOKEN: chris_test
+          DSE_ACCESS_TOKEN: ${{ vars.REMOTE }}
+          # DSE_ACCESS_TOKEN: chris_test
         run: make git-test
 
 
@@ -310,7 +311,8 @@ jobs:
         run: make build-versioned-docs
         env:
           VERSION: ${{ github.event.release.tag_name }}
-          DSE_ACCESS_TOKEN: ${{ secrets.DSE_ACCESS_TOKEN }}
+          DSE_ACCESS_TOKEN: ${{ vars.REMOTE }}
+          # DSE_ACCESS_TOKEN: ${{ secrets.DSE_ACCESS_TOKEN }}
 
   # deploy-docs:
 

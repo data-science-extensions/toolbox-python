@@ -115,6 +115,7 @@ git-check-add-docs-remote:
 	@if git remote -v | grep -q '^docs'; then \
 		git remote remove docs; \
 	fi
+	echo ${DSE_ACCESS_TOKEN}
 	git remote add docs https://${DSE_ACCESS_TOKEN}@github.com/data-science-extensions/website.git
 git-test:
 	echo ${DSE_ACCESS_TOKEN}
@@ -173,6 +174,7 @@ docs-build-versioned:
 	git config --global --list
 	git config --local --list
 	git remote -v
+	echo ${DSE_ACCESS_TOKEN}
 	poetry run mike --debug deploy --update-aliases --remote=docs --branch=docs-site --push $(VERSION) latest
 update-git-docs:
 	git add .
