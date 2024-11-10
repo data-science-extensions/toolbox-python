@@ -102,7 +102,8 @@ jobs:
 
       - name: Check Make
         env:
-          DSE_ACCESS_TOKEN: chris_test
+          DSE_ACCESS_TOKEN: ${{ secrets.DSE_ACCESS_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
         run: make git-test
 
 
@@ -311,6 +312,7 @@ jobs:
         env:
           VERSION: ${{ github.event.release.tag_name }}
           DSE_ACCESS_TOKEN: ${{ secrets.DSE_ACCESS_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
 
   # deploy-docs:
 
