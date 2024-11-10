@@ -87,6 +87,10 @@ check: check-black check-mypy check-pycln check-isort check-codespell check-pyli
 .PHONY: pytest
 pytest:
 	poetry run pytest --config-file pyproject.toml
+commit-coverage-report:
+	git add .
+	git commit --no-verify --message "Update coverage report [skip ci]"
+	git push
 copy-coverage-report:
 	cp --recursive --update "./cov-report/html/." "./docs/code/coverage/"
 
@@ -96,11 +100,6 @@ copy-coverage-report:
 git-add-credentials:
 	git config --global user.name ${GITHUB_ACTOR}
 	git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-	git config --local user.name ${GITHUB_ACTOR}
-	git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-	git config --global --list
-	git config --local --list
-	git remote -v
 configure-git: git-add-credentials
 git-refresh-current-branch:
 	git remote update

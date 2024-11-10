@@ -134,10 +134,11 @@ jobs:
 
       - name: Commit coverage report
         id: commit-coverage-report
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
         run: |
-          git add .
-          git commit --no-verify --message "Update coverage report [skip ci]"
-          git push
+          make configure-git
+          make commit-coverage-report
 
       - name: Upload coverage
         id: upload-coverage
