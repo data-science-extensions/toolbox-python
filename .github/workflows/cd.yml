@@ -100,6 +100,12 @@ jobs:
           git status
           git branch
 
+      - name: Check Make
+        env:
+          DSE_ACCESS_TOKEN: chris_test
+        run: make git-test
+
+
   test:
 
     name: Run Tests

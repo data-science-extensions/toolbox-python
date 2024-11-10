@@ -112,7 +112,14 @@ git-check-add-docs-remote:
 	@if git remote -v | grep -q '^docs'; then \
 		git remote remove docs; \
 	fi
-	git remote add docs https://$(DSE_ACCESS_TOKEN)@github.com/data-science-extensions/website.git
+	git remote add docs https://${DSE_ACCESS_TOKEN}@github.com/data-science-extensions/website.git
+git-test:
+	echo ${DSE_ACCESS_TOKEN}
+	echo $(DSE_ACCESS_TOKEN)
+	git remote -v
+	git remote add docs https://${DSE_ACCESS_TOKEN}@github.com/data-science-extensions/website.git
+	git remote -v
+
 
 
 #* Deploy Package
