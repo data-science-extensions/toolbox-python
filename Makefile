@@ -178,4 +178,4 @@ docs-delete-version:
 docs-set-default:
 	poetry run mike --debug set-default --branch=docs-site --push latest
 build-static-docs: docs-build-static update-git-docs
-build-versioned-docs: git-check-add-docs-remote docs-build-versioned docs-set-default
+build-versioned-docs: docs-build-versioned docs-set-default
