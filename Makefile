@@ -95,6 +95,9 @@ pytest:
 git-add-credentials:
 	git config --global user.name ${GITHUB_ACTOR}
 	git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+	git config --global --list
+	git config --local --list
+	git remote -v
 configure-git: git-add-credentials
 git-refresh-current-branch:
 	git remote update
@@ -167,6 +170,9 @@ docs-serve-versioned:
 docs-build-static:
 	poetry run mkdocs build --clean
 docs-build-versioned:
+	git config --global --list
+	git config --local --list
+	git remote -v
 	poetry run mike --debug deploy --update-aliases --remote=docs --branch=docs-site --push $(VERSION) latest
 update-git-docs:
 	git add .
