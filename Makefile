@@ -109,9 +109,10 @@ git-switch-to-main-branch:
 git-switch-to-docs-branch:
 	git checkout -B docs-site --track origin/docs-site
 git-check-add-docs-remote:
-	@if ! git remote -v | grep -q '^docs'; then \
-		git remote add docs https://github.com/data-science-extensions/website.git; \
+	@if git remote -v | grep -q '^docs'; then \
+		git remote remove docs; \
 	fi
+	git remote add docs https://$(DSE_ACCESS_TOKEN)@github.com/data-science-extensions/website.git
 
 
 #* Deploy Package

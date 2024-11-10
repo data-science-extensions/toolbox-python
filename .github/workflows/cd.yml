@@ -14,6 +14,9 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
+env:
+  DSE_ACCESS_TOKEN: ${{ secrets.DSE_ACCESS_TOKEN }}
+
 jobs:
 
   debug:
@@ -245,9 +248,9 @@ jobs:
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
 
-      - name: Publish package
-        id: publish-package
-        run: poetry publish --dist-dir="dist"
+      # - name: Publish package
+      #   id: publish-package
+      #   run: poetry publish --dist-dir="dist"
 
       - name: Check
         id: check
