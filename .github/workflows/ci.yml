@@ -83,6 +83,11 @@ jobs:
           git status
           git branch
 
+      - name: Check Make
+        env:
+          DSE_ACCESS_TOKEN: chris_test
+        run: make git-test
+
   check:
 
     if: github.ref_type == 'branch' && github.event_name == 'push' && github.ref_name != 'main'
