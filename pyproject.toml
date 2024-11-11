@@ -39,50 +39,50 @@ Issues = "https://github.com/data-science-extensions/toolbox-python/issues"
 
 [tool.poetry.dependencies]
 python = ">3.9,<4.0"
-typeguard = "^4.3"
-more-itertools = "^10.5"
+typeguard = "4.*"
+more-itertools = "10.*"
 
 [tool.poetry.group.dev]
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.10"
-blacken-docs = "^1.19"
-pre-commit = "^4.0"
-isort = "^5.13"
-codespell = "^2.3"
-pyupgrade = "^3.17"
-pylint = "^3.3"
-pycln = "^2.4"
-ipykernel = "^6.29"
+black = "24.*"
+blacken-docs = "1.*"
+pre-commit = "4.*"
+isort = "5.*"
+codespell = "2.*"
+pyupgrade = "3.*"
+pylint = "3.*"
+pycln = "2.*"
+ipykernel = "6.*"
 
 [tool.poetry.group.docs]
 optional = true
 
 [tool.poetry.group.docs.dependencies]
-mkdocs = "^1.6"
-mkdocs-material = "^9.5"
-mkdocstrings = "^0.26"
-mkdocstrings-python = "^1.12"
-mkdocs-coverage = "^1.1"
-mkdocs-autorefs = "^1.2"
-livereload = "^2.7"
-mike = "^2.1"
-black = "^24.10"
+mkdocs = "1.*"
+mkdocs-material = "9.*"
+mkdocstrings = "0.*"
+mkdocstrings-python = "1.*"
+mkdocs-coverage = "1.*"
+mkdocs-autorefs = "1.*"
+livereload = "2.*"
+mike = "2.*"
+black = "24.*"
 
 [tool.poetry.group.test]
 optional = true
 
 [tool.poetry.group.test.dependencies]
-requests = "^2.32"
-pytest = "^8.3"
-pytest-clarity = "^1.0"
-pytest-cov = "^5.0"
-pytest-sugar = "^1.0"
-pytest-icdiff = "^0"
-pytest-xdist = "^3.6"
-mypy = "^1.11"
-parameterized = "^0.9"
+requests = "2.*"
+pytest = "8.*"
+pytest-clarity = "1.*"
+pytest-cov = "6.*"
+pytest-sugar = "1.*"
+pytest-icdiff = "0.*"
+pytest-xdist = "3.*"
+mypy = "1.*"
+parameterized = "0.*"
 
 [tool.black]
 color = true
