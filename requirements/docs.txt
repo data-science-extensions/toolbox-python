@@ -7,3 +7,4 @@ mkdocs-autorefs==1.*
 livereload==2.*
 mike==2.*
 black==24.*
+docstring-inheritance==2.*
