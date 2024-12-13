@@ -41,13 +41,16 @@
 # ## Python StdLib Imports ----
 from typing import Any
 
+# ## Local First Party Imports ----
+from toolbox_python.collection_types import str_list
+
 
 # ---------------------------------------------------------------------------- #
 #  Exports                                                                  ####
 # ---------------------------------------------------------------------------- #
 
 
-__all__: list[str] = ["get_full_class_name"]
+__all__: str_list = ["get_full_class_name"]
 
 
 # ---------------------------------------------------------------------------- #

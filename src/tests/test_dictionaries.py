@@ -18,7 +18,15 @@ from unittest import TestCase
 import pytest
 
 # ## Local First Party Imports ----
-from toolbox_python.collection_types import int_list, int_tuple, str_list, str_tuple
+from toolbox_python.collection_types import (
+    dict_int_str,
+    dict_str_int,
+    dict_str_str,
+    int_list,
+    int_tuple,
+    str_list,
+    str_tuple,
+)
 
 # Local Module Imports
 from toolbox_python.dictionaries import dict_reverse_keys_and_values
@@ -36,7 +44,7 @@ class TestDictionaries(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
 
-        cls.dict_basic: dict[str, int] = {"a": 1, "b": 2, "c": 3}
+        cls.dict_basic: dict_str_int = {"a": 1, "b": 2, "c": 3}
 
         cls.dict_iterables: dict[
             str, Union[str_list, int_list, str_tuple, int_tuple]
@@ -71,8 +79,8 @@ class TestDictionaries(TestCase):
 
     def test_reverse_dict_one_for_one(self) -> None:
         _input = self.dict_basic
-        _output = dict_reverse_keys_and_values(_input)
-        _expected = {"1": "a", "2": "b", "3": "c"}
+        _output: dict_int_str = dict_reverse_keys_and_values(_input)
+        _expected: dict_str_str = {"1": "a", "2": "b", "3": "c"}
         assert _output == _expected
 
     def test_reverse_dict_iterables(self) -> None:
@@ -110,7 +118,7 @@ class TestDictionaries(TestCase):
     def test_reverse_dict_embedded_dicts(self) -> None:
         _input = self.dict_with_dicts
         _output = dict_reverse_keys_and_values(_input)
-        _expected = {
+        _expected: dict_str_str = {
             "11": "aa",
             "22": "bb",
             "33": "cc",

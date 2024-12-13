@@ -40,7 +40,7 @@
 from __future__ import annotations
 
 # ## Python StdLib Imports ----
-from typing import Any, Optional, Union
+from typing import Any
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
@@ -48,6 +48,7 @@ from typeguard import typechecked
 # ## Local First Party Imports ----
 from toolbox_python.bools import strtobool
 from toolbox_python.checkers import is_type
+from toolbox_python.collection_types import str_list
 
 
 # ---------------------------------------------------------------------------- #
@@ -55,7 +56,7 @@ from toolbox_python.checkers import is_type
 # ---------------------------------------------------------------------------- #
 
 
-__all__: list[str] = ["defaults", "Defaults"]
+__all__: str_list = ["defaults", "Defaults"]
 
 
 # ---------------------------------------------------------------------------- #
@@ -196,8 +197,8 @@ class Defaults:
     def get(
         self,
         value: Any,
-        default: Optional[Any] = None,
-        cast: Optional[Union[str, type]] = None,
+        default: Any | None = None,
+        cast: str | type | None = None,
     ) -> Any:
         """
         !!! note "Summary"
@@ -250,8 +251,8 @@ class Defaults:
 
     def _validate_value_and_default(
         self,
-        value: Optional[Any] = None,
-        default: Optional[Any] = None,
+        value: Any | None = None,
+        default: Any | None = None,
     ) -> Defaults:
         """
         !!! note "Summary"
@@ -284,7 +285,7 @@ class Defaults:
 
     def _validate_type(
         self,
-        check_type: Optional[Union[str, type]] = None,
+        check_type: str | type | None = None,
     ) -> Defaults:
         """
         !!! note "Summary"
@@ -306,7 +307,7 @@ class Defaults:
         ??? tip "See Also"
             - [`Defaults.get()`][toolbox_python.defaults.Defaults.get]
         """
-        valid_types: list[str] = [
+        valid_types: str_list = [
             "bool",
             "dict",
             "int",

@@ -51,7 +51,7 @@ from toolbox_python.collection_types import str_list, str_list_tuple
 #  Exports                                                                  ####
 # ---------------------------------------------------------------------------- #
 
-__all__: list[str] = [
+__all__: str_list = [
     "str_replace",
     "str_contains",
     "str_contains_any",

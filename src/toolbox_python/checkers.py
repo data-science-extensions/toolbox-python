@@ -25,7 +25,12 @@ from typing import Any, Union
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from toolbox_python.collection_types import any_collection, scalar, str_collection
+from toolbox_python.collection_types import (
+    any_collection,
+    scalar,
+    str_collection,
+    str_list,
+)
 
 
 ## --------------------------------------------------------------------------- #
@@ -33,7 +38,7 @@ from toolbox_python.collection_types import any_collection, scalar, str_collecti
 ## --------------------------------------------------------------------------- #
 
 
-__all__: list[str] = [
+__all__: str_list = [
     "all_elements_contains",
     "any_element_contains",
     "assert_all_in",
@@ -638,7 +643,7 @@ def assert_all_values_of_type(
         if isinstance(check_type, type):
             msg += f"Must be '{check_type}'"
         else:
-            types: list[str] = [f"'{typ.__name__}'" for typ in check_type]
+            types: str_list = [f"'{typ.__name__}'" for typ in check_type]
             msg += f"Must be: {' or '.join(types)}"
         raise TypeError(msg)
 
@@ -733,7 +738,7 @@ def assert_any_values_of_type(
         if isinstance(check_type, type):
             msg += f"Must be: '{check_type.__name__}'"
         else:
-            types: list[str] = [f"'{typ.__name__}'" for typ in check_type]
+            types: str_list = [f"'{typ.__name__}'" for typ in check_type]
             msg += f"Must be: {' or '.join(types)}"
         raise TypeError(msg)
 

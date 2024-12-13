@@ -47,14 +47,20 @@ from more_itertools import collapse as itertools_collapse
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from toolbox_python.collection_types import any_list, any_tuple, collection, scalar
+from toolbox_python.collection_types import (
+    any_list,
+    any_tuple,
+    collection,
+    scalar,
+    str_list,
+)
 
 
 # ---------------------------------------------------------------------------- #
 #  Exports                                                                  ####
 # ---------------------------------------------------------------------------- #
 
-__all__: list[str] = ["flatten", "flat_list", "product"]
+__all__: str_list = ["flatten", "flat_list", "product"]
 
 
 # ---------------------------------------------------------------------------- #

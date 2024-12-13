@@ -11,11 +11,10 @@
 
 
 # ## Python StdLib Imports ----
-# Python StdLib Imports
 from unittest import TestCase
 
 # ## Local First Party Imports ----
-# Local Module Imports
+from toolbox_python.collection_types import str_list
 from toolbox_python.strings import (
     str_contains,
     str_contains_all,
@@ -103,14 +102,14 @@ class TestNumberCharacterSeparation(TestCase):
 
     def test_str_separate_number_chars1(self) -> None:
         _input = "-12.1grams"
-        _output: list[str] = str_separate_number_chars(_input)
-        _expected: list[str] = ["-12.1", "grams"]
+        _output: str_list = str_separate_number_chars(_input)
+        _expected: str_list = ["-12.1", "grams"]
         assert _output == _expected
 
     def test_str_separate_number_chars2(self) -> None:
         _input = "abcd2343 abw34324 abc3243-23A 123"
-        _output: list[str] = str_separate_number_chars(_input)
-        _expected: list[str] = [
+        _output: str_list = str_separate_number_chars(_input)
+        _expected: str_list = [
             "abcd",
             "2343",
             "abw",

@@ -364,13 +364,13 @@ def list_columns(
         Full credit goes to:<br>
         https://stackoverflow.com/questions/1524126/how-to-print-a-list-more-nicely#answer-36085705
     """
-    string_list: list[str] = [str(item) for item in obj]
+    string_list: str_list = [str(item) for item in obj]
     if cols_wide > len(string_list):
         cols_wide = len(string_list)
     max_len: int = max(len(item) for item in string_list)
     if columnwise:
         cols_wide = int(ceil(len(string_list) / cols_wide))
-    segmented_list: list[list[str]] = [
+    segmented_list: list[str_list] = [
         string_list[index : index + cols_wide]
         for index in range(0, len(string_list), cols_wide)
     ]
@@ -379,7 +379,7 @@ def list_columns(
             segmented_list[-1].extend(
                 [""] * (len(string_list) - len(segmented_list[-1]))
             )
-        combined_list: Union[list[list[str]], Any] = zip(*segmented_list)
+        combined_list: Union[list[str_list], Any] = zip(*segmented_list)
     else:
         combined_list = segmented_list
     printer: str = "\n".join(

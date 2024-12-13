@@ -42,14 +42,14 @@
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from toolbox_python.collection_types import dict_any, dict_str_int
+from toolbox_python.collection_types import dict_any, dict_str_any, str_list
 
 
 # ---------------------------------------------------------------------------- #
 #  Exports                                                                  ####
 # ---------------------------------------------------------------------------- #
 
-__all__: list[str] = ["dict_reverse_keys_and_values"]
+__all__: str_list = ["dict_reverse_keys_and_values"]
 
 
 # ---------------------------------------------------------------------------- #
@@ -62,7 +62,7 @@ __all__: list[str] = ["dict_reverse_keys_and_values"]
 @typechecked
 def dict_reverse_keys_and_values(
     dictionary: dict_any,
-) -> dict_str_int:
+) -> dict_str_any:
     """
     !!! note "Summary"
         Take the `key` and `values` of a dictionary, and reverse them.
@@ -201,7 +201,7 @@ def dict_reverse_keys_and_values(
         !!! observation "Here, the process would be to run a recursive process when it recognises that any `value` is a `#!py dict` object. So long as there are no duplicate values in any of the contained `#!py dict`'s, the resulting output will be a big, flat dictionary."
         </div>
     """
-    output_dict: dict_str_int = dict()
+    output_dict: dict_str_any = dict()
     for key, value in dictionary.items():
         if isinstance(value, (str, int, float)):
             output_dict[str(value)] = key
@@ -216,7 +216,7 @@ def dict_reverse_keys_and_values(
                     )
                 output_dict[str(elem)] = key
         elif isinstance(value, dict):
-            interim_dict: dict_str_int = dict_reverse_keys_and_values(value)
+            interim_dict: dict_str_any = dict_reverse_keys_and_values(value)
             output_dict = {
                 **output_dict,
                 **interim_dict,

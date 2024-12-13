@@ -110,6 +110,8 @@ dict_str_int = dict[
 
 
 dict_str_any = dict[str, Any]
+dict_str_str = dict[str, str]
+dict_int_str = dict[int, str]
 
 
 log_levels = Literal["debug", "info", "warning", "error", "critical"]
