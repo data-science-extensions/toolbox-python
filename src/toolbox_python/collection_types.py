@@ -67,10 +67,11 @@ any_tuple = tuple[Any, ...]
 any_set = set[Any]
 any_list_tuple = Union[any_list, any_tuple]
 collection = Union[any_list, any_tuple, any_set]
-str_collection = Union[str, str_list, str_tuple, str_set]
+str_collection = Union[str_list, str_tuple, str_set]
 any_collection = Union[any_list, any_tuple, any_set]
 scalar = Union[str, int, float, bool]
 iterable = Union[list, tuple, set, dict]
+
 
 dict_any = dict[
     Union[str, int],
@@ -89,6 +90,7 @@ dict_any = dict[
     ```
 """
 
+
 dict_str_int = dict[
     Union[str, int],
     Union[str, int],
@@ -105,6 +107,10 @@ dict_str_int = dict[
     ]
     ```
 """
+
+
+dict_str_any = dict[str, Any]
+
 
 log_levels = Literal["debug", "info", "warning", "error", "critical"]
 """
