@@ -1,0 +1,86 @@
+/* Icons & colours to add at the root */
+:root {
+    --md-admonition-icon--pro-tip: url('https://upload.wikimedia.org/wikipedia/commons/2/21/Font_Awesome_5_regular_thumbs-up.svg');
+    --md-admonition-color--pro-tip: rgb(43, 155, 70);
+    --md-admonition-color-body--pro-tip: rgba(43, 155, 70, 0.1);
+    --md-admonition-icon--deprecation: url('https://cdn-icons-png.flaticon.com/512/61/61114.png');
+    --md-admonition-color--deprecation: rgb(255, 0, 0);
+    --md-admonition-color-body--deprecation: rgba(255, 0, 0, 0.1);
+    --md-admonition-icon--observation: url('https://cdn-icons-png.flaticon.com/512/1341/1341248.png');
+    --md-admonition-color--observation: rgb(128, 128, 128);
+    --md-admonition-color-body--observation: rgba(128, 128, 128, 0.1);
+    --md-admonition-icon--calculation: url('https://uxwing.com/wp-content/themes/uxwing/download/education-school/formula-fx-icon.png');
+    --md-admonition-color--calculation: rgb(0, 184, 212);
+    --md-admonition-color-body--calculation: rgba(0, 184, 212, 0.1);
+}
+
+
+
+/* Info for the `pro-tip` admonition */
+.md-typeset .admonition.pro-tip,
+.md-typeset details.pro-tip {
+    border-color: var(--md-admonition-color--pro-tip);
+}
+.md-typeset .pro-tip>.admonition-title,
+.md-typeset .pro-tip>summary {
+    background-color: var(--md-admonition-color-body--pro-tip);
+}
+.md-typeset .pro-tip>.admonition-title::before,
+.md-typeset .pro-tip>summary::before {
+    background-color: var(--md-admonition-color--pro-tip);
+    -webkit-mask-image: var(--md-admonition-icon--pro-tip);
+    mask-image: var(--md-admonition-icon--pro-tip);
+}
+
+
+
+/* Info for the `deprecation` admonition */
+.md-typeset .admonition.deprecation,
+.md-typeset details.deprecation {
+    border-color: var(--md-admonition-color--deprecation);
+}
+.md-typeset .deprecation>.admonition-title,
+.md-typeset .deprecation>summary {
+    background-color: var(--md-admonition-color-body--deprecation);
+}
+.md-typeset .deprecation>.admonition-title::before,
+.md-typeset .deprecation>summary::before {
+    background-color: var(--md-admonition-color--deprecation);
+    -webkit-mask-image: var(--md-admonition-icon--deprecation);
+    mask-image: var(--md-admonition-icon--deprecation);
+}
+
+
+/* Info for the `observation` admonition */
+.md-typeset .admonition.observation,
+.md-typeset details.observation {
+    border-color: var(--md-admonition-color--observation);
+}
+.md-typeset .observation>.admonition-title,
+.md-typeset .observation>summary {
+    background-color: var(--md-admonition-color-body--observation);
+}
+.md-typeset .observation>.admonition-title::before,
+.md-typeset .observation>summary::before {
+    background-color: var(--md-admonition-color--observation);
+    -webkit-mask-image: var(--md-admonition-icon--observation);
+    mask-image: var(--md-admonition-icon--observation);
+}
+
+
+
+/* Info for the `calculation` admonition */
+.md-typeset .admonition.calculation,
+.md-typeset details.calculation {
+    border-color: var(--md-admonition-color--calculation);
+}
+.md-typeset .calculation>.admonition-title,
+.md-typeset .calculation>summary {
+    background-color: var(--md-admonition-color-body--calculation);
+}
+.md-typeset .calculation>.admonition-title::before,
+.md-typeset .calculation>summary::before {
+    background-color: var(--md-admonition-color--calculation);
+    -webkit-mask-image: var(--md-admonition-icon--calculation);
+    mask-image: var(--md-admonition-icon--calculation);
+}
