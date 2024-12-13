@@ -120,38 +120,24 @@ git-switch-to-docs-branch:
 
 #* Deploy Package
 # See: https://github.com/monim67/poetry-bumpversion
-
-.PHONY: bump-version
+.PHONY: deployment
 bump-version:
 	poetry self add poetry-bumpversion
 	poetry version $(VERSION_CLEAN)
 	poetry version --short
-
-.PHONY: update-git
 update-git:
 	git add .
 	git commit --message="Bump to version \`$(VERSION)\` [skip ci]" --allow-empty
 	git push --force --no-verify
 	git status
-
-.PHONY: poetry-build
 poetry-build:
 	poetry build
-
-.PHONY: poetry-configure-credentials
 poetry-configure:
 	poetry config pypi-token.pypi ${PYPI_TOKEN}
-
-.PHONY: poetry-publish
 poetry-publish:
 	poetry publish
-
-.PHONY: build-package
 build-package: poetry-build
-
-.PHONY: deploy-package
 deploy-package: poetry-configure poetry-publish
-
 
 
 #* Docs
