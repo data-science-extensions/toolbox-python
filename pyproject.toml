@@ -128,9 +128,6 @@ disable_error_code = [
     "valid-type",
     "attr-defined",
 ]
-# install_types = true
-# non_interactive = true
-# no_strict_optional = true
 
 [tool.isort]
 import_heading_future = "## Future Python Library Imports ----"
