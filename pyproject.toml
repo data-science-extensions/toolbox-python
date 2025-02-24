@@ -179,7 +179,7 @@ disable = [
 
 [[tool.poetry_bumpversion.replacements]]
 files = [
-    "src/toolbox_python/version.py",
+    "src/toolbox_python/__init__.py",
     "src/tests/test_version.py",
 ]
 
