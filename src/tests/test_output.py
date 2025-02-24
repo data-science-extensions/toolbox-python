@@ -13,6 +13,7 @@
 # ## Python StdLib Imports ----
 import logging
 from collections.abc import Generator
+from functools import lru_cache
 from typing import Literal, Union
 from unittest import TestCase
 
@@ -184,6 +185,7 @@ class TestListColumnsOutput(TestCase):
         self.capsys: pytest.CaptureFixture = capsys
 
     @staticmethod
+    @lru_cache
     def get_list_of_words(num_words: int = 100) -> str_list:
         word_url = "https://www.mit.edu/~ecprice/wordlist.10000"
         response: requests.Response = requests.get(word_url)
