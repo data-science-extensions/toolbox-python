@@ -39,9 +39,10 @@
 
 
 # ## Python StdLib Imports ----
+from collections.abc import Generator
 from logging import Logger, _nameToLevel
 from math import ceil
-from typing import Any, Generator, Literal, Optional, Union
+from typing import Any, Literal, Optional, Union
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
@@ -382,7 +383,9 @@ def list_columns(
     ]
     if columnwise:
         if len(segmented_list[-1]) != cols_wide:
-            segmented_list[-1].extend([""] * (len(string_list) - len(segmented_list[-1])))
+            segmented_list[-1].extend(
+                [""] * (len(string_list) - len(segmented_list[-1]))
+            )
         combined_list: Union[list[str_list], Any] = zip(*segmented_list)
     else:
         combined_list = segmented_list

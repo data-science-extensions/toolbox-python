@@ -195,7 +195,7 @@ def flatten(
     """
     return list(
         itertools_collapse(
-            iterable=list_of_lists,
+            iterable=list_of_lists,  # type: ignore
             base_type=base_type,
             levels=levels,
         )
