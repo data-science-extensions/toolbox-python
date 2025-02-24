@@ -41,14 +41,20 @@
 # ## Python StdLib Imports ----
 from logging import Logger, _nameToLevel
 from math import ceil
-from typing import Any, Literal, Optional, Union
+from typing import Any, Generator, Literal, Optional, Union
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
 from toolbox_python.checkers import is_type
-from toolbox_python.collection_types import log_levels, str_list
+from toolbox_python.collection_types import (
+    any_list,
+    any_set,
+    any_tuple,
+    log_levels,
+    str_list,
+)
 
 
 # ---------------------------------------------------------------------------- #
@@ -230,11 +236,11 @@ def print_or_log_output(
 
 @typechecked
 def list_columns(
-    obj: list,
+    obj: Union[any_list, any_set, any_tuple, Generator],
     cols_wide: int = 4,
     columnwise: bool = True,
     gap: int = 4,
-    print_output: bool = True,
+    print_output: bool = False,
 ) -> Optional[str]:
     """
     !!! note Summary
@@ -376,9 +382,7 @@ def list_columns(
     ]
     if columnwise:
         if len(segmented_list[-1]) != cols_wide:
-            segmented_list[-1].extend(
-                [""] * (len(string_list) - len(segmented_list[-1]))
-            )
+            segmented_list[-1].extend([""] * (len(string_list) - len(segmented_list[-1])))
         combined_list: Union[list[str_list], Any] = zip(*segmented_list)
     else:
         combined_list = segmented_list
