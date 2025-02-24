@@ -33,7 +33,7 @@ repos:
 
   # Linter
   - repo: https://github.com/psf/black
-    rev: "24.10.0"
+    rev: "25.1.0"
     hooks:
       - id: black
         language_version: python3.13
@@ -48,7 +48,7 @@ repos:
 
   # Run MyPy type checks
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.13.0"
+    rev: "v1.15.0"
     hooks:
       - id: mypy
         files: src/toolbox_python
@@ -58,7 +58,7 @@ repos:
 
   # Reorder Python imports
   - repo: https://github.com/pycqa/isort
-    rev: "5.13.2"
+    rev: "6.0.0"
     hooks:
       - id: isort
         name: isort (python)
@@ -67,7 +67,7 @@ repos:
 
   # Find any outdated syntax and replace with modern equivalents
   - repo: https://github.com/asottile/pyupgrade
-    rev: "v3.19.0"
+    rev: "v3.19.1"
     hooks:
       - id: pyupgrade
         name: Upgrade Python features
@@ -76,7 +76,7 @@ repos:
 
   # Check spelling
   - repo: https://github.com/codespell-project/codespell
-    rev: "v2.3.0"
+    rev: "v2.4.1"
     hooks:
     - id: codespell
       additional_dependencies:
@@ -87,7 +87,7 @@ repos:
 
   # Remove unused import statements
   - repo: https://github.com/hadialqattan/pycln
-    rev: "v2.4.0"
+    rev: "v2.5.0"
     hooks:
       - id: pycln
         args:
@@ -95,7 +95,7 @@ repos:
 
   # Check poetry configs
   - repo: https://github.com/python-poetry/poetry
-    rev: "1.8.0"
+    rev: "2.1.1"
     hooks:
       - id: poetry-check
 

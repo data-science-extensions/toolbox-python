@@ -14,7 +14,7 @@
 from unittest import TestCase
 
 # ## Local First Party Imports ----
-from toolbox_python.version import __version__ as version
+from toolbox_python import __version__ as version
 
 
 # ---------------------------------------------------------------------------- #

@@ -1,17 +1,19 @@
-[tool.poetry]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[project]
 name = "toolbox-python"
 version = "1.0.4"
 description = "Helper files/functions/classes for generic Python processes"
 readme = "README.md"
 license = "MIT"
 authors = [
-    "Admin <toolbox-python@data-science-extensions.com>",
+    {name="Chris Mahoney", email="toolbox-python@data-science-extensions.com"},
 ]
 maintainers = [
-    "Admin <toolbox-python@data-science-extensions.com>",
-]
-packages = [
-    { include = "toolbox_python", from = "src" },
+    {name="Chris Mahoney", email="toolbox-python@data-science-extensions.com"},
 ]
 classifiers = [
     "Topic :: Software Development :: Build Tools",
@@ -29,27 +31,32 @@ classifiers = [
     "Topic :: Software Development :: Testing :: Unit",
     "Topic :: Utilities",
 ]
+requires-python = ">3.9,<4.0"
+dependencies = [
+    "typeguard==4.*",
+    "more-itertools==10.*",
+]
 
-[tool.poetry.urls]
+[project.urls]
 Homepage = "https://data-science-extensions.com/python-toolbox"
 Documentation = "https://data-science-extensions.com/python-toolbox"
 Repository = "https://github.com/data-science-extensions/toolbox-python"
 Changelog = "https://github.com/data-science-extensions/toolbox-python/releases"
 Issues = "https://github.com/data-science-extensions/toolbox-python/issues"
 
-[tool.poetry.dependencies]
-python = ">3.9,<4.0"
-typeguard = "4.*"
-more-itertools = "10.*"
+[tool.poetry]
+packages = [
+    { include = "toolbox_python", from = "src" },
+]
 
 [tool.poetry.group.dev]
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-black = "24.*"
+black = "25.*"
 blacken-docs = "1.*"
 pre-commit = "4.*"
-isort = "5.*"
+isort = "6.*"
 codespell = "2.*"
 pyupgrade = "3.*"
 pylint = "3.*"
@@ -68,7 +75,7 @@ mkdocs-coverage = "1.*"
 mkdocs-autorefs = "1.*"
 livereload = "2.*"
 mike = "2.*"
-black = "24.*"
+black = "25.*"
 docstring-inheritance = "2.*"
 
 [tool.poetry.group.test]
@@ -179,10 +186,6 @@ disable = [
 
 [[tool.poetry_bumpversion.replacements]]
 files = [
-    "src/toolbox_python/version.py",
+    "src/toolbox_python/__init__.py",
     "src/tests/test_version.py",
 ]
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"

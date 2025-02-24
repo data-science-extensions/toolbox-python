@@ -35,16 +35,22 @@ install-poetry:
 	$(PYTHON) -m pip install poetry
 	poetry --version
 install:
+	poetry lock
 	poetry install --no-interaction --only main
 install-dev:
+	poetry lock
 	poetry install --no-interaction --with dev
 install-docs:
+	poetry lock
 	poetry install --no-interaction --with docs
 install-test:
+	poetry lock
 	poetry install --no-interaction --with test
 install-dev-test:
+	poetry lock
 	poetry install --no-interaction --with dev,test
 install-all:
+	poetry lock
 	poetry install --no-interaction --with dev,docs,test
 
 
