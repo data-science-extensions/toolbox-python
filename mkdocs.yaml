@@ -115,8 +115,6 @@ plugins:
             #   - docstring_inheritance.griffe
             allow_inspection: true
             docstring_style: google
-            docstring_options:
-              replace_admonitions: no
             show_root_heading: true
             show_root_toc_entry: false
             show_root_full_path: true
