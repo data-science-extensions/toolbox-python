@@ -1,10 +1,10 @@
 mkdocs==1.*
 mkdocs-material==9.*
-mkdocstrings==0.*
-mkdocstrings-python==1.*
 mkdocs-coverage==1.*
 mkdocs-autorefs==1.*
+mkdocstrings==0.*
+mkdocstrings-python==1.*
 livereload==2.*
 mike==2.*
-black==24.*
+black==25.*
 docstring-inheritance==2.*

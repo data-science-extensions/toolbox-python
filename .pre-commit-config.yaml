@@ -58,7 +58,7 @@ repos:
 
   # Reorder Python imports
   - repo: https://github.com/pycqa/isort
-    rev: "6.0.0"
+    rev: "6.0.1"
     hooks:
       - id: isort
         name: isort (python)
@@ -93,11 +93,20 @@ repos:
         args:
           - "--all"
 
-  # Check poetry configs
-  - repo: https://github.com/python-poetry/poetry
-    rev: "2.1.1"
+  # # Check poetry configs
+  # - repo: https://github.com/python-poetry/poetry
+  #   rev: "2.1.1"
+  #   hooks:
+  #     - id: poetry-check
+
+  # Check uv configs
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: "0.6.12"
     hooks:
-      - id: poetry-check
+      - id: uv-lock
+      - id: uv-sync
+        # args:
+        #   - "--all-groups"
 
   # Run Pylint
   - repo: local
