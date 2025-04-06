@@ -312,14 +312,14 @@ def _test_dot_dict() -> None:
                 "age": 30,
                 "address": {"city": "New York", "zip": "10001"},
             },
-            "items": [{"id": 1, "name": "Item 1"}, {"id": 2, "name": "Item 2"}],
+            "objects": [{"id": 1, "name": "Item 1"}, {"id": 2, "name": "Item 2"}],
         }
     )
 
     # Access with dot notation
     print(data.user.name)  # John
     print(data.user.address.city)  # New York
-    print(data.items[0].name)  # Item 1
+    print(data.objects[0].name)  # Item 1
 
     # You can still use dictionary access
     print(data["user"]["age"])  # 30
