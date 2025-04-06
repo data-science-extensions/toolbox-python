@@ -251,19 +251,19 @@ class DotDict(dict):
         if isinstance(value, dict):
             return DotDict(value)
         elif isinstance(value, list):
-            return [self._convert_value(item) for item in value]
+            return list(self._convert_value(item) for item in value)
         elif isinstance(value, tuple):
             return tuple(self._convert_value(item) for item in value)
         elif isinstance(value, set):
-            return {self._convert_value(item) for item in value}
+            return set(self._convert_value(item) for item in value)
         return value
 
     def __getattr__(self, key) -> Any:
         """Allow dictionary keys to be accessed as attributes."""
         try:
             return self[key]
-        except KeyError:
-            raise AttributeError(f"Key not found: '{key}'")
+        except KeyError as e:
+            raise AttributeError(f"Key not found: '{key}'") from e
 
     def __setattr__(self, key, value) -> None:
         """Allow setting dictionary keys via attributes."""
@@ -275,25 +275,31 @@ class DotDict(dict):
 
     def __delitem__(self, key) -> None:
         """Intercept item deletion to remove keys."""
-        dict.__delitem__(self, key)
-        if key in self:
+        try:
+            dict.__delitem__(self, key)
+        except KeyError as e:
+            raise KeyError(f"Key not found: '{key}'.") from e
+
+    def __delattr__(self, key) -> None:
+        """Allow deleting dictionary keys via attributes."""
+        try:
             del self[key]
-        else:
-            raise KeyError(f"Key not found: '{key}'.")
+        except KeyError as e:
+            raise AttributeError(f"Key not found: '{key}'") from e
 
     def update(self, *args, **kwargs) -> None:
         """Override update to convert new values."""
         for k, v in dict(*args, **kwargs).items():
             self[k] = v
 
-    def to_dict(self):
+    def to_dict(self) -> Any:
         """Convert back to regular dictionary."""
 
-        def _convert_back(obj):
+        def _convert_back(obj) -> Any:
             if isinstance(obj, DotDict):
                 return {k: _convert_back(v) for k, v in obj.items()}
             elif isinstance(obj, list):
-                return [_convert_back(item) for item in obj]
+                return list(_convert_back(item) for item in obj)
             elif isinstance(obj, tuple):
                 return tuple(_convert_back(item) for item in obj)
             elif isinstance(obj, set):
@@ -301,35 +307,3 @@ class DotDict(dict):
             return obj
 
         return _convert_back(self)
-
-
-def _test_dot_dict() -> None:
-    # Create a DotDict
-    data = DotDict(
-        {
-            "user": {
-                "name": "John",
-                "age": 30,
-                "address": {"city": "New York", "zip": "10001"},
-            },
-            "objects": [{"id": 1, "name": "Item 1"}, {"id": 2, "name": "Item 2"}],
-        }
-    )
-
-    # Access with dot notation
-    print(data.user.name)  # John
-    print(data.user.address.city)  # New York
-    print(data.objects[0].name)  # Item 1
-
-    # You can still use dictionary access
-    print(data["user"]["age"])  # 30
-
-    # Modify values with dot notation
-    data.user.age = 31
-    data.user.address.city = "Boston"
-
-    # Add new keys
-    data.new_key = "value"
-
-    # Convert back to regular dict if needed
-    regular_dict = data.to_dict()
