@@ -219,7 +219,7 @@ jobs:
 
         - name: Build package
           id: build-package
-          run: build-package
+          run: make build-package
 
         - name: Upload assets
           id: upload-assets
@@ -270,7 +270,7 @@ jobs:
         id: publish-package
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        run: publish-package
+        run: make publish-package
 
       - name: Check
         id: check
