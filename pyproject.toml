@@ -176,8 +176,9 @@ disable = [
     "E1137", # unsupported-assignment-operation
 ]
 
-# [[tool.poetry_bumpversion.replacements]]
-# files = [
-#     "src/toolbox_python/__init__.py",
-#     "src/tests/test_version.py",
-# ]
+[tool.bump_version.replacements]
+files = [
+    { file = "src/toolbox_python/__init__.py", pattern = "__version__ = \"{VERSION}\"" },
+    { file = "src/tests/test_version.py", pattern = "__version__ = \"{VERSION}\"" },
+    { file = "pyproject.toml", pattern = "version = \"{VERSION}\"" },
+]

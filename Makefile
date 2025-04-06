@@ -64,17 +64,17 @@ uv-self-update:
 	uv self update
 	uv --version
 uv-install-main:
-	uv sync --no-cache --no-group=dev --no-group=docs --no-group=test
+	uv sync --link-mode=copy --no-cache --no-group=dev --no-group=docs --no-group=test
 uv-install-dev:
-	uv sync --no-cache --group=dev
+	uv sync --link-mode=copy --no-cache --group=dev
 uv-install-docs:
-	uv sync --no-cache --group=docs
+	uv sync --link-mode=copy --no-cache --group=docs
 uv-install-test:
-	uv sync --no-cache --group=test
+	uv sync --link-mode=copy --no-cache --group=test
 uv-install-dev-test:
-	uv sync --no-cache --group=dev --group=test
+	uv sync --link-mode=copy --no-cache --group=dev --group=test
 uv-install-all:
-	uv sync --no-cache --all-groups
+	uv sync --link-mode=copy --no-cache --all-groups
 uv-sync-main: uv-install-main
 uv-sync-dev: uv-install-dev
 uv-sync-docs: uv-install-docs
@@ -165,9 +165,7 @@ git-switch-to-docs-branch:
 # See: https://github.com/monim67/poetry-bumpversion
 .PHONY: deployment
 bump-version:
-	poetry self add poetry-bumpversion
-	poetry version $(VERSION_CLEAN)
-	poetry version --short
+	uv run --link-mode=copy python -m src.utils.bump_version --verbose=true $(VERSION_CLEAN)
 update-git:
 	git add .
 	git commit --message="Bump to version \`$(VERSION)\` [skip ci]" --allow-empty
