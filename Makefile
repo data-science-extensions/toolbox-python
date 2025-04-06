@@ -32,25 +32,25 @@ install-python-and-pip: install-python install-pip upgrade-pip
 
 #* Poetry
 .PHONY: poetry-installs
-install-poetry:
+poetry-install-poetry:
 	$(PYTHON) -m pip install poetry
 	poetry --version
-install:
+poetry-install:
 	poetry lock
 	poetry install --no-interaction --only main
-install-dev:
+poetry-install-dev:
 	poetry lock
 	poetry install --no-interaction --with dev
-install-docs:
+poetry-install-docs:
 	poetry lock
 	poetry install --no-interaction --with docs
-install-test:
+poetry-install-test:
 	poetry lock
 	poetry install --no-interaction --with test
-install-dev-test:
+poetry-install-dev-test:
 	poetry lock
 	poetry install --no-interaction --with dev,test
-install-all:
+poetry-install-all:
 	poetry lock
 	poetry install --no-interaction --with dev,docs,test
 
@@ -64,15 +64,15 @@ uv-self-update:
 	uv self update
 	uv --version
 uv-install-main:
-	uv sync --link-mode=copy --no-cache --no-group dev,docs,test
+	uv sync --no-cache --no-group=dev --no-group=docs --no-group=test
 uv-install-dev:
-	uv sync --link-mode=copy --no-cache --group dev
+	uv sync --no-cache --group=dev
 uv-install-docs:
-	uv sync --link-mode=copy --no-cache --group docs
+	uv sync --no-cache --group=docs
 uv-install-test:
-	uv sync --link-mode=copy --no-cache --group test
+	uv sync --no-cache --group=test
 uv-install-dev-test:
-	uv sync --link-mode=copy --no-cache --group dev,test
+	uv sync --no-cache --group=dev --group=test
 uv-install-all:
 	uv sync --no-cache --all-groups
 uv-sync-main: uv-install-main
@@ -83,6 +83,13 @@ uv-sync-dev-test: uv-install-dev-test
 uv-sync-all: uv-install-all
 uv-sync: uv-install-all
 uv-update: uv-install-all
+install: uv-install-main
+install-main: uv-install-main
+install-dev: uv-install-dev
+install-docs: uv-install-docs
+install-test: uv-install-test
+install-dev-test: uv-install-dev-test
+install-all: uv-install-all
 
 
 #* Linting
@@ -91,9 +98,7 @@ run-black:
 	uv run black --config pyproject.toml ./
 run-isort:
 	uv run isort --settings-file pyproject.toml ./
-run-safety:
-	uv check
-lint: run-black run-isort run-safety
+lint: run-black run-isort
 
 
 #* Checking
@@ -112,10 +117,13 @@ check-pytest:
 	uv run pytest --config-file pyproject.toml
 check-pycln:
 	uv run pycln --config="pyproject.toml" src/$(PACKAGE_NAME)
+check-build:
+	uv build --out-dir=dist
+	if [ -d "dist" ]; then rm --recursive dist; fi
 check-mkdocs:
 	uv run mkdocs build --site-dir="temp"
 	if [ -d "temp" ]; then rm --recursive temp; fi
-check: check-black check-mypy check-pycln check-isort check-codespell check-pylint check-mkdocs check-pytest
+check: check-black check-mypy check-pycln check-isort check-codespell check-pylint check-mkdocs check-build check-pytest
 
 
 #* Testing

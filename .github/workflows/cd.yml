@@ -114,6 +114,9 @@ jobs:
         with:
           ref: main
 
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
       - name: Set up Python
         id: setup-python
         uses: actions/setup-python@v5
@@ -128,10 +131,6 @@ jobs:
           make configure-git
           make git-switch-to-main-branch
           make git-refresh-current-branch
-
-      - name: Install Poetry
-        id: install-poetry
-        run: make install-poetry
 
       - name: Install dependencies
         id: install-dependencies
@@ -175,6 +174,9 @@ jobs:
           with:
             ref: main
 
+        - name: Set up uv
+          uses: astral-sh/setup-uv@v5
+
         - name: Setup Python
           id: setup-python
           uses: actions/setup-python@v5
@@ -190,10 +192,6 @@ jobs:
               echo "/$VERSION is missing. Please try again."
               exit 1
             fi
-
-        - name: Install Poetry
-          id: install-poetry
-          run: make install-poetry
 
         - name: Install dependencies
           run: make install

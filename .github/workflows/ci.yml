@@ -94,13 +94,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
-
-      - name: Install Poetry
-        run: make install-poetry
+          python-version-file: "pyproject.toml"
 
       - name: Install dependencies
         run: make install-all
@@ -126,16 +126,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-
-      - name: Install Pip
-        run: make install-pip
-
-      - name: Install Poetry
-        run: make install-poetry
 
       - name: Install dependencies
         run: make install-all
