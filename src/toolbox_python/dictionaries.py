@@ -303,7 +303,7 @@ class DotDict(dict):
             elif isinstance(obj, tuple):
                 return tuple(_convert_back(item) for item in obj)
             elif isinstance(obj, set):
-                return set(self._convert_value(item) for item in obj)
+                return set(_convert_back(item) for item in obj)
             return obj
 
         return _convert_back(self)
