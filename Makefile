@@ -5,6 +5,7 @@ PYTHONPATH := `pwd`
 VERSION ?= v0.0.0
 VERSION_CLEAN := $(shell echo $(VERSION) | awk '{gsub(/v/,"")}1')
 VERSION_NO_PATCH := "$(shell echo $(VERSION) | cut --delimiter '.' --fields 1-2).*"
+UV_LINK_MODE := copy
 
 
 #* Environment
@@ -31,68 +32,104 @@ install-python-and-pip: install-python install-pip upgrade-pip
 
 #* Poetry
 .PHONY: poetry-installs
-install-poetry:
+poetry-install-poetry:
 	$(PYTHON) -m pip install poetry
 	poetry --version
-install:
+poetry-install:
 	poetry lock
 	poetry install --no-interaction --only main
-install-dev:
+poetry-install-dev:
 	poetry lock
 	poetry install --no-interaction --with dev
-install-docs:
+poetry-install-docs:
 	poetry lock
 	poetry install --no-interaction --with docs
-install-test:
+poetry-install-test:
 	poetry lock
 	poetry install --no-interaction --with test
-install-dev-test:
+poetry-install-dev-test:
 	poetry lock
 	poetry install --no-interaction --with dev,test
-install-all:
+poetry-install-all:
 	poetry lock
 	poetry install --no-interaction --with dev,docs,test
+
+
+#* UV
+.PHONY: uv
+install-uv:
+	curl -LsSf https://astral.sh/uv/install.sh | sh
+	uv --version
+uv-self-update:
+	uv self update
+	uv --version
+uv-install-main:
+	uv sync --link-mode=copy --no-cache --no-group=dev --no-group=docs --no-group=test
+uv-install-dev:
+	uv sync --link-mode=copy --no-cache --group=dev
+uv-install-docs:
+	uv sync --link-mode=copy --no-cache --group=docs
+uv-install-test:
+	uv sync --link-mode=copy --no-cache --group=test
+uv-install-dev-test:
+	uv sync --link-mode=copy --no-cache --group=dev --group=test
+uv-install-all:
+	uv sync --link-mode=copy --no-cache --all-groups
+uv-sync-main: uv-install-main
+uv-sync-dev: uv-install-dev
+uv-sync-docs: uv-install-docs
+uv-sync-test: uv-install-test
+uv-sync-dev-test: uv-install-dev-test
+uv-sync-all: uv-install-all
+uv-sync: uv-install-all
+uv-update: uv-install-all
+install: uv-install-main
+install-main: uv-install-main
+install-dev: uv-install-dev
+install-docs: uv-install-docs
+install-test: uv-install-test
+install-dev-test: uv-install-dev-test
+install-all: uv-install-all
 
 
 #* Linting
 .PHONY: linting
 run-black:
-	poetry run black --config pyproject.toml ./
+	uv run black --config pyproject.toml ./
 run-isort:
-	poetry run isort --settings-file pyproject.toml ./
-run-safety:
-	poetry check
-lint: run-black run-isort run-safety
+	uv run isort --settings-file pyproject.toml ./
+lint: run-black run-isort
 
 
 #* Checking
 .PHONY: checking
 check-black:
-	poetry run black --diff --check --config pyproject.toml ./
+	uv run black --diff --check --config pyproject.toml ./
 check-mypy:
-	poetry run mypy --install-types --config-file pyproject.toml src/$(PACKAGE_NAME)
+	uv run mypy --install-types --config-file pyproject.toml src/$(PACKAGE_NAME)
 check-isort:
-	poetry run isort --settings-file pyproject.toml ./
+	uv run isort --settings-file pyproject.toml ./
 check-codespell:
-	poetry run codespell --toml pyproject.toml src/ *.py
-check-safety:
-	poetry check
+	uv run codespell --toml pyproject.toml src/ *.py
 check-pylint:
-	poetry run pylint --rcfile=pyproject.toml src/$(PACKAGE_NAME)
+	uv run pylint --rcfile=pyproject.toml src/$(PACKAGE_NAME)
 check-pytest:
-	poetry run pytest --config-file pyproject.toml
+	uv run pytest --config-file pyproject.toml
 check-pycln:
-	poetry run pycln --config="pyproject.toml" src/$(PACKAGE_NAME)
+	uv run pycln --config="pyproject.toml" src/$(PACKAGE_NAME)
+check-build:
+	uv build --out-dir=dist
+	if [ -d "dist" ]; then rm --recursive dist; fi
 check-mkdocs:
-	poetry run mkdocs build --site-dir="temp"
+	uv run mkdocs build --site-dir="temp"
 	if [ -d "temp" ]; then rm --recursive temp; fi
-check: check-black check-mypy check-pycln check-isort check-codespell check-pylint check-mkdocs check-pytest
+check: check-black check-mypy check-pycln check-isort check-codespell check-pylint check-mkdocs check-build check-pytest
 
 
 #* Testing
 .PHONY: pytest
 pytest:
-	poetry run pytest --config-file pyproject.toml
+	uv run pytest --config-file pyproject.toml
 copy-coverage-report:
 	cp --recursive --update "./cov-report/html/." "./docs/code/coverage/"
 commit-coverage-report:
@@ -128,46 +165,43 @@ git-switch-to-docs-branch:
 # See: https://github.com/monim67/poetry-bumpversion
 .PHONY: deployment
 bump-version:
-	poetry self add poetry-bumpversion
-	poetry version $(VERSION_CLEAN)
-	poetry version --short
+	uv run --link-mode=copy python -m src.utils.bump_version --verbose=true $(VERSION_CLEAN)
 update-git:
 	git add .
 	git commit --message="Bump to version \`$(VERSION)\` [skip ci]" --allow-empty
 	git push --force --no-verify
 	git status
-poetry-build:
-	poetry build
-poetry-configure:
-	poetry config pypi-token.pypi ${PYPI_TOKEN}
-poetry-publish:
-	poetry publish
-build-package: poetry-build
-deploy-package: poetry-configure poetry-publish
+uv-build:
+	uv build --out-dir=dist
+uv-publish:
+	uv publish --token ${PYPI_TOKEN}
+build-package: uv-build
+publish-package: uv-publish
+deploy-package: uv-publish
 
 
 #* Docs
 .PHONY: docs
 docs-serve-static:
-	poetry run mkdocs serve
+	uv run mkdocs serve
 docs-serve-versioned:
-	poetry run mike serve --branch=docs-site
+	uv run mike serve --branch=docs-site
 docs-build-static:
-	poetry run mkdocs build --clean
+	uv run mkdocs build --clean
 docs-build-versioned:
 	git config --global --list
 	git config --local --list
 	git remote -v
-	poetry run mike --debug deploy --update-aliases --branch=docs-site --push $(VERSION) latest
+	uv run mike --debug deploy --update-aliases --branch=docs-site --push $(VERSION) latest
 update-git-docs:
 	git add .
 	git commit -m "Build docs [skip ci]"
 	git push --force --no-verify --push-option ci.skip
 docs-check-versions:
-	poetry run mike --debug list --branch=docs-site
+	uv run mike --debug list --branch=docs-site
 docs-delete-version:
-	poetry run mike --debug delete --branch=docs-site $(VERSION)
+	uv run mike --debug delete --branch=docs-site $(VERSION)
 docs-set-default:
-	poetry run mike --debug set-default --branch=docs-site --push latest
+	uv run mike --debug set-default --branch=docs-site --push latest
 build-static-docs: docs-build-static update-git-docs
 build-versioned-docs: docs-build-versioned docs-set-default

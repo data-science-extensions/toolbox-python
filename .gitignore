@@ -1,4 +1,5 @@
 ### User Defined ###
+uv.lock
 poetry.lock
 Pipfile
 Pipfile.lock

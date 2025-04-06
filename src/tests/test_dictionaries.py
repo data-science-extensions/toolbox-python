@@ -18,8 +18,10 @@ from unittest import TestCase
 import pytest
 
 # ## Local First Party Imports ----
+from toolbox_python.checkers import assert_type
 from toolbox_python.collection_types import (
     dict_int_str,
+    dict_str_any,
     dict_str_int,
     dict_str_str,
     int_list,
@@ -29,17 +31,17 @@ from toolbox_python.collection_types import (
 )
 
 # Local Module Imports
-from toolbox_python.dictionaries import dict_reverse_keys_and_values
+from toolbox_python.dictionaries import DotDict, dict_reverse_keys_and_values
 
 
 # ---------------------------------------------------------------------------- #
 #                                                                              #
-#     Test Suite                                                            ####
+#     dict_reverse_keys_and_values()                                                            ####
 #                                                                              #
 # ---------------------------------------------------------------------------- #
 
 
-class TestDictionaries(TestCase):
+class TestDictReverseKeysAndValues(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -130,3 +132,101 @@ class TestDictionaries(TestCase):
             "6": "ee",
         }
         assert _output == _expected
+
+
+# ---------------------------------------------------------------------------- #
+#                                                                              #
+#     DotDict()                                                             ####
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+
+
+class TestDotDict(TestCase):
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.test_dict: dict_str_any = {
+            "version": 1.0,
+            "title": "Sample Dictionary",
+            "user": {
+                "name": "John",
+                "age": 30,
+                "address": {"city": "New York", "zip": "10001"},
+            },
+            "list_objects": [{"id": 1, "name": "Item 1"}, {"id": 2, "name": "Item 2"}],
+            "tuple_objects": (1, 2, 3, 4, 5, 6),
+            "set_objects": {"a", "b", "c", "d", "e", "f"},
+        }
+        cls.dot_dict = DotDict(cls.test_dict)
+
+    def test_dict_init(self) -> None:
+        assert_type(self.dot_dict, DotDict)
+        assert_type(self.dot_dict, dict)
+
+    def test_dict_values(self) -> None:
+        assert self.dot_dict.version == 1.0
+        assert self.dot_dict.title == "Sample Dictionary"
+        with pytest.raises(AttributeError):
+            assert self.dot_dict.missing == "Missing Key"
+
+    def test_dict_nested_values(self) -> None:
+        assert self.dot_dict.user.name == "John"
+        assert self.dot_dict.user.age == 30
+        assert self.dot_dict.user.address.city == "New York"
+        assert self.dot_dict.user.address.zip == "10001"
+
+    def test_dict_list_values(self) -> None:
+        assert self.dot_dict.list_objects[0].id == 1
+        assert self.dot_dict.list_objects[0].name == "Item 1"
+        assert self.dot_dict.list_objects[1].id == 2
+        assert self.dot_dict.list_objects[1].name == "Item 2"
+        assert self.dot_dict.tuple_objects[0] == 1
+        assert self.dot_dict.tuple_objects[1] == 2
+        assert self.dot_dict.tuple_objects == self.test_dict["tuple_objects"]
+        assert self.dot_dict.set_objects == self.test_dict["set_objects"]
+
+    def test_dict_standard_usage(self) -> None:
+        assert self.dot_dict["version"] == 1.0
+        assert self.dot_dict["title"] == "Sample Dictionary"
+        assert self.dot_dict["user"]["name"] == "John"
+        assert self.dot_dict["user"]["age"] == 30
+        assert self.dot_dict["user"]["address"]["city"] == "New York"
+        assert self.dot_dict["user"]["address"]["zip"] == "10001"
+        assert self.dot_dict["list_objects"][0]["id"] == 1
+        assert self.dot_dict["list_objects"][0]["name"] == "Item 1"
+        assert self.dot_dict["list_objects"][1]["id"] == 2
+        assert self.dot_dict["list_objects"][1]["name"] == "Item 2"
+
+    def test_dict_add_new_key(self) -> None:
+        self.dot_dict.key_one = "New Value"
+        assert self.dot_dict.key_one == "New Value"
+        del self.dot_dict.key_one
+        self.dot_dict["key_two"] = "New Value"
+        assert self.dot_dict["key_two"] == "New Value"
+        del self.dot_dict["key_two"]
+        with pytest.raises(KeyError):
+            del self.dot_dict["missing_key"]
+        with pytest.raises(AttributeError):
+            del self.dot_dict.missing_key
+
+    def test_convert_to_dict(self) -> None:
+        dict_from_dotdict = self.dot_dict.to_dict()
+        assert isinstance(dict_from_dotdict, dict)
+        assert dict_from_dotdict == self.test_dict
+        assert dict_from_dotdict["user"]["name"] == "John"
+        assert dict_from_dotdict["list_objects"][0]["name"] == "Item 1"
+        with pytest.raises(AttributeError):
+            dict_from_dotdict.version
+            dict_from_dotdict.title
+
+    def test_update_dict(self) -> None:
+        new_dict = {
+            "version": 2.0,
+            "title": "Updated Dictionary",
+            "user": {"name": "Jane", "age": 25},
+        }
+        self.dot_dict.update(new_dict)
+        assert self.dot_dict.version == 2.0
+        assert self.dot_dict.title == "Updated Dictionary"
+        assert self.dot_dict.user.name == "Jane"
+        assert self.dot_dict.user.age == 25

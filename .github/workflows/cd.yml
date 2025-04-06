@@ -114,6 +114,9 @@ jobs:
         with:
           ref: main
 
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
       - name: Set up Python
         id: setup-python
         uses: actions/setup-python@v5
@@ -128,10 +131,6 @@ jobs:
           make configure-git
           make git-switch-to-main-branch
           make git-refresh-current-branch
-
-      - name: Install Poetry
-        id: install-poetry
-        run: make install-poetry
 
       - name: Install dependencies
         id: install-dependencies
@@ -175,6 +174,9 @@ jobs:
           with:
             ref: main
 
+        - name: Set up uv
+          uses: astral-sh/setup-uv@v5
+
         - name: Setup Python
           id: setup-python
           uses: actions/setup-python@v5
@@ -190,10 +192,6 @@ jobs:
               echo "/$VERSION is missing. Please try again."
               exit 1
             fi
-
-        - name: Install Poetry
-          id: install-poetry
-          run: make install-poetry
 
         - name: Install dependencies
           run: make install
@@ -221,7 +219,7 @@ jobs:
 
         - name: Build package
           id: build-package
-          run: poetry build --output="dist"
+          run: build-package
 
         - name: Upload assets
           id: upload-assets
@@ -235,6 +233,8 @@ jobs:
           with:
             name: dist
             path: dist/*
+            retention-days: 1
+            overwrite: true
 
   deploy-package:
 
@@ -250,6 +250,9 @@ jobs:
         with:
           ref: main
 
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
       - name: Setup Python
         id: setup-python
         uses: actions/setup-python@v5
@@ -263,23 +266,51 @@ jobs:
           name: dist
           path: dist
 
-      - name: Install Poetry
-        id: install-poetry
-        run: make install-poetry
-
-      - name: Configure poetry
-        id: configure-poetry
-        env:
-          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        run: make poetry-configure
-
       - name: Publish package
         id: publish-package
-        run: poetry publish --dist-dir="dist"
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: publish-package
 
       - name: Check
         id: check
-        run: echo 'Package deployed to PyPI 👉 https://pypi.org/project/toolbox-python/'
+        run: |
+          echo 'Package deployed to PyPI 👉 https://pypi.org/project/toolbox-python/'
+          uvx pip install --dry-run --no-deps --no-cache toolbox-python
+
+  install-package:
+
+    name: Install Package on '${{ matrix.os }}' with '${{ matrix.python-version }}'
+    needs: deploy-package
+
+    if: ${{ always() && needs.deploy-package.result == 'success' }}
+
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+      fail-fast: false
+      max-parallel: 15
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+
+      - name: Checkout repository
+        id: checkout-repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Python
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        id: install-package
+        run: pip install --no-cache toolbox-python
 
   build-docs:
 
@@ -301,15 +332,14 @@ jobs:
         with:
           ref: main
 
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
       - name: Setup Python
         id: setup-python
         uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-
-      - name: Install Poetry
-        id: install-poetry
-        run: make install-poetry
 
       - name: Install dependencies
         id: install-dependencies
