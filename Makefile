@@ -171,14 +171,13 @@ update-git:
 	git commit --message="Bump to version \`$(VERSION)\` [skip ci]" --allow-empty
 	git push --force --no-verify
 	git status
-poetry-build:
-	poetry build
-poetry-configure:
-	poetry config pypi-token.pypi ${PYPI_TOKEN}
-poetry-publish:
-	poetry publish
-build-package: poetry-build
-deploy-package: poetry-configure poetry-publish
+uv-build:
+	uv build --out-dir=dist
+uv-publish:
+	uv publish --token ${PYPI_TOKEN}
+build-package: uv-build
+publish-package: uv-publish
+deploy-package: uv-publish
 
 
 #* Docs
