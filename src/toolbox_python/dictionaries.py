@@ -38,6 +38,9 @@
 # ---------------------------------------------------------------------------- #
 
 
+# ## Python StdLib Imports ----
+from typing import Any
+
 # ## Python Third Party Imports ----
 from typeguard import typechecked
 
@@ -49,12 +52,12 @@ from toolbox_python.collection_types import dict_any, dict_str_any, str_list
 #  Exports                                                                  ####
 # ---------------------------------------------------------------------------- #
 
-__all__: str_list = ["dict_reverse_keys_and_values"]
+__all__: str_list = ["dict_reverse_keys_and_values", "DotDict"]
 
 
 # ---------------------------------------------------------------------------- #
 #                                                                              #
-#     Functions                                                             ####
+#     Swap Keys & Values                                                    ####
 #                                                                              #
 # ---------------------------------------------------------------------------- #
 
@@ -222,3 +225,111 @@ def dict_reverse_keys_and_values(
                 **interim_dict,
             }
     return output_dict
+
+
+# ---------------------------------------------------------------------------- #
+#                                                                              #
+#     Use dot-methods to access values                                      ####
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+
+
+class DotDict(dict):
+    """
+    Dictionary subclass that allows dot notation access to keys.
+    Nested dictionaries are automatically converted to DotDict instances.
+    """
+
+    def __init__(self, *args, **kwargs) -> None:
+        dict.__init__(self)
+        d = dict(*args, **kwargs)
+        for key, value in d.items():
+            self[key] = self._convert_value(value)
+
+    def _convert_value(self, value):
+        """Convert dictionary values recursively."""
+        if isinstance(value, dict):
+            return DotDict(value)
+        elif isinstance(value, list):
+            return [self._convert_value(item) for item in value]
+        elif isinstance(value, tuple):
+            return tuple(self._convert_value(item) for item in value)
+        elif isinstance(value, set):
+            return {self._convert_value(item) for item in value}
+        return value
+
+    def __getattr__(self, key) -> Any:
+        """Allow dictionary keys to be accessed as attributes."""
+        try:
+            return self[key]
+        except KeyError:
+            raise AttributeError(f"Key not found: '{key}'")
+
+    def __setattr__(self, key, value) -> None:
+        """Allow setting dictionary keys via attributes."""
+        self[key] = value
+
+    def __setitem__(self, key, value) -> None:
+        """Intercept item setting to convert dictionaries."""
+        dict.__setitem__(self, key, self._convert_value(value))
+
+    def __delitem__(self, key) -> None:
+        """Intercept item deletion to remove keys."""
+        dict.__delitem__(self, key)
+        if key in self:
+            del self[key]
+        else:
+            raise KeyError(f"Key not found: '{key}'.")
+
+    def update(self, *args, **kwargs) -> None:
+        """Override update to convert new values."""
+        for k, v in dict(*args, **kwargs).items():
+            self[k] = v
+
+    def to_dict(self):
+        """Convert back to regular dictionary."""
+
+        def _convert_back(obj):
+            if isinstance(obj, DotDict):
+                return {k: _convert_back(v) for k, v in obj.items()}
+            elif isinstance(obj, list):
+                return [_convert_back(item) for item in obj]
+            elif isinstance(obj, tuple):
+                return tuple(_convert_back(item) for item in obj)
+            elif isinstance(obj, set):
+                return set(self._convert_value(item) for item in obj)
+            return obj
+
+        return _convert_back(self)
+
+
+def _test_dot_dict() -> None:
+    # Create a DotDict
+    data = DotDict(
+        {
+            "user": {
+                "name": "John",
+                "age": 30,
+                "address": {"city": "New York", "zip": "10001"},
+            },
+            "items": [{"id": 1, "name": "Item 1"}, {"id": 2, "name": "Item 2"}],
+        }
+    )
+
+    # Access with dot notation
+    print(data.user.name)  # John
+    print(data.user.address.city)  # New York
+    print(data.items[0].name)  # Item 1
+
+    # You can still use dictionary access
+    print(data["user"]["age"])  # 30
+
+    # Modify values with dot notation
+    data.user.age = 31
+    data.user.address.city = "Boston"
+
+    # Add new keys
+    data.new_key = "value"
+
+    # Convert back to regular dict if needed
+    regular_dict = data.to_dict()
