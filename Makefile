@@ -57,6 +57,8 @@ poetry-install-all:
 
 #* UV
 .PHONY: uv
+uv-shell:
+	bash -c "source .venv/bin/activate && exec bash"
 install-uv:
 	curl -LsSf https://astral.sh/uv/install.sh | sh
 	uv --version
@@ -95,33 +97,33 @@ install-all: uv-install-all
 #* Linting
 .PHONY: linting
 run-black:
-	uv run black --config pyproject.toml ./
+	uv run --link-mode=copy black --config pyproject.toml ./
 run-isort:
-	uv run isort --settings-file pyproject.toml ./
+	uv run --link-mode=copy isort --settings-file pyproject.toml ./
 lint: run-black run-isort
 
 
 #* Checking
 .PHONY: checking
 check-black:
-	uv run black --diff --check --config pyproject.toml ./
+	uv run --link-mode=copy black --diff --check --config pyproject.toml ./
 check-mypy:
-	uv run mypy --install-types --config-file pyproject.toml src/$(PACKAGE_NAME)
+	uv run --link-mode=copy mypy --install-types --config-file pyproject.toml src/$(PACKAGE_NAME)
 check-isort:
-	uv run isort --settings-file pyproject.toml ./
+	uv run --link-mode=copy isort --settings-file pyproject.toml ./
 check-codespell:
-	uv run codespell --toml pyproject.toml src/ *.py
+	uv run --link-mode=copy codespell --toml pyproject.toml src/ *.py
 check-pylint:
-	uv run pylint --rcfile=pyproject.toml src/$(PACKAGE_NAME)
+	uv run --link-mode=copy pylint --rcfile=pyproject.toml src/$(PACKAGE_NAME)
 check-pytest:
-	uv run pytest --config-file pyproject.toml
+	uv run --link-mode=copy pytest --config-file pyproject.toml
 check-pycln:
-	uv run pycln --config="pyproject.toml" src/$(PACKAGE_NAME)
+	uv run --link-mode=copy pycln --config="pyproject.toml" src/$(PACKAGE_NAME)
 check-build:
 	uv build --out-dir=dist
 	if [ -d "dist" ]; then rm --recursive dist; fi
 check-mkdocs:
-	uv run mkdocs build --site-dir="temp"
+	uv run --link-mode=copy mkdocs build --site-dir="temp"
 	if [ -d "temp" ]; then rm --recursive temp; fi
 check: check-black check-mypy check-pycln check-isort check-codespell check-pylint check-mkdocs check-build check-pytest
 
@@ -129,7 +131,7 @@ check: check-black check-mypy check-pycln check-isort check-codespell check-pyli
 #* Testing
 .PHONY: pytest
 pytest:
-	uv run pytest --config-file pyproject.toml
+	uv run --link-mode=copy pytest --config-file pyproject.toml
 copy-coverage-report:
 	cp --recursive --update "./cov-report/html/." "./docs/code/coverage/"
 commit-coverage-report:
@@ -183,25 +185,25 @@ deploy-package: uv-publish
 #* Docs
 .PHONY: docs
 docs-serve-static:
-	uv run mkdocs serve
+	uv run --link-mode=copy mkdocs serve
 docs-serve-versioned:
-	uv run mike serve --branch=docs-site
+	uv run --link-mode=copy mike serve --branch=docs-site
 docs-build-static:
-	uv run mkdocs build --clean
+	uv run --link-mode=copy mkdocs build --clean
 docs-build-versioned:
 	git config --global --list
 	git config --local --list
 	git remote -v
-	uv run mike --debug deploy --update-aliases --branch=docs-site --push $(VERSION) latest
+	uv run --link-mode=copy mike --debug deploy --update-aliases --branch=docs-site --push $(VERSION) latest
 update-git-docs:
 	git add .
 	git commit -m "Build docs [skip ci]"
 	git push --force --no-verify --push-option ci.skip
 docs-check-versions:
-	uv run mike --debug list --branch=docs-site
+	uv run --link-mode=copy mike --debug list --branch=docs-site
 docs-delete-version:
-	uv run mike --debug delete --branch=docs-site $(VERSION)
+	uv run --link-mode=copy mike --debug delete --branch=docs-site $(VERSION)
 docs-set-default:
-	uv run mike --debug set-default --branch=docs-site --push latest
+	uv run --link-mode=copy mike --debug set-default --branch=docs-site --push latest
 build-static-docs: docs-build-static update-git-docs
 build-versioned-docs: docs-build-versioned docs-set-default
