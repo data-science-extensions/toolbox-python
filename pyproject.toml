@@ -1,7 +1,3 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [project]
 name = "toolbox-python"
 version = "1.2.1"
@@ -54,6 +50,7 @@ dev = [
     "pycln==2.*",
     "pylint==3.*",
     "pyupgrade==3.*",
+    # "ruff==0.*",
 ]
 docs = [
     "black==25.*",
@@ -134,6 +131,12 @@ split_on_trailing_comma = true
 combine_as_imports = true
 lines_after_imports = 2
 
+# [tool.ruff.lint.isort]
+# force-wrap-aliases = true
+# split-on-trailing-comma = true
+# combine-as-imports = true
+# lines-after-imports = 2
+
 [tool.codespell]
 ignore-words-list = "demog"
 
@@ -176,4 +179,13 @@ files = [
     { file = "src/toolbox_python/__init__.py", pattern = "__version__ = \"{VERSION}\"" },
     { file = "src/tests/test_version.py", pattern = "__version__ = \"{VERSION}\"" },
     { file = "pyproject.toml", pattern = "version = \"{VERSION}\"" },
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "src/toolbox_python",
 ]

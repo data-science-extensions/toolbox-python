@@ -77,6 +77,8 @@ uv-install-dev-test:
 	uv sync --link-mode=copy --no-cache --group=dev --group=test
 uv-install-all:
 	uv sync --link-mode=copy --no-cache --all-groups
+uv-lock:
+	uv lock --link-mode=copy
 uv-sync-main: uv-install-main
 uv-sync-dev: uv-install-dev
 uv-sync-docs: uv-install-docs
@@ -85,6 +87,7 @@ uv-sync-dev-test: uv-install-dev-test
 uv-sync-all: uv-install-all
 uv-sync: uv-install-all
 uv-update: uv-install-all
+uv-lock-sync: uv-lock uv-sync
 install: uv-install-main
 install-main: uv-install-main
 install-dev: uv-install-dev
