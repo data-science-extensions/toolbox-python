@@ -1,0 +1,2286 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Helper files/functions/classes for generic Python processes">
+      
+      
+        <meta name="author" content="[Chris Mahoney](mailto:chris@mahoneyconsultingservices.com)">
+      
+      
+      
+        <link rel="prev" href="../strings/">
+      
+      
+        <link rel="next" href="../checkers/">
+      
+      
+      <link rel="icon" href="../../assets/images/python.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
+    
+    
+      
+        <title>Dictionaries - Python Toolbox</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.2afb09e1.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/style.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/admonitions.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/code_chunks.css">
+    
+      <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#toolbox_python.dictionaries" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+          <aside class="md-banner md-banner--warning">
+            <div class="md-banner__inner md-grid md-typeset">
+              
+  You're not viewing the latest version.
+  <a href="../../..">
+    <strong>Click here to go to latest.</strong>
+  </a>
+
+            </div>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+          </aside>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Python Toolbox" class="md-header__button md-logo" aria-label="Python Toolbox" data-md-component="logo">
+      
+  <img src="../../assets/images/python.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python Toolbox
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Dictionaries
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/data-science-extensions/toolbox-python" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21.94 13.11-1.05-3.22c0-.03-.01-.06-.02-.09l-2.11-6.48a.86.86 0 0 0-.8-.57c-.36 0-.68.25-.79.58l-2 6.17H8.84L6.83 3.33a.85.85 0 0 0-.79-.58c-.37 0-.69.25-.8.58L3.13 9.82v.01l-1.07 3.28c-.16.5.01 1.04.44 1.34l9.22 6.71c.17.12.39.12.56-.01l9.22-6.7c.43-.3.6-.84.44-1.34M8.15 10.45l2.57 7.91-6.17-7.91m8.73 7.92 2.47-7.59.1-.33h3.61l-5.59 7.16m4.1-13.67 1.81 5.56h-3.62m-1.3.95-1.79 5.51L12 19.24l-2.86-8.79M6.03 3.94 7.84 9.5H4.23m-1.18 4.19c-.09-.07-.13-.19-.09-.29l.79-2.43 5.82 7.45m11.38-4.73-6.51 4.73.02-.03 5.79-7.42.79 2.43c.04.1 0 .22-.09.29"/></svg>
+  </div>
+  <div class="md-source__repository">
+    toolbox-python
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../usage/overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Usage
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Modules
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Python Toolbox" class="md-nav__button md-logo" aria-label="Python Toolbox" data-md-component="logo">
+      
+  <img src="../../assets/images/python.svg" alt="logo">
+
+    </a>
+    Python Toolbox
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/data-science-extensions/toolbox-python" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21.94 13.11-1.05-3.22c0-.03-.01-.06-.02-.09l-2.11-6.48a.86.86 0 0 0-.8-.57c-.36 0-.68.25-.79.58l-2 6.17H8.84L6.83 3.33a.85.85 0 0 0-.79-.58c-.37 0-.69.25-.8.58L3.13 9.82v.01l-1.07 3.28c-.16.5.01 1.04.44 1.34l9.22 6.71c.17.12.39.12.56-.01l9.22-6.7c.43-.3.6-.84.44-1.34M8.15 10.45l2.57 7.91-6.17-7.91m8.73 7.92 2.47-7.59.1-.33h3.61l-5.59 7.16m4.1-13.67 1.81 5.56h-3.62m-1.3.95-1.79 5.51L12 19.24l-2.86-8.79M6.03 3.94 7.84 9.5H4.23m-1.18 4.19c-.09-.07-.13-.19-.09-.29l.79-2.43 5.82 7.45m11.38-4.73-6.51 4.73.02-.03 5.79-7.42.79 2.43c.04.1 0 .22-.09.29"/></svg>
+  </div>
+  <div class="md-source__repository">
+    toolbox-python
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Usage
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Usage
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Modules
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Classes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Bools
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lists/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lists
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../strings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Strings
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Dictionaries
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dictionaries
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;dictionaries
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" dictionaries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.dict_reverse_keys_and_values" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;dict_reverse_keys_and_values
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;DotDict
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" DotDict">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__init__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.__getattr__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__getattr__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.__setattr__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__setattr__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.__setitem__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__setitem__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.__delitem__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__delitem__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.__delattr__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__delattr__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.update" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;update
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.to_dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;to_dict
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../checkers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Checkers
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../output/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Output
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../retry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Retry
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../defaults/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Defaults
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;dictionaries
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" dictionaries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.dict_reverse_keys_and_values" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;dict_reverse_keys_and_values
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;DotDict
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" DotDict">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__init__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.__getattr__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__getattr__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.__setattr__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__setattr__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.__setitem__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__setitem__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.__delitem__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__delitem__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.__delattr__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__delattr__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.update" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;update
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox_python.dictionaries.DotDict.to_dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;to_dict
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/data-science-extensions/toolbox-python/edit/main/docs/code/dictionaries.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/data-science-extensions/toolbox-python/raw/main/docs/code/dictionaries.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+  <h1>Dictionaries</h1>
+
+<div class="doc doc-object doc-module">
+
+
+
+<h3 id="toolbox_python.dictionaries" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <span class="doc doc-object-name doc-module-name">toolbox_python.dictionaries</span>
+
+
+<a href="#toolbox_python.dictionaries" class="headerlink" title="Permanent link">🔗</a></h3>
+
+    <div class="doc doc-contents first">
+
+        <div class="admonition note">
+<p class="admonition-title">Summary</p>
+<p>The <code>dictionaries</code> module is used how to manipulate and enhance Python dictionaries.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Details</p>
+<p>Note that functions in this module will only take-in and manipulate existing <code class="highlight"><span class="nb">dict</span></code> objects, and also output <code class="highlight"><span class="nb">dict</span></code> objects. It will not sub-class the base <code class="highlight"><span class="nb">dict</span></code> object, or create new '<code class="highlight"><span class="nb">dict</span></code>-like' objects. It will always maintain pure python types at it's core.</p>
+</div>
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="toolbox_python.dictionaries.dict_reverse_keys_and_values" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">dict_reverse_keys_and_values</span>
+
+
+<a href="#toolbox_python.dictionaries.dict_reverse_keys_and_values" class="headerlink" title="Permanent link">🔗</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">dict_reverse_keys_and_values</span><span class="p">(</span>
+    <span class="n">dictionary</span><span class="p">:</span> <span class="n">dict_any</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">dict_str_any</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <div class="admonition note">
+<p class="admonition-title">Summary</p>
+<p>Take the <code>key</code> and <code>values</code> of a dictionary, and reverse them.</p>
+</div>
+<details class="info" open="open">
+<summary>Details</summary>
+<p>This process is simple enough if the <code>values</code> are atomic types, like <code class="highlight"><span class="nb">str</span></code>, <code class="highlight"><span class="nb">int</span></code>, or <code class="highlight"><span class="nb">float</span></code> types. But it is a little more tricky when the <code>values</code> are more complex types, like <code class="highlight"><span class="nb">list</span></code> or <code class="highlight"><span class="nb">dict</span></code>; here we need to use some recursion.</p>
+</details>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>dictionary</code>
+            </td>
+            <td>
+                  <code><span title="toolbox_python.collection_types.dict_any">dict_any</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The input <code class="highlight"><span class="nb">dict</span></code> that you'd like to have the <code>keys</code> and <code>values</code> switched.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If any of the inputs parsed to the parameters of this function are not the correct type. Uses the <a href="https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked"><code>@typeguard.typechecked</code></a> decorator.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="KeyError">KeyError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>When there are duplicate <code>values</code> being coerced to <code>keys</code> in the new dictionary. Raised because a Python <code class="highlight"><span class="nb">dict</span></code> cannot have duplicate keys of the same value.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>output_dict</code></td>            <td>
+                  <code><span title="dict_str_int">dict_str_int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The updated <code class="highlight"><span class="nb">dict</span></code>.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <details class="example" open="open">
+<summary>Examples</summary>
+<div class="python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Set up</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="c1"># Imports</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">toolbox_python.dictionaries</span><span class="w"> </span><span class="kn">import</span> <span class="n">dict_reverse_keys_and_values</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Basic dictionary</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dict_basic</span> <span class="o">=</span> <span class="p">{</span>
+<span class="o">...</span>     <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="o">...</span>     <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<span class="o">...</span>     <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+<span class="o">...</span> <span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Dictionary with iterables</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dict_iterables</span> <span class="o">=</span> <span class="p">{</span>
+<span class="o">...</span>     <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">],</span>
+<span class="o">...</span>     <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+<span class="o">...</span>     <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="s2">&quot;9&quot;</span><span class="p">),</span>
+<span class="o">...</span>     <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
+<span class="o">...</span> <span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Dictionary with iterables and duplicates</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dict_iterables_with_duplicates</span> <span class="o">=</span> <span class="p">{</span>
+<span class="o">...</span>     <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+<span class="o">...</span>     <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+<span class="o">...</span> <span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Dictionary with sub-dictionaries</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dict_with_dicts</span> <span class="o">=</span> <span class="p">{</span>
+<span class="o">...</span>     <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="o">...</span>         <span class="s2">&quot;aa&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+<span class="o">...</span>         <span class="s2">&quot;bb&quot;</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span>
+<span class="o">...</span>         <span class="s2">&quot;cc&quot;</span><span class="p">:</span> <span class="mi">33</span><span class="p">,</span>
+<span class="o">...</span>     <span class="p">},</span>
+<span class="o">...</span>     <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="o">...</span>         <span class="s2">&quot;dd&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+<span class="o">...</span>         <span class="s2">&quot;ee&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="p">),</span>
+<span class="o">...</span>     <span class="p">},</span>
+<span class="o">...</span> <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p><div class="python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Example 1: Reverse one-for-one</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">dict_reverse_keys_and_values</span><span class="p">(</span><span class="n">dict_basic</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+<div class="result" markdown>
+<div class="shell highlight"><span class="filename">Terminal</span><pre><span></span><code><span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;1&quot;</span>:<span class="w"> </span><span class="s2">&quot;a&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;2&quot;</span>:<span class="w"> </span><span class="s2">&quot;b&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;3&quot;</span>:<span class="w"> </span><span class="s2">&quot;c&quot;</span>,
+<span class="o">}</span>
+</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Conclusion: Successful conversion.</p>
+</div>
+<div class="admonition observation">
+<p class="admonition-title">Notice here that the original values were type <code class="highlight"><span class="nb">int</span></code>, but here they have been converted to <code class="highlight"><span class="nb">str</span></code>. This is because <code class="highlight"><span class="nb">dict</span></code> keys should ideally only be <code class="highlight"><span class="nb">str</span></code> type.</p>
+</div>
+</div>
+<p><div class="python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Example 2: Reverse dictionary containing iterables in `values`</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">dict_reverse_keys_and_values</span><span class="p">(</span><span class="n">dict_iterables</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+<div class="result" markdown>
+<div class="shell highlight"><span class="filename">Terminal</span><pre><span></span><code><span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;1&quot;</span>:<span class="w"> </span><span class="s2">&quot;a&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;2&quot;</span>:<span class="w"> </span><span class="s2">&quot;a&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;3&quot;</span>:<span class="w"> </span><span class="s2">&quot;a&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;4&quot;</span>:<span class="w"> </span><span class="s2">&quot;b&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;5&quot;</span>:<span class="w"> </span><span class="s2">&quot;b&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;6&quot;</span>:<span class="w"> </span><span class="s2">&quot;b&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;7&quot;</span>:<span class="w"> </span><span class="s2">&quot;c&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;8&quot;</span>:<span class="w"> </span><span class="s2">&quot;c&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;9&quot;</span>:<span class="w"> </span><span class="s2">&quot;c&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;10&quot;</span>:<span class="w"> </span><span class="s2">&quot;d&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;11&quot;</span>:<span class="w"> </span><span class="s2">&quot;d&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;12&quot;</span>:<span class="w"> </span><span class="s2">&quot;d&quot;</span>,
+<span class="o">}</span>
+</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Conclusion: Successful conversion.</p>
+</div>
+<div class="admonition observation">
+<p class="admonition-title">Notice here how it has 'flattened' the iterables in the <code>values</code> in to individual keys, and assigned the original <code>key</code> to multiple keys. They keys have again been coerced to <code class="highlight"><span class="nb">str</span></code> type.</p>
+</div>
+</div>
+<p><div class="python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Example 3: Dictionary with iterables, raise error when `key` already exists</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">dict_reverse_keys_and_values</span><span class="p">(</span><span class="n">dict_iterables_with_duplicates</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+<div class="result" markdown>
+<div class="shell highlight"><span class="filename">Terminal</span><pre><span></span><code>KeyError:<span class="w"> </span>Key<span class="w"> </span>already<span class="w"> </span>existing.
+Cannot<span class="w"> </span>update<span class="w"> </span><span class="sb">`</span>output_dict<span class="sb">`</span><span class="w"> </span>with<span class="w"> </span>new<span class="w"> </span>elements:<span class="w"> </span><span class="o">{</span><span class="m">2</span>:<span class="w"> </span><span class="s1">&#39;b&#39;</span><span class="o">}</span>
+Because<span class="w"> </span>the<span class="w"> </span>key<span class="w"> </span>is<span class="w"> </span>already<span class="w"> </span>existing<span class="w"> </span><span class="k">for</span>:<span class="w"> </span><span class="o">{</span><span class="s1">&#39;2&#39;</span>:<span class="w"> </span><span class="s1">&#39;a&#39;</span><span class="o">}</span>
+Full<span class="w"> </span><span class="sb">`</span>output_dict<span class="sb">`</span><span class="w"> </span>so<span class="w"> </span>far:
+<span class="o">{</span><span class="s1">&#39;1&#39;</span>:<span class="w"> </span><span class="s1">&#39;a&#39;</span>,<span class="w"> </span><span class="s1">&#39;2&#39;</span>:<span class="w"> </span><span class="s1">&#39;a&#39;</span>,<span class="w"> </span><span class="s1">&#39;3&#39;</span>:<span class="w"> </span><span class="s1">&#39;a&#39;</span>,<span class="w"> </span><span class="s1">&#39;4&#39;</span>:<span class="w"> </span><span class="s1">&#39;b&#39;</span><span class="o">}</span>
+</code></pre></div></p>
+<div class="admonition failure">
+<p class="admonition-title">Conclusion: Failed conversion.</p>
+</div>
+<div class="admonition observation">
+<p class="admonition-title">Here, in the second element of the dictionary (<code class="highlight"><span class="s2">&quot;b&quot;</span></code>), there is a duplicate value <code class="highlight"><span class="mi">2</span></code> which is already existing in the first element of the dictionary (<code class="highlight"><span class="s2">&quot;a&quot;</span></code>). So, we would expect to see an error.<br>Remember, a Python <code class="highlight"><span class="nb">dict</span></code> object <em>cannot</em> contain duplicate keys. They must always be unique.</p>
+</div>
+</div>
+<p><div class="python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Example 4: Dictionary with embedded dictionaries</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">dict_reverse_keys_and_values</span><span class="p">(</span><span class="n">dict_with_dicts</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+<div class="result" markdown>
+<div class="shell highlight"><span class="filename">Terminal</span><pre><span></span><code><span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;1&quot;</span>:<span class="w"> </span><span class="s2">&quot;a&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;2&quot;</span>:<span class="w"> </span><span class="s2">&quot;a&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;3&quot;</span>:<span class="w"> </span><span class="s2">&quot;a&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;4&quot;</span>:<span class="w"> </span><span class="s2">&quot;b&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;5&quot;</span>:<span class="w"> </span><span class="s2">&quot;b&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;6&quot;</span>:<span class="w"> </span><span class="s2">&quot;b&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;7&quot;</span>:<span class="w"> </span><span class="s2">&quot;c&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;8&quot;</span>:<span class="w"> </span><span class="s2">&quot;c&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;9&quot;</span>:<span class="w"> </span><span class="s2">&quot;c&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;10&quot;</span>:<span class="w"> </span><span class="s2">&quot;d&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;11&quot;</span>:<span class="w"> </span><span class="s2">&quot;d&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;12&quot;</span>:<span class="w"> </span><span class="s2">&quot;d&quot;</span>,
+<span class="o">}</span>
+</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Conclusion: Successful conversion.</p>
+</div>
+<div class="admonition observation">
+<p class="admonition-title">Here, the process would be to run a recursive process when it recognises that any <code>value</code> is a <code class="highlight"><span class="nb">dict</span></code> object. So long as there are no duplicate values in any of the contained <code class="highlight"><span class="nb">dict</span></code>'s, the resulting output will be a big, flat dictionary.</p>
+</div>
+</div>
+</details>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/toolbox_python/dictionaries.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@typechecked</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">dict_reverse_keys_and_values</span><span class="p">(</span>
+    <span class="n">dictionary</span><span class="p">:</span> <span class="n">dict_any</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">dict_str_any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    !!! note &quot;Summary&quot;</span>
+<span class="sd">        Take the `key` and `values` of a dictionary, and reverse them.</span>
+
+<span class="sd">    ???+ info &quot;Details&quot;</span>
+<span class="sd">        This process is simple enough if the `values` are atomic types, like `#!py str`, `#!py int`, or `#!py float` types. But it is a little more tricky when the `values` are more complex types, like `#!py list` or `#!py dict`; here we need to use some recursion.</span>
+
+<span class="sd">    Params:</span>
+<span class="sd">        dictionary (dict_any):</span>
+<span class="sd">            The input `#!py dict` that you&#39;d like to have the `keys` and `values` switched.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.</span>
+<span class="sd">        KeyError: When there are duplicate `values` being coerced to `keys` in the new dictionary. Raised because a Python `#!py dict` cannot have duplicate keys of the same value.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        output_dict (dict_str_int):</span>
+<span class="sd">            The updated `#!py dict`.</span>
+
+<span class="sd">    ???+ example &quot;Examples&quot;</span>
+
+<span class="sd">        ```{.py .python linenums=&quot;1&quot; title=&quot;Set up&quot;}</span>
+<span class="sd">        &gt;&gt;&gt; # Imports</span>
+<span class="sd">        &gt;&gt;&gt; from toolbox_python.dictionaries import dict_reverse_keys_and_values</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Basic dictionary</span>
+<span class="sd">        &gt;&gt;&gt; dict_basic = {</span>
+<span class="sd">        ...     &quot;a&quot;: 1,</span>
+<span class="sd">        ...     &quot;b&quot;: 2,</span>
+<span class="sd">        ...     &quot;c&quot;: 3,</span>
+<span class="sd">        ... }</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Dictionary with iterables</span>
+<span class="sd">        &gt;&gt;&gt; dict_iterables = {</span>
+<span class="sd">        ...     &quot;a&quot;: [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;],</span>
+<span class="sd">        ...     &quot;b&quot;: [4, 5, 6],</span>
+<span class="sd">        ...     &quot;c&quot;: (&quot;7&quot;, &quot;8&quot;, &quot;9&quot;),</span>
+<span class="sd">        ...     &quot;d&quot;: (10, 11, 12),</span>
+<span class="sd">        ... }</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Dictionary with iterables and duplicates</span>
+<span class="sd">        &gt;&gt;&gt; dict_iterables_with_duplicates = {</span>
+<span class="sd">        ...     &quot;a&quot;: [1, 2, 3],</span>
+<span class="sd">        ...     &quot;b&quot;: [4, 2, 5],</span>
+<span class="sd">        ... }</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Dictionary with sub-dictionaries</span>
+<span class="sd">        &gt;&gt;&gt; dict_with_dicts = {</span>
+<span class="sd">        ...     &quot;a&quot;: {</span>
+<span class="sd">        ...         &quot;aa&quot;: 11,</span>
+<span class="sd">        ...         &quot;bb&quot;: 22,</span>
+<span class="sd">        ...         &quot;cc&quot;: 33,</span>
+<span class="sd">        ...     },</span>
+<span class="sd">        ...     &quot;b&quot;: {</span>
+<span class="sd">        ...         &quot;dd&quot;: [1, 2, 3],</span>
+<span class="sd">        ...         &quot;ee&quot;: (&quot;4&quot;, &quot;5&quot;, &quot;6&quot;),</span>
+<span class="sd">        ...     },</span>
+<span class="sd">        ... }</span>
+<span class="sd">        ```</span>
+
+<span class="sd">        ```{.py .python linenums=&quot;1&quot; title=&quot;Example 1: Reverse one-for-one&quot;}</span>
+<span class="sd">        &gt;&gt;&gt; print(dict_reverse_keys_and_values(dict_basic))</span>
+<span class="sd">        ```</span>
+<span class="sd">        &lt;div class=&quot;result&quot; markdown&gt;</span>
+<span class="sd">        ```{.sh .shell title=&quot;Terminal&quot;}</span>
+<span class="sd">        {</span>
+<span class="sd">            &quot;1&quot;: &quot;a&quot;,</span>
+<span class="sd">            &quot;2&quot;: &quot;b&quot;,</span>
+<span class="sd">            &quot;3&quot;: &quot;c&quot;,</span>
+<span class="sd">        }</span>
+<span class="sd">        ```</span>
+<span class="sd">        !!! success &quot;Conclusion: Successful conversion.&quot;</span>
+<span class="sd">        !!! observation &quot;Notice here that the original values were type `#!py int`, but here they have been converted to `#!py str`. This is because `#!py dict` keys should ideally only be `#!py str` type.&quot;</span>
+<span class="sd">        &lt;/div&gt;</span>
+
+<span class="sd">        ```{.py .python linenums=&quot;1&quot; title=&quot;Example 2: Reverse dictionary containing iterables in `values`&quot;}</span>
+<span class="sd">        &gt;&gt;&gt; print(dict_reverse_keys_and_values(dict_iterables))</span>
+<span class="sd">        ```</span>
+<span class="sd">        &lt;div class=&quot;result&quot; markdown&gt;</span>
+<span class="sd">        ```{.sh .shell title=&quot;Terminal&quot;}</span>
+<span class="sd">        {</span>
+<span class="sd">            &quot;1&quot;: &quot;a&quot;,</span>
+<span class="sd">            &quot;2&quot;: &quot;a&quot;,</span>
+<span class="sd">            &quot;3&quot;: &quot;a&quot;,</span>
+<span class="sd">            &quot;4&quot;: &quot;b&quot;,</span>
+<span class="sd">            &quot;5&quot;: &quot;b&quot;,</span>
+<span class="sd">            &quot;6&quot;: &quot;b&quot;,</span>
+<span class="sd">            &quot;7&quot;: &quot;c&quot;,</span>
+<span class="sd">            &quot;8&quot;: &quot;c&quot;,</span>
+<span class="sd">            &quot;9&quot;: &quot;c&quot;,</span>
+<span class="sd">            &quot;10&quot;: &quot;d&quot;,</span>
+<span class="sd">            &quot;11&quot;: &quot;d&quot;,</span>
+<span class="sd">            &quot;12&quot;: &quot;d&quot;,</span>
+<span class="sd">        }</span>
+<span class="sd">        ```</span>
+<span class="sd">        !!! success &quot;Conclusion: Successful conversion.&quot;</span>
+<span class="sd">        !!! observation &quot;Notice here how it has &#39;flattened&#39; the iterables in the `values` in to individual keys, and assigned the original `key` to multiple keys. They keys have again been coerced to `#!py str` type.&quot;</span>
+<span class="sd">        &lt;/div&gt;</span>
+
+<span class="sd">        ```{.py .python linenums=&quot;1&quot; title=&quot;Example 3: Dictionary with iterables, raise error when `key` already exists&quot;}</span>
+<span class="sd">        &gt;&gt;&gt; print(dict_reverse_keys_and_values(dict_iterables_with_duplicates))</span>
+<span class="sd">        ```</span>
+<span class="sd">        &lt;div class=&quot;result&quot; markdown&gt;</span>
+<span class="sd">        ```{.sh .shell title=&quot;Terminal&quot;}</span>
+<span class="sd">        KeyError: Key already existing.</span>
+<span class="sd">        Cannot update `output_dict` with new elements: {2: &#39;b&#39;}</span>
+<span class="sd">        Because the key is already existing for: {&#39;2&#39;: &#39;a&#39;}</span>
+<span class="sd">        Full `output_dict` so far:</span>
+<span class="sd">        {&#39;1&#39;: &#39;a&#39;, &#39;2&#39;: &#39;a&#39;, &#39;3&#39;: &#39;a&#39;, &#39;4&#39;: &#39;b&#39;}</span>
+<span class="sd">        ```</span>
+<span class="sd">        !!! failure &quot;Conclusion: Failed conversion.&quot;</span>
+<span class="sd">        !!! observation &quot;Here, in the second element of the dictionary (`#!py &quot;b&quot;`), there is a duplicate value `#!py 2` which is already existing in the first element of the dictionary (`#!py &quot;a&quot;`). So, we would expect to see an error.&lt;br&gt;Remember, a Python `#!py dict` object _cannot_ contain duplicate keys. They must always be unique.&quot;</span>
+<span class="sd">        &lt;/div&gt;</span>
+
+<span class="sd">        ```{.py .python linenums=&quot;1&quot; title=&quot;Example 4: Dictionary with embedded dictionaries&quot;}</span>
+<span class="sd">        &gt;&gt;&gt; print(dict_reverse_keys_and_values(dict_with_dicts))</span>
+<span class="sd">        ```</span>
+<span class="sd">        &lt;div class=&quot;result&quot; markdown&gt;</span>
+<span class="sd">        ```{.sh .shell title=&quot;Terminal&quot;}</span>
+<span class="sd">        {</span>
+<span class="sd">            &quot;1&quot;: &quot;a&quot;,</span>
+<span class="sd">            &quot;2&quot;: &quot;a&quot;,</span>
+<span class="sd">            &quot;3&quot;: &quot;a&quot;,</span>
+<span class="sd">            &quot;4&quot;: &quot;b&quot;,</span>
+<span class="sd">            &quot;5&quot;: &quot;b&quot;,</span>
+<span class="sd">            &quot;6&quot;: &quot;b&quot;,</span>
+<span class="sd">            &quot;7&quot;: &quot;c&quot;,</span>
+<span class="sd">            &quot;8&quot;: &quot;c&quot;,</span>
+<span class="sd">            &quot;9&quot;: &quot;c&quot;,</span>
+<span class="sd">            &quot;10&quot;: &quot;d&quot;,</span>
+<span class="sd">            &quot;11&quot;: &quot;d&quot;,</span>
+<span class="sd">            &quot;12&quot;: &quot;d&quot;,</span>
+<span class="sd">        }</span>
+<span class="sd">        ```</span>
+<span class="sd">        !!! success &quot;Conclusion: Successful conversion.&quot;</span>
+<span class="sd">        !!! observation &quot;Here, the process would be to run a recursive process when it recognises that any `value` is a `#!py dict` object. So long as there are no duplicate values in any of the contained `#!py dict`&#39;s, the resulting output will be a big, flat dictionary.&quot;</span>
+<span class="sd">        &lt;/div&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">output_dict</span><span class="p">:</span> <span class="n">dict_str_any</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="n">output_dict</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)]</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="ow">in</span> <span class="n">output_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Key already existing.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Cannot update `output_dict` with new elements: </span><span class="si">{</span><span class="w"> </span><span class="p">{</span><span class="n">elem</span><span class="p">:</span><span class="w"> </span><span class="n">key</span><span class="p">}</span><span class="w"> </span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Because the key is already existing for: </span><span class="si">{</span><span class="w"> </span><span class="p">{</span><span class="n">new_key</span><span class="p">:</span><span class="w"> </span><span class="n">new_value</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">new_key</span><span class="p">,</span><span class="w"> </span><span class="n">new_value</span><span class="p">)</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">output_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">new_key</span><span class="o">==</span><span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">)}</span><span class="w"> </span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Full `output_dict` so far:</span><span class="se">\n</span><span class="si">{</span><span class="n">output_dict</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="n">output_dict</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">)]</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">interim_dict</span><span class="p">:</span> <span class="n">dict_str_any</span> <span class="o">=</span> <span class="n">dict_reverse_keys_and_values</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">output_dict</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="o">**</span><span class="n">output_dict</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">interim_dict</span><span class="p">,</span>
+            <span class="p">}</span>
+    <span class="k">return</span> <span class="n">output_dict</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="toolbox_python.dictionaries.DotDict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DotDict</span>
+
+
+<a href="#toolbox_python.dictionaries.DotDict" class="headerlink" title="Permanent link">🔗</a></h4>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="dict">dict</span></code></p>
+
+
+        <p>Dictionary subclass that allows dot notation access to keys.
+Nested dictionaries are automatically converted to DotDict instances.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>src/toolbox_python/dictionaries.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">DotDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dictionary subclass that allows dot notation access to keys.</span>
+<span class="sd">    Nested dictionaries are automatically converted to DotDict instances.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">dict</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert dictionary values recursively.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">DotDict</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_convert_value</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_convert_value</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_convert_value</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Allow dictionary keys to be accessed as attributes.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key not found: &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Allow setting dictionary keys via attributes.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Intercept item setting to convert dictionaries.&quot;&quot;&quot;</span>
+        <span class="nb">dict</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_value</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Intercept item deletion to remove keys.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">dict</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key not found: &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Allow deleting dictionary keys via attributes.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key not found: &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Override update to convert new values.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert back to regular dictionary.&quot;&quot;&quot;</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_convert_back</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">DotDict</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">_convert_back</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">_convert_back</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">_convert_back</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">_convert_back</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">obj</span>
+
+        <span class="k">return</span> <span class="n">_convert_back</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="toolbox_python.dictionaries.DotDict.__init__" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">__init__</span>
+
+
+<a href="#toolbox_python.dictionaries.DotDict.__init__" class="headerlink" title="Permanent link">🔗</a></h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="nf">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/toolbox_python/dictionaries.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">dict</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="toolbox_python.dictionaries.DotDict.__getattr__" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">__getattr__</span>
+
+
+<a href="#toolbox_python.dictionaries.DotDict.__getattr__" class="headerlink" title="Permanent link">🔗</a></h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="fm">__getattr__</span><span class="p">(</span><span class="nf">key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Allow dictionary keys to be accessed as attributes.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/toolbox_python/dictionaries.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Allow dictionary keys to be accessed as attributes.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key not found: &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="toolbox_python.dictionaries.DotDict.__setattr__" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">__setattr__</span>
+
+
+<a href="#toolbox_python.dictionaries.DotDict.__setattr__" class="headerlink" title="Permanent link">🔗</a></h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="fm">__setattr__</span><span class="p">(</span><span class="nf">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Allow setting dictionary keys via attributes.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/toolbox_python/dictionaries.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Allow setting dictionary keys via attributes.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="toolbox_python.dictionaries.DotDict.__setitem__" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">__setitem__</span>
+
+
+<a href="#toolbox_python.dictionaries.DotDict.__setitem__" class="headerlink" title="Permanent link">🔗</a></h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="fm">__setitem__</span><span class="p">(</span><span class="nf">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Intercept item setting to convert dictionaries.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/toolbox_python/dictionaries.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Intercept item setting to convert dictionaries.&quot;&quot;&quot;</span>
+    <span class="nb">dict</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_value</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="toolbox_python.dictionaries.DotDict.__delitem__" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">__delitem__</span>
+
+
+<a href="#toolbox_python.dictionaries.DotDict.__delitem__" class="headerlink" title="Permanent link">🔗</a></h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="fm">__delitem__</span><span class="p">(</span><span class="nf">key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Intercept item deletion to remove keys.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/toolbox_python/dictionaries.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Intercept item deletion to remove keys.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">dict</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key not found: &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="toolbox_python.dictionaries.DotDict.__delattr__" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">__delattr__</span>
+
+
+<a href="#toolbox_python.dictionaries.DotDict.__delattr__" class="headerlink" title="Permanent link">🔗</a></h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="fm">__delattr__</span><span class="p">(</span><span class="nf">key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Allow deleting dictionary keys via attributes.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/toolbox_python/dictionaries.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Allow deleting dictionary keys via attributes.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key not found: &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="toolbox_python.dictionaries.DotDict.update" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">update</span>
+
+
+<a href="#toolbox_python.dictionaries.DotDict.update" class="headerlink" title="Permanent link">🔗</a></h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">update</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Override update to convert new values.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/toolbox_python/dictionaries.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override update to convert new values.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="toolbox_python.dictionaries.DotDict.to_dict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">to_dict</span>
+
+
+<a href="#toolbox_python.dictionaries.DotDict.to_dict" class="headerlink" title="Permanent link">🔗</a></h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">to_dict</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Any</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Convert back to regular dictionary.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/toolbox_python/dictionaries.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert back to regular dictionary.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_back</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">DotDict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">_convert_back</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">_convert_back</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">_convert_back</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">_convert_back</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="k">return</span> <span class="n">_convert_back</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.instant", "search.highlight", "search.suggest", "toc.follow", "content.action.edit", "content.action.view"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
