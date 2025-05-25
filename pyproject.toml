@@ -11,10 +11,12 @@ maintainers = [
     {name="Chris Mahoney", email="toolbox-python@data-science-extensions.com"},
 ]
 classifiers = [
-    "Topic :: Software Development :: Build Tools",
-    "Topic :: Software Development :: Libraries :: Python Modules",
     "Development Status :: 5 - Production/Stable",
     "License :: OSI Approved :: MIT License",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Testing :: Unit",
+    "Topic :: Utilities",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -22,11 +24,8 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Intended Audience :: Developers",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Software Development :: Testing :: Unit",
-    "Topic :: Utilities",
 ]
-requires-python = ">3.9,<4.0"
+requires-python = ">=3.9,<4.0"
 dependencies = [
     "typeguard==4.*",
     "more-itertools==10.*",
