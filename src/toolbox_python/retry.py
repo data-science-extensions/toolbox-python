@@ -45,7 +45,7 @@ from functools import wraps
 from logging import Logger
 from time import sleep
 from types import ModuleType
-from typing import Any, Callable, Literal, Optional, Union
+from typing import Callable, Literal, Optional, TypeVar, Union, overload
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
@@ -80,6 +80,9 @@ _exceptions = Union[
 """
 
 
+R = TypeVar("R")
+
+
 # ---------------------------------------------------------------------------- #
 #                                                                              #
 #     Classes                                                               ####
@@ -98,13 +101,29 @@ class Retry:
 # ---------------------------------------------------------------------------- #
 
 
+@overload
 @typechecked
 def retry(
     exceptions: _exceptions = Exception,
     tries: int = 1,
     delay: int = 0,
-    print_or_log: Optional[Literal["print", "log"]] = "print",
-) -> Optional[Any]:
+    print_or_log: Literal["print"] = "print",
+) -> Callable[[Callable[..., R]], Callable[..., R]]: ...
+@overload
+@typechecked
+def retry(
+    exceptions: _exceptions = Exception,
+    tries: int = 1,
+    delay: int = 0,
+    print_or_log: Literal["log"] = "log",
+) -> Callable[[Callable[..., R]], Callable[..., R]]: ...
+@typechecked
+def retry(
+    exceptions: _exceptions = Exception,
+    tries: int = 1,
+    delay: int = 0,
+    print_or_log: Literal["print", "log"] = "print",
+) -> Callable[[Callable[..., R]], Callable[..., R]]:
     """
     !!! note "Summary"
         Retry a given function a number of times. Catching any known exceptions when they are given. And retrurning any output to either a terminal or a log file.
@@ -154,7 +173,7 @@ def retry(
         >>> from toolbox_python.retry import retry
         ```
 
-        ```pycon {.py .python linenums="1" title="Example 1: No error"}
+        ```{.py .python linenums="1" title="Example 1: No error"}
         >>> @retry(tries=5, delay=1, print_or_log="print")
         >>> def simple_func(var1: str = "this") -> str:
         ...     return var1
@@ -167,7 +186,7 @@ def retry(
         ```
         </div>
 
-        ```pycon {.py .python linenums="1" title="Example 2: Expected error"}
+        ```{.py .python linenums="1" title="Example 2: Expected error"}
         >>> @retry(exceptions=TypeError, tries=5, delay=1, print_or_log="print")
         >>> def failing_func(var1: str = "that") -> None:
         ...     raise ValueError("Incorrect value")

@@ -42,7 +42,7 @@
 from collections.abc import Generator
 from logging import Logger, _nameToLevel
 from math import ceil
-from typing import Any, Literal, Optional, Union
+from typing import Any, Literal, Optional, Union, overload
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
@@ -235,6 +235,24 @@ def print_or_log_output(
     )
 
 
+@overload
+@typechecked
+def list_columns(
+    obj: Union[any_list, any_set, any_tuple, Generator],
+    cols_wide: int = 4,
+    columnwise: bool = True,
+    gap: int = 4,
+    print_output: Literal[False] = False,
+) -> str: ...
+@overload
+@typechecked
+def list_columns(
+    obj: Union[any_list, any_set, any_tuple, Generator],
+    cols_wide: int = 4,
+    columnwise: bool = True,
+    gap: int = 4,
+    print_output: Literal[True] = True,
+) -> None: ...
 @typechecked
 def list_columns(
     obj: Union[any_list, any_set, any_tuple, Generator],
