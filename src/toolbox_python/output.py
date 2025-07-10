@@ -48,7 +48,12 @@ from typing import Any, Literal, Optional, Union, overload
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from toolbox_python.checkers import is_type
+from toolbox_python.checkers import (
+    assert_all_is_type,
+    assert_is_type,
+    assert_is_valid,
+    is_type,
+)
 from toolbox_python.collection_types import (
     any_list,
     any_set,
@@ -61,6 +66,7 @@ from toolbox_python.collection_types import (
 # ---------------------------------------------------------------------------- #
 #  Exports                                                                  ####
 # ---------------------------------------------------------------------------- #
+
 
 __all__: str_list = ["print_or_log_output", "list_columns"]
 
@@ -394,16 +400,30 @@ def list_columns(
         Full credit goes to:<br>
         https://stackoverflow.com/questions/1524126/how-to-print-a-list-more-nicely#answer-36085705
     """
+
+    # Validations
+    assert_is_type(obj, (list, set, tuple, Generator))
+    assert_all_is_type((cols_wide, gap), int)
+    assert_all_is_type((columnwise, print_output), bool)
+    assert_is_valid(cols_wide, ">", 0)
+    assert_is_valid(gap, ">", 0)
+
+    # Prepare the string representation of the object
     string_list: str_list = [str(item) for item in obj]
-    if cols_wide > len(string_list):
-        cols_wide = len(string_list)
+    cols_wide = min(cols_wide, len(string_list))
     max_len: int = max(len(item) for item in string_list)
+
+    # Adjust column width if column-wise output
     if columnwise:
         cols_wide = int(ceil(len(string_list) / cols_wide))
+
+    # Segment the list into chunks
     segmented_list: list[str_list] = [
         string_list[index : index + cols_wide]
         for index in range(0, len(string_list), cols_wide)
     ]
+
+    # Ensure the last segment has the correct number of columns
     if columnwise:
         if len(segmented_list[-1]) != cols_wide:
             segmented_list[-1].extend(
@@ -412,12 +432,16 @@ def list_columns(
         combined_list: Union[list[str_list], Any] = zip(*segmented_list)
     else:
         combined_list = segmented_list
+
+    # Create the formatted string with proper spacing
     printer: str = "\n".join(
         [
             "".join([element.ljust(max_len + gap) for element in group])
             for group in combined_list
         ]
     )
+
+    # Print the output if requested
     if print_output:
         print(printer)
     return printer
