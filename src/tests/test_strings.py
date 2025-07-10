@@ -11,7 +11,11 @@
 
 
 # ## Python StdLib Imports ----
+from typing import Any, Union
 from unittest import TestCase
+
+# ## Python Third Party Imports ----
+from parameterized import parameterized
 
 # ## Local First Party Imports ----
 from toolbox_python.collection_types import str_list
@@ -21,6 +25,7 @@ from toolbox_python.strings import (
     str_contains_any,
     str_replace,
     str_separate_number_chars,
+    str_to_list,
 )
 
 
@@ -120,4 +125,23 @@ class TestNumberCharacterSeparation(TestCase):
             "A",
             "123",
         ]
+        assert _output == _expected
+
+
+class TestStrToList(TestCase):
+
+    @parameterized.expand(
+        input=[
+            ("abc", ["abc"]),
+            (["a", "b", "c"], ["a", "b", "c"]),
+            (("a", "b", "c"), ("a", "b", "c")),
+            ({"a", "b", "c"}, {"a", "b", "c"}),
+            ({"a": 1, "b": 2, "c": 3}, {"a": 1, "b": 2, "c": 3}),
+            (123, 123),
+        ]
+    )
+    def test_str_to_list(
+        self, _input: Union[str, Any], _expected: Union[str_list, Any]
+    ) -> None:
+        _output: str_list = str_to_list(_input)
         assert _output == _expected

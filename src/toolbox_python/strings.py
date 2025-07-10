@@ -39,11 +39,13 @@
 # ## Python StdLib Imports ----
 import re
 import string
+from typing import Any, Union, overload
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
+from toolbox_python.checkers import is_type
 from toolbox_python.collection_types import str_list, str_list_tuple
 
 
@@ -57,6 +59,7 @@ __all__: str_list = [
     "str_contains_any",
     "str_contains_all",
     "str_separate_number_chars",
+    "str_to_list",
 ]
 
 
@@ -467,3 +470,29 @@ def str_separate_number_chars(text: str) -> str_list:
     """
     res = re.split(r"([-+]?\d+\.\d+)|([-+]?\d+)", text.strip())
     return [r.strip() for r in res if r is not None and r.strip() != ""]
+
+
+@overload
+@typechecked
+def str_to_list(obj: str) -> str_list: ...
+@overload
+@typechecked
+def str_to_list(obj: Any) -> Any: ...
+@typechecked
+def str_to_list(obj: Any) -> Union[str_list, Any]:
+    """
+    !!! note "Summary"
+        Convert a string to a list containing that string as the only element.
+
+    ???+ abstract "Details"
+        This function is useful when you want to ensure that a string is treated as a list, even if it is a single string. If the input is already a list, it will return it unchanged.
+
+    Params:
+        obj (Any):
+            The object to convert to a list if it is a string.
+
+    Raises:
+        TypeCheckError:
+            If `obj` is not a string or a list.
+    """
+    return [obj] if is_type(obj, str) else obj
