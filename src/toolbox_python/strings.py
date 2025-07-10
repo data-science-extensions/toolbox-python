@@ -91,7 +91,8 @@ def str_replace(
             Defaults to `""`.
 
     Raises:
-        TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
+        TypeCheckError:
+            If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
         (str):
@@ -99,13 +100,13 @@ def str_replace(
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Set up"}
+        ```pycon {.py .python linenums="1" title="Set up"}
         >>> from toolbox_python.strings import str_replace
         >>> long_string = "This long string"
         >>> complex_sentence = "Because my pizza was cold, I put it in the microwave."
         ```
 
-        ```{.py .python linenums="1" title="Example 1: Replace all spaces (` `) with underscore (`_`)"}
+        ```pycon {.py .python linenums="1" title="Example 1: Replace all spaces (` `) with underscore (`_`)"}
         >>> print(str_replace(long_string, " ", "_"))
         ```
         <div class="result" markdown>
@@ -115,7 +116,7 @@ def str_replace(
         !!! success "Conclusion: Successful conversion."
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: Remove all punctuation and white space"}
+        ```pycon {.py .python linenums="1" title="Example 2: Remove all punctuation and white space"}
         >>> print(str_replace(complex_sentence))
         ```
         <div class="result" markdown>
@@ -125,7 +126,7 @@ def str_replace(
         !!! success "Conclusion: Successful conversion."
         </div>
 
-        ```{.py .python linenums="1" title="Example 3: Invalid `old_string` input"}
+        ```pycon {.py .python linenums="1" title="Example 3: Invalid `old_string` input"}
         >>> print(str_replace(123))
         ```
         <div class="result" markdown>
@@ -167,7 +168,8 @@ def str_contains(check_string: str, sub_string: str) -> bool:
             The substring to check.
 
     Raises:
-        TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
+        TypeCheckError:
+            If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
         (bool):
@@ -175,12 +177,12 @@ def str_contains(check_string: str, sub_string: str) -> bool:
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Set up"}
+        ```pycon {.py .python linenums="1" title="Set up"}
         >>> from toolbox_python.strings import str_contains
         >>> long_string = "This long string"
         ```
 
-        ```{.py .python linenums="1" title="Example 1: String is contained"}
+        ```pycon {.py .python linenums="1" title="Example 1: String is contained"}
         >>> print(str_contains(long_string, "long"))
         ```
         <div class="result" markdown>
@@ -190,7 +192,7 @@ def str_contains(check_string: str, sub_string: str) -> bool:
         !!! success "Conclusion: `#!py long_string` contains `#!py "long"`."
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: String is not contained"}
+        ```pycon {.py .python linenums="1" title="Example 2: String is not contained"}
         >>> print(str_contains(long_string, "short"))
         ```
         <div class="result" markdown>
@@ -200,7 +202,7 @@ def str_contains(check_string: str, sub_string: str) -> bool:
         !!! success "Conclusion: `#!py long_string` does not contain `#!py "short"`."
         </div>
 
-        ```{.py .python linenums="1" title="Example 3: Invalid `check_string` input"}
+        ```pycon {.py .python linenums="1" title="Example 3: Invalid `check_string` input"}
         >>> print(str_contains(123, "short"))
         ```
         <div class="result" markdown>
@@ -234,7 +236,8 @@ def str_contains_any(
             The collection of substrings to check.
 
     Raises:
-        TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
+        TypeCheckError:
+            If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
         (bool):
@@ -242,12 +245,12 @@ def str_contains_any(
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Set up"}
+        ```pycon {.py .python linenums="1" title="Set up"}
         >>> from toolbox_python.strings import str_contains_any
         >>> long_string = "This long string"
         ```
 
-        ```{.py .python linenums="1" title="Example 1: Contains any"}
+        ```pycon {.py .python linenums="1" title="Example 1: Contains any"}
         >>> print(str_contains_any(long_string, ["long", "short"]))
         ```
         <div class="result" markdown>
@@ -257,7 +260,7 @@ def str_contains_any(
         !!! success "Conclusion: `#!py long_string` contains either `#!py "long"` or `#!py "short"`."
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: Contains none"}
+        ```pycon {.py .python linenums="1" title="Example 2: Contains none"}
         >>> print(str_contains_any(long_string, ["this", "that"]))
         ```
         <div class="result" markdown>
@@ -267,7 +270,7 @@ def str_contains_any(
         !!! success "Conclusion: `#!py long_string` contains neither `#!py "this"` nor `#!py "that"`."
         </div>
 
-        ```{.py .python linenums="1" title="Example 3: Invalid `check_string` input"}
+        ```pycon {.py .python linenums="1" title="Example 3: Invalid `check_string` input"}
         >>> print(str_contains_any(123, ["short", "long"]))
         ```
         <div class="result" markdown>
@@ -307,7 +310,8 @@ def str_contains_all(
             The collection of substrings to check.
 
     Raises:
-        TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
+        TypeCheckError:
+            If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
         (bool):
@@ -315,12 +319,12 @@ def str_contains_all(
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Set up"}
+        ```pycon {.py .python linenums="1" title="Set up"}
         >>> from toolbox_python.strings import str_contains_all
         >>> long_string = "This long string"
         ```
 
-        ```{.py .python linenums="1" title="Example 1: Contains all"}
+        ```pycon {.py .python linenums="1" title="Example 1: Contains all"}
         >>> print(str_contains_all(long_string, ["long", "string"]))
         ```
         <div class="result" markdown>
@@ -330,7 +334,7 @@ def str_contains_all(
         !!! success "Conclusion: `#!py long_string` contains both `#!py "long"` and `#!py "string"`."
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: Contains some"}
+        ```pycon {.py .python linenums="1" title="Example 2: Contains some"}
         >>> print(str_contains_all(long_string, ["long", "something"]))
         ```
         <div class="result" markdown>
@@ -340,7 +344,7 @@ def str_contains_all(
         !!! failure "Conclusion: `#!py long_string` contains `#!py "long"` but not `#!py "something"`."
         </div>
 
-        ```{.py .python linenums="1" title="Example 3: Contains none"}
+        ```pycon {.py .python linenums="1" title="Example 3: Contains none"}
         >>> print(str_contains_all(long_string, ["this", "that"]))
         ```
         <div class="result" markdown>
@@ -350,7 +354,7 @@ def str_contains_all(
         !!! failure "Conclusion: `#!py long_string` contains neither `#!py "this"` nor `#!py "that"`."
         </div>
 
-        ```{.py .python linenums="1" title="Example 4: Invalid `check_string` input"}
+        ```pycon {.py .python linenums="1" title="Example 4: Invalid `check_string` input"}
         >>> print(str_contains_all(123, ["short", "long"]))
         ```
         <div class="result" markdown>
@@ -389,7 +393,8 @@ def str_separate_number_chars(text: str) -> str_list:
             The string to split.
 
     Raises:
-        TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
+        TypeCheckError:
+            If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
         (str_list):
@@ -397,13 +402,13 @@ def str_separate_number_chars(text: str) -> str_list:
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Set up"}
+        ```pycon {.py .python linenums="1" title="Set up"}
         >>> from toolbox_python.strings import str_contains_all
         >>> simple_string = "-12.1grams"
         >>> complex_string = "abcd2343 abw34324 abc3243-23A 123"
         ```
 
-        ```{.py .python linenums="1" title="Example 1: Simple split"}
+        ```pycon {.py .python linenums="1" title="Example 1: Simple split"}
         >>> print(str_separate_number_chars(simple_string))
         ```
         <div class="result" markdown>
@@ -413,7 +418,7 @@ def str_separate_number_chars(text: str) -> str_list:
         !!! success "Conclusion: Successful split."
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: Complex split"}
+        ```pycon {.py .python linenums="1" title="Example 2: Complex split"}
         >>> print(str_separate_number_chars(complex_string))
         ```
         <div class="result" markdown>
@@ -433,7 +438,7 @@ def str_separate_number_chars(text: str) -> str_list:
         !!! success "Conclusion: Successful split."
         </div>
 
-        ```{.py .python linenums="1" title="Example 3: `text` does not contain any numbers"}
+        ```pycon {.py .python linenums="1" title="Example 3: `text` does not contain any numbers"}
         >>> print(str_separate_number_chars("abcd"))
         ```
         <div class="result" markdown>
@@ -443,7 +448,7 @@ def str_separate_number_chars(text: str) -> str_list:
         !!! success "Conclusion: No numbers in `#!py text`, so returns a single-element long list."
         </div>
 
-        ```{.py .python linenums="1" title="Example 4: Invalid `text` input"}
+        ```pycon {.py .python linenums="1" title="Example 4: Invalid `text` input"}
         >>> print(str_separate_number_chars(123))
         ```
         <div class="result" markdown>

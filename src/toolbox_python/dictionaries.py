@@ -63,9 +63,7 @@ __all__: str_list = ["dict_reverse_keys_and_values", "DotDict"]
 
 
 @typechecked
-def dict_reverse_keys_and_values(
-    dictionary: dict_any,
-) -> dict_str_any:
+def dict_reverse_keys_and_values(dictionary: dict_any) -> dict_str_any:
     """
     !!! note "Summary"
         Take the `key` and `values` of a dictionary, and reverse them.
@@ -78,8 +76,10 @@ def dict_reverse_keys_and_values(
             The input `#!py dict` that you'd like to have the `keys` and `values` switched.
 
     Raises:
-        TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
-        KeyError: When there are duplicate `values` being coerced to `keys` in the new dictionary. Raised because a Python `#!py dict` cannot have duplicate keys of the same value.
+        TypeCheckError:
+            If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
+        KeyError:
+            When there are duplicate `values` being coerced to `keys` in the new dictionary. Raised because a Python `#!py dict` cannot have duplicate keys of the same value.
 
     Returns:
         output_dict (dict_str_int):
@@ -87,7 +87,7 @@ def dict_reverse_keys_and_values(
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Set up"}
+        ```pycon {.py .python linenums="1" title="Set up"}
         >>> # Imports
         >>> from toolbox_python.dictionaries import dict_reverse_keys_and_values
         >>>
@@ -126,7 +126,7 @@ def dict_reverse_keys_and_values(
         ... }
         ```
 
-        ```{.py .python linenums="1" title="Example 1: Reverse one-for-one"}
+        ```pycon {.py .python linenums="1" title="Example 1: Reverse one-for-one"}
         >>> print(dict_reverse_keys_and_values(dict_basic))
         ```
         <div class="result" markdown>
@@ -141,7 +141,7 @@ def dict_reverse_keys_and_values(
         !!! observation "Notice here that the original values were type `#!py int`, but here they have been converted to `#!py str`. This is because `#!py dict` keys should ideally only be `#!py str` type."
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: Reverse dictionary containing iterables in `values`"}
+        ```pycon {.py .python linenums="1" title="Example 2: Reverse dictionary containing iterables in `values`"}
         >>> print(dict_reverse_keys_and_values(dict_iterables))
         ```
         <div class="result" markdown>
@@ -165,7 +165,7 @@ def dict_reverse_keys_and_values(
         !!! observation "Notice here how it has 'flattened' the iterables in the `values` in to individual keys, and assigned the original `key` to multiple keys. They keys have again been coerced to `#!py str` type."
         </div>
 
-        ```{.py .python linenums="1" title="Example 3: Dictionary with iterables, raise error when `key` already exists"}
+        ```pycon {.py .python linenums="1" title="Example 3: Dictionary with iterables, raise error when `key` already exists"}
         >>> print(dict_reverse_keys_and_values(dict_iterables_with_duplicates))
         ```
         <div class="result" markdown>
@@ -180,7 +180,7 @@ def dict_reverse_keys_and_values(
         !!! observation "Here, in the second element of the dictionary (`#!py "b"`), there is a duplicate value `#!py 2` which is already existing in the first element of the dictionary (`#!py "a"`). So, we would expect to see an error.<br>Remember, a Python `#!py dict` object _cannot_ contain duplicate keys. They must always be unique."
         </div>
 
-        ```{.py .python linenums="1" title="Example 4: Dictionary with embedded dictionaries"}
+        ```pycon {.py .python linenums="1" title="Example 4: Dictionary with embedded dictionaries"}
         >>> print(dict_reverse_keys_and_values(dict_with_dicts))
         ```
         <div class="result" markdown>

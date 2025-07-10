@@ -137,9 +137,12 @@ def retry(
             Defaults to `#!py "print"`.
 
     Raises:
-        TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
-        ValueError: If either `tries` or `delay` are less than `#!py 0`
-        RuntimeError: If _either_ an unexpected `#!py Exception` was thrown, which was not declared in the `exceptions` collection, _or_ if the `func` was still not able to be executed after `tries` number of iterations.
+        TypeCheckError:
+            If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
+        ValueError:
+            If either `tries` or `delay` are less than `#!py 0`
+        RuntimeError:
+            If _either_ an unexpected `#!py Exception` was thrown, which was not declared in the `exceptions` collection, _or_ if the `func` was still not able to be executed after `tries` number of iterations.
 
     Returns:
         result (Optional[Any]):
@@ -147,14 +150,15 @@ def retry(
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Imports"}
+        ```pycon {.py .python linenums="1" title="Imports"}
         >>> from toolbox_python.retry import retry
         ```
 
-        ```{.py .python linenums="1" title="Example 1: No error"}
+        ```pycon {.py .python linenums="1" title="Example 1: No error"}
         >>> @retry(tries=5, delay=1, print_or_log="print")
-        >>> def simple_func(var1:str="this")->str:
+        >>> def simple_func(var1: str = "this") -> str:
         ...     return var1
+        ...
         >>> simple_func()
         ```
         <div class="result" markdown>
@@ -163,10 +167,11 @@ def retry(
         ```
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: Expected error"}
+        ```pycon {.py .python linenums="1" title="Example 2: Expected error"}
         >>> @retry(exceptions=TypeError, tries=5, delay=1, print_or_log="print")
-        >>> def failing_func(var1:str="that")->None:
+        >>> def failing_func(var1: str = "that") -> None:
         ...     raise ValueError("Incorrect value")
+        ...
         >>> failing_func()
         ```
         <div class="result" markdown>

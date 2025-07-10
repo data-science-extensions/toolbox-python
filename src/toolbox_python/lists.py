@@ -97,7 +97,8 @@ def flatten(
             Defaults to `#!py None`.
 
     Raises:
-        TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
+        TypeCheckError:
+            If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
         (any_list):
@@ -105,11 +106,11 @@ def flatten(
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Set up"}
+        ```pycon {.py .python linenums="1" title="Set up"}
         >>> from toolbox_python.lists import flatten
         ```
 
-        ```{.py .python linenums="1" title="Example 1: Basic list, same input & output"}
+        ```pycon {.py .python linenums="1" title="Example 1: Basic list, same input & output"}
         >>> print(flatten([0, 1, 2, 3]))
         ```
         <div class="result" markdown>
@@ -119,7 +120,7 @@ def flatten(
         !!! success "Conclusion: Successful flattening."
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: List containing two lists"}
+        ```pycon {.py .python linenums="1" title="Example 2: List containing two lists"}
         >>> print(flatten([[0, 1], [2, 3]]))
         ```
         <div class="result" markdown>
@@ -129,7 +130,7 @@ def flatten(
         !!! success "Conclusion: Successful flattening."
         </div>
 
-        ```{.py .python linenums="1" title="Example 3: List containing a list and other data"}
+        ```pycon {.py .python linenums="1" title="Example 3: List containing a list and other data"}
         >>> print(flatten([0, 1, [2, 3]]))
         ```
         <div class="result" markdown>
@@ -139,7 +140,7 @@ def flatten(
         !!! success "Conclusion: Successful flattening."
         </div>
 
-        ```{.py .python linenums="1" title="Example 4: List containing two lists and other data"}
+        ```pycon {.py .python linenums="1" title="Example 4: List containing two lists and other data"}
         >>> print(flatten([[0, 1], [2, 3], 4, 5]))
         ```
         <div class="result" markdown>
@@ -149,7 +150,7 @@ def flatten(
         !!! success "Conclusion: Successful flattening."
         </div>
 
-        ```{.py .python linenums="1" title="Example 5: List containing a list, a tuple, and other data"}
+        ```pycon {.py .python linenums="1" title="Example 5: List containing a list, a tuple, and other data"}
         >>> print(flatten([[0, 1], (2, 3), 4, 5]))
         ```
         <div class="result" markdown>
@@ -159,7 +160,7 @@ def flatten(
         !!! success "Conclusion: Successful flattening."
         </div>
 
-        ```{.py .python linenums="1" title="Example 6: List containing up to three levels deep"}
+        ```pycon {.py .python linenums="1" title="Example 6: List containing up to three levels deep"}
         >>> print(flatten([[0, 1], [2, 3, [4, 5]]]))
         ```
         <div class="result" markdown>
@@ -169,7 +170,7 @@ def flatten(
         !!! success "Conclusion: Successful flattening."
         </div>
 
-        ```{.py .python linenums="1" title="Example 7: List containing up to three levels deep, plus other data"}
+        ```pycon {.py .python linenums="1" title="Example 7: List containing up to three levels deep, plus other data"}
         >>> print(flatten([[0, 1], [2, 3, [4, 5]], 6, 7]))
         ```
         <div class="result" markdown>
@@ -179,7 +180,7 @@ def flatten(
         !!! success "Conclusion: Successful flattening."
         </div>
 
-        ```{.py .python linenums="1" title="Example 8: List containing up to four levels deep"}
+        ```pycon {.py .python linenums="1" title="Example 8: List containing up to four levels deep"}
         >>> print(flatten([[0, 1], [2, 3, [4, [5]]]]))
         ```
         <div class="result" markdown>
@@ -213,7 +214,8 @@ def flat_list(*inputs: Any) -> any_list:
             Any input.
 
     Raises:
-        TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
+        TypeCheckError:
+            If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
         (any_list):
@@ -221,11 +223,11 @@ def flat_list(*inputs: Any) -> any_list:
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Set up"}
+        ```pycon {.py .python linenums="1" title="Set up"}
         >>> from toolbox_python.lists import flat_list
         ```
 
-        ```{.py .python linenums="1" title="Example 1: Basic input & output"}
+        ```pycon {.py .python linenums="1" title="Example 1: Basic input & output"}
         >>> print(flat_list(0, 1, 2, 3))
         ```
         <div class="result" markdown>
@@ -235,7 +237,7 @@ def flat_list(*inputs: Any) -> any_list:
         !!! success "Conclusion: Successful flattening."
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: Multiple lists"}
+        ```pycon {.py .python linenums="1" title="Example 2: Multiple lists"}
         >>> print(flat_list([0, 1], [2, 3]))
         ```
         <div class="result" markdown>
@@ -245,7 +247,7 @@ def flat_list(*inputs: Any) -> any_list:
         !!! success "Conclusion: Successful flattening."
         </div>
 
-        ```{.py .python linenums="1" title="Example 3: List and other data"}
+        ```pycon {.py .python linenums="1" title="Example 3: List and other data"}
         >>> print(flat_list(0, 1, [2, 3]))
         ```
         <div class="result" markdown>
@@ -255,7 +257,7 @@ def flat_list(*inputs: Any) -> any_list:
         !!! success "Conclusion: Successful flattening."
         </div>
 
-        ```{.py .python linenums="1" title="Example 4: Multiple lists and other data"}
+        ```pycon {.py .python linenums="1" title="Example 4: Multiple lists and other data"}
         >>> print(flat_list([0, 1], [2, 3], 4, 5))
         ```
         <div class="result" markdown>
@@ -265,7 +267,7 @@ def flat_list(*inputs: Any) -> any_list:
         !!! success "Conclusion: Successful flattening."
         </div>
 
-        ```{.py .python linenums="1" title="Example 5: List and a tuple and other data"}
+        ```pycon {.py .python linenums="1" title="Example 5: List and a tuple and other data"}
         >>> print(flat_list([0, 1], (2, 3), 4, 5))
         ```
         <div class="result" markdown>
@@ -275,7 +277,7 @@ def flat_list(*inputs: Any) -> any_list:
         !!! success "Conclusion: Successful flattening."
         </div>
 
-        ```{.py .python linenums="1" title="Example 6: List and a nested list"}
+        ```pycon {.py .python linenums="1" title="Example 6: List and a nested list"}
         >>> print(flat_list([0, 1], [2, 3, [4, 5]]))
         ```
         <div class="result" markdown>
@@ -285,7 +287,7 @@ def flat_list(*inputs: Any) -> any_list:
         !!! success "Conclusion: Successful flattening."
         </div>
 
-        ```{.py .python linenums="1" title="Example 7: List and a nested list and other data"}
+        ```pycon {.py .python linenums="1" title="Example 7: List and a nested list and other data"}
         >>> print(flat_list([0, 1], [2, 3, [4, 5]], 6, 7))
         ```
         <div class="result" markdown>
@@ -295,7 +297,7 @@ def flat_list(*inputs: Any) -> any_list:
         !!! success "Conclusion: Successful flattening."
         </div>
 
-        ```{.py .python linenums="1" title="Example 8: Deep nested lists"}
+        ```pycon {.py .python linenums="1" title="Example 8: Deep nested lists"}
         >>> print(flat_list([0, 1], [2, 3, [4, [5]]]))
         ```
         <div class="result" markdown>
@@ -332,11 +334,11 @@ def product(*iterables) -> list[any_tuple]:
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Set up"}
+        ```pycon {.py .python linenums="1" title="Set up"}
         >>> from toolbox_python.lists import product
         ```
 
-        ```{.py .python linenums="1" title="Example 1: Basic input & output"}
+        ```pycon {.py .python linenums="1" title="Example 1: Basic input & output"}
         >>> print(product([1], [11], [111]))
         ```
         <div class="result" markdown>
@@ -348,7 +350,7 @@ def product(*iterables) -> list[any_tuple]:
         !!! success "Conclusion: Successful conversion."
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: Multiple lists"}
+        ```pycon {.py .python linenums="1" title="Example 2: Multiple lists"}
         >>> print(product([1, 2], [11], [111]))
         ```
         <div class="result" markdown>
@@ -361,7 +363,7 @@ def product(*iterables) -> list[any_tuple]:
         !!! success "Conclusion: Successful conversion."
         </div>
 
-        ```{.py .python linenums="1" title="Example 3: List and other data"}
+        ```pycon {.py .python linenums="1" title="Example 3: List and other data"}
         >>> print(product([1, 2], [11], [111, 222]))
         ```
         <div class="result" markdown>
@@ -376,7 +378,7 @@ def product(*iterables) -> list[any_tuple]:
         !!! success "Conclusion: Successful conversion."
         </div>
 
-        ```{.py .python linenums="1" title="Example 4: Multiple lists and other data"}
+        ```pycon {.py .python linenums="1" title="Example 4: Multiple lists and other data"}
         >>> print(product([1, 2], [11, 22], [111, 222]))
         ```
         <div class="result" markdown>

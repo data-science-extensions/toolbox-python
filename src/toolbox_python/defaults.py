@@ -79,12 +79,12 @@ class Defaults:
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Set up data for examples"}
+        ```pycon {.py .python linenums="1" title="Set up data for examples"}
         >>> from toolbox_python.defaults import Defaults
         >>> defaults = Defaults()
         ```
 
-        ```{.py .python linenums="1" title="Example 1: Call direct from class"}
+        ```pycon {.py .python linenums="1" title="Example 1: Call direct from class"}
         >>> print(Defaults()(value="this"))
         ```
         <div class="result" markdown>
@@ -94,7 +94,7 @@ class Defaults:
         !!! success "Conclusion: Successfully printed default value direct from class."
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: Call from instantiated class"}
+        ```pycon {.py .python linenums="1" title="Example 2: Call from instantiated class"}
         >>> print(defaults(value="that"))
         ```
         <div class="result" markdown>
@@ -104,7 +104,7 @@ class Defaults:
         !!! success "Conclusion: Successfully printed default value from instantiated class."
         </div>
 
-        ```{.py .python linenums="1" title="Example 3: Cast to `bool`"}
+        ```pycon {.py .python linenums="1" title="Example 3: Cast to `bool`"}
         >>> print(defaults(value="True", cast=bool))
         ```
         <div class="result" markdown>
@@ -114,7 +114,7 @@ class Defaults:
         !!! success "Conclusion: Successfully casted to `#!py bool`."
         </div>
 
-        ```{.py .python linenums="1" title="Example 4: Cast to `int`"}
+        ```pycon {.py .python linenums="1" title="Example 4: Cast to `int`"}
         >>> print(defaults(value="1", cast=int))
         ```
         <div class="result" markdown>
@@ -124,7 +124,7 @@ class Defaults:
         !!! success "Conclusion: Successfully casted to `#!py int`."
         </div>
 
-        ```{.py .python linenums="1" title="Example 5: Cast to `str`"}
+        ```pycon {.py .python linenums="1" title="Example 5: Cast to `str`"}
         >>> print(defaults(value=1, cast=str))
         ```
         <div class="result" markdown>
@@ -134,7 +134,7 @@ class Defaults:
         !!! success "Conclusion: Successfully casted to `#!py str`."
         </div>
 
-        ```{.py .python linenums="1" title="Example 6: Cast to string `'str'`"}
+        ```pycon {.py .python linenums="1" title="Example 6: Cast to string `'str'`"}
         >>> print(defaults(value=1, cast="str"))
         ```
         <div class="result" markdown>
@@ -145,7 +145,7 @@ class Defaults:
         !!! observation "Note: The only difference between this and the previous example is the type of the `cast` parameter. Here, it is a string representation of the type, whereas in the previous example, we parse'ed in the actual `str` class."
         </div>
 
-        ```{.py .python linenums="1" title="Example 7: Invalid cast type"}
+        ```pycon {.py .python linenums="1" title="Example 7: Invalid cast type"}
         >>> print(defaults(value="next", cast="bad_type"))
         ```
         <div class="result" markdown>
@@ -156,7 +156,7 @@ class Defaults:
         !!! failure "Conclusion: Invalid cast type."
         </div>
 
-        ```{.py .python linenums="1" title="Example 8: All blank values"}
+        ```pycon {.py .python linenums="1" title="Example 8: All blank values"}
         >>> print(defaults(value=None, cast=None))
         ```
         <div class="result" markdown>
@@ -224,6 +224,10 @@ class Defaults:
                 The data type to convert to.<br>
                 Must be one of: `#!py ["bool", "dict", "int", "float", "list", "str", "tuple"]`.<br>
                 Defaults to `#!py None`.
+
+        Raises:
+            TypeCheckError:
+                If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
         Returns:
             value (Any):
@@ -316,6 +320,7 @@ class Defaults:
             "str",
             "tuple",
         ]
+        retype: str | type | None = None
         if check_type is None:
             return self
         elif is_type(check_type, str):

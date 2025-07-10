@@ -104,11 +104,11 @@ def strtobool(value: str) -> bool:
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Set up"}
+        ```pycon {.py .python linenums="1" title="Set up"}
         from toolbox_python.bools import strtobool
         ```
 
-        ```{.py .python linenums="1" title="Example 1: `true` conversions"}
+        ```pycon {.py .python linenums="1" title="Example 1: `true` conversions"}
         >>> print(strtobool("true"))
         >>> print(strtobool("t"))
         >>> print(strtobool("1"))
@@ -122,7 +122,7 @@ def strtobool(value: str) -> bool:
         !!! success "Conclusion: Successful conversion."
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: `false` conversions"}
+        ```pycon {.py .python linenums="1" title="Example 2: `false` conversions"}
         >>> print(strtobool("false"))
         >>> print(strtobool("f"))
         >>> print(strtobool("0"))
@@ -136,7 +136,7 @@ def strtobool(value: str) -> bool:
         !!! success "Conclusion: Successful conversion."
         </div>
 
-        ```{.py .python linenums="1" title="Example 3: invalid value"}
+        ```pycon {.py .python linenums="1" title="Example 3: invalid value"}
         >>> print(strtobool(5))
         ```
         <div class="result" markdown>
