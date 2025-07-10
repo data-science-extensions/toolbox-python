@@ -8,6 +8,24 @@
 
 # ---------------------------------------------------------------------------- #
 #                                                                              #
+#     Overview                                                              ####
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+
+
+# ---------------------------------------------------------------------------- #
+#  Description                                                              ####
+# ---------------------------------------------------------------------------- #
+
+
+"""
+!!! note "Summary"
+    This module provides functions to check certain values against other objects. It includes type checking, value validation, and membership checks.
+"""
+
+
+# ---------------------------------------------------------------------------- #
+#                                                                              #
 #     Setup                                                                 ####
 #                                                                              #
 # ---------------------------------------------------------------------------- #
@@ -600,10 +618,7 @@ def assert_value_of_type(
         ```
         <div class="result" markdown>
         ```{.sh .shell title="Output"}
-        Traceback (most recent call last):
-          ...
-        TypeError:
-            Value '42' is not correct type: 'int'. Must be: 'str'
+        TypeError: Value '42' is not correct type: 'int'. Must be: 'str'
         ```
         !!! failure "Conclusion: The value is not of type `#!py str`."
         </div>
@@ -623,8 +638,6 @@ def assert_value_of_type(
         ```
         <div class="result" markdown>
         ```{.sh .shell title="Output"}
-        Traceback (most recent call last):
-          ...
         TypeError: Value '42' is not correct type: 'int'. Must be: 'str' or 'dict'.
         ```
         !!! failure "Conclusion: The value is not of type `#!py str` or `#!py dict`."
@@ -689,8 +702,6 @@ def assert_all_values_of_type(
         ```
         <div class="result" markdown>
         ```{.sh .shell title="Output"}
-        Traceback (most recent call last):
-            ...
         TypeError: Some elements [1, 2, 3] have the incorrect type ['int', 'int', 'int']. Must be 'str'
         ```
         !!! failure "Conclusion: Not all values are of type `#!py str`."
@@ -711,8 +722,6 @@ def assert_all_values_of_type(
         ```
         <div class="result" markdown>
         ```{.sh .shell title="Output"}
-        Traceback (most recent call last):
-            ...
         TypeError: Some elements [1, 2, 3] have the incorrect type ['int', 'int', 'int']. Must be: 'str' or 'dict'
         ```
         !!! failure "Conclusion: Not all values are of type `#!py str` or `#!py dict`."
@@ -788,8 +797,6 @@ def assert_any_values_of_type(
         ```
         <div class="result" markdown>
         ```{.sh .shell title="Output"}
-        Traceback (most recent call last):
-            ...
         TypeError: None of the elements in [1, 'a', 3.0] have the correct type. Must be: 'dict'
         ```
         !!! failure "Conclusion: None of the values are of type `#!py dict`."
@@ -810,8 +817,6 @@ def assert_any_values_of_type(
         ```
         <div class="result" markdown>
         ```{.sh .shell title="Output"}
-        Traceback (most recent call last):
-            ...
         TypeError: None of the elements in [1, 'a', 3.0] have the correct type. Must be: 'dict' or 'list'
         ```
         !!! failure "Conclusion: None of the values are of type `#!py dict` or `#!py list`."
@@ -880,8 +885,6 @@ def assert_value_in_iterable(
         ```
         <div class="result" markdown>
         ```{.sh .shell title="Output"}
-        Traceback (most recent call last):
-            ...
         LookupError: Value '4' not found in iterable: [1, 2, 3]
         ```
         !!! failure "Conclusion: The value is not in the iterable."
@@ -941,8 +944,6 @@ def assert_any_values_in_iterable(
         ```
         <div class="result" markdown>
         ```{.sh .shell title="Output"}
-        Traceback (most recent call last):
-            ...
         LookupError: None of the values in [4, 5] can be found in [1, 2, 3]
         ```
         !!! failure "Conclusion: None of the values are in the iterable."
@@ -1004,8 +1005,6 @@ def assert_all_values_in_iterable(
         ```
         <div class="result" markdown>
         ```{.sh .shell title="Output"}
-        Traceback (most recent call last):
-            ...
         LookupError: Some values [4] are missing from [1, 2, 3]
         ```
         !!! failure "Conclusion: Not all values are in the iterable."
@@ -1069,8 +1068,6 @@ def assert_is_valid_value(value: Any, op: str, target: Any) -> None:
         ```
         <div class="result" markdown>
         ```{.sh .shell title="Output"}
-        Traceback (most recent call last):
-            ...
         ValueError: Validation failed: '5 <= 3' is not True
         ```
         !!! failure "Conclusion: The value is not less than or equal to the target."
