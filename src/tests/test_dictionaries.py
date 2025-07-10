@@ -36,7 +36,7 @@ from toolbox_python.dictionaries import DotDict, dict_reverse_keys_and_values
 
 # ---------------------------------------------------------------------------- #
 #                                                                              #
-#     dict_reverse_keys_and_values()                                                            ####
+#     dict_reverse_keys_and_values()                                        ####
 #                                                                              #
 # ---------------------------------------------------------------------------- #
 
