@@ -216,13 +216,18 @@ def retry(
                 f"Invalid value for parameter `{param}`: {eval(param)}\n"
                 f"Must be a positive integer."
             )
+
+    exceptions = (
+        tuple(exceptions) if isinstance(exceptions, (list, tuple)) else (exceptions,)
+    )
+
+    log: Optional[Logger] = None
+
     if print_or_log == "log":
         stk: inspect.FrameInfo = inspect.stack()[2]
         mod: Union[ModuleType, None] = inspect.getmodule(stk[0])
         if mod is not None:
             log: Optional[Logger] = logging.getLogger(mod.__name__)
-    else:
-        log = None
 
     def decorator(func: Callable):
         @wraps(func)

@@ -55,6 +55,7 @@ repos:
         args:
           - "--install-types"
           - "--config-file=pyproject.toml"
+          - "--allow-redefinition"
 
   # Reorder Python imports
   - repo: https://github.com/pycqa/isort
