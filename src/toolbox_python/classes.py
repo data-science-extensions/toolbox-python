@@ -182,8 +182,6 @@ class class_property(property):
         ```
         <div class="result" markdown>
         ```{.sh .shell title="Terminal"}
-        Traceback (most recent call last):
-        ...
         NotImplementedError: class_property can only be read-only; use a metaclass to implement modifiable class-level properties
         ```
         !!! failure "Conclusion: Failed to set a class property."

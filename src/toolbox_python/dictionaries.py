@@ -65,7 +65,7 @@ __all__: str_list = ["dict_reverse_keys_and_values", "DotDict"]
 @typechecked
 def dict_reverse_keys_and_values(dictionary: dict_any) -> dict_str_any:
     """
-    !!! note "Summary"
+    !!! summary "Summary"
         Take the `key` and `values` of a dictionary, and reverse them.
 
     ???+ info "Details"
@@ -236,8 +236,73 @@ def dict_reverse_keys_and_values(dictionary: dict_any) -> dict_str_any:
 
 class DotDict(dict):
     """
-    Dictionary subclass that allows dot notation access to keys.
-    Nested dictionaries are automatically converted to DotDict instances.
+    !!! summary "Summary"
+        Dictionary subclass that allows dot notation access to keys.
+
+    !!! abstract "Details"
+        Nested dictionaries are automatically converted to DotDict instances.
+
+    ???+ example "Examples"
+        ```pycon {.py .python linenums="1" title="Set up"}
+        >>> # Imports
+        >>> from toolbox_python.dictionaries import DotDict
+        >>>
+        >>> # Create a DotDict
+        >>> dot_dict = DotDict({"a": 1, "b": {"c": 2}})
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Accessing values with dot notation"}
+        >>> print(dot_dict.a)
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Output"}
+        1
+        ```
+        !!! success "Conclusion: Successfully accessed value using dot notation."
+        </div>
+
+        ```pycon {.py .python linenums="1" title="Example 2: Accessing nested values with dot notation"}
+        >>> print(dot_dict.b.c)
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Output"}
+        2
+        ```
+        !!! success "Conclusion: Successfully accessed nested value using dot notation."
+        </div>
+
+        ```pycon {.py .python linenums="1" title="Example 3: Setting values with dot notation"}
+        >>> dot_dict.d = 3
+        >>> print(dot_dict.d)
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Output"}
+        3
+        ```
+        !!! success "Conclusion: Successfully set value using dot notation."
+        </div>
+
+        ```pycon {.py .python linenums="1" title="Example 4: Updating nested values with dot notation"}
+        >>> dot_dict.b.e = 4
+        >>> print(dot_dict.b.e)
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Output"}
+        4
+        ```
+        !!! success "Conclusion: Successfully updated nested value using dot notation."
+        </div>
+
+        ```pycon {.py .python linenums="1" title="Example 5: Converting back to regular dict"}
+        >>> regular_dict = dot_dict.to_dict()
+        >>> print(regular_dict)
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Output"}
+        {'a': 1, 'b': {'c': 2, 'e': 4}, 'd': 3}
+        ```
+        !!! success "Conclusion: Successfully converted DotDict back to regular dict."
+        </div>
     """
 
     def __init__(self, *args, **kwargs) -> None:
@@ -288,12 +353,58 @@ class DotDict(dict):
             raise AttributeError(f"Key not found: '{key}'") from e
 
     def update(self, *args, **kwargs) -> None:
-        """Override update to convert new values."""
+        """
+        !!! summary "Summary"
+            Override update to convert new values.
+
+        Parameters:
+            *args:
+                Variable length argument list.
+            **kwargs:
+                Arbitrary keyword arguments.
+
+        Returns:
+            (None):
+                This function does not return a value. It updates the dictionary with new key-value pairs.
+
+        ???+ example "Examples"
+            ```pycon {.py .python linenums="1" title="Update DotDict"}
+            >>> dot_dict = DotDict({"a": 1, "b": 2})
+            >>> dot_dict.update({"c": 3, "d": {"e": 4}})
+            >>> print(dot_dict)
+            ```
+            <div class="result" markdown>
+            ```{.sh .shell title="Output"}
+            {'a': 1, 'b': 2, 'c': 3, 'd': {'e': 4}}
+            ```
+            !!! success "Conclusion: Successfully updated DotDict with new values."
+            </div>
+        """
         for k, v in dict(*args, **kwargs).items():
             self[k] = v
 
     def to_dict(self) -> Any:
-        """Convert back to regular dictionary."""
+        """
+        !!! summary "Summary"
+            Convert back to regular dictionary.
+
+        Returns:
+            (Any):
+                The original dictionary structure, with all nested `#!py DotDict` instances converted back to regular dictionaries.
+
+        ???+ example "Examples"
+            ```pycon {.py .python linenums="1" title="Convert DotDict to regular dict"}
+            >>> dot_dict = DotDict({"a": 1, "b": {"c": 2}})
+            >>> regular_dict = dot_dict.to_dict()
+            >>> print(regular_dict)
+            ```
+            <div class="result" markdown>
+            ```{.sh .shell title="Output"}
+            {'a': 1, 'b': {'c': 2}}
+            ```
+            !!! success "Conclusion: Successfully converted DotDict back to regular dict."
+            </div>
+        """
 
         def _convert_back(obj) -> Any:
             if isinstance(obj, DotDict):

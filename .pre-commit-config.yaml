@@ -103,9 +103,11 @@ repos:
         # args:
         #   - "--all-groups"
 
-  # Run Pylint
+  # Everything run locally
   - repo: local
     hooks:
+
+      # Run Pylint
       - id: pylint
         name: pylint
         entry: pipenv run pylint
@@ -115,3 +117,10 @@ repos:
           - "--rcfile=pyproject.toml"
           - "-rn" # Only display messages
           - "-sn" # Don't display the score
+
+      # Check
+      - id: check-docstrings
+        name: Check Docstrings
+        entry: uv run --no-sync --link-mode=copy check-docstrings
+        language: system
+        types: [python]

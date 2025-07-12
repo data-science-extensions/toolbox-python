@@ -125,7 +125,7 @@ def retry(
     print_or_log: Literal["print", "log"] = "print",
 ) -> Callable[[Callable[..., R]], Callable[..., R]]:
     """
-    !!! note "Summary"
+    !!! summary "Summary"
         Retry a given function a number of times. Catching any known exceptions when they are given. And retrurning any output to either a terminal or a log file.
 
     !!! deprecation "Deprecated"

@@ -593,6 +593,10 @@ def assert_value_of_type(
         TypeError:
             If the value is not of the specified type or one of the specified types.
 
+    Returns:
+        (None):
+            This function does not return a value. It raises an exception if the assertion fails.
+
     ???+ example "Examples"
 
         Assert that a value is of a specific type:
@@ -676,6 +680,10 @@ def assert_all_values_of_type(
     Raises:
         TypeError:
             If any value is not of the specified type or one of the specified types.
+
+    Returns:
+        (None):
+            This function does not return a value. It raises an exception if the assertion fails.
 
     ???+ example "Examples"
 
@@ -772,6 +780,10 @@ def assert_any_values_of_type(
         TypeError:
             If none of the values are of the specified type or one of the specified types.
 
+    Returns:
+        (None):
+            This function does not return a value. It raises an exception if the assertion fails.
+
     ???+ example "Examples"
 
         Assert that any value in an iterable is of a specific type:
@@ -860,6 +872,10 @@ def assert_value_in_iterable(
         LookupError:
             If the value is not found in the iterable.
 
+    Returns:
+        (None):
+            This function does not return a value. It raises an exception if the assertion fails.
+
     ???+ example "Examples"
 
         Assert that a value is in an iterable:
@@ -918,6 +934,10 @@ def assert_any_values_in_iterable(
     Raises:
         LookupError:
             If none of the values are found in the iterable.
+
+    Returns:
+        (None):
+            This function does not return a value. It raises an exception if the assertion fails.
 
     ???+ example "Examples"
 
@@ -979,6 +999,10 @@ def assert_all_values_in_iterable(
     Raises:
         LookupError:
             If any value is not found in the iterable.
+
+    Returns:
+        (None):
+            This function does not return a value. It raises an exception if the assertion fails.
 
     ???+ example "Examples"
 
@@ -1101,7 +1125,7 @@ def any_element_contains(
     check: str,
 ) -> bool:
     """
-    !!! note "Summary"
+    !!! summary "Summary"
         Check to see if any element in a given iterable contains a given string value.
         !!! warning "Note: This check _is_ case sensitive."
 
@@ -1158,7 +1182,7 @@ def any_element_contains(
 @typechecked
 def all_elements_contains(iterable: str_collection, check: str) -> bool:
     """
-    !!! note "Summary"
+    !!! summary "Summary"
         Check to see if all elements in a given iterable contains a given string value.
         !!! warning "Note: This check _is_ case sensitive."
 
@@ -1215,7 +1239,7 @@ def all_elements_contains(iterable: str_collection, check: str) -> bool:
 @typechecked
 def get_elements_containing(iterable: str_collection, check: str) -> tuple[str, ...]:
     """
-    !!! note "Summary"
+    !!! summary "Summary"
         Extract all elements in a given iterable which contains a given string value.
         !!! warning "Note: This check _is_ case sensitive."
 

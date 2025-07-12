@@ -86,7 +86,7 @@ def generate_group_cutoffs(
         (tuple[tuple[int, int], ...]):
             A tuple of tuples, where each inner tuple contains the start and end indices for each group. The last group may have a different size if the total number is not evenly divisible by the number of groups.
 
-    !!! example "Examples"
+    ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Prepare data"}
         >>> from toolbox_python.generators import generate_group_cutoffs
