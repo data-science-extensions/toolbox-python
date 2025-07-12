@@ -143,6 +143,7 @@ def check() -> None:
     check_codespell()
     check_pylint()
     check_pycln()
+    check_docstrings_dir("src/toolbox_python")
     check_mkdocs()
     check_build()
     check_pytest()
@@ -160,7 +161,7 @@ class FunctionAndClassDetails(NamedTuple):
     lineno: int
 
 
-def check_docstrings(file: str) -> None:
+def check_docstrings_file(file: str) -> None:
     """
     Check docstrings in a Python file for completeness and correct formatting.
 
@@ -175,7 +176,7 @@ def check_docstrings(file: str) -> None:
         raise ValueError(f"File must be a Python file (.py): {file}")
 
     # Read and parse the file
-    with open(file_path, mode="r", encoding="utf-8") as f:
+    with open(file_path, encoding="utf-8") as f:
         content = f.read()
 
     try:
@@ -435,8 +436,48 @@ def check_docstrings_cli() -> None:
         print("Usage: python scripts.py <python_file>")
         sys.exit(1)
 
+    print(f"Checking docstrings in {sys.argv[1]}...")
+
     try:
-        check_docstrings(sys.argv[1])
+        check_docstrings_file(sys.argv[1])
     except Exception as e:
         print(f"Error: {e}")
         sys.exit(1)
+
+
+def check_docstrings_all() -> None:
+    """Check docstrings in all Python files in the src directory."""
+
+    python_files: list[str] = get_all_files(".py")
+    if not python_files:
+        print("No Python files found to check.")
+        return
+    else:
+        print(
+            f"\nChecking docstrings in all Python files... Files to check: '{len(python_files)}'."
+        )
+
+    for file in python_files:
+        check_docstrings_file(file)
+
+    print("✓ All docstrings are valid across all files.")
+
+
+def check_docstrings_dir(dir: str) -> None:
+    """Check docstrings in all Python files in the src directory."""
+
+    python_files: list[str] = [
+        file for file in get_all_files(".py") if file.startswith(dir)
+    ]
+    if not python_files:
+        print("No Python files found to check.")
+        return
+    else:
+        print(
+            f"\nChecking docstrings in all Python files in '{dir}'... Files to check: '{len(python_files)}'."
+        )
+
+    for file in python_files:
+        check_docstrings_file(file)
+
+    print("✓ All docstrings are valid across all files.")
