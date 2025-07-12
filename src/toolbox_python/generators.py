@@ -64,7 +64,7 @@ def generate_group_cutoffs(
     total_number: int, num_groups: int
 ) -> tuple[tuple[int, int], ...]:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Generate group cutoffs for a given total number and number of groups.
 
     !!! details "Details"

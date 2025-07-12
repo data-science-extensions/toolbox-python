@@ -249,8 +249,8 @@ def _check_single_docstring(
     ]
 
     # Check for mandatory sections
-    if not re.search(r'!!! summary "Summary"', docstring, re.IGNORECASE):
-        raise ValueError('Missing mandatory Summary section: `!!! summary "Summary"`')
+    if not re.search(r'!!! note "Summary"', docstring, re.IGNORECASE):
+        raise ValueError('Missing mandatory Summary section: `!!! note "Summary"`')
 
     # Check Params section
     if item_type == "function" and isinstance(node, ast.FunctionDef):
@@ -297,7 +297,7 @@ def _check_single_docstring(
 def _check_section_order(docstring: str) -> None:
     """Check that sections appear in the correct order."""
     section_patterns = [
-        (r'!!! summary "Summary"', "Summary"),
+        (r'!!! note "Summary"', "Summary"),
         (r'!!! details "Details"', "Details"),
         (r"Params:", "Params"),
         (r"Raises:", "Raises"),
@@ -353,7 +353,7 @@ def _validate_section_formats(docstring: str, name: str) -> None:
 
     # Check Summary is single paragraph
     summary_match = re.search(
-        r'!!! summary "Summary"\s*\n\s*(.+?)(?=\n\s*\n|\n\s*[!?])',
+        r'!!! note "Summary"\s*\n\s*(.+?)(?=\n\s*\n|\n\s*[!?])',
         docstring,
         re.DOTALL | re.IGNORECASE,
     )

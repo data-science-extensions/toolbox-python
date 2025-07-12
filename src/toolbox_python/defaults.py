@@ -73,7 +73,7 @@ __all__: str_list = ["defaults", "Defaults"]
 
 class Defaults:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         When we create and use Python variables, it is sometimes handy to add a default value for that variable.
         This class will handle that process.
 
@@ -201,7 +201,7 @@ class Defaults:
         cast: str | type | None = None,
     ) -> Any:
         """
-        !!! summary "Summary"
+        !!! note "Summary"
             From the value that is parsed in to the `value` parameter, convert it to `default` if `value` is `#!py None`, and convert it to `cast` if `cast` is not `#!py None`.
 
         ???+ info "Details"

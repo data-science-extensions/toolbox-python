@@ -268,7 +268,7 @@ def list_columns(
     print_output: bool = False,
 ) -> Optional[str]:
     """
-    !!! note Summary
+    !!! note "Summary"
         Print the given list in evenly-spaced columns.
 
     Params:

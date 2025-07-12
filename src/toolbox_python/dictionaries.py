@@ -65,7 +65,7 @@ __all__: str_list = ["dict_reverse_keys_and_values", "DotDict"]
 @typechecked
 def dict_reverse_keys_and_values(dictionary: dict_any) -> dict_str_any:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Take the `key` and `values` of a dictionary, and reverse them.
 
     ???+ info "Details"
@@ -236,7 +236,7 @@ def dict_reverse_keys_and_values(dictionary: dict_any) -> dict_str_any:
 
 class DotDict(dict):
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Dictionary subclass that allows dot notation access to keys.
 
     !!! abstract "Details"
@@ -354,7 +354,7 @@ class DotDict(dict):
 
     def update(self, *args, **kwargs) -> None:
         """
-        !!! summary "Summary"
+        !!! note "Summary"
             Override update to convert new values.
 
         Parameters:
@@ -385,7 +385,7 @@ class DotDict(dict):
 
     def to_dict(self) -> Any:
         """
-        !!! summary "Summary"
+        !!! note "Summary"
             Convert back to regular dictionary.
 
         Returns:

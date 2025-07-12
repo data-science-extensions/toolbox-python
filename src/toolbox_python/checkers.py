@@ -131,7 +131,7 @@ def is_value_of_type(value: Any, check_type: type) -> bool: ...
 def is_value_of_type(value: Any, check_type: tuple[type, ...]) -> bool: ...
 def is_value_of_type(value: Any, check_type: Union[type, tuple[type, ...]]) -> bool:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Check if a given value is of a specified type or types.
 
     ???+ info "Details"
@@ -189,7 +189,7 @@ def is_all_values_of_type(
     check_type: Union[type, tuple[type, ...]],
 ) -> bool:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Check if all values in an iterable are of a specified type or types.
 
     ???+ info "Details"
@@ -249,7 +249,7 @@ def is_any_values_of_type(
     check_type: Union[type, tuple[type, ...]],
 ) -> bool:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Check if any value in an iterable is of a specified type or types.
 
     ???+ info "Details"
@@ -310,7 +310,7 @@ def is_value_in_iterable(
     iterable: any_collection,
 ) -> bool:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Check if a given value is present in an iterable.
 
     ???+ info "Details"
@@ -373,7 +373,7 @@ def is_all_values_in_iterable(
     iterable: any_collection,
 ) -> bool:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Check if all values in an iterable are present in another iterable.
 
     ???+ info "Details"
@@ -438,7 +438,7 @@ def is_any_values_in_iterable(
     iterable: any_collection,
 ) -> bool:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Check if any value in an iterable is present in another iterable.
 
     ???+ info "Details"
@@ -499,7 +499,7 @@ def is_any_values_in_iterable(
 
 def is_valid_value(value: Any, op: str, target: Any) -> bool:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Check if a value is valid based on a specified operator and target.
 
     ???+ info "Details"
@@ -577,7 +577,7 @@ def assert_value_of_type(
     check_type: Union[type, tuple[type, ...]],
 ) -> None:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Assert that a given value is of a specified type or types.
 
     ???+ info "Details"
@@ -665,7 +665,7 @@ def assert_all_values_of_type(
     check_type: Union[type, tuple[type, ...]],
 ) -> None:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Assert that all values in an iterable are of a specified type or types.
 
     ???+ info "Details"
@@ -764,7 +764,7 @@ def assert_any_values_of_type(
     check_type: Union[type, tuple[type, ...]],
 ) -> None:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Assert that any value in an iterable is of a specified type or types.
 
     ???+ info "Details"
@@ -856,7 +856,7 @@ def assert_value_in_iterable(
     iterable: any_collection,
 ) -> None:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Assert that a given value is present in an iterable.
 
     ???+ info "Details"
@@ -919,7 +919,7 @@ def assert_any_values_in_iterable(
     iterable: any_collection,
 ) -> None:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Assert that any value in an iterable is present in another iterable.
 
     ???+ info "Details"
@@ -984,7 +984,7 @@ def assert_all_values_in_iterable(
     iterable: any_collection,
 ) -> None:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Assert that all values in an iterable are present in another iterable.
 
     ???+ info "Details"
@@ -1047,7 +1047,7 @@ def assert_all_values_in_iterable(
 
 def assert_is_valid_value(value: Any, op: str, target: Any) -> None:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Assert that a value is valid based on a specified operator and target.
 
     ???+ info "Details"
@@ -1125,7 +1125,7 @@ def any_element_contains(
     check: str,
 ) -> bool:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Check to see if any element in a given iterable contains a given string value.
         !!! warning "Note: This check _is_ case sensitive."
 
@@ -1182,7 +1182,7 @@ def any_element_contains(
 @typechecked
 def all_elements_contains(iterable: str_collection, check: str) -> bool:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Check to see if all elements in a given iterable contains a given string value.
         !!! warning "Note: This check _is_ case sensitive."
 
@@ -1239,7 +1239,7 @@ def all_elements_contains(iterable: str_collection, check: str) -> bool:
 @typechecked
 def get_elements_containing(iterable: str_collection, check: str) -> tuple[str, ...]:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Extract all elements in a given iterable which contains a given string value.
         !!! warning "Note: This check _is_ case sensitive."
 

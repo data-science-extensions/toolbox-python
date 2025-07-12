@@ -494,5 +494,34 @@ def str_to_list(obj: Any) -> Union[str_list, Any]:
     Raises:
         TypeCheckError:
             If `obj` is not a string or a list.
+
+    Returns:
+        (Union[str_list, Any]):
+            If `obj` is a string, returns a list containing that string as the only element. If `obj` is not a string, returns it unchanged.
+
+    ???+ example "Examples"
+        ```pycon {.py .python linenums="1" title="Set up"}
+        >>> from toolbox_python.strings import str_to_list
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Convert string to list"}
+        >>> print(str_to_list("hello"))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        ["hello"]
+        ```
+        !!! success "Conclusion: Successfully converted string to list."
+        </div>
+
+        ```pycon {.py .python linenums="1" title="Example 2: Input is already a list"}
+        >>> print(str_to_list(["hello", "world"]))
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Terminal"}
+        ["hello", "world"]
+        ```
+        !!! success "Conclusion: Input was already a list, so returned unchanged."
+        </div>
     """
     return [obj] if is_type(obj, str) else obj
