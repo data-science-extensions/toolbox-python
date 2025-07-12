@@ -134,11 +134,11 @@ jobs:
 
       - name: Install dependencies
         id: install-dependencies
-        run: make install-all
+        run: uv sync --no-cache --all-groups
 
       - name: Run checks
         id: run-checks
-        run: make check
+        run: uv run check
 
       - name: Copy coverage report
         id: copy-coverage-report
@@ -194,7 +194,7 @@ jobs:
             fi
 
         - name: Install dependencies
-          run: make install
+          run: uv sync --no-cache
 
         - name: Setup Git
           id: setup-git
