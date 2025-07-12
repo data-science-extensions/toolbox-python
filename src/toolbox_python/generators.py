@@ -41,7 +41,7 @@ from typeguard import typechecked
 
 # ## Local First Party Imports ----
 from toolbox_python.checkers import assert_is_valid
-from toolbox_python.types import str_list
+from toolbox_python.collection_types import str_list
 
 
 ## --------------------------------------------------------------------------- #
