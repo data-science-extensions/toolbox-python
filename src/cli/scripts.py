@@ -219,7 +219,7 @@ def check_docstrings_file(file: str) -> None:
         error_msg = f"Docstring validation errors in {file}:\n" + "\n".join(errors)
         raise RuntimeError(error_msg)
 
-    print(f"✓ All docstrings in {file} are valid")
+    print(f"✓ All docstrings are valid in: '{file}'")
 
 
 def _check_single_docstring(
@@ -457,8 +457,17 @@ def check_docstrings_all() -> None:
             f"\nChecking docstrings in all Python files... Files to check: '{len(python_files)}'."
         )
 
+    errors = []
+
     for file in python_files:
-        check_docstrings_file(file)
+        try:
+            check_docstrings_file(file)
+        except Exception as e:
+            errors.append(str(e))
+
+    if errors:
+        error_msg = "Docstring validation errors:\n" + "\n".join(errors)
+        raise RuntimeError(error_msg)
 
     print("✓ All docstrings are valid across all files.")
 
@@ -477,7 +486,16 @@ def check_docstrings_dir(dir: str) -> None:
             f"\nChecking docstrings in all Python files in '{dir}'... Files to check: '{len(python_files)}'."
         )
 
+    errors = []
+
     for file in python_files:
-        check_docstrings_file(file)
+        try:
+            check_docstrings_file(file)
+        except Exception as e:
+            errors.append(str(e))
+
+    if errors:
+        error_msg = "Docstring validation errors:\n" + "\n".join(errors)
+        raise RuntimeError(error_msg)
 
     print("✓ All docstrings are valid across all files.")
