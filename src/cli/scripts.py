@@ -17,13 +17,21 @@ from typing import Literal, NamedTuple, Union
 ## --------------------------------------------------------------------------- #
 
 
+def expand_space(lst: Union[list[str], tuple[str, ...]]) -> list[str]:
+    return [item for element in lst for item in element.split()]
+
+
 def run_command(*command) -> None:
+    command = expand_space(command)
     print("\n", " ".join(command), sep="", flush=True)
     subprocess.run(command, check=True)
 
 
+run = run_command
+
+
 def uv_sync() -> None:
-    run_command("uv", "sync", "--all-groups", "--native-tls", "--link-mode=copy")
+    run_command("uv sync --all-groups --native-tls --link-mode=copy")
 
 
 def lint_check() -> None:
@@ -48,7 +56,7 @@ def get_all_files(*suffixes) -> list[str]:
 
 
 def run_black() -> None:
-    run_command("black", "--config=pyproject.toml", "./")
+    run_command("black --config=pyproject.toml ./")
 
 
 def run_blacken_docs() -> None:
@@ -56,15 +64,15 @@ def run_blacken_docs() -> None:
 
 
 def run_isort() -> None:
-    run_command("isort", "--settings-file=pyproject.toml", "./")
+    run_command("isort --settings-file=pyproject.toml ./")
 
 
 def run_pycln() -> None:
-    run_command("pycln", "--config=pyproject.toml", "src/")
+    run_command("pycln --config=pyproject.toml src/")
 
 
 def run_pyupgrade() -> None:
-    run_command("pyupgrade", "--py3-plus", *get_all_files(".py"))
+    run_command("pyupgrade --py3-plus", *get_all_files(".py"))
 
 
 def lint() -> None:
@@ -80,11 +88,11 @@ def lint() -> None:
 
 
 def check_black() -> None:
-    run_command("black", "--check", "--config=pyproject.toml", "./")
+    run_command("black --check --config=pyproject.toml ./")
 
 
 def check_blacken_docs() -> None:
-    run_command("blacken-docs", "--check", *get_all_files(".md", ".py", ".ipynb"))
+    run_command("blacken-docs --check", *get_all_files(".md", ".py", ".ipynb"))
 
 
 def check_mypy() -> None:
@@ -98,33 +106,33 @@ def check_mypy() -> None:
 
 
 def check_isort() -> None:
-    run_command("isort", "--check", "--settings-file=pyproject.toml", "./")
+    run_command("isort --check --settings-file=pyproject.toml ./")
 
 
 def check_codespell() -> None:
-    run_command("codespell", "--toml=pyproject.toml", "src/", "*.py")
+    run_command("codespell --toml=pyproject.toml src/ *.py")
 
 
 def check_pylint() -> None:
-    run_command("pylint", "--rcfile=pyproject.toml", "src/toolbox_python")
+    run_command("pylint --rcfile=pyproject.toml src/toolbox_python")
 
 
 def check_pycln() -> None:
-    run_command("pycln", "--config=pyproject.toml", "src/")
+    run_command("pycln --check --config=pyproject.toml src/")
 
 
 def check_build() -> None:
-    run_command("uv", "build", "--out-dir=dist")
-    run_command("rm", "--recursive", "dist")
+    run_command("uv build --out-dir=dist")
+    run_command("rm --recursive dist")
 
 
 def check_mkdocs() -> None:
-    run_command("mkdocs", "build", "--site-dir=temp")
-    run_command("rm", "--recursive", "temp")
+    run_command("mkdocs build --site-dir=temp")
+    run_command("rm --recursive temp")
 
 
 def check_pytest() -> None:
-    run_command("pytest", "--config-file=pyproject.toml")
+    run_command("pytest --config-file=pyproject.toml")
 
 
 def check() -> None:
