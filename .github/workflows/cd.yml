@@ -264,11 +264,11 @@ jobs:
           name: dist
           path: dist
 
-      - name: Publish package
-        id: publish-package
-        env:
-          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        run: uv publish --token ${PYPI_TOKEN}
+      # - name: Publish package
+      #   id: publish-package
+      #   env:
+      #     PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+      #   run: uv publish --token ${PYPI_TOKEN}
 
       - name: Check
         id: check
