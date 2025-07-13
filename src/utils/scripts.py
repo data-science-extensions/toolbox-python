@@ -178,7 +178,7 @@ def git_switch_to_docs_branch() -> None:
 
 
 def git_add_coverage_report() -> None:
-    run('cp --recursive --update "./cov-report/html/." "./docs/code/coverage/"')
+    run("cp --recursive --update ./cov-report/html/ ./docs/code/coverage/")
     run("git add ./docs/code/coverage/*")
     run('git commit --no-verify --message "Update coverage report [skip ci]"')
     run("git push")
