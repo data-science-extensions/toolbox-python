@@ -14,6 +14,12 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
+env:
+  VERSION: ${{ github.event.release.tag_name }}
+  UV_LINK_MODE: copy
+  UV_NATIVE_TLS: true
+  UV_NO_SYNC: true
+
 jobs:
 
   debug:
@@ -123,30 +129,26 @@ jobs:
         with:
           python-version: '3.13'
 
+      - name: Install dependencies
+        id: install-dependencies
+        run: uv sync --no-cache --all-groups
+
       - name: Set up Git
         id: setup-git
         env:
           GITHUB_ACTOR: ${{ github.actor }}
         run: |
-          make configure-git
-          make git-switch-to-main-branch
-          make git-refresh-current-branch
-
-      - name: Install dependencies
-        id: install-dependencies
-        run: uv sync --no-cache --all-groups
+          uv run add-git-credentials
+          uv run git-switch-to-main-branch
+          uv run git-refresh-current-branch
 
       - name: Run checks
         id: run-checks
         run: uv run check
 
-      - name: Copy coverage report
-        id: copy-coverage-report
-        run: make copy-coverage-report
-
-      - name: Commit coverage report
-        id: commit-coverage-report
-        run: make commit-coverage-report
+      - name: Add coverage report
+        id: add-coverage-report
+        run: uv run git-add-coverage-report
 
       - name: Upload coverage
         id: upload-coverage
@@ -185,8 +187,6 @@ jobs:
 
         - name: Check VERSION
           id: check-version
-          env:
-            VERSION: ${{ github.event.release.tag_name }}
           run: |
             if [ -z "${VERSION}" ]; then
               echo "/$VERSION is missing. Please try again."
@@ -198,28 +198,26 @@ jobs:
 
         - name: Setup Git
           id: setup-git
-          env:
-            GITHUB_ACTOR: ${{ github.actor }}
           run: |
-            make configure-git
-            make git-switch-to-main-branch
-            make git-refresh-current-branch
+            uv run add-git-credentials
+            uv run git-switch-to-main-branch
+            uv run git-refresh-current-branch
 
         - name: Bump version
           id: bump-version
-          env:
-            VERSION: ${{ github.event.release.tag_name }}
-          run: make bump-version
+          run: uv run bump-version --verbose=true version=${VERSION}
 
-        - name: Update Git
-          id: update-git
-          env:
-            VERSION: ${{ github.event.release.tag_name }}
-          run: make update-git
+        - name: Update Git Version
+          id: update-git-version
+          run: uv run git-update-version
+
+        - name: Fix tag reference
+          id: fix-tag-reference
+          run: uv run git-fix-tag-reference
 
         - name: Build package
           id: build-package
-          run: make build-package
+          run: uv build --out-dir=dist
 
         - name: Upload assets
           id: upload-assets
@@ -270,7 +268,7 @@ jobs:
         id: publish-package
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        run: make publish-package
+        run: uv publish --token ${PYPI_TOKEN}
 
       - name: Check
         id: check
@@ -343,20 +341,17 @@ jobs:
 
       - name: Install dependencies
         id: install-dependencies
-        run: make install-docs
+        run: uv sync --group=docs
 
       - name: Setup Git
         id: setup-git
         env:
           GITHUB_ACTOR: ${{ github.actor }}
         run: |
-          make configure-git
-          make git-switch-to-main-branch
-          make git-refresh-current-branch
+            uv run add-git-credentials
+            uv run git-switch-to-main-branch
+            uv run git-refresh-current-branch
 
       - name: Build docs
         id: build-docs
-        env:
-          VERSION: ${{ github.event.release.tag_name }}
-          GITHUB_ACTOR: ${{ github.actor }}
-        run: make build-versioned-docs
+        run: uv run build-versioned-docs
