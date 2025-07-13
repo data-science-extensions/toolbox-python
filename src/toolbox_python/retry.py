@@ -51,6 +51,7 @@ from typing import Callable, Literal, Optional, TypeVar, Union, overload
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
+from toolbox_python.checkers import assert_is_valid
 from toolbox_python.classes import get_full_class_name
 from toolbox_python.collection_types import str_list
 from toolbox_python.output import print_or_log_output
@@ -210,12 +211,8 @@ def retry(
         - https://pypi.org/project/retry/
         - https://stackoverflow.com/questions/21786382/pythonic-way-of-retry-running-a-function#answer-21788594
     """
-    for param in ["tries", "delay"]:
-        if not eval(param) >= 0:
-            raise ValueError(
-                f"Invalid value for parameter `{param}`: {eval(param)}\n"
-                f"Must be a positive integer."
-            )
+    assert_is_valid(tries, ">=", 0)
+    assert_is_valid(delay, ">=", 0)
 
     exceptions = (
         tuple(exceptions) if isinstance(exceptions, (list, tuple)) else (exceptions,)
