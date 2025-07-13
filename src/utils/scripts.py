@@ -197,31 +197,45 @@ def git_add_coverage_report() -> None:
     run("git push")
 
 
-def git_update_version() -> None:
-    run(r'echo VERSION="\`${VERSION}\`"')
+def git_update_version(version: str) -> None:
+    run(f'echo VERSION="{version}"')
     run("git add .")
     run(
         "git",
         "commit",
         "--allow-empty",
-        r'--message="Bump to version \`$(VERSION)\` [skip ci]"',
+        f'--message="Bump to version `{version}` [skip ci]"',
         expand=False,
     )
     run("git push --force --no-verify")
     run("git status")
 
 
-def git_fix_tag_reference() -> None:
+def git_update_version_cli() -> None:
+    if len(sys.argv) < 2:
+        print("Requires argument: <version>")
+        sys.exit(1)
+    git_update_version(sys.argv[1])
+
+
+def git_fix_tag_reference(version: str) -> None:
     """
     Force update the tag to point to the latest commit with correct version number.
     This also ensures the tag shows the correct version in the `pyproject.toml` file for that tag.
     """
 
     ### Force update the tag to point to the current commit ----
-    run(r"git tag --force ${VERSION}")
+    run(f"git tag --force {version}")
 
     ### Force push the updated tag ----
-    run(r"git push --force origin ${VERSION}")
+    run(f"git push --force origin {version}")
+
+
+def git_fix_tag_reference_cli() -> None:
+    if len(sys.argv) < 2:
+        print("Requires argument: <version>")
+        sys.exit(1)
+    git_fix_tag_reference(sys.argv[1])
 
 
 ## --------------------------------------------------------------------------- #
@@ -241,46 +255,81 @@ def docs_build_static() -> None:
     run("mkdocs build --clean")
 
 
-def docs_build_versioned() -> None:
+def docs_build_versioned(version: str) -> None:
     run("git config --global --list")
     run("git config --local --list")
-    run("git remote -v")
+    run("git remote --verbose")
     run(
-        r"mike --debug deploy --update-aliases --branch=docs-site --push ${VERSION} latest"
+        f"mike --debug deploy --update-aliases --branch=docs-site --push {version} latest"
     )
 
 
-def update_git_docs() -> None:
+def docs_build_versioned_cli() -> None:
+    if len(sys.argv) < 2:
+        print("Requires argument: <version>")
+        sys.exit(1)
+    docs_build_versioned(sys.argv[1])
+
+
+def update_git_docs(version: str) -> None:
     run("git add .")
     run(
         "git",
         "commit",
-        r'--message="Build docs \`${VERSION}\` [skip ci]"',
+        f'--message="Build docs `{version}` [skip ci]"',
         expand=False,
     )
     run("git push --force --no-verify --push-option ci.skip")
+
+
+def update_git_docs_cli() -> None:
+    if len(sys.argv) < 2:
+        print("Requires argument: <version>")
+        sys.exit(1)
+    update_git_docs(sys.argv[1])
 
 
 def docs_check_versions() -> None:
     run("mike --debug list --branch=docs-site")
 
 
-def docs_delete_version() -> None:
-    run(r"mike --debug delete --branch=docs-site ${VERSION}")
+def docs_delete_version(version: str) -> None:
+    run(f"mike --debug delete --branch=docs-site {version}")
+
+
+def docs_delete_version_cli() -> None:
+    if len(sys.argv) < 2:
+        print("Requires argument: <version>")
+        sys.exit(1)
+    docs_delete_version(sys.argv[1])
 
 
 def docs_set_default() -> None:
     run("mike --debug set-default --branch=docs-site --push latest")
 
 
-def build_static_docs() -> None:
+def build_static_docs(version: str) -> None:
     docs_build_static()
-    update_git_docs()
+    update_git_docs(version)
 
 
-def build_versioned_docs() -> None:
-    docs_build_versioned()
+def build_static_docs_cli() -> None:
+    if len(sys.argv) < 2:
+        print("Requires argument: <version>")
+        sys.exit(1)
+    build_static_docs(sys.argv[1])
+
+
+def build_versioned_docs(version: str) -> None:
+    docs_build_versioned(version)
     docs_set_default()
+
+
+def build_versioned_docs_cli() -> None:
+    if len(sys.argv) < 2:
+        print("Requires argument: <version>")
+        sys.exit(1)
+    build_versioned_docs(sys.argv[1])
 
 
 ## --------------------------------------------------------------------------- #

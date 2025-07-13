@@ -209,11 +209,11 @@ jobs:
 
         - name: Update Git Version
           id: update-git-version
-          run: uv run git-update-version
+          run: uv run git-update-version ${VERSION}
 
         - name: Fix tag reference
           id: fix-tag-reference
-          run: uv run git-fix-tag-reference
+          run: uv run git-fix-tag-reference ${VERSION}
 
         - name: Build package
           id: build-package
@@ -354,4 +354,4 @@ jobs:
 
       - name: Build docs
         id: build-docs
-        run: uv run build-versioned-docs
+        run: uv run build-versioned-docs ${VERSION}
