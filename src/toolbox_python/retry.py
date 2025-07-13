@@ -127,7 +127,7 @@ def retry(
 ) -> Callable[[Callable[..., R]], Callable[..., R]]:
     """
     !!! note "Summary"
-        Retry a given function a number of times. Catching any known exceptions when they are given. And retrurning any output to either a terminal or a log file.
+        Retry a given function a number of times. Catching any known exceptions when they are given. And returning any output to either a terminal or a log file.
 
     !!! deprecation "Deprecated"
         This function is deprecated. Please use the [`retry()`][func] decorator from the [`stamina`][docs] package instead.<br>
