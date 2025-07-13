@@ -8,6 +8,7 @@ import ast
 import re
 import subprocess
 import sys
+from math import e
 from pathlib import Path
 from typing import Literal, NamedTuple, Union
 
@@ -21,10 +22,10 @@ def expand_space(lst: Union[list[str], tuple[str, ...]]) -> list[str]:
     return [item for element in lst for item in element.split()]
 
 
-def run_command(*command) -> None:
-    command = expand_space(command)
-    print("\n", " ".join(command), sep="", flush=True)
-    subprocess.run(command, check=True)
+def run_command(*command, expand: bool = True) -> None:
+    _command: list[str] = expand_space(command) if expand else list(command)
+    print("\n", " ".join(_command), sep="", flush=True)
+    subprocess.run(_command, check=True)
 
 
 run = run_command
@@ -155,8 +156,14 @@ def check() -> None:
 
 
 def add_git_credentials() -> None:
-    run('git config --global user.name "github-actions[bot]"')
-    run('git config --global user.email "github-actions[bot]@users.noreply.github.com"')
+    run("git", "config", "--global", "user.name", "github-actions[bot]")
+    run(
+        "git",
+        "config",
+        "--global",
+        "user.email",
+        "github-actions[bot]@users.noreply.github.com",
+    )
 
 
 def git_refresh_current_branch() -> None:
@@ -180,7 +187,13 @@ def git_switch_to_docs_branch() -> None:
 def git_add_coverage_report() -> None:
     run("cp --recursive --update ./cov-report/html/ ./docs/code/coverage/")
     run("git add ./docs/code/coverage/*")
-    run('git commit --no-verify --message "Update coverage report [skip ci]"')
+    run(
+        "git",
+        "commit",
+        "--no-verify",
+        '--message="Update coverage report [skip ci]"',
+        expand=False,
+    )
     run("git push")
 
 
@@ -188,7 +201,11 @@ def git_update_version() -> None:
     run(r'echo VERSION="\`${VERSION}\`"')
     run("git add .")
     run(
-        r'git commit --message="Bump to version \`$(VERSION)\` [skip ci]" --allow-empty'
+        "git",
+        "commit",
+        "--allow-empty",
+        r'--message="Bump to version \`$(VERSION)\` [skip ci]"',
+        expand=False,
     )
     run("git push --force --no-verify")
     run("git status")
@@ -235,7 +252,12 @@ def docs_build_versioned() -> None:
 
 def update_git_docs() -> None:
     run("git add .")
-    run(r'git commit -m "Build docs \`${VERSION}\` [skip ci]"')
+    run(
+        "git",
+        "commit",
+        r'--message="Build docs \`${VERSION}\` [skip ci]"',
+        expand=False,
+    )
     run("git push --force --no-verify --push-option ci.skip")
 
 
