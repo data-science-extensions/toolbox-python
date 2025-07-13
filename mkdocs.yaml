@@ -19,7 +19,6 @@ theme:
   coverpage_icon: ./assets/images/python.svg
   custom_dir: docs/overrides
   palette:
-    # primary: teal
     primary: blue grey
     accent: indigo
   features:
@@ -37,8 +36,7 @@ theme:
     - content.action.view
   logo: ./assets/images/python.svg
   icon:
-    repo: material/gitlab
-    # logo: fontawesome/brands/python
+    repo: material/github
     edit: material/file-edit-outline
     view: material/file-eye-outline
 
@@ -53,6 +51,7 @@ nav:
       - Lists: code/lists.md
       - Strings: code/strings.md
       - Dictionaries: code/dictionaries.md
+      - Generators: code/generators.md
       - Checkers: code/checkers.md
       - Output: code/output.md
       - Retry: code/retry.md

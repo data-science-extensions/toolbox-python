@@ -42,13 +42,18 @@
 from collections.abc import Generator
 from logging import Logger, _nameToLevel
 from math import ceil
-from typing import Any, Literal, Optional, Union
+from typing import Any, Literal, Optional, Union, overload
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from toolbox_python.checkers import is_type
+from toolbox_python.checkers import (
+    assert_all_is_type,
+    assert_is_type,
+    assert_is_valid,
+    is_type,
+)
 from toolbox_python.collection_types import (
     any_list,
     any_set,
@@ -61,6 +66,7 @@ from toolbox_python.collection_types import (
 # ---------------------------------------------------------------------------- #
 #  Exports                                                                  ####
 # ---------------------------------------------------------------------------- #
+
 
 __all__: str_list = ["print_or_log_output", "list_columns"]
 
@@ -99,7 +105,7 @@ def print_or_log_output(
             Defaults to `#!py None`.
 
     Raises:
-        TypeError:
+        TypeCheckError:
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
         AssertError:
             If `#!py print_or_log=="log"` and `#!py log` is not an instance of `#!py Logger`.
@@ -110,7 +116,7 @@ def print_or_log_output(
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Set up data for examples"}
+        ```pycon {.py .python linenums="1" title="Set up data for examples"}
         >>> from toolbox_python.output import print_or_log_output
         >>> import logging
         >>> logging.basicConfig(filename="logs.log", encoding="utf-8")
@@ -118,7 +124,7 @@ def print_or_log_output(
         >>> default_message = "This is a"
         ```
 
-        ```{.py .python linenums="1" title="Example 1: Print output"}
+        ```pycon {.py .python linenums="1" title="Example 1: Print output"}
         >>> print_or_log_output(
         ...     message=f"{default_message} print",
         ...     print_or_log="print",
@@ -131,7 +137,7 @@ def print_or_log_output(
         !!! success "Conclusion: Successfully printed the message."
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: Log `info`"}
+        ```pycon {.py .python linenums="1" title="Example 2: Log `info`"}
         >>> print_or_log_output(
         ...     message=f"{default_message}n info",
         ...     print_or_log="log",
@@ -146,7 +152,7 @@ def print_or_log_output(
         !!! success "Conclusion: Successfully logged the message."
         </div>
 
-        ```{.py .python linenums="1" title="Example 3: Log `debug`"}
+        ```pycon {.py .python linenums="1" title="Example 3: Log `debug`"}
         >>> print_or_log_output(
         ...     message=f"{default_message} debug",
         ...     print_or_log="log",
@@ -163,7 +169,7 @@ def print_or_log_output(
         !!! observation "Note: This logging structure will continue for every new call to `print_or_log_output()` when `print_or_log="log"`, and the `log` and `log_level` parameters are valid."
         </div>
 
-        ```{.py .python linenums="1" title="Example 7: Invalid `print_or_log` input"}
+        ```pycon {.py .python linenums="1" title="Example 7: Invalid `print_or_log` input"}
         >>> print_or_log_output(
         ...     message=f"{default_message} invalid",
         ...     print_or_log="error",
@@ -176,7 +182,7 @@ def print_or_log_output(
         !!! failure "Conclusion: `print_or_log` can only have the string values `"print"` or `"log"`."
         </div>
 
-        ```{.py .python linenums="1" title="Example 8: Invalid `log` input"}
+        ```pycon {.py .python linenums="1" title="Example 8: Invalid `log` input"}
         >>> print_or_log_output(
         ...     message=f"{default_message} invalid",
         ...     print_or_log="log",
@@ -191,7 +197,7 @@ def print_or_log_output(
         !!! failure "Conclusion: When `print_or_log="log"` then `#!py log` must be an instance of `#!py Logger`."
         </div>
 
-        ```{.py .python linenums="1" title="Example 9: Invalid `log_level` input"}
+        ```pycon {.py .python linenums="1" title="Example 9: Invalid `log_level` input"}
         >>> print_or_log_output(
         ...     message=f"{default_message} invalid",
         ...     print_or_log="log",
@@ -235,6 +241,24 @@ def print_or_log_output(
     )
 
 
+@overload
+@typechecked
+def list_columns(
+    obj: Union[any_list, any_set, any_tuple, Generator],
+    cols_wide: int = 4,
+    columnwise: bool = True,
+    gap: int = 4,
+    print_output: Literal[False] = False,
+) -> str: ...
+@overload
+@typechecked
+def list_columns(
+    obj: Union[any_list, any_set, any_tuple, Generator],
+    cols_wide: int = 4,
+    columnwise: bool = True,
+    gap: int = 4,
+    print_output: Literal[True] = True,
+) -> None: ...
 @typechecked
 def list_columns(
     obj: Union[any_list, any_set, any_tuple, Generator],
@@ -244,7 +268,7 @@ def list_columns(
     print_output: bool = False,
 ) -> Optional[str]:
     """
-    !!! note Summary
+    !!! note "Summary"
         Print the given list in evenly-spaced columns.
 
     Params:
@@ -278,8 +302,12 @@ def list_columns(
             Defaults to: `#!py True`.
 
     Raises:
-        TypeError:
+        TypeCheckError:
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
+        TypeError:
+            If `#!py obj` is not a valid type. Must be one of: `#!py list`, `#!py set`, `#!py tuple`, or `#!py Generator`.
+        ValueError:
+            If `#!py cols_wide` is not greater than `0`, or if `#!py gap` is not greater than `0`.
 
     Returns:
         printer (Optional[str]):
@@ -287,7 +315,7 @@ def list_columns(
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Set up"}
+        ```pycon {.py .python linenums="1" title="Set up"}
         >>> # Imports
         >>> from toolbox_python.output import list_columns
         >>> import requests
@@ -298,9 +326,10 @@ def list_columns(
         ...     response = requests.get(word_url)
         ...     words = response.content.decode().splitlines()
         ...     return words[:num_words]
+        ...
         ```
 
-        ```{.py .python linenums="1" title="Example 1: Default parameters"}
+        ```pycon {.py .python linenums="1" title="Example 1: Default parameters"}
         >>> list_columns(get_list_of_words(4 * 5))
         ```
         <div class="result" markdown>
@@ -314,7 +343,7 @@ def list_columns(
         !!! success "Conclusion: Successfully printed the list in columns."
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: Columnwise with 2 columns"}
+        ```pycon {.py .python linenums="1" title="Example 2: Columnwise with 2 columns"}
         >>> list_columns(
         ...     get_list_of_words(5),
         ...     cols_wide=2,
@@ -330,7 +359,7 @@ def list_columns(
         !!! success "Conclusion: Successfully printed the list in columns."
         </div>
 
-        ```{.py .python linenums="1" title="Example 3: Rowwise with 3 columns"}
+        ```pycon {.py .python linenums="1" title="Example 3: Rowwise with 3 columns"}
         >>> list_columns(
         ...     get_list_of_words(4 * 3),
         ...     columnwise=False,
@@ -348,7 +377,7 @@ def list_columns(
         !!! success "Conclusion: Successfully printed the list in rows."
         </div>
 
-        ```{.py .python linenums="1" title="Example 4: Rowwise with 2 columns, no print output"}
+        ```pycon {.py .python linenums="1" title="Example 4: Rowwise with 2 columns, no print output"}
         >>> output = list_columns(
         ...     get_list_of_words(4 * 2),
         ...     columnwise=False,
@@ -371,16 +400,30 @@ def list_columns(
         Full credit goes to:<br>
         https://stackoverflow.com/questions/1524126/how-to-print-a-list-more-nicely#answer-36085705
     """
+
+    # Validations
+    assert_is_type(obj, (list, set, tuple, Generator))
+    assert_all_is_type((cols_wide, gap), int)
+    assert_all_is_type((columnwise, print_output), bool)
+    assert_is_valid(cols_wide, ">", 0)
+    assert_is_valid(gap, ">", 0)
+
+    # Prepare the string representation of the object
     string_list: str_list = [str(item) for item in obj]
-    if cols_wide > len(string_list):
-        cols_wide = len(string_list)
+    cols_wide = min(cols_wide, len(string_list))
     max_len: int = max(len(item) for item in string_list)
+
+    # Adjust column width if column-wise output
     if columnwise:
         cols_wide = int(ceil(len(string_list) / cols_wide))
+
+    # Segment the list into chunks
     segmented_list: list[str_list] = [
         string_list[index : index + cols_wide]
         for index in range(0, len(string_list), cols_wide)
     ]
+
+    # Ensure the last segment has the correct number of columns
     if columnwise:
         if len(segmented_list[-1]) != cols_wide:
             segmented_list[-1].extend(
@@ -389,12 +432,16 @@ def list_columns(
         combined_list: Union[list[str_list], Any] = zip(*segmented_list)
     else:
         combined_list = segmented_list
+
+    # Create the formatted string with proper spacing
     printer: str = "\n".join(
         [
             "".join([element.ljust(max_len + gap) for element in group])
             for group in combined_list
         ]
     )
+
+    # Print the output if requested
     if print_output:
         print(printer)
     return printer

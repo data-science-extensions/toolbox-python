@@ -63,9 +63,7 @@ __all__: str_list = ["dict_reverse_keys_and_values", "DotDict"]
 
 
 @typechecked
-def dict_reverse_keys_and_values(
-    dictionary: dict_any,
-) -> dict_str_any:
+def dict_reverse_keys_and_values(dictionary: dict_any) -> dict_str_any:
     """
     !!! note "Summary"
         Take the `key` and `values` of a dictionary, and reverse them.
@@ -78,8 +76,10 @@ def dict_reverse_keys_and_values(
             The input `#!py dict` that you'd like to have the `keys` and `values` switched.
 
     Raises:
-        TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
-        KeyError: When there are duplicate `values` being coerced to `keys` in the new dictionary. Raised because a Python `#!py dict` cannot have duplicate keys of the same value.
+        TypeCheckError:
+            If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
+        KeyError:
+            When there are duplicate `values` being coerced to `keys` in the new dictionary. Raised because a Python `#!py dict` cannot have duplicate keys of the same value.
 
     Returns:
         output_dict (dict_str_int):
@@ -87,7 +87,7 @@ def dict_reverse_keys_and_values(
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Set up"}
+        ```pycon {.py .python linenums="1" title="Set up"}
         >>> # Imports
         >>> from toolbox_python.dictionaries import dict_reverse_keys_and_values
         >>>
@@ -126,7 +126,7 @@ def dict_reverse_keys_and_values(
         ... }
         ```
 
-        ```{.py .python linenums="1" title="Example 1: Reverse one-for-one"}
+        ```pycon {.py .python linenums="1" title="Example 1: Reverse one-for-one"}
         >>> print(dict_reverse_keys_and_values(dict_basic))
         ```
         <div class="result" markdown>
@@ -141,7 +141,7 @@ def dict_reverse_keys_and_values(
         !!! observation "Notice here that the original values were type `#!py int`, but here they have been converted to `#!py str`. This is because `#!py dict` keys should ideally only be `#!py str` type."
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: Reverse dictionary containing iterables in `values`"}
+        ```pycon {.py .python linenums="1" title="Example 2: Reverse dictionary containing iterables in `values`"}
         >>> print(dict_reverse_keys_and_values(dict_iterables))
         ```
         <div class="result" markdown>
@@ -165,7 +165,7 @@ def dict_reverse_keys_and_values(
         !!! observation "Notice here how it has 'flattened' the iterables in the `values` in to individual keys, and assigned the original `key` to multiple keys. They keys have again been coerced to `#!py str` type."
         </div>
 
-        ```{.py .python linenums="1" title="Example 3: Dictionary with iterables, raise error when `key` already exists"}
+        ```pycon {.py .python linenums="1" title="Example 3: Dictionary with iterables, raise error when `key` already exists"}
         >>> print(dict_reverse_keys_and_values(dict_iterables_with_duplicates))
         ```
         <div class="result" markdown>
@@ -180,7 +180,7 @@ def dict_reverse_keys_and_values(
         !!! observation "Here, in the second element of the dictionary (`#!py "b"`), there is a duplicate value `#!py 2` which is already existing in the first element of the dictionary (`#!py "a"`). So, we would expect to see an error.<br>Remember, a Python `#!py dict` object _cannot_ contain duplicate keys. They must always be unique."
         </div>
 
-        ```{.py .python linenums="1" title="Example 4: Dictionary with embedded dictionaries"}
+        ```pycon {.py .python linenums="1" title="Example 4: Dictionary with embedded dictionaries"}
         >>> print(dict_reverse_keys_and_values(dict_with_dicts))
         ```
         <div class="result" markdown>
@@ -236,8 +236,73 @@ def dict_reverse_keys_and_values(
 
 class DotDict(dict):
     """
-    Dictionary subclass that allows dot notation access to keys.
-    Nested dictionaries are automatically converted to DotDict instances.
+    !!! note "Summary"
+        Dictionary subclass that allows dot notation access to keys.
+
+    !!! abstract "Details"
+        Nested dictionaries are automatically converted to DotDict instances.
+
+    ???+ example "Examples"
+        ```pycon {.py .python linenums="1" title="Set up"}
+        >>> # Imports
+        >>> from toolbox_python.dictionaries import DotDict
+        >>>
+        >>> # Create a DotDict
+        >>> dot_dict = DotDict({"a": 1, "b": {"c": 2}})
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Accessing values with dot notation"}
+        >>> print(dot_dict.a)
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Output"}
+        1
+        ```
+        !!! success "Conclusion: Successfully accessed value using dot notation."
+        </div>
+
+        ```pycon {.py .python linenums="1" title="Example 2: Accessing nested values with dot notation"}
+        >>> print(dot_dict.b.c)
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Output"}
+        2
+        ```
+        !!! success "Conclusion: Successfully accessed nested value using dot notation."
+        </div>
+
+        ```pycon {.py .python linenums="1" title="Example 3: Setting values with dot notation"}
+        >>> dot_dict.d = 3
+        >>> print(dot_dict.d)
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Output"}
+        3
+        ```
+        !!! success "Conclusion: Successfully set value using dot notation."
+        </div>
+
+        ```pycon {.py .python linenums="1" title="Example 4: Updating nested values with dot notation"}
+        >>> dot_dict.b.e = 4
+        >>> print(dot_dict.b.e)
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Output"}
+        4
+        ```
+        !!! success "Conclusion: Successfully updated nested value using dot notation."
+        </div>
+
+        ```pycon {.py .python linenums="1" title="Example 5: Converting back to regular dict"}
+        >>> regular_dict = dot_dict.to_dict()
+        >>> print(regular_dict)
+        ```
+        <div class="result" markdown>
+        ```{.sh .shell title="Output"}
+        {'a': 1, 'b': {'c': 2, 'e': 4}, 'd': 3}
+        ```
+        !!! success "Conclusion: Successfully converted DotDict back to regular dict."
+        </div>
     """
 
     def __init__(self, *args, **kwargs) -> None:
@@ -288,12 +353,58 @@ class DotDict(dict):
             raise AttributeError(f"Key not found: '{key}'") from e
 
     def update(self, *args, **kwargs) -> None:
-        """Override update to convert new values."""
+        """
+        !!! note "Summary"
+            Override update to convert new values.
+
+        Parameters:
+            *args:
+                Variable length argument list.
+            **kwargs:
+                Arbitrary keyword arguments.
+
+        Returns:
+            (None):
+                This function does not return a value. It updates the dictionary with new key-value pairs.
+
+        ???+ example "Examples"
+            ```pycon {.py .python linenums="1" title="Update DotDict"}
+            >>> dot_dict = DotDict({"a": 1, "b": 2})
+            >>> dot_dict.update({"c": 3, "d": {"e": 4}})
+            >>> print(dot_dict)
+            ```
+            <div class="result" markdown>
+            ```{.sh .shell title="Output"}
+            {'a': 1, 'b': 2, 'c': 3, 'd': {'e': 4}}
+            ```
+            !!! success "Conclusion: Successfully updated DotDict with new values."
+            </div>
+        """
         for k, v in dict(*args, **kwargs).items():
             self[k] = v
 
     def to_dict(self) -> Any:
-        """Convert back to regular dictionary."""
+        """
+        !!! note "Summary"
+            Convert back to regular dictionary.
+
+        Returns:
+            (Any):
+                The original dictionary structure, with all nested `#!py DotDict` instances converted back to regular dictionaries.
+
+        ???+ example "Examples"
+            ```pycon {.py .python linenums="1" title="Convert DotDict to regular dict"}
+            >>> dot_dict = DotDict({"a": 1, "b": {"c": 2}})
+            >>> regular_dict = dot_dict.to_dict()
+            >>> print(regular_dict)
+            ```
+            <div class="result" markdown>
+            ```{.sh .shell title="Output"}
+            {'a': 1, 'b': {'c': 2}}
+            ```
+            !!! success "Conclusion: Successfully converted DotDict back to regular dict."
+            </div>
+        """
 
         def _convert_back(obj) -> Any:
             if isinstance(obj, DotDict):

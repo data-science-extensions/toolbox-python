@@ -15,11 +15,15 @@ from typing import Any, Union
 from unittest import TestCase
 
 # ## Python Third Party Imports ----
-import pytest
 from parameterized import parameterized
+from pytest import raises
 
 # ## Local First Party Imports ----
-from tests.setup import name_func_nested_list, name_func_predefined_name
+from tests.setup import (
+    name_func_flat_list,
+    name_func_nested_list,
+    name_func_predefined_name,
+)
 from toolbox_python.checkers import (
     all_elements_contains,
     any_element_contains,
@@ -32,6 +36,7 @@ from toolbox_python.checkers import (
     assert_any_values_in_iterable,
     assert_any_values_of_type,
     assert_in,
+    assert_is_valid,
     assert_type,
     assert_value_in_iterable,
     assert_value_of_type,
@@ -46,6 +51,7 @@ from toolbox_python.checkers import (
     is_any_values_of_type,
     is_in,
     is_type,
+    is_valid,
     is_value_in_iterable,
     is_value_of_type,
 )
@@ -75,7 +81,12 @@ type_maps: dict[type, Any] = {
 # ---------------------------------------------------------------------------- #
 
 
-class TestSuite(TestCase):
+## --------------------------------------------------------------------------- #
+##  Types                                                                   ####
+## --------------------------------------------------------------------------- #
+
+
+class TestTypes(TestCase):
 
     def setUp(self) -> None:
         pass
@@ -126,7 +137,7 @@ class TestSuite(TestCase):
             assert_type(_val, _typ)
             assert_value_of_type(_val, _typ)
         else:
-            with pytest.raises(TypeError):
+            with raises(TypeError):
                 assert_type(_val, _typ)
                 assert_value_of_type(_val, _typ)
 
@@ -176,7 +187,7 @@ class TestSuite(TestCase):
             assert_all_values_of_type(_vals, _typ)
             assert_all_type(_vals, _typ)
         else:
-            with pytest.raises(TypeError):
+            with raises(TypeError):
                 assert_all_values_of_type(_vals, _typ)
                 assert_all_type(_vals, _typ)
 
@@ -226,9 +237,17 @@ class TestSuite(TestCase):
             assert_any_values_of_type(_vals, _typ)
             assert_any_type(_vals, _typ)
         else:
-            with pytest.raises(TypeError):
+            with raises(TypeError):
                 assert_any_values_of_type(_vals, _typ)
                 assert_any_type(_vals, _typ)
+
+
+## --------------------------------------------------------------------------- #
+##  Iterables                                                               ####
+## --------------------------------------------------------------------------- #
+
+
+class TestIterables(TestCase):
 
     @parameterized.expand(
         (
@@ -276,27 +295,27 @@ class TestSuite(TestCase):
         assert_any_in(_val, _vals)
 
     def test_raises_assert_value_of_type(self) -> None:
-        with pytest.raises(TypeError):
+        with raises(TypeError):
             assert_value_of_type(5, str)
             assert_value_of_type("5", int)
 
     def test_raises_all_values_of_type(self) -> None:
-        with pytest.raises(TypeError):
+        with raises(TypeError):
             assert_all_values_of_type((1, 2, 3, 4, 5), str)
             assert_all_values_of_type(("1", "2", "3", "4", "5"), int)
 
     def test_raises_assert_value_in_iterable(self) -> None:
-        with pytest.raises(LookupError):
+        with raises(LookupError):
             assert_value_in_iterable("a", (1, 2, 3))
             assert_value_in_iterable(1, ("a", "b", "c"))
 
     def test_raises_assert_any_values_in_iterable(self) -> None:
-        with pytest.raises(LookupError):
+        with raises(LookupError):
             assert_any_values_in_iterable(("a", "b"), (1, 2, 3))
             assert_any_values_in_iterable((1, 2), ("a", "b", "c"))
 
     def test_raises_assert_all_values_in_iterable(self) -> None:
-        with pytest.raises(LookupError):
+        with raises(LookupError):
             assert_all_values_in_iterable(("a", "d"), ("a", "b", "c"))
 
 
@@ -371,3 +390,68 @@ class TestContains(TestCase):
             _out = tuple(sorted(_out))
             _exp = tuple(sorted(_exp))
         assert _out == _exp
+
+
+## --------------------------------------------------------------------------- #
+##  Values                                                                  ####
+## --------------------------------------------------------------------------- #
+
+
+TRUES = (
+    (5, "<", 10),
+    (5, "<=", 10),
+    (5, "<=", 5),
+    (10, ">", 5),
+    (10, ">=", 5),
+    (5, ">=", 5),
+    (5, "==", 5),
+    (5, "!=", 10),
+    (3, "in", [1, 2, 3, 4]),
+    (5, "not in", (1, 2, 3, 4)),
+)
+FALSES = (
+    (10, "<", 5),
+    (10, "<=", 5),
+    (5, ">", 10),
+    (5, ">=", 10),
+    (5, "==", 10),
+    (5, "!=", 5),
+    (5, "in", [1, 2, 3, 4]),
+    (3, "not in", (1, 2, 3, 4)),
+)
+
+
+class TestValues(TestCase):
+
+    @parameterized.expand(
+        input=TRUES,
+        name_func=name_func_flat_list,
+    )
+    def test_is_valid(self, _val: Any, _op: str, _targ: Any) -> None:
+        assert is_valid(_val, _op, _targ) == True
+
+    @parameterized.expand(
+        input=FALSES,
+        name_func=name_func_flat_list,
+    )
+    def test_not_is_valid(self, _val: Any, _op: str, _targ: Any) -> None:
+        assert is_valid(_val, _op, _targ) == False
+
+    @parameterized.expand(
+        input=TRUES,
+        name_func=name_func_flat_list,
+    )
+    def test_assert_is_valid(self, _val: Any, _op: str, _targ: Any) -> None:
+        assert assert_is_valid(_val, _op, _targ) is None
+
+    @parameterized.expand(
+        input=FALSES,
+        name_func=name_func_flat_list,
+    )
+    def test_assert_not_is_valid(self, _val: Any, _op: str, _targ: Any) -> None:
+        with raises(ValueError):
+            assert_is_valid(_val, _op, _targ)
+
+    def test_assert_is_valid_unknown_operator(self) -> None:
+        with raises(ValueError):
+            assert_is_valid(5, "unknown", 10)

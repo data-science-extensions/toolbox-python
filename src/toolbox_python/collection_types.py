@@ -104,7 +104,7 @@ dict_any = dict[
     To streamline other functions, this `type` alias is created for a `Dict` containing certain types.
 !!! abstract "Details"
     The structure of the `type` is as follows:
-    ```{.py .python linenums="1" title="Type structure"}
+    ```pycon {.py .python linenums="1" title="Type structure"}
     dict_any = Dict[
         Union[str, int],
         Union[str, int, float, list, tuple, dict],
@@ -121,7 +121,7 @@ dict_str_int = dict[
     To streamline other functions, this `type` alias is created for a `Dict` containing certain types.
 !!! abstract "Details"
     The structure of the `type` is as follows:
-    ```{.py .python linenums="1" title="Type structure"}
+    ```pycon {.py .python linenums="1" title="Type structure"}
     dict_str_int = Dict[
         Union[str, int],
         Union[str, int],
@@ -136,7 +136,7 @@ log_levels = Literal["debug", "info", "warning", "error", "critical"]
     To streamline other functions, this `type` alias is created for all of the `log` levels available.
 !!! abstract "Details"
     The structure of the `type` is as follows:
-    ```{.py .python linenums="1" title="Type structure"}
+    ```pycon {.py .python linenums="1" title="Type structure"}
     Literal["debug", "info", "warning", "error", "critical"]
     ```
 """

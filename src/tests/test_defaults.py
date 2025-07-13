@@ -14,8 +14,8 @@
 from unittest import TestCase
 
 # ## Python Third Party Imports ----
-import pytest
 from parameterized import parameterized
+from pytest import raises
 
 # ## Local First Party Imports ----
 from tests.setup import name_func_nested_list
@@ -75,9 +75,9 @@ class TestDefaults(TestCase):
         assert _output == _expected
 
     def test_defaults_invalid_cast(self) -> None:
-        with pytest.raises(AttributeError):
+        with raises(AttributeError):
             defaults(value="next", cast="bad_type")
 
     def test_defaults_all_blank(self) -> None:
-        with pytest.raises(AttributeError):
+        with raises(AttributeError):
             defaults(value=None, default=None)

@@ -84,11 +84,11 @@ def get_full_class_name(obj: Any) -> str:
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Set up"}
+        ```pycon {.py .python linenums="1" title="Set up"}
         >>> from toolbox_python.classes import get_full_class_name
         ```
 
-        ```{.py .python linenums="1" title="Example 1: Check the name of a standard class"}
+        ```pycon {.py .python linenums="1" title="Example 1: Check the name of a standard class"}
         >>> print(get_full_class_name(str))
         ```
         <div class="result" markdown>
@@ -98,7 +98,7 @@ def get_full_class_name(obj: Any) -> str:
         !!! success "Conclusion: Successful class name extraction."
         </div>
 
-        ```{.py .python linenums="1" title="Example 2: Check the name of an imported class"}
+        ```pycon {.py .python linenums="1" title="Example 2: Check the name of an imported class"}
         >>> from random import Random
         >>> print(get_full_class_name(Random))
         ```
@@ -139,13 +139,13 @@ class class_property(property):
 
         Normal usage is as a decorator:
 
-        ```{.py .python linenums="1" title="Example 1: Normal usage"}
+        ```pycon {.py .python linenums="1" title="Example 1: Normal usage"}
         >>> class Foo:
         ...     _bar_internal = 1
-        ...
         ...     @class_property
         ...     def bar(cls):
         ...         return cls._bar_internal + 1
+        ...
         >>>
         >>> print(f"Class attribute: `{Foo.bar}`")
         >>>
@@ -153,7 +153,9 @@ class class_property(property):
         >>> print(f"Instantiated class: `{foo_instance.bar}`")
         >>>
         >>> foo_instance._bar_internal = 2
-        >>> print(f"Modified instance attribute: `{foo_instance.bar}`")  # Ignores instance attributes
+        >>> print(
+        ...     f"Modified instance attribute: `{foo_instance.bar}`"
+        ... )  # Ignores instance attributes
         ```
         <div class="result" markdown>
         ```{.sh .shell title="Terminal"}
@@ -167,22 +169,19 @@ class class_property(property):
 
         As previously noted, a `class_property` is limited to implementing read-only attributes:
 
-        ```{.py .python linenums="1" title="Example 2: Read-only attributes"}
+        ```pycon {.py .python linenums="1" title="Example 2: Read-only attributes"}
         >>> class Foo:
         ...     _bar_internal = 1
-        ...
         ...     @class_property
         ...     def bar(cls):
         ...         return cls._bar_internal
-        ...
         ...     @bar.setter
         ...     def bar(cls, value):
         ...         cls._bar_internal = value
+        ...
         ```
         <div class="result" markdown>
         ```{.sh .shell title="Terminal"}
-        Traceback (most recent call last):
-        ...
         NotImplementedError: class_property can only be read-only; use a metaclass to implement modifiable class-level properties
         ```
         !!! failure "Conclusion: Failed to set a class property."
@@ -268,11 +267,11 @@ class class_property(property):
 
 #     ???+ example "Examples"
 
-#         ```{.py .python linenums="1" title="Set up"}
+#         ```pycon {.py .python linenums="1" title="Set up"}
 #         >>> from toolbox_python.classes import cached_class_property
 #         ```
 
-#         ```{.py .python linenums="1" title="Example 1: Create a cached class property"}
+#         ```pycon {.py .python linenums="1" title="Example 1: Create a cached class property"}
 #         >>> class TestClass:
 #         ...     @cached_class_property
 #         ...     def expensive_property(cls):

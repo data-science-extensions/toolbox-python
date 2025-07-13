@@ -48,13 +48,14 @@ repos:
 
   # Run MyPy type checks
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.15.0"
+    rev: "v1.16.1"
     hooks:
       - id: mypy
         files: src/toolbox_python
         args:
           - "--install-types"
           - "--config-file=pyproject.toml"
+          - "--allow-redefinition"
 
   # Reorder Python imports
   - repo: https://github.com/pycqa/isort
@@ -67,7 +68,7 @@ repos:
 
   # Find any outdated syntax and replace with modern equivalents
   - repo: https://github.com/asottile/pyupgrade
-    rev: "v3.19.1"
+    rev: "v3.20.0"
     hooks:
       - id: pyupgrade
         name: Upgrade Python features
@@ -93,24 +94,20 @@ repos:
         args:
           - "--all"
 
-  # # Check poetry configs
-  # - repo: https://github.com/python-poetry/poetry
-  #   rev: "2.1.1"
-  #   hooks:
-  #     - id: poetry-check
-
   # Check uv configs
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: "0.6.12"
+    rev: "0.7.20"
     hooks:
       - id: uv-lock
       - id: uv-sync
         # args:
         #   - "--all-groups"
 
-  # Run Pylint
+  # Everything run locally
   - repo: local
     hooks:
+
+      # Run Pylint
       - id: pylint
         name: pylint
         entry: pipenv run pylint
@@ -120,3 +117,10 @@ repos:
           - "--rcfile=pyproject.toml"
           - "-rn" # Only display messages
           - "-sn" # Don't display the score
+
+      # Check
+      - id: check-docstrings
+        name: Check Docstrings
+        entry: uv run --no-sync --link-mode=copy check-docstrings
+        language: system
+        types: [python]

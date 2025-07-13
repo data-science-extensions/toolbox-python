@@ -45,12 +45,13 @@ from functools import wraps
 from logging import Logger
 from time import sleep
 from types import ModuleType
-from typing import Any, Callable, Literal, Optional, Union
+from typing import Callable, Literal, Optional, TypeVar, Union, overload
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
+from toolbox_python.checkers import assert_is_valid
 from toolbox_python.classes import get_full_class_name
 from toolbox_python.collection_types import str_list
 from toolbox_python.output import print_or_log_output
@@ -80,6 +81,9 @@ _exceptions = Union[
 """
 
 
+R = TypeVar("R")
+
+
 # ---------------------------------------------------------------------------- #
 #                                                                              #
 #     Classes                                                               ####
@@ -98,16 +102,32 @@ class Retry:
 # ---------------------------------------------------------------------------- #
 
 
+@overload
 @typechecked
 def retry(
     exceptions: _exceptions = Exception,
     tries: int = 1,
     delay: int = 0,
-    print_or_log: Optional[Literal["print", "log"]] = "print",
-) -> Optional[Any]:
+    print_or_log: Literal["print"] = "print",
+) -> Callable[[Callable[..., R]], Callable[..., R]]: ...
+@overload
+@typechecked
+def retry(
+    exceptions: _exceptions = Exception,
+    tries: int = 1,
+    delay: int = 0,
+    print_or_log: Literal["log"] = "log",
+) -> Callable[[Callable[..., R]], Callable[..., R]]: ...
+@typechecked
+def retry(
+    exceptions: _exceptions = Exception,
+    tries: int = 1,
+    delay: int = 0,
+    print_or_log: Literal["print", "log"] = "print",
+) -> Callable[[Callable[..., R]], Callable[..., R]]:
     """
     !!! note "Summary"
-        Retry a given function a number of times. Catching any known exceptions when they are given. And retrurning any output to either a terminal or a log file.
+        Retry a given function a number of times. Catching any known exceptions when they are given. And returning any output to either a terminal or a log file.
 
     !!! deprecation "Deprecated"
         This function is deprecated. Please use the [`retry()`][func] decorator from the [`stamina`][docs] package instead.<br>
@@ -137,9 +157,12 @@ def retry(
             Defaults to `#!py "print"`.
 
     Raises:
-        TypeError: If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
-        ValueError: If either `tries` or `delay` are less than `#!py 0`
-        RuntimeError: If _either_ an unexpected `#!py Exception` was thrown, which was not declared in the `exceptions` collection, _or_ if the `func` was still not able to be executed after `tries` number of iterations.
+        TypeCheckError:
+            If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
+        ValueError:
+            If either `tries` or `delay` are less than `#!py 0`
+        RuntimeError:
+            If _either_ an unexpected `#!py Exception` was thrown, which was not declared in the `exceptions` collection, _or_ if the `func` was still not able to be executed after `tries` number of iterations.
 
     Returns:
         result (Optional[Any]):
@@ -147,14 +170,15 @@ def retry(
 
     ???+ example "Examples"
 
-        ```{.py .python linenums="1" title="Imports"}
+        ```pycon {.py .python linenums="1" title="Imports"}
         >>> from toolbox_python.retry import retry
         ```
 
         ```{.py .python linenums="1" title="Example 1: No error"}
         >>> @retry(tries=5, delay=1, print_or_log="print")
-        >>> def simple_func(var1:str="this")->str:
+        >>> def simple_func(var1: str = "this") -> str:
         ...     return var1
+        ...
         >>> simple_func()
         ```
         <div class="result" markdown>
@@ -165,8 +189,9 @@ def retry(
 
         ```{.py .python linenums="1" title="Example 2: Expected error"}
         >>> @retry(exceptions=TypeError, tries=5, delay=1, print_or_log="print")
-        >>> def failing_func(var1:str="that")->None:
+        >>> def failing_func(var1: str = "that") -> None:
         ...     raise ValueError("Incorrect value")
+        ...
         >>> failing_func()
         ```
         <div class="result" markdown>
@@ -186,19 +211,20 @@ def retry(
         - https://pypi.org/project/retry/
         - https://stackoverflow.com/questions/21786382/pythonic-way-of-retry-running-a-function#answer-21788594
     """
-    for param in ["tries", "delay"]:
-        if not eval(param) >= 0:
-            raise ValueError(
-                f"Invalid value for parameter `{param}`: {eval(param)}\n"
-                f"Must be a positive integer."
-            )
+    assert_is_valid(tries, ">=", 0)
+    assert_is_valid(delay, ">=", 0)
+
+    exceptions = (
+        tuple(exceptions) if isinstance(exceptions, (list, tuple)) else (exceptions,)
+    )
+
+    log: Optional[Logger] = None
+
     if print_or_log == "log":
         stk: inspect.FrameInfo = inspect.stack()[2]
         mod: Union[ModuleType, None] = inspect.getmodule(stk[0])
         if mod is not None:
             log: Optional[Logger] = logging.getLogger(mod.__name__)
-    else:
-        log = None
 
     def decorator(func: Callable):
         @wraps(func)
