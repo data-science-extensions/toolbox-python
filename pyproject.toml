@@ -1,6 +1,6 @@
 [project]
 name = "toolbox-python"
-version = "1.3.2"
+version = "v1.4.0"
 description = "Helper files/functions/classes for generic Python processes"
 readme = "README.md"
 license = "MIT"
