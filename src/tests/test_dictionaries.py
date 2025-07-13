@@ -15,7 +15,7 @@ from typing import Union
 from unittest import TestCase
 
 # ## Python Third Party Imports ----
-import pytest
+from pytest import raises
 
 # ## Local First Party Imports ----
 from toolbox_python.checkers import assert_type
@@ -113,7 +113,7 @@ class TestDictReverseKeysAndValues(TestCase):
             r"Full `output_dict` so far:\n"
             r"{'1': 'a', '2': 'a', '3': 'a', '4': 'b'}"
         )
-        with pytest.raises(KeyError) as execinfo:
+        with raises(KeyError) as execinfo:
             _output = dict_reverse_keys_and_values(_input)
         assert str(execinfo.value) == f'"{_expected}"'
 
@@ -166,7 +166,7 @@ class TestDotDict(TestCase):
     def test_dict_values(self) -> None:
         assert self.dot_dict.version == 1.0
         assert self.dot_dict.title == "Sample Dictionary"
-        with pytest.raises(AttributeError):
+        with raises(AttributeError):
             assert self.dot_dict.missing == "Missing Key"
 
     def test_dict_nested_values(self) -> None:
@@ -204,9 +204,9 @@ class TestDotDict(TestCase):
         self.dot_dict["key_two"] = "New Value"
         assert self.dot_dict["key_two"] == "New Value"
         del self.dot_dict["key_two"]
-        with pytest.raises(KeyError):
+        with raises(KeyError):
             del self.dot_dict["missing_key"]
-        with pytest.raises(AttributeError):
+        with raises(AttributeError):
             del self.dot_dict.missing_key
 
     def test_convert_to_dict(self) -> None:
@@ -215,7 +215,7 @@ class TestDotDict(TestCase):
         assert dict_from_dotdict == self.test_dict
         assert dict_from_dotdict["user"]["name"] == "John"
         assert dict_from_dotdict["list_objects"][0]["name"] == "Item 1"
-        with pytest.raises(AttributeError):
+        with raises(AttributeError):
             dict_from_dotdict.version
             dict_from_dotdict.title
 

@@ -14,8 +14,8 @@
 from unittest import TestCase
 
 # ## Python Third Party Imports ----
-import pytest
 from parameterized import parameterized
+from pytest import raises
 
 # ## Local First Party Imports ----
 from tests.setup import name_func_nested_list
@@ -44,5 +44,5 @@ class TestBools(TestCase):
 
     def test_strtobool_raises(self) -> None:
         _input = 5
-        with pytest.raises(ValueError):
+        with raises(ValueError):
             _output: bool = strtobool(_input)

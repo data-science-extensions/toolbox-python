@@ -15,8 +15,8 @@ from typing import Any, Union
 from unittest import TestCase
 
 # ## Python Third Party Imports ----
-import pytest
 from parameterized import parameterized
+from pytest import raises
 
 # ## Local First Party Imports ----
 from tests.setup import (
@@ -137,7 +137,7 @@ class TestTypes(TestCase):
             assert_type(_val, _typ)
             assert_value_of_type(_val, _typ)
         else:
-            with pytest.raises(TypeError):
+            with raises(TypeError):
                 assert_type(_val, _typ)
                 assert_value_of_type(_val, _typ)
 
@@ -187,7 +187,7 @@ class TestTypes(TestCase):
             assert_all_values_of_type(_vals, _typ)
             assert_all_type(_vals, _typ)
         else:
-            with pytest.raises(TypeError):
+            with raises(TypeError):
                 assert_all_values_of_type(_vals, _typ)
                 assert_all_type(_vals, _typ)
 
@@ -237,7 +237,7 @@ class TestTypes(TestCase):
             assert_any_values_of_type(_vals, _typ)
             assert_any_type(_vals, _typ)
         else:
-            with pytest.raises(TypeError):
+            with raises(TypeError):
                 assert_any_values_of_type(_vals, _typ)
                 assert_any_type(_vals, _typ)
 
@@ -295,27 +295,27 @@ class TestIterables(TestCase):
         assert_any_in(_val, _vals)
 
     def test_raises_assert_value_of_type(self) -> None:
-        with pytest.raises(TypeError):
+        with raises(TypeError):
             assert_value_of_type(5, str)
             assert_value_of_type("5", int)
 
     def test_raises_all_values_of_type(self) -> None:
-        with pytest.raises(TypeError):
+        with raises(TypeError):
             assert_all_values_of_type((1, 2, 3, 4, 5), str)
             assert_all_values_of_type(("1", "2", "3", "4", "5"), int)
 
     def test_raises_assert_value_in_iterable(self) -> None:
-        with pytest.raises(LookupError):
+        with raises(LookupError):
             assert_value_in_iterable("a", (1, 2, 3))
             assert_value_in_iterable(1, ("a", "b", "c"))
 
     def test_raises_assert_any_values_in_iterable(self) -> None:
-        with pytest.raises(LookupError):
+        with raises(LookupError):
             assert_any_values_in_iterable(("a", "b"), (1, 2, 3))
             assert_any_values_in_iterable((1, 2), ("a", "b", "c"))
 
     def test_raises_assert_all_values_in_iterable(self) -> None:
-        with pytest.raises(LookupError):
+        with raises(LookupError):
             assert_all_values_in_iterable(("a", "d"), ("a", "b", "c"))
 
 
@@ -449,9 +449,9 @@ class TestValues(TestCase):
         name_func=name_func_flat_list,
     )
     def test_assert_not_is_valid(self, _val: Any, _op: str, _targ: Any) -> None:
-        with pytest.raises(ValueError):
+        with raises(ValueError):
             assert_is_valid(_val, _op, _targ)
 
     def test_assert_is_valid_unknown_operator(self) -> None:
-        with pytest.raises(ValueError):
+        with raises(ValueError):
             assert_is_valid(5, "unknown", 10)

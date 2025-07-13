@@ -15,7 +15,7 @@ from pprint import pprint
 from unittest import TestCase
 
 # ## Python Third Party Imports ----
-import pytest
+from pytest import CaptureFixture, LogCaptureFixture, fixture
 
 # ## Local First Party Imports ----
 from toolbox_python.retry import retry
@@ -53,10 +53,12 @@ class TestRetryDecorator(TestCase):
     def setUp(self) -> None:
         pass
 
-    @pytest.fixture(autouse=True)
-    def _pass_fixtures(self, capsys, caplog) -> None:
-        self.capsys: pytest.CaptureFixture = capsys
-        self.caplog: pytest.LogCaptureFixture = caplog
+    @fixture(autouse=True)
+    def _pass_fixtures(
+        self, capsys: CaptureFixture[str], caplog: LogCaptureFixture
+    ) -> None:
+        self.capsys: CaptureFixture = capsys
+        self.caplog: LogCaptureFixture = caplog
         self.caplog.set_level("notset".upper())
 
     @staticmethod

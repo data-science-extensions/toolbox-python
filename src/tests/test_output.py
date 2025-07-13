@@ -18,9 +18,9 @@ from typing import Literal, Union
 from unittest import TestCase
 
 # ## Python Third Party Imports ----
-import pytest
 import requests
 from parameterized import parameterized
+from pytest import CaptureFixture, LogCaptureFixture, fixture, raises
 from typeguard import TypeCheckError
 
 # ## Local First Party Imports ----
@@ -42,12 +42,10 @@ class TestPrintOrLogOutput(TestCase):
         cls.message = "Message for:"
         cls.log: logging.Logger = logging.getLogger(__name__)
 
-    @pytest.fixture(autouse=True)
-    def _pass_fixtures(
-        self, capsys: pytest.CaptureFixture, caplog: pytest.LogCaptureFixture
-    ) -> None:
-        self.capsys: pytest.CaptureFixture = capsys
-        self.caplog: pytest.LogCaptureFixture = caplog
+    @fixture(autouse=True)
+    def _pass_fixtures(self, capsys: CaptureFixture, caplog: LogCaptureFixture) -> None:
+        self.capsys: CaptureFixture = capsys
+        self.caplog: LogCaptureFixture = caplog
         self.caplog.set_level("notset".upper())
 
     def test_print_output(self) -> None:
@@ -114,14 +112,14 @@ class TestPrintOrLogOutput(TestCase):
         self.caplog.clear()
 
     def test_invalid_input(self) -> None:
-        with pytest.raises(TypeCheckError):
+        with raises(TypeCheckError):
             print_or_log_output(
                 message=f"{self.message} none",
                 print_or_log="invalid",
             )
 
     def test_raises_type_error(self) -> None:
-        with pytest.raises(TypeError):
+        with raises(TypeError):
             print_or_log_output(
                 message=f"{self.message} error",
                 print_or_log="log",
@@ -130,7 +128,7 @@ class TestPrintOrLogOutput(TestCase):
             )
 
     def test_raises_value_error(self) -> None:
-        with pytest.raises(ValueError):
+        with raises(ValueError):
             print_or_log_output(
                 message=f"{self.message} error",
                 print_or_log="log",
@@ -139,7 +137,7 @@ class TestPrintOrLogOutput(TestCase):
             )
 
     def test_invalid_input_01(self) -> None:
-        with pytest.raises(TypeCheckError):
+        with raises(TypeCheckError):
             print_or_log_output(
                 message=1,
                 print_or_log="log",
@@ -148,7 +146,7 @@ class TestPrintOrLogOutput(TestCase):
             )
 
     def test_invalid_input_02(self) -> None:
-        with pytest.raises(TypeCheckError):
+        with raises(TypeCheckError):
             print_or_log_output(
                 message=self.message,
                 print_or_log="invalid",
@@ -157,7 +155,7 @@ class TestPrintOrLogOutput(TestCase):
             )
 
     def test_invalid_input_03(self) -> None:
-        with pytest.raises(TypeCheckError):
+        with raises(TypeCheckError):
             print_or_log_output(
                 message=self.message,
                 print_or_log="log",
@@ -166,7 +164,7 @@ class TestPrintOrLogOutput(TestCase):
             )
 
     def test_invalid_input_04(self) -> None:
-        with pytest.raises(TypeCheckError):
+        with raises(TypeCheckError):
             print_or_log_output(
                 message=self.message,
                 print_or_log="log",
@@ -180,9 +178,9 @@ class TestListColumnsOutput(TestCase):
     def setUp(self) -> None:
         pass
 
-    @pytest.fixture(autouse=True)
-    def _pass_fixtures(self, capsys: pytest.CaptureFixture) -> None:
-        self.capsys: pytest.CaptureFixture = capsys
+    @fixture(autouse=True)
+    def _pass_fixtures(self, capsys: CaptureFixture) -> None:
+        self.capsys: CaptureFixture = capsys
 
     @staticmethod
     @lru_cache
