@@ -31,7 +31,7 @@ run = run_command
 
 
 def uv_sync() -> None:
-    run_command("uv sync --all-groups --native-tls --link-mode=copy")
+    run("uv sync --all-groups --native-tls --link-mode=copy")
 
 
 def lint_check() -> None:
@@ -56,23 +56,23 @@ def get_all_files(*suffixes) -> list[str]:
 
 
 def run_black() -> None:
-    run_command("black --config=pyproject.toml ./")
+    run("black --config=pyproject.toml ./")
 
 
 def run_blacken_docs() -> None:
-    run_command("blacken-docs", *get_all_files(".md", ".py", ".ipynb"))
+    run("blacken-docs", *get_all_files(".md", ".py", ".ipynb"))
 
 
 def run_isort() -> None:
-    run_command("isort --settings-file=pyproject.toml ./")
+    run("isort --settings-file=pyproject.toml ./")
 
 
 def run_pycln() -> None:
-    run_command("pycln --config=pyproject.toml src/")
+    run("pycln --config=pyproject.toml src/")
 
 
 def run_pyupgrade() -> None:
-    run_command("pyupgrade --py3-plus", *get_all_files(".py"))
+    run("pyupgrade --py3-plus", *get_all_files(".py"))
 
 
 def lint() -> None:
@@ -88,15 +88,15 @@ def lint() -> None:
 
 
 def check_black() -> None:
-    run_command("black --check --config=pyproject.toml ./")
+    run("black --check --config=pyproject.toml ./")
 
 
 def check_blacken_docs() -> None:
-    run_command("blacken-docs --check", *get_all_files(".md", ".py", ".ipynb"))
+    run("blacken-docs --check", *get_all_files(".md", ".py", ".ipynb"))
 
 
 def check_mypy() -> None:
-    run_command(
+    run(
         "mypy",
         "--install-types",
         "--non-interactive",
@@ -106,33 +106,33 @@ def check_mypy() -> None:
 
 
 def check_isort() -> None:
-    run_command("isort --check --settings-file=pyproject.toml ./")
+    run("isort --check --settings-file=pyproject.toml ./")
 
 
 def check_codespell() -> None:
-    run_command("codespell --toml=pyproject.toml src/ *.py")
+    run("codespell --toml=pyproject.toml src/ *.py")
 
 
 def check_pylint() -> None:
-    run_command("pylint --rcfile=pyproject.toml src/toolbox_python")
+    run("pylint --rcfile=pyproject.toml src/toolbox_python")
 
 
 def check_pycln() -> None:
-    run_command("pycln --check --config=pyproject.toml src/")
+    run("pycln --check --config=pyproject.toml src/")
 
 
 def check_build() -> None:
-    run_command("uv build --out-dir=dist")
-    run_command("rm --recursive dist")
+    run("uv build --out-dir=dist")
+    run("rm --recursive dist")
 
 
 def check_mkdocs() -> None:
-    run_command("mkdocs build --site-dir=temp")
-    run_command("rm --recursive temp")
+    run("mkdocs build --site-dir=temp")
+    run("rm --recursive temp")
 
 
 def check_pytest() -> None:
-    run_command("pytest --config-file=pyproject.toml")
+    run("pytest --config-file=pyproject.toml")
 
 
 def check() -> None:
@@ -150,7 +150,119 @@ def check() -> None:
 
 
 ## --------------------------------------------------------------------------- #
-##  Pre-Commit                                                              ####
+##  Git                                                                     ####
+## --------------------------------------------------------------------------- #
+
+
+def add_git_credentials() -> None:
+    run('git config --global user.name "github-actions[bot]"')
+    run('git config --global user.email "github-actions[bot]@users.noreply.github.com"')
+
+
+def git_refresh_current_branch() -> None:
+    run("git remote update")
+    run("git fetch --verbose")
+    run("git fetch --verbose --tags")
+    run("git pull  --verbose")
+    run("git status --verbose")
+    run("git branch --list --verbose")
+    run("git tag --list --sort=-creatordate")
+
+
+def git_switch_to_main_branch() -> None:
+    run("git checkout -B main --track origin/main")
+
+
+def git_switch_to_docs_branch() -> None:
+    run("git checkout -B docs-site --track origin/docs-site")
+
+
+def git_add_coverage_report() -> None:
+    run('cp --recursive --update "./cov-report/html/." "./docs/code/coverage/"')
+    run("git add ./docs/code/coverage/*")
+    run('git commit --no-verify --message "Update coverage report [skip ci]"')
+    run("git push")
+
+
+def git_update_version() -> None:
+    run(r'echo VERSION="\`${VERSION}\`"')
+    run("git add .")
+    run(
+        r'git commit --message="Bump to version \`$(VERSION)\` [skip ci]" --allow-empty'
+    )
+    run("git push --force --no-verify")
+    run("git status")
+
+
+def git_fix_tag_reference() -> None:
+    """
+    Force update the tag to point to the latest commit with correct version number.
+    This also ensures the tag shows the correct version in the `pyproject.toml` file for that tag.
+    """
+
+    ### Force update the tag to point to the current commit ----
+    run(r"git tag --force ${VERSION}")
+
+    ### Force push the updated tag ----
+    run(r"git push --force origin ${VERSION}")
+
+
+## --------------------------------------------------------------------------- #
+##  Docs                                                                    ####
+## --------------------------------------------------------------------------- #
+
+
+def docs_serve_static() -> None:
+    run("mkdocs serve")
+
+
+def docs_serve_versioned() -> None:
+    run("mike serve --branch=docs-site")
+
+
+def docs_build_static() -> None:
+    run("mkdocs build --clean")
+
+
+def docs_build_versioned() -> None:
+    run("git config --global --list")
+    run("git config --local --list")
+    run("git remote -v")
+    run(
+        r"mike --debug deploy --update-aliases --branch=docs-site --push ${VERSION} latest"
+    )
+
+
+def update_git_docs() -> None:
+    run("git add .")
+    run(r'git commit -m "Build docs \`${VERSION}\` [skip ci]"')
+    run("git push --force --no-verify --push-option ci.skip")
+
+
+def docs_check_versions() -> None:
+    run("mike --debug list --branch=docs-site")
+
+
+def docs_delete_version() -> None:
+    run(r"mike --debug delete --branch=docs-site ${VERSION}")
+
+
+def docs_set_default() -> None:
+    run("mike --debug set-default --branch=docs-site --push latest")
+
+
+def build_static_docs() -> None:
+    docs_build_static()
+    update_git_docs()
+
+
+def build_versioned_docs() -> None:
+    docs_build_versioned()
+    docs_set_default()
+
+
+## --------------------------------------------------------------------------- #
+##  Docstrings                                                              ####
 ## --------------------------------------------------------------------------- #
 
 
