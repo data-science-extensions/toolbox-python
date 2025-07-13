@@ -4,6 +4,7 @@ poetry.lock
 Pipfile
 Pipfile.lock
 .vscode/
+git_output/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
