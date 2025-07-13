@@ -161,7 +161,7 @@ def generate_group_cutoffs(
     # Calculate the size of each group
     group_size: int = total_number // num_groups
 
-    # List to store al group cutoffs
+    # List to store all group cutoffs
     cutoffs: list[tuple[int, int]] = []
 
     # Calculate the number of items that will be in the last group
