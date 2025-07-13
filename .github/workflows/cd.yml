@@ -82,12 +82,10 @@ jobs:
           echo "github.event.sender: ${{ github.event.sender }}"
           echo "github.event.release.assets_url: ${{ github.event.release.assets_url }}"
           echo "github.event.release.author: ${{ github.event.release.author }}"
-          echo "github.event.release.body: ${{ github.event.release.body }}"
           echo "github.event.release.created_at: ${{ github.event.release.created_at }}"
           echo "github.event.release.draft: ${{ github.event.release.draft }}"
           echo "github.event.release.html_url: ${{ github.event.release.html_url }}"
           echo "github.event.release.id: ${{ github.event.release.id }}"
-          echo "github.event.release.name: ${{ github.event.release.name }}"
           echo "github.event.release.node_id: ${{ github.event.release.node_id }}"
           echo "github.event.release.prerelease: ${{ github.event.release.prerelease }}"
           echo "github.event.release.published_at: ${{ github.event.release.published_at }}"
@@ -97,6 +95,8 @@ jobs:
           echo "github.event.release.upload_url: ${{ github.event.release.upload_url }}"
           echo "github.event.release.url: ${{ github.event.release.url }}"
           echo "github.event.release.zipball_url: ${{ github.event.release.zipball_url }}"
+          echo -e "github.event.release.name: ${{ github.event.release.name }}"
+          echo -e "github.event.release.body: ${{ github.event.release.body }}"
 
       - name: Check Git
         run: |
