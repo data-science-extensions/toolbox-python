@@ -40,6 +40,9 @@ theme:
     edit: material/file-edit-outline
     view: material/file-eye-outline
 
+hooks:
+  - docs/overrides/hooks/shortcodes.py
+
 nav:
   - Home: index.md
   - Usage:
@@ -93,6 +96,7 @@ extra_css:
   - assets/stylesheets/style.css
   - assets/stylesheets/admonitions.css
   - assets/stylesheets/code_chunks.css
+  - assets/stylesheets/shortcodes.css
   - https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css
 
 plugins:
