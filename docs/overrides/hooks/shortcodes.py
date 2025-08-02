@@ -34,7 +34,7 @@ from mkdocs.structure.files import File, Files
 from mkdocs.structure.pages import Page
 
 # ## Local First Party Imports ----
-from toolbox_python.types import str_list
+from toolbox_python.collection_types import str_list
 
 
 ## --------------------------------------------------------------------------- #
