@@ -38,10 +38,22 @@ from github.Repository import Repository
 ## --------------------------------------------------------------------------- #
 
 
+### Environment Variables ----
+TOKEN: str | None = os.environ.get("GITHUB_TOKEN")
+REPOSITORY_NAME: str | None = os.environ.get("REPOSITORY_NAME")
+if TOKEN is None:
+    raise RuntimeError(
+        "Environment variable `GITHUB_TOKEN` is not set. Please set it before running the script."
+    )
+if REPOSITORY_NAME is None:
+    raise RuntimeError(
+        "Environment variable `REPOSITORY_NAME` is not set. Please set it before running the script."
+    )
+
+
+### Static ----
 OUTPUT_FILENAME: str = "CHANGELOG.md"
 OUTPUT_FILEPATH: Path = Path(OUTPUT_FILENAME)
-TOKEN: str = os.environ["GITHUB_TOKEN"]
-REPOSITORY_NAME: str = os.environ["REPOSITORY_NAME"]
 AUTH: Token = Auth.Token(TOKEN)
 NEW_LINE: str = "\n"
 BLANK_LINE: str = "\n\n"
