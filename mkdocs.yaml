@@ -47,6 +47,7 @@ nav:
   - Home: index.md
   - Usage:
       - Overview: usage/overview.md
+      - Change Log: usage/changelog.md
   - Modules:
       - code/index.md
       - Classes: code/classes.md
