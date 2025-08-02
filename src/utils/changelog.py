@@ -142,9 +142,14 @@ def add_release_notes(release: GitRelease) -> str:
     This function returns a string containing the formatted release notes,
     including the release body and any additional information.
     """
+    release_body: str = (
+        release.body.replace(f"{BLANK_LINE}", NEW_LINE)
+        .replace("## ", "### ")
+        .replace(NEW_LINE, f"{TAB * 2}")
+    )
     return (
         f'{TAB}??? note "Release Notes"{BLANK_LINE}'
-        f"{TAB * 2}{release.body.replace(f'{BLANK_LINE}', NEW_LINE).replace('## ', '### ').replace(NEW_LINE, f'{TAB * 2}')}{BLANK_LINE}"
+        f"{TAB * 2}{release_body}{BLANK_LINE}"
     )
 
 
@@ -157,10 +162,13 @@ def add_commit_info(commit: Commit) -> str:
     # NOTE: We write the commit message to the output file.
     # We format the commit message to replace newlines with `{LINE_BREAK}` tags for better readability in Markdown.
     # We also include the author's login and a link to their GitHub profile, as well as a link to the commit itself.
+    commit_message: str = commit.commit.message.replace(BLANK_LINE, NEW_LINE).replace(
+        NEW_LINE, f"{LINE_BREAK}{NEW_LINE}{TAB * 3}"
+    )
     return (
-        f"{TAB * 2}* {commit.commit.message.replace(f'{NEW_LINE * 2}', NEW_LINE).replace(NEW_LINE, f'{LINE_BREAK}{NEW_LINE}{TAB * 3}')}"
+        f"{TAB * 2}* {commit_message}"
         f" (by [{commit.author.login if commit.author else ''}]({commit.author.html_url if commit.author else ''}))"
-        f" [View]({commit.html_url}){NEW_LINE * 2}"
+        f" [View]({commit.html_url}){BLANK_LINE}"
     )
 
 
@@ -221,7 +229,7 @@ def main() -> None:
             f.write(add_release_notes(release))
 
             ### Add a section for updates ----
-            f.write(f'{TAB}??? abstract "Updates"{NEW_LINE * 2}')
+            f.write(f'{TAB}??? abstract "Updates"{BLANK_LINE}')
 
             # NOTE: We fetch the commits between the current release and the previous release.
             # If the previous tag is "0", we fetch all commits until the current release.
@@ -259,4 +267,4 @@ def main() -> None:
                 f.write(add_commit_info(commit))
 
             ### Add a newline after each release section ----
-            f.write(f"{NEW_LINE * 2}")
+            f.write(f"{BLANK_LINE}")
