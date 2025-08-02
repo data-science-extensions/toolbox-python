@@ -95,8 +95,8 @@ jobs:
           echo "github.event.release.upload_url: ${{ github.event.release.upload_url }}"
           echo "github.event.release.url: ${{ github.event.release.url }}"
           echo "github.event.release.zipball_url: ${{ github.event.release.zipball_url }}"
-        # echo -E "github.event.release.name: ${{ github.event.release.name }}"
-        # echo -E "github.event.release.body: ${{ github.event.release.body }}"
+          echo -E "github.event.release.name: ${{ github.event.release.name }}"
+          echo -E "github.event.release.body: ${{ github.event.release.body }}"
 
       - name: Check Git
         run: |

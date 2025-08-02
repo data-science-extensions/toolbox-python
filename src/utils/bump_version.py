@@ -30,7 +30,6 @@ import re
 import tomllib
 from pathlib import Path
 from typing import Any
-from warnings import warn
 
 # ## Local First Party Imports ----
 from toolbox_python.dictionaries import DotDict
@@ -98,7 +97,7 @@ def update_files(files: list[DotDict]) -> None:
         ### Extract variables ----
         filepath = Path(file.file)
         pattern: str = file.pattern
-        search_pattern: str = pattern.replace("{VERSION}", ".*?")
+        search_pattern: str = "^" + pattern.replace("{VERSION}", ".*?")
 
         ### Check ----
         if args.verbose:
@@ -106,22 +105,24 @@ def update_files(files: list[DotDict]) -> None:
 
         ### Check if the file exists ----
         if not filepath.exists():
-            warn(f"-- File does not exist: {file.file}")
+            print(f"-- File does not exist: {file.file}")
             continue
 
         ### Read the file ----
         content: str = filepath.read_text()
 
         ### Check if the pattern exists in the file ----
-        if not re.search(search_pattern, content):
-            warn(f"-- Pattern not found in file: {file.pattern}")
+        if not re.search(pattern=search_pattern, string=content, flags=re.MULTILINE):
+            print(f"-- !! Pattern not found in file: {file.pattern}")
             continue
 
         new_content: list[str] = []
         for line in content.splitlines():
-            if re.search(search_pattern, line):
+            if re.search(pattern=search_pattern, string=line, flags=re.MULTILINE):
                 new_line: str = re.sub(
-                    search_pattern, pattern.replace("{VERSION}", args.version), line
+                    pattern=search_pattern,
+                    repl=pattern.replace("{VERSION}", args.version),
+                    string=line,
                 )
                 new_content.append(new_line)
                 if args.verbose:
