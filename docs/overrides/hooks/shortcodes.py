@@ -77,7 +77,7 @@ def on_page_markdown(markdown: str, *, page: Page, config: MkDocsConfig, files: 
     # are referenced in the main page, but their content is not included in the
     # main page. This is done using the Snippets Notation: https://facelessuser.github.io/pymdown-extensions/extensions/snippets/#snippets-notation
     # In this case, we will read the content of the source file and return it.
-    short_referenced_pages: list[str] = ["overview", "changelog"]
+    short_referenced_pages: list[str] = ["overview", "changelog", "contributing"]
     if page.file.name in short_referenced_pages:
         pattern = r'-*8<-*\s*"([^"]+)"'
         match = re.search(pattern, markdown)

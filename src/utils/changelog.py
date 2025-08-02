@@ -119,7 +119,7 @@ def add_release_info(release: GitRelease, repo: Repository) -> str:
         f"{TAB}## **{release.title}**{BLANK_LINE}"
         f"{TAB}<!-- md:tag {release.tag_name} -->{LINE_BREAK}{NEW_LINE}"
         f"{TAB}<!-- md:date {release.created_at.date()} -->{LINE_BREAK}{NEW_LINE}"
-        f"{TAB}<!-- md:link [{repo.full_name}/releases/tag/{release.tag_name}]({release.html_url}) -->{BLANK_LINE}"
+        f"{TAB}<!-- md:link [{repo.full_name}/releases/{release.tag_name}]({release.html_url}) -->{BLANK_LINE}"
     )
 
 

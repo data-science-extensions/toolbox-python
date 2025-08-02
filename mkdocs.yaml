@@ -47,6 +47,7 @@ nav:
   - Home: index.md
   - Usage:
       - Overview: usage/overview.md
+      - Contributing: usage/contributing.md
       - Change Log: usage/changelog.md
   - Modules:
       - code/index.md
