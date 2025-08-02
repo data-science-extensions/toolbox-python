@@ -1,0 +1,43 @@
+/* Badge */
+.mdx-badge {
+    font-size: 0.85em;
+}
+
+/* Badge with heart */
+.mdx-badge--heart {
+    --md-typeset-a-color: hsl(340, 82%, 52%);
+    --md-accent-fg-color: hsl(340, 100, 70%);
+    --md-accent-fg-color--transparent: hsl(340, 100%, 70%, 0.1);
+}
+
+/* Animate icon */
+.mdx-badge--heart .twemoji {
+    animation: heart 1000ms infinite;
+}
+
+/* Badge moved to the right */
+.mdx-badge--right {
+    float: right;
+    margin-left: 0.35em;
+}
+
+/* Badge icon */
+.mdx-badge__icon {
+    padding: 0.25rem;
+    background: var(--md-accent-fg-color--transparent);
+    border-start-start-radius: 0.125rem;
+    border-end-start-radius: 0.125rem;
+}
+
+/* If icon is alone, round corners */
+.mdx-badge__icon:last-child {
+    border-radius: 0.125rem;
+}
+
+/* Badge text */
+.mdx-badge__text {
+    padding: 0.25rem 0.375rem;
+    border-start-end-radius: 0.125rem;
+    border-end-end-radius: 0.125rem;
+    box-shadow: 0 0 0 1px inset var(--md-accent-fg-color--transparent);
+}

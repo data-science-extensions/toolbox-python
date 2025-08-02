@@ -348,9 +348,24 @@ jobs:
         env:
           GITHUB_ACTOR: ${{ github.actor }}
         run: |
-            uv run add-git-credentials
-            uv run git-switch-to-main-branch
-            uv run git-refresh-current-branch
+          uv run add-git-credentials
+          uv run git-switch-to-main-branch
+          uv run git-refresh-current-branch
+
+      - name: Generate ChangeLog
+        id: generate-changelog
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY_NAME: data-science-extensions/toolbox-python
+        run: uv run generate-changelog
+
+      - name: Commit ChangeLog
+        id: commit-changelog
+        run: |
+          git add .
+          git commit --message "Update changelog to \`${VERSION}\` [skip ci]" || echo "No changes to commit"
+          git push --force --no-verify
+          git status
 
       - name: Build docs
         id: build-docs
