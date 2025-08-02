@@ -352,9 +352,12 @@ jobs:
           uv run git-switch-to-main-branch
           uv run git-refresh-current-branch
 
-      - name: Build ChangeLog
-        id: build-changelog
-        run: uv run build-changelog
+      - name: Generate ChangeLog
+        id: generate-changelog
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY_NAME: data-science-extensions/toolbox-python
+        run: uv run generate-changelog
 
       - name: Commit ChangeLog
         id: commit-changelog

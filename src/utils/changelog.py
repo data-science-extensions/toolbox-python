@@ -41,6 +41,7 @@ from github.Repository import Repository
 OUTPUT_FILENAME: str = "CHANGELOG.md"
 OUTPUT_FILEPATH: Path = Path(OUTPUT_FILENAME)
 TOKEN: str = os.environ["GITHUB_TOKEN"]
+REPOSITORY_NAME: str = os.environ["REPOSITORY_NAME"]
 AUTH: Token = Auth.Token(TOKEN)
 NEW_LINE: str = "\n"
 BLANK_LINE: str = "\n\n"
@@ -171,10 +172,8 @@ def main() -> None:
     ### Open the contexts ----
     with Github(auth=AUTH) as g, open(OUTPUT_FILENAME, "w") as f:
 
-        # NOTE: The repository is hardcoded here, but you can modify it to fetch from an environment variable or a configuration file if needed. This is done to ensure that the script is self-contained and does not require external configuration.
-
         ### Get the repository ----
-        REPO: Repository = g.get_repo("data-science-extensions/toolbox-python")
+        REPO: Repository = g.get_repo(REPOSITORY_NAME)
 
         ### Write the header to the output file ----
         f.write(add_header(REPO))
