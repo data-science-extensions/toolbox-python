@@ -1,7 +1,7 @@
 # ============================================================================ #
 #                                                                              #
-#     Title: Title                                                             #
-#     Purpose: Purpose                                                         #
+#     Title: Shortcodes and Hooks for MkDocs Material Documentation            #
+#     Purpose: Provide custom shortcodes and hooks for enhancing the docs.     #
 #     Notes: Created with reference to MkDocs Material hooks and shortcodes.   #
 #            https://github.com/squidfunk/mkdocs-material/blob/master/src/overrides/hooks/shortcodes.py
 #                                                                              #
@@ -33,36 +33,16 @@ from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.files import File, Files
 from mkdocs.structure.pages import Page
 
+# ## Local First Party Imports ----
+from toolbox_python.types import str_list
+
 
 ## --------------------------------------------------------------------------- #
 ##  Exports                                                                 ####
 ## --------------------------------------------------------------------------- #
 
 
-__all__: str_list = [...]
-
-
-## --------------------------------------------------------------------------- #
-##  Constants                                                               ####
-## --------------------------------------------------------------------------- #
-
-
-CONSTANT = ...
-
-
-## --------------------------------------------------------------------------- #
-##  Types                                                                   ####
-## --------------------------------------------------------------------------- #
-
-
-TYPE = ...
-
-
-# ---------------------------------------------------------------------------- #
-#                                                                              #
-#     Hooks                                                                 ####
-#                                                                              #
-# ---------------------------------------------------------------------------- #
+__all__: str_list = ["on_page_markdown", "flag", "option", "setting"]
 
 
 ## --------------------------------------------------------------------------- #
