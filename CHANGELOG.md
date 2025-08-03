@@ -9,6 +9,42 @@
 .md-nav--secondary .md-nav__list .md-nav__list { display: none; }
 </style>
 
+!!! info "v1.4.1"
+
+    ## **v1.4.1 - Documentation Infrastructure Enhancement and Automated Changelog Generation**
+
+    <!-- md:tag v1.4.1 --><br>
+    <!-- md:date 2025-08-03 --><br>
+    <!-- md:link [data-science-extensions/toolbox-python/releases/v1.4.1](https://github.com/data-science-extensions/toolbox-python/releases/tag/v1.4.1) -->
+
+    ??? note "Release Notes"
+
+        ### 📋 Summary                Version 1.4.1 focuses on enhancing the project's documentation infrastructure and establishing automated changelog generation capabilities. This release introduces comprehensive contribution guidelines, automated changelog workflows, and improved documentation styling to streamline the development process and enhance the contributor experience.                        ### 🔄 Automated Changelog System                * **CI/CD Integration**: Automated changelog generation integrated into the continuous deployment pipeline using GitHub Actions        * **Environment Variables**: Added support for `GITHUB_TOKEN` and `REPOSITORY_NAME` environment variables for secure API access        * **CLI Command**: Introduced `generate-changelog` command for manual changelog creation and debugging purposes        * **Version Control**: Automatic commit of changelog updates with version-specific commit messages and skip CI flags                        ### 📚 Contribution Framework                * **Guidelines Documentation**: Created comprehensive `CONTRIBUTING.md` with detailed procedures for issue reporting, branch management, coding standards, and review processes        * **Documentation Integration**: Added contribution guidelines to the documentation site at `docs/usage/contributing.md` for improved discoverability        * **Developer Onboarding**: Established clear expectations and workflows to reduce contributor onboarding time                        ### 📁 Documentation Site Enhancements                        #### 🎨 Visual Improvements                * **Custom Styling**: Implemented shortcode CSS system with badge support for enhanced visual consistency across documentation        * **Navigation Structure**: Improved site navigation with better organisation and user experience        * **MkDocs Configuration**: Enhanced site configuration with updated plugin management and table of contents depth limiting                        #### 📖 Content Organisation                * **Changelog Integration**: Added dedicated changelog page (`docs/usage/changelog.md`) within the documentation site        * **Reference Architecture**: Established standardised documentation structure for consistency across all pages                ### 🧐 Technical Implementation                        #### 🔧 Workflow Automation                * **Release Process**: Enhanced `cd.yml` workflow with automated changelog generation steps        * **Error Handling**: Improved workflow reliability with proper dependency management and error handling        * **Version Management**: Automated tracking and updating of version information throughout the release process                        #### 📦 Package Configuration                * **CLI Scripts**: Updated `pyproject.toml` with new CLI commands for changelog generation        * **Build System**: Maintained compatibility with existing build processes whilst adding new automation capabilities                        ### 🔍 Code Quality & Infrastructure                        #### 🧪 Maintenance Scripts                * **Changelog Utilities**: Enhanced `src/utils/changelog.py` with improved formatting, error handling, and environment variable support        * **Release Automation**: Streamlined release note generation with better readability and maintainability        * **Git Integration**: Improved git history processing for structured changelog creation                        #### 📊 Documentation Standards                * **Formatting Consistency**: Standardised formatting across all documentation files for improved readability        * **Content Structure**: Established clear patterns for documentation organisation and presentation                        ### 📈 Developer Experience Improvements                        #### 🤝 Contributor Benefits                * **Clear Guidelines**: Comprehensive contribution documentation reduces confusion and speeds up onboarding        * **Automated Workflows**: Changelog generation eliminates manual documentation overhead for maintainers        * **Consistent Standards**: Established coding and documentation standards improve code quality and review efficiency                        #### 🔧 Maintainer Benefits                * **Reduced Manual Work**: Automated changelog generation significantly reduces maintenance overhead        * **Quality Assurance**: Clear contribution guidelines ensure consistent quality across contributions        * **Streamlined Processes**: Automated workflows improve release reliability and reduce human error                        ### 🏗️ Infrastructure Foundation                This release establishes a robust foundation for project documentation and automation. The automated changelog system ensures accurate version history tracking, whilst the comprehensive contribution guidelines provide clear expectations for all project participants.                The enhanced documentation infrastructure supports better collaboration and reduces the barrier to entry for new contributors, fostering a more inclusive and efficient development environment.                        ### 💪 What's Changed                * Documentation Infrastructure Enhancement and Automated Changelog Generation by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/37                        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.4.0...v1.4.1
+
+    ??? abstract "Updates"
+
+        * Refactor release notes and commit message formatting for improved readability and maintainability (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/4bdc1134aa5dddc29a2f271f876b789b06ad6716)
+
+        * Add environment variable checks for `GITHUB_TOKEN` and `REPOSITORY_NAME` (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/d03763e8882e09895f1be0a6873e4b78bfe9a066)
+
+        * Fix typo (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/e0dde1a731eb380353f079ee578ca2f06c1bcfce)
+
+        * Fix formatting in the `shortcodes` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/2b6ecedac9fc30d53acc874b7ecfb198ec61cc93)
+
+        * Add first draft of `CHANGELOG.md` (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/ae4493ba5fc259343ebafd944444336c45290873)
+
+        * Add `Contribution Guidelines` page (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/761ad62b2b2b63f1b704c5c09e7a2e576cc2d148)
+
+        * Add process for generating changelog during CD pipeline (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/503a5c809ebf6b6b255d425b35c553793a61b432)
+
+        * Add process for generating shortcodes in docs (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/9365042cc6ce63f52db0069fe0ab5be89a4a185a)
+
+        * Initial commit of the `CONTRIBUTING` docs (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/16707a8cc1958b12327120a3e47c609f22d9b43f)
+
+        * Hide the lines in the CD workflow which are causing issues (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/41d39789e75ebb0aa9cb7a235abdf0ce8380a161)
+
+
+
 !!! info "v1.4.0"
 
     ## **v1.4.0 - Comprehensive Package Enhancement and Tooling Migration**
@@ -19,202 +55,7 @@
 
     ??? note "Release Notes"
 
-        ### 📋 Overview
-
-        This release introduces significant enhancements to the `toolbox-python` package, including a new `generators` module, expanded validation capabilities, comprehensive docstring standards, and modernized CI/CD workflows. The changes span 30 commits across multiple areas of the codebase to improve functionality, maintainability, and developer experience while maintaining full backward compatibility.
-
-
-        ### 🆕 New Modules and Core Functionality
-
-
-        #### Generators Module
-
-        * **New module**: `toolbox_python.generators` - Provides functions for computing data on-the-fly based on input parameters rather than storing it in databases or files
-        * **New function**: `generate_group_cutoffs()` - Divides a total number of items into specified groups, returning start and end indices for each group with proper validation and error handling
-        * **Documentation**: Added comprehensive documentation with examples and complete test coverage
-
-
-        #### Enhanced Checkers Module
-
-        * **New constant**: `OPERATORS` dictionary - Defines comparison operations for value validation including `<`, `<=`, `>`, `>=`, `==`, `!=`, `in`, and `not in`
-        * **New function**: `is_valid_value()` - Checks if a value is valid based on a specified operator and target value
-        * **New function**: `assert_is_valid_value()` - Assert version of the validation function with proper error handling
-        * **Enhanced aliases**: Added `is_valid` and `assert_is_valid` function aliases for consistency and convenience
-
-
-        #### Enhanced Strings Module
-
-        * **New function**: `str_to_list()` - Converts strings to single-element lists while preserving other data types unchanged
-        * **Type safety**: Includes comprehensive overloads and type hints for better development experience
-        * **Input flexibility**: Provides a convenient way to normalize string inputs for functions that expect list-like objects
-
-
-        ### 🔧 Function Enhancements and Type Safety
-
-
-        #### Improved Type Hints and Overloads
-
-        * **Enhanced overloads**: Added `@overload` decorators for better type hints in:
-          - `toolbox_python.checkers.is_value_of_type()` - Now properly handles both single types and tuple of types
-          - `toolbox_python.output.list_columns()` - Distinguishes between print and return modes
-          - `toolbox_python.retry.retry()` - Better handling of different parameter combinations
-        * **Type validation**: Enhanced parameter validation across multiple functions using new assertion functions
-
-
-        #### Function Robustness Improvements
-
-        * **Parameter validation**: Added comprehensive input validation using `assert_is_valid` functions to ensure type safety and value constraints
-        * **Error handling**: Improved exception handling for the `retry()` function with better logging initialization and normalized exception parameter handling
-        * **Code structure**: Better organization with descriptive comments separating validation, preparation, processing, and output phases
-        * **Column width logic**: Simplified logic in `list_columns()` by replacing conditional assignment with `min()` function for cleaner code
-
-
-        ### 📜 Package Scripts and Automation
-
-
-        #### Comprehensive Utility Scripts
-
-        * **Script module**: `src/utils/scripts.py` - Extensive collection of utility functions organized into categories:
-          - **Syncing**: `uv_sync()` for dependency management
-          - **Linting**: `run_black()`, `run_isort()`, `run_pycln()`, `run_pyupgrade()`, `run_blacken_docs()`, and combined `lint()`
-          - **Checking**: `check_black()`, `check_mypy()`, `check_pytest()`, `check_codespell()`, `check_pylint()`, and comprehensive `check()`
-          - **Git operations**: `add_git_credentials()`, `git_refresh_current_branch()`, `git_switch_to_main_branch()`, `git_add_coverage_report()`
-          - **Documentation**: `docs_build_static()`, `docs_serve_versioned()`, `build_versioned_docs()`, and version management
-
-
-        #### Project Scripts Configuration
-
-        * **Package scripts**: Added extensive `[project.scripts]` table in `pyproject.toml` with organized sections:
-          - **Syncing**: `sync`
-          - **Linting**: `run-black`, `run-isort`, `lint`, `lint-check`
-          - **Checking**: `check-black`, `check-mypy`, `check-pytest`, `check-docstrings`, `check`
-          - **Git**: `add-git-credentials`, `git-switch-to-main-branch`, `bump-version`, `git-update-version`
-          - **Docs**: `docs-serve-static`, `build-versioned-docs`, `docs-check-versions`
-        * **Enhanced version management**: Updated `src/utils/bump_version.py` for better CLI compatibility and version tracking
-
-
-        ### 📚 Docstring Standards and Validation
-
-
-        #### Automated Docstring Validation System
-
-        * **Validation infrastructure**: Implemented comprehensive docstring checking with strict formatting requirements:
-          - `FunctionAndClassDetails()` - Named tuple for tracking function and class details
-          - `check_docstrings_file()` - Validates docstrings in individual files with detailed error reporting
-          - `_check_single_docstring()` - Validates individual function/class docstrings against standards
-          - `_check_section_order()` - Ensures proper section ordering (Summary → Params → Returns/Yields → Examples)
-          - `_validate_section_formats()` - Validates specific section formats and content structure
-          - `check_docstrings_cli()`, `check_docstrings_all()`, `check_docstrings_dir()` - Various checking interfaces
-
-
-        #### Enhanced Docstring Standards
-
-        * **Mandatory sections**: Summary, Params, Returns/Yields, and Examples sections now required for all functions and classes
-        * **Format consistency**: Fixed typos across all docstrings from `!!! summary "Summary"` to `!!! note "Summary"`
-        * **Examples improvements**: Updated all code examples to use `pycon` syntax for better clarity and consistency
-        * **Type information**: Enhanced `Raises` statements with proper exception types (e.g., `TypeError`, `ValueError`, `LookupError`) and detailed descriptions
-        * **Documentation quality**: Improved parameter descriptions, return value specifications, and comprehensive usage examples
-
-
-        ### 🚀 CI/CD Workflow Modernization
-
-
-        #### Migration to UV-Based Tooling
-
-        * **CI workflow**: Complete refactoring of `.github/workflows/ci.yml`:
-          - Replaced all `make` commands with `uv run` commands for improved consistency and performance
-          - Added UV environment variables for optimal configuration
-          - Streamlined dependency installation and checking processes
-        * **CD workflow**: Comprehensive modernization of `.github/workflows/cd.yml`:
-          - Replaced `make` commands with `uv run` commands throughout all jobs
-          - Added environment variables for UV configuration (`UV_LINK_MODE`, `UV_NATIVE_TLS`, `UV_NO_SYNC`)
-          - Improved git operations with new utility functions
-          - Enhanced version management and tag handling
-          - Fixed tag reference issues to ensure correct version numbers in releases
-          - Streamlined package building and publishing processes
-
-
-        #### Enhanced Pre-commit Integration
-
-        * **Hook updates**: Updated pre-commit hook versions for better compatibility:
-          - Updated `mypy` from v1.15.0 to v1.16.1 with additional `--allow-redefinition` flag
-          - Updated `pyupgrade` from v3.19.1 to v3.20.0
-          - Updated `uv-pre-commit` from 0.6.12 to 0.7.20
-          - Removed outdated poetry check hooks
-        * **New validation**: Added `check-docstrings` hook for continuous validation during development workflow
-
-
-        ### ⚙️ Configuration and Build System Updates
-
-
-        #### Project Configuration Enhancements
-
-        * **Build system**: Migrated from `hatchling` to `uv_build` for better integration with UV toolchain and improved build reliability
-        * **MyPy configuration**: Updated to include `no-redef` in `disable_error_code` list for better type checking compatibility
-        * **Dependencies**: Added `uv` to the development dependency group for comprehensive toolchain integration
-        * **Python requirements**: Updated syntax from `">3.9,<4.0"` to `">=3.9,<4.0"` for standard compliance
-
-
-        #### Documentation Configuration
-
-        * **MkDocs updates**:
-          - Added new `generators` module to navigation structure for complete module coverage
-          - Fixed repository icon from `material/gitlab` to `material/github` for accurate branding
-          - Enhanced navigation structure to reflect all available modules
-        * **Improved organization**: Better categorization and presentation of module documentation
-
-
-        #### Enhanced Type System
-
-        * **Collection types**: Expanded `collection_types.py` with new type aliases:
-          - Added `datetime` collections: `datetime_list`, `datetime_tuple`, `datetime_set`, `datetime_list_tuple`
-          - Added `int` collections: `int_set`, `int_list_tuple`
-          - Enhanced `dict` collections: reorganized and added better documentation
-          - Improved organization with clear section comments for better maintainability
-
-
-        ### 🧪 Testing and Quality Assurance
-
-
-        #### Comprehensive Test Coverage
-
-        * **New test modules**: Added extensive test coverage for new functionality:
-          - `src/tests/test_generators.py` - Complete test suite for the generators module with edge cases
-          - Enhanced `src/tests/test_strings.py` - Tests for new `str_to_list()` function with various input types
-          - Expanded `src/tests/test_checkers.py` - Comprehensive tests for new validation functions including `OPERATORS` testing
-        * **Test improvements**: Updated existing tests to use `pytest.raises` instead of `pytest` imports for better compatibility
-        * **Coverage maintenance**: Maintained 100% test coverage across all modules while adding new functionality
-
-
-        #### Quality Improvements
-
-        * **Validation robustness**: Enhanced function robustness through comprehensive parameter validation using new assertion functions
-        * **Error handling**: Improved error capture and reporting in docstring checking with detailed feedback
-        * **Type safety**: Better type hints and validation across the codebase with overloads and proper type checking
-        * **Code organization**: Improved code structure with better separation of concerns and descriptive comments
-
-
-        ### 🎯 Impact and Benefits
-
-        This release significantly enhances the `toolbox-python` package by:
-
-        - **Expanding core functionality** with new modules and utilities that provide valuable data processing capabilities for on-demand computation
-        - **Improving developer experience** through better type hints, comprehensive validation, standardized tooling, and automated quality checks
-        - **Enhancing code quality** with comprehensive validation systems, consistent documentation standards, and robust error handling
-        - **Modernizing CI/CD** with migration to UV-based tooling for better reliability, performance, and maintainability
-        - **Strengthening maintainability** through comprehensive testing, automated docstring validation, and organized project scripts
-        - **Improving type safety** with enhanced type hints, validation functions, and comprehensive overloads for better IDE support
-
-
-        ### 💪 Pull Requests
-
-        * Reorder classifiers and update Python requirement syntax in `pyproject.toml` by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/35
-        * Comprehensive Package Enhancement and Tooling Migration with new modules, improved validation, and modernized CI/CD workflows by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/36
-
-
-        The changes maintain full backward compatibility while providing substantial improvements to functionality, developer experience, and project maintenance workflows. All existing APIs remain unchanged, ensuring seamless upgrades for existing users.
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.3.1...v1.4.0
+        ### 📋 Overview                This release introduces significant enhancements to the `toolbox-python` package, including a new `generators` module, expanded validation capabilities, comprehensive docstring standards, and modernized CI/CD workflows. The changes span 30 commits across multiple areas of the codebase to improve functionality, maintainability, and developer experience while maintaining full backward compatibility.                        ### 🆕 New Modules and Core Functionality                        #### Generators Module                * **New module**: `toolbox_python.generators` - Provides functions for computing data on-the-fly based on input parameters rather than storing it in databases or files        * **New function**: `generate_group_cutoffs()` - Divides a total number of items into specified groups, returning start and end indices for each group with proper validation and error handling        * **Documentation**: Added comprehensive documentation with examples and complete test coverage                        #### Enhanced Checkers Module                * **New constant**: `OPERATORS` dictionary - Defines comparison operations for value validation including `<`, `<=`, `>`, `>=`, `==`, `!=`, `in`, and `not in`        * **New function**: `is_valid_value()` - Checks if a value is valid based on a specified operator and target value        * **New function**: `assert_is_valid_value()` - Assert version of the validation function with proper error handling        * **Enhanced aliases**: Added `is_valid` and `assert_is_valid` function aliases for consistency and convenience                        #### Enhanced Strings Module                * **New function**: `str_to_list()` - Converts strings to single-element lists while preserving other data types unchanged        * **Type safety**: Includes comprehensive overloads and type hints for better development experience        * **Input flexibility**: Provides a convenient way to normalize string inputs for functions that expect list-like objects                        ### 🔧 Function Enhancements and Type Safety                        #### Improved Type Hints and Overloads                * **Enhanced overloads**: Added `@overload` decorators for better type hints in:          - `toolbox_python.checkers.is_value_of_type()` - Now properly handles both single types and tuple of types          - `toolbox_python.output.list_columns()` - Distinguishes between print and return modes          - `toolbox_python.retry.retry()` - Better handling of different parameter combinations        * **Type validation**: Enhanced parameter validation across multiple functions using new assertion functions                        #### Function Robustness Improvements                * **Parameter validation**: Added comprehensive input validation using `assert_is_valid` functions to ensure type safety and value constraints        * **Error handling**: Improved exception handling for the `retry()` function with better logging initialization and normalized exception parameter handling        * **Code structure**: Better organization with descriptive comments separating validation, preparation, processing, and output phases        * **Column width logic**: Simplified logic in `list_columns()` by replacing conditional assignment with `min()` function for cleaner code                        ### 📜 Package Scripts and Automation                        #### Comprehensive Utility Scripts                * **Script module**: `src/utils/scripts.py` - Extensive collection of utility functions organized into categories:          - **Syncing**: `uv_sync()` for dependency management          - **Linting**: `run_black()`, `run_isort()`, `run_pycln()`, `run_pyupgrade()`, `run_blacken_docs()`, and combined `lint()`          - **Checking**: `check_black()`, `check_mypy()`, `check_pytest()`, `check_codespell()`, `check_pylint()`, and comprehensive `check()`          - **Git operations**: `add_git_credentials()`, `git_refresh_current_branch()`, `git_switch_to_main_branch()`, `git_add_coverage_report()`          - **Documentation**: `docs_build_static()`, `docs_serve_versioned()`, `build_versioned_docs()`, and version management                        #### Project Scripts Configuration                * **Package scripts**: Added extensive `[project.scripts]` table in `pyproject.toml` with organized sections:          - **Syncing**: `sync`          - **Linting**: `run-black`, `run-isort`, `lint`, `lint-check`          - **Checking**: `check-black`, `check-mypy`, `check-pytest`, `check-docstrings`, `check`          - **Git**: `add-git-credentials`, `git-switch-to-main-branch`, `bump-version`, `git-update-version`          - **Docs**: `docs-serve-static`, `build-versioned-docs`, `docs-check-versions`        * **Enhanced version management**: Updated `src/utils/bump_version.py` for better CLI compatibility and version tracking                        ### 📚 Docstring Standards and Validation                        #### Automated Docstring Validation System                * **Validation infrastructure**: Implemented comprehensive docstring checking with strict formatting requirements:          - `FunctionAndClassDetails()` - Named tuple for tracking function and class details          - `check_docstrings_file()` - Validates docstrings in individual files with detailed error reporting          - `_check_single_docstring()` - Validates individual function/class docstrings against standards          - `_check_section_order()` - Ensures proper section ordering (Summary → Params → Returns/Yields → Examples)          - `_validate_section_formats()` - Validates specific section formats and content structure          - `check_docstrings_cli()`, `check_docstrings_all()`, `check_docstrings_dir()` - Various checking interfaces                        #### Enhanced Docstring Standards                * **Mandatory sections**: Summary, Params, Returns/Yields, and Examples sections now required for all functions and classes        * **Format consistency**: Fixed typos across all docstrings from `!!! summary "Summary"` to `!!! note "Summary"`        * **Examples improvements**: Updated all code examples to use `pycon` syntax for better clarity and consistency        * **Type information**: Enhanced `Raises` statements with proper exception types (e.g., `TypeError`, `ValueError`, `LookupError`) and detailed descriptions        * **Documentation quality**: Improved parameter descriptions, return value specifications, and comprehensive usage examples                        ### 🚀 CI/CD Workflow Modernization                        #### Migration to UV-Based Tooling                * **CI workflow**: Complete refactoring of `.github/workflows/ci.yml`:          - Replaced all `make` commands with `uv run` commands for improved consistency and performance          - Added UV environment variables for optimal configuration          - Streamlined dependency installation and checking processes        * **CD workflow**: Comprehensive modernization of `.github/workflows/cd.yml`:          - Replaced `make` commands with `uv run` commands throughout all jobs          - Added environment variables for UV configuration (`UV_LINK_MODE`, `UV_NATIVE_TLS`, `UV_NO_SYNC`)          - Improved git operations with new utility functions          - Enhanced version management and tag handling          - Fixed tag reference issues to ensure correct version numbers in releases          - Streamlined package building and publishing processes                        #### Enhanced Pre-commit Integration                * **Hook updates**: Updated pre-commit hook versions for better compatibility:          - Updated `mypy` from v1.15.0 to v1.16.1 with additional `--allow-redefinition` flag          - Updated `pyupgrade` from v3.19.1 to v3.20.0          - Updated `uv-pre-commit` from 0.6.12 to 0.7.20          - Removed outdated poetry check hooks        * **New validation**: Added `check-docstrings` hook for continuous validation during development workflow                        ### ⚙️ Configuration and Build System Updates                        #### Project Configuration Enhancements                * **Build system**: Migrated from `hatchling` to `uv_build` for better integration with UV toolchain and improved build reliability        * **MyPy configuration**: Updated to include `no-redef` in `disable_error_code` list for better type checking compatibility        * **Dependencies**: Added `uv` to the development dependency group for comprehensive toolchain integration        * **Python requirements**: Updated syntax from `">3.9,<4.0"` to `">=3.9,<4.0"` for standard compliance                        #### Documentation Configuration                * **MkDocs updates**:           - Added new `generators` module to navigation structure for complete module coverage          - Fixed repository icon from `material/gitlab` to `material/github` for accurate branding          - Enhanced navigation structure to reflect all available modules        * **Improved organization**: Better categorization and presentation of module documentation                        #### Enhanced Type System                * **Collection types**: Expanded `collection_types.py` with new type aliases:          - Added `datetime` collections: `datetime_list`, `datetime_tuple`, `datetime_set`, `datetime_list_tuple`          - Added `int` collections: `int_set`, `int_list_tuple`          - Enhanced `dict` collections: reorganized and added better documentation          - Improved organization with clear section comments for better maintainability                        ### 🧪 Testing and Quality Assurance                        #### Comprehensive Test Coverage                * **New test modules**: Added extensive test coverage for new functionality:          - `src/tests/test_generators.py` - Complete test suite for the generators module with edge cases          - Enhanced `src/tests/test_strings.py` - Tests for new `str_to_list()` function with various input types          - Expanded `src/tests/test_checkers.py` - Comprehensive tests for new validation functions including `OPERATORS` testing        * **Test improvements**: Updated existing tests to use `pytest.raises` instead of `pytest` imports for better compatibility        * **Coverage maintenance**: Maintained 100% test coverage across all modules while adding new functionality                        #### Quality Improvements                * **Validation robustness**: Enhanced function robustness through comprehensive parameter validation using new assertion functions        * **Error handling**: Improved error capture and reporting in docstring checking with detailed feedback        * **Type safety**: Better type hints and validation across the codebase with overloads and proper type checking        * **Code organization**: Improved code structure with better separation of concerns and descriptive comments                        ### 🎯 Impact and Benefits                This release significantly enhances the `toolbox-python` package by:                - **Expanding core functionality** with new modules and utilities that provide valuable data processing capabilities for on-demand computation        - **Improving developer experience** through better type hints, comprehensive validation, standardized tooling, and automated quality checks        - **Enhancing code quality** with comprehensive validation systems, consistent documentation standards, and robust error handling        - **Modernizing CI/CD** with migration to UV-based tooling for better reliability, performance, and maintainability        - **Strengthening maintainability** through comprehensive testing, automated docstring validation, and organized project scripts        - **Improving type safety** with enhanced type hints, validation functions, and comprehensive overloads for better IDE support                        ### 💪 Pull Requests                * Reorder classifiers and update Python requirement syntax in `pyproject.toml` by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/35        * Comprehensive Package Enhancement and Tooling Migration with new modules, improved validation, and modernized CI/CD workflows by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/36                        The changes maintain full backward compatibility while providing substantial improvements to functionality, developer experience, and project maintenance workflows. All existing APIs remain unchanged, ensuring seamless upgrades for existing users.                **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.3.1...v1.4.0        
 
     ??? abstract "Updates"
 
@@ -254,7 +95,7 @@
 
         * Move `scripts.py` from`src/cli` to `src/utils` and add functions to handle `git` and `docs` processes (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/8d55c79043b8a515ba122dc24284c811f77cc078)
 
-        * Update `bump_version` util to be better compatible with CLI execution (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/f6ad6dea6553bb7cf921e91d59fe77a047d07e8c)
+        * Update `bump_version` util to be better compatable with CLI execution (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/f6ad6dea6553bb7cf921e91d59fe77a047d07e8c)
 
         * Add `git_checks.sh` script to capture git logs and diffs (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/6ec8292e7e33fe98bd9327ee0277adfc61570d7e)
 
@@ -329,18 +170,7 @@
 
     ??? note "Release Notes"
 
-        This release updates the `pyproject.toml` file to enhance metadata clarity and correct the Python version requirement syntax. The most important changes include reorganizing and expanding the `classifiers` section and adjusting the `requires-python` field.
-
-        #### What's Changed
-        * Reorder classifiers and update Python requirement syntax in `pyproject.toml` by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/35
-
-        #### Metadata improvements:
-        * Reorganized and expanded the `classifiers` section to include additional topics such as `Testing :: Unit` and `Utilities`, improving the discoverability and categorization of the project.
-
-        #### Syntax correction:
-        * Updated the `requires-python` field from `">3.9,<4.0"` to `">=3.9,<4.0"` to align with standard version specification syntax.
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.3.1...v1.3.2
+        This release updates the `pyproject.toml` file to enhance metadata clarity and correct the Python version requirement syntax. The most important changes include reorganizing and expanding the `classifiers` section and adjusting the `requires-python` field.                #### What's Changed        * Reorder classifiers and update Python requirement syntax in `pyproject.toml` by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/35                #### Metadata improvements:        * Reorganized and expanded the `classifiers` section to include additional topics such as `Testing :: Unit` and `Utilities`, improving the discoverability and categorization of the project.                #### Syntax correction:        * Updated the `requires-python` field from `">3.9,<4.0"` to `">=3.9,<4.0"` to align with standard version specification syntax.                **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.3.1...v1.3.2
 
     ??? abstract "Updates"
 
@@ -358,12 +188,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-
-        * Add more Collection types by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/34
-
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.2.1...v1.3.1
+        ### What's Changed                * Add more Collection types by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/34                        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.2.1...v1.3.1
 
     ??? abstract "Updates"
 
@@ -385,12 +210,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-
-        * Add new `@class_property` decorator by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/33
-
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.2.0...v1.2.1
+        ### What's Changed                * Add new `@class_property` decorator by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/33                        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.2.0...v1.2.1
 
     ??? abstract "Updates"
 
@@ -416,14 +236,7 @@
 
     ??? note "Release Notes"
 
-        ### Primary Changes
-
-        * Migrate build engine from Poetry to UV
-        * Add new `DotDict` class to handle accessing dictionary keys using `.attribute` syntax
-        * Add utility module `bump_version` for checking `pyproject.toml` and updating the version values across the respective files
-
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.1.0...v1.2.0
+        ### Primary Changes                * Migrate build engine from Poetry to UV        * Add new `DotDict` class to handle accessing dictionary keys using `.attribute` syntax        * Add utility module `bump_version` for checking `pyproject.toml` and updating the version values across the respective files                        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.1.0...v1.2.0
 
     ??? abstract "Updates"
 
@@ -462,16 +275,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-
-        - Update `list_columns()` function:
-            - Allow the `obj` input to accept different input types
-            - Extend the Unit Tests
-        - Update `pyproject.toml` file:
-            - To match the structure of the latest `poetry` version
-            - To fix the location of where the `__version__` attribute is stored
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.0.4...v1.1.0
+        ### What's Changed                - Update `list_columns()` function:            - Allow the `obj` input to accept different input types            - Extend the Unit Tests        - Update `pyproject.toml` file:            - To match the structure of the latest `poetry` version            - To fix the location of where the `__version__` attribute is stored                **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.0.4...v1.1.0
 
     ??? abstract "Updates"
 
@@ -501,10 +305,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Fix type definitions across all modules.
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.0.3...v1.0.4
+        ### What's Changed        * Fix type definitions across all modules.                 **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.0.3...v1.0.4
 
     ??? abstract "Updates"
 
@@ -524,11 +325,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Streamline a few functions in the Unit Tests module
-        * Add `dict_str_any` object to the `collection_types` module
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.0.2...v1.0.3
+        ### What's Changed        * Streamline a few functions in the Unit Tests module        * Add `dict_str_any` object to the `collection_types` module                 **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.0.2...v1.0.3        
 
     ??? abstract "Updates"
 
@@ -570,10 +367,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Refactor how the coverage reports are handled in the docs.
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.0.1...v1.0.2
+        ### What's Changed        * Refactor how the coverage reports are handled in the docs.                 **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.0.1...v1.0.2
 
     ??? abstract "Updates"
 
@@ -617,10 +411,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Fix some minor typos on the docs.
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.0.0...v1.0.1
+        ### What's Changed        * Fix some minor typos on the docs.                **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.0.0...v1.0.1
 
     ??? abstract "Updates"
 
@@ -664,10 +455,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * First major release.
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.1.1...v1.0.0
+        ### What's Changed        * First major release.                **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.1.1...v1.0.0
 
     ??? abstract "Updates"
 
@@ -685,10 +473,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Fix bugs in docs, and correct directory structure
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.10.2...v0.10.3
+        ### What's Changed        * Fix bugs in docs, and correct directory structure                **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.10.2...v0.10.3
 
     ??? abstract "Updates"
 
@@ -722,10 +507,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Fix directory structure for docs
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.10.1...v0.10.2
+        ### What's Changed        * Fix directory structure for docs                **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.10.1...v0.10.2
 
     ??? abstract "Updates"
 
@@ -771,11 +553,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Add Documentation by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/28
-
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.9.1...v0.10.1
+        ### What's Changed        * Add Documentation by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/28                        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.9.1...v0.10.1
 
     ??? abstract "Updates"
 
@@ -871,11 +649,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Add `retry` module and all unit tests by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/26
-
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.8.1...v0.9.1
+        ### What's Changed        * Add `retry` module and all unit tests by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/26                        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.8.1...v0.9.1
 
     ??? abstract "Updates"
 
@@ -895,11 +669,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Add `output` module and all unit tests by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/25
-
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.7.1...v0.8.1
+        ### What's Changed        * Add `output` module and all unit tests by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/25                        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.7.1...v0.8.1
 
     ??? abstract "Updates"
 
@@ -917,11 +687,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Add `*_contains()` functions to `checkers` module by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/23
-
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.6.1...v0.7.1
+        ### What's Changed        * Add `*_contains()` functions to `checkers` module by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/23                        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.6.1...v0.7.1
 
     ??? abstract "Updates"
 
@@ -939,11 +705,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Add `lists` module by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/22
-
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.5.1...v0.6.1
+        ### What's Changed        * Add `lists` module by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/22                        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.5.1...v0.6.1
 
     ??? abstract "Updates"
 
@@ -963,11 +725,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Add `strings` module and all unit tests by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/21
-
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.4.1...v0.5.1
+        ### What's Changed        * Add `strings` module and all unit tests by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/21                        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.4.1...v0.5.1
 
     ??? abstract "Updates"
 
@@ -987,11 +745,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Add `classes` module by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/16
-
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.3.1...v0.4.1
+        ### What's Changed        * Add `classes` module by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/16                        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.3.1...v0.4.1
 
     ??? abstract "Updates"
 
@@ -1009,11 +763,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Add `defaults` module by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/15
-
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.2.1...v0.3.1
+        ### What's Changed        * Add `defaults` module by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/15                        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.2.1...v0.3.1
 
     ??? abstract "Updates"
 
@@ -1033,13 +783,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Add URLs back in to config by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/9
-        * Fix Merge config by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/10
-        * Add `dictionaries` module and all Unit Tests by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/11
-
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.1.1...v0.2.1
+        ### What's Changed        * Add URLs back in to config by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/9        * Fix Merge config by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/10        * Add `dictionaries` module and all Unit Tests by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/11                        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v0.1.1...v0.2.1
 
     ??? abstract "Updates"
 
@@ -1085,20 +829,7 @@
 
     ??? note "Release Notes"
 
-        ### What's Changed
-        * Updates by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/1
-        * Dev by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/2
-        * Dev by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/3
-        * Dev by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/4
-        * Dev by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/5
-        * Dev by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/6
-        * Dev by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/7
-        * Dev by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/8
-
-        ### New Contributors
-        * @chrimaho made their first contribution in https://github.com/data-science-extensions/toolbox-python/pull/1
-
-        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/commits/v0.1.1
+        ### What's Changed        * Updates by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/1        * Dev by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/2        * Dev by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/3        * Dev by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/4        * Dev by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/5        * Dev by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/6        * Dev by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/7        * Dev by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/8                ### New Contributors        * @chrimaho made their first contribution in https://github.com/data-science-extensions/toolbox-python/pull/1                **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/commits/v0.1.1
 
     ??? abstract "Updates"
 
@@ -1161,3 +892,6 @@
         * Add `bools` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/7a6a871dedbc11ca14456d0f10cf12df517d18f0)
 
         * Initial commit (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/94bad5dee056d7796512c773e5f6ff0f92d83244)
+
+
+
