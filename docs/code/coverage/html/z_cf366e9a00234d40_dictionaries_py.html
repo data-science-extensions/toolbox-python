@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Coverage for src/toolbox_python/dictionaries.py: 100%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_58284776.png">
-    <link rel="stylesheet" href="style_cb_81f8c14c.css" type="text/css">
+    <link rel="stylesheet" href="style_cb_6b508a39.css" type="text/css">
     <script src="coverage_html_cb_6fb7b396.js" defer></script>
 </head>
 <body class="pyfile">
@@ -64,8 +64,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_cf366e9a00234d40_generators_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.9.2">coverage.py v7.9.2</a>,
-            created at 2025-07-13 05:03 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.10.1">coverage.py v7.10.1</a>,
+            created at 2025-08-03 00:14 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -294,18 +294,18 @@
     <p class="run"><span class="n"><a id="t212" href="#t212">212</a></span><span class="t">            <span class="key">for</span> <span class="nam">elem</span> <span class="key">in</span> <span class="nam">value</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t213" href="#t213">213</a></span><span class="t">                <span class="key">if</span> <span class="nam">str</span><span class="op">(</span><span class="nam">elem</span><span class="op">)</span> <span class="key">in</span> <span class="nam">output_dict</span><span class="op">.</span><span class="nam">keys</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t214" href="#t214">214</a></span><span class="t">                    <span class="key">raise</span> <span class="nam">KeyError</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t215" href="#t215">215</a></span><span class="t">                        <span class="fst">f"</span><span class="fst">Key already existing.\n</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t216" href="#t216">216</a></span><span class="t">                        <span class="fst">f"</span><span class="fst">Cannot update `output_dict` with new elements: </span><span class="op">{</span> <span class="op">{</span><span class="nam">elem</span><span class="op">:</span> <span class="nam">key</span><span class="op">}</span> <span class="op">}</span><span class="fst">\n</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t217" href="#t217">217</a></span><span class="t">                        <span class="fst">f"</span><span class="fst">Because the key is already existing for: </span><span class="op">{</span> <span class="op">{</span><span class="nam">new_key</span><span class="op">:</span> <span class="nam">new_value</span> <span class="key">for</span> <span class="op">(</span><span class="nam">new_key</span><span class="op">,</span> <span class="nam">new_value</span><span class="op">)</span> <span class="key">in</span> <span class="nam">output_dict</span><span class="op">.</span><span class="nam">items</span><span class="op">(</span><span class="op">)</span> <span class="key">if</span> <span class="nam">new_key</span><span class="op">==</span><span class="nam">str</span><span class="op">(</span><span class="nam">elem</span><span class="op">)</span><span class="op">}</span> <span class="op">}</span><span class="fst">\n</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t218" href="#t218">218</a></span><span class="t">                        <span class="fst">f"</span><span class="fst">Full `output_dict` so far:\n</span><span class="op">{</span><span class="nam">output_dict</span><span class="op">}</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t219" href="#t219">219</a></span><span class="t">                    <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t215" href="#t215">215</a></span><span class="t">                        <span class="fst">f"</span><span class="fst">Key already existing.\n</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t216" href="#t216">216</a></span><span class="t">                        <span class="fst">f"</span><span class="fst">Cannot update `output_dict` with new elements: </span><span class="op">{</span> <span class="op">{</span><span class="nam">elem</span><span class="op">:</span> <span class="nam">key</span><span class="op">}</span> <span class="op">}</span><span class="fst">\n</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t217" href="#t217">217</a></span><span class="t">                        <span class="fst">f"</span><span class="fst">Because the key is already existing for: </span><span class="op">{</span> <span class="op">{</span><span class="nam">new_key</span><span class="op">:</span> <span class="nam">new_value</span> <span class="key">for</span> <span class="op">(</span><span class="nam">new_key</span><span class="op">,</span> <span class="nam">new_value</span><span class="op">)</span> <span class="key">in</span> <span class="nam">output_dict</span><span class="op">.</span><span class="nam">items</span><span class="op">(</span><span class="op">)</span> <span class="key">if</span> <span class="nam">new_key</span><span class="op">==</span><span class="nam">str</span><span class="op">(</span><span class="nam">elem</span><span class="op">)</span><span class="op">}</span> <span class="op">}</span><span class="fst">\n</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t218" href="#t218">218</a></span><span class="t">                        <span class="fst">f"</span><span class="fst">Full `output_dict` so far:\n</span><span class="op">{</span><span class="nam">output_dict</span><span class="op">}</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t219" href="#t219">219</a></span><span class="t">                    <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t220" href="#t220">220</a></span><span class="t">                <span class="nam">output_dict</span><span class="op">[</span><span class="nam">str</span><span class="op">(</span><span class="nam">elem</span><span class="op">)</span><span class="op">]</span> <span class="op">=</span> <span class="nam">key</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t221" href="#t221">221</a></span><span class="t">        <span class="key">elif</span> <span class="nam">isinstance</span><span class="op">(</span><span class="nam">value</span><span class="op">,</span> <span class="nam">dict</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t222" href="#t222">222</a></span><span class="t">            <span class="nam">interim_dict</span><span class="op">:</span> <span class="nam">dict_str_any</span> <span class="op">=</span> <span class="nam">dict_reverse_keys_and_values</span><span class="op">(</span><span class="nam">value</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t223" href="#t223">223</a></span><span class="t">            <span class="nam">output_dict</span> <span class="op">=</span> <span class="op">{</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t224" href="#t224">224</a></span><span class="t">                <span class="op">**</span><span class="nam">output_dict</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t225" href="#t225">225</a></span><span class="t">                <span class="op">**</span><span class="nam">interim_dict</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t226" href="#t226">226</a></span><span class="t">            <span class="op">}</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t224" href="#t224">224</a></span><span class="t">                <span class="op">**</span><span class="nam">output_dict</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t225" href="#t225">225</a></span><span class="t">                <span class="op">**</span><span class="nam">interim_dict</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t226" href="#t226">226</a></span><span class="t">            <span class="op">}</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t227" href="#t227">227</a></span><span class="t">    <span class="key">return</span> <span class="nam">output_dict</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t228" href="#t228">228</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t229" href="#t229">229</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -508,8 +508,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_cf366e9a00234d40_generators_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.9.2">coverage.py v7.9.2</a>,
-            created at 2025-07-13 05:03 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.10.1">coverage.py v7.10.1</a>,
+            created at 2025-08-03 00:14 +0000
         </p>
     </div>
 </footer>
