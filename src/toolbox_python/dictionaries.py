@@ -305,7 +305,7 @@ class DotDict(dict):
         </div>
     """
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         dict.__init__(self)
         d = dict(*args, **kwargs)
         for key, value in d.items():
@@ -352,15 +352,15 @@ class DotDict(dict):
         except KeyError as e:
             raise AttributeError(f"Key not found: '{key}'") from e
 
-    def update(self, *args, **kwargs) -> None:
+    def update(self, *args: Any, **kwargs: Any) -> None:
         """
         !!! note "Summary"
             Override update to convert new values.
 
         Parameters:
-            *args:
+            *args (Any):
                 Variable length argument list.
-            **kwargs:
+            **kwargs (Any):
                 Arbitrary keyword arguments.
 
         Returns:
