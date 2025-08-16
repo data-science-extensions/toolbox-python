@@ -52,9 +52,7 @@ class TestStrings(TestCase):
     def test_str_replace_2(self) -> None:
         _input: str = self.complex_sentence
         _output: str = str_replace(_input)
-        _expected: str = (
-            self.complex_sentence.replace(" ", "").replace(",", "").replace(".", "")
-        )
+        _expected: str = self.complex_sentence.replace(" ", "").replace(",", "").replace(".", "")
         assert _output == _expected
 
     def test_str_contains_valid(self) -> None:
@@ -140,8 +138,6 @@ class TestStrToList(TestCase):
             (123, 123),
         ]
     )
-    def test_str_to_list(
-        self, _input: Union[str, Any], _expected: Union[str_list, Any]
-    ) -> None:
+    def test_str_to_list(self, _input: Union[str, Any], _expected: Union[str_list, Any]) -> None:
         _output: str_list = str_to_list(_input)
         assert _output == _expected

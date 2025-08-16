@@ -43,7 +43,11 @@ from toolbox_python.dictionaries import DotDict
 ### Set up argument parsing ----
 parser = argparse.ArgumentParser(description="Bump version in files.")
 parser.add_argument(
-    "-v", "--verbose", default=False, type=bool, help="Enable verbose output."
+    "-v",
+    "--verbose",
+    default=False,
+    type=bool,
+    help="Enable verbose output.",
 )
 parser.add_argument("version", type=str, help="The new version to set in the files.")
 

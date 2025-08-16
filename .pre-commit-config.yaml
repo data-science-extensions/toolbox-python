@@ -39,7 +39,6 @@ repos:
         language_version: python3.13
         args:
           - "--config=pyproject.toml"
-          - "--line-length=120"
   - repo: https://github.com/adamchainz/blacken-docs
     rev: "1.19.1"
     hooks:

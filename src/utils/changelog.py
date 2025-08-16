@@ -42,13 +42,9 @@ from github.Repository import Repository
 TOKEN: str | None = os.environ.get("GITHUB_TOKEN")
 REPOSITORY_NAME: str | None = os.environ.get("REPOSITORY_NAME")
 if TOKEN is None:
-    raise RuntimeError(
-        "Environment variable `GITHUB_TOKEN` is not set. Please set it before running the script."
-    )
+    raise RuntimeError("Environment variable `GITHUB_TOKEN` is not set. Please set it before running the script.")
 if REPOSITORY_NAME is None:
-    raise RuntimeError(
-        "Environment variable `REPOSITORY_NAME` is not set. Please set it before running the script."
-    )
+    raise RuntimeError("Environment variable `REPOSITORY_NAME` is not set. Please set it before running the script.")
 
 
 ### Static ----
@@ -143,14 +139,9 @@ def add_release_notes(release: GitRelease) -> str:
     including the release body and any additional information.
     """
     release_body: str = (
-        release.body.replace(f"{BLANK_LINE}", NEW_LINE)
-        .replace("## ", "### ")
-        .replace(NEW_LINE, f"{TAB * 2}")
+        release.body.replace(f"{BLANK_LINE}", NEW_LINE).replace("## ", "### ").replace(NEW_LINE, f"{TAB * 2}")
     )
-    return (
-        f'{TAB}??? note "Release Notes"{BLANK_LINE}'
-        f"{TAB * 2}{release_body}{BLANK_LINE}"
-    )
+    return f'{TAB}??? note "Release Notes"{BLANK_LINE}' f"{TAB * 2}{release_body}{BLANK_LINE}"
 
 
 def add_commit_info(commit: Commit) -> str:
@@ -218,9 +209,7 @@ def main() -> None:
             # If there is no previous release, we fetch all commits until the current release. This is the case for the very first release in the repo.
 
             ### Determine the previous tag if it exists, otherwise set it to "0"
-            previous_tag: str = (
-                releases[index + 1].tag_name if index + 1 < len(releases) else "0"
-            )
+            previous_tag: str = releases[index + 1].tag_name if index + 1 < len(releases) else "0"
 
             ### Write the release information to the output file ----
             f.write(add_release_info(release, REPO))
@@ -238,11 +227,7 @@ def main() -> None:
             ### Fetch the commits for the current release ----
             commits: list[Commit] = sorted(
                 REPO.get_commits(
-                    since=(
-                        releases[index + 1].created_at
-                        if previous_tag != "0"
-                        else NotSet
-                    ),
+                    since=(releases[index + 1].created_at if previous_tag != "0" else NotSet),
                     until=release.created_at,
                 ),
                 key=lambda c: c.commit.committer.date,

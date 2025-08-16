@@ -44,10 +44,7 @@ def get_all_files(*suffixes) -> list[str]:
     return [
         str(p)
         for p in Path("./").glob("**/*")
-        if ".venv" not in p.parts
-        and not p.parts[0].startswith(".")
-        and p.is_file()
-        and p.suffix in {*suffixes}
+        if ".venv" not in p.parts and not p.parts[0].startswith(".") and p.is_file() and p.suffix in {*suffixes}
     ]
 
 
@@ -259,9 +256,7 @@ def docs_build_versioned(version: str) -> None:
     run("git config --global --list")
     run("git config --local --list")
     run("git remote --verbose")
-    run(
-        f"mike --debug deploy --update-aliases --branch=docs-site --push {version} latest"
-    )
+    run(f"mike --debug deploy --update-aliases --branch=docs-site --push {version} latest")
 
 
 def docs_build_versioned_cli() -> None:
@@ -374,17 +369,13 @@ def check_docstrings_file(file: str) -> None:
         def visit_FunctionDef(self, node):
             if node.name.startswith("_"):  # Skip private functions
                 return
-            functions_and_classes.append(
-                FunctionAndClassDetails("function", node.name, node, node.lineno)
-            )
+            functions_and_classes.append(FunctionAndClassDetails("function", node.name, node, node.lineno))
             self.generic_visit(node)
 
         def visit_ClassDef(self, node):
             if node.name.startswith("_"):  # Skip private classes
                 return
-            functions_and_classes.append(
-                FunctionAndClassDetails("class", node.name, node, node.lineno)
-            )
+            functions_and_classes.append(FunctionAndClassDetails("class", node.name, node, node.lineno))
             self.generic_visit(node)
 
     visitor = DocstringVisitor()
@@ -440,18 +431,14 @@ def _check_single_docstring(
         # Get function parameters (excluding 'self' for methods)
         params = [arg.arg for arg in node.args.args if arg.arg != "self"]
         if params and not re.search(r"Params:", docstring):
-            raise ValueError(
-                "Missing mandatory Params section for function with parameters"
-            )
+            raise ValueError("Missing mandatory Params section for function with parameters")
 
         # Check each parameter is documented
         if params:
             for param in params:
                 param_pattern = rf"{param}\s*\([^)]+\):"
                 if not re.search(param_pattern, docstring):
-                    raise ValueError(
-                        f"Parameter '{param}' not documented or incorrectly formatted"
-                    )
+                    raise ValueError(f"Parameter '{param}' not documented or incorrectly formatted")
 
     # Check Returns or Yields (but not both)
     has_returns = re.search(r"Returns:", docstring)
@@ -466,9 +453,7 @@ def _check_single_docstring(
 
     # Check mandatory Examples section
     if not re.search(r'\?\?\?\+ example "Examples"', docstring, re.IGNORECASE):
-        raise ValueError(
-            'Missing mandatory Examples section: `???+ example "Examples"`'
-        )
+        raise ValueError('Missing mandatory Examples section: `???+ example "Examples"`')
 
     # Validate section order
     _check_section_order(docstring)
@@ -561,9 +546,7 @@ def _validate_section_formats(docstring: str, name: str) -> None:
             for line in param_lines:
                 if not line.startswith(" "):  # Parameter name line
                     if not re.match(r"\w+\s*\([^)]+\):", line):
-                        raise ValueError(
-                            f"Invalid parameter format: '{line}'. Expected: 'param_name (type):'"
-                        )
+                        raise ValueError(f"Invalid parameter format: '{line}'. Expected: 'param_name (type):'")
 
     # Validate Raises format
     if re.search(r"Raises:", docstring):
@@ -575,9 +558,7 @@ def _validate_section_formats(docstring: str, name: str) -> None:
         if raises_match:
             raises_content = raises_match.group(1)
             # Check each exception follows the format: ExceptionType:
-            exception_lines = [
-                line for line in raises_content.split("\n") if line.strip()
-            ]
+            exception_lines = [line for line in raises_content.split("\n") if line.strip()]
             for line in exception_lines:
                 if not line.startswith(" "):  # Exception name line
                     if not re.match(
@@ -586,9 +567,7 @@ def _validate_section_formats(docstring: str, name: str) -> None:
                     ):
                         # Allow common exception patterns
                         if not line.endswith(":"):
-                            raise ValueError(
-                                f"Invalid exception format: '{line}'. Expected: 'ExceptionType:'"
-                            )
+                            raise ValueError(f"Invalid exception format: '{line}'. Expected: 'ExceptionType:'")
 
     # Validate Returns/Yields format
     returns_or_yields = re.search(r"(Returns|Yields):", docstring)
@@ -602,9 +581,7 @@ def _validate_section_formats(docstring: str, name: str) -> None:
         if section_match:
             section_content = section_match.group(1)
             # Check format: optional_name (type):
-            return_lines = [
-                line for line in section_content.split("\n") if line.strip()
-            ]
+            return_lines = [line for line in section_content.split("\n") if line.strip()]
             for line in return_lines:
                 if not line.startswith(" "):  # Return value line
                     if not re.match(r"(\w+\s*)?\([^)]+\):", line):
@@ -636,9 +613,7 @@ def check_docstrings_all() -> None:
         print("No Python files found to check.")
         return
     else:
-        print(
-            f"\nChecking docstrings in all Python files... Files to check: '{len(python_files)}'."
-        )
+        print(f"\nChecking docstrings in all Python files... Files to check: '{len(python_files)}'.")
 
     errors = []
 
@@ -658,16 +633,12 @@ def check_docstrings_all() -> None:
 def check_docstrings_dir(dir: str) -> None:
     """Check docstrings in all Python files in the src directory."""
 
-    python_files: list[str] = [
-        file for file in get_all_files(".py") if file.startswith(dir)
-    ]
+    python_files: list[str] = [file for file in get_all_files(".py") if file.startswith(dir)]
     if not python_files:
         print("No Python files found to check.")
         return
     else:
-        print(
-            f"\nChecking docstrings in all Python files in '{dir}'... Files to check: '{len(python_files)}'."
-        )
+        print(f"\nChecking docstrings in all Python files in '{dir}'... Files to check: '{len(python_files)}'.")
 
     errors = []
 

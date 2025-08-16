@@ -61,7 +61,8 @@ __all__: str_list = ["generate_group_cutoffs"]
 
 @typechecked
 def generate_group_cutoffs(
-    total_number: int, num_groups: int
+    total_number: int,
+    num_groups: int,
 ) -> tuple[tuple[int, int], ...]:
     """
     !!! note "Summary"

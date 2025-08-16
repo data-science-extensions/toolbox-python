@@ -54,9 +54,7 @@ class TestRetryDecorator(TestCase):
         pass
 
     @fixture(autouse=True)
-    def _pass_fixtures(
-        self, capsys: CaptureFixture[str], caplog: LogCaptureFixture
-    ) -> None:
+    def _pass_fixtures(self, capsys: CaptureFixture[str], caplog: LogCaptureFixture) -> None:
         self.capsys: CaptureFixture = capsys
         self.caplog: LogCaptureFixture = caplog
         self.caplog.set_level("notset".upper())
@@ -80,12 +78,7 @@ class TestRetryDecorator(TestCase):
         console_print = self.capsys.readouterr()
         error_output = "Still could not write after 5 iterations. Please check."
         error_string = "Caught an expected error at iteration {i}: `{__name__}`. Retrying in 1 seconds..."
-        error_message = "\n".join(
-            [
-                error_string.format(i=i, __name__=f"{__name__}.ExpectedError")
-                for i in range(1, 6)
-            ]
-        )
+        error_message = "\n".join([error_string.format(i=i, __name__=f"{__name__}.ExpectedError") for i in range(1, 6)])
         error_message += f"\n{error_output}\n"
         assert str(e.exception) == error_output
         assert console_print.out == error_message
@@ -107,9 +100,7 @@ class TestRetryDecorator(TestCase):
         for index, record in enumerate(log_records):
             if index < 5:
                 assert record.levelname == "warning".upper()
-                assert record.message == error_string.format(
-                    i=index + 1, __name__=f"{__name__}.ExpectedError"
-                )
+                assert record.message == error_string.format(i=index + 1, __name__=f"{__name__}.ExpectedError")
             else:
                 assert record.levelname == "error".upper()
                 assert record.message == error_output
@@ -127,9 +118,7 @@ class TestRetryDecorator(TestCase):
         with self.assertRaises(RuntimeError) as e:
             self.fail_unknown_print()
         console_print = self.capsys.readouterr()
-        error_output = (
-            f"Caught an unexpected error at iteration 1: `{__name__}.ExpectedError`."
-        )
+        error_output = f"Caught an unexpected error at iteration 1: `{__name__}.ExpectedError`."
         assert console_print.out == error_output + "\n"
         assert str(e.exception) == error_output
 
@@ -144,9 +133,7 @@ class TestRetryDecorator(TestCase):
         with self.assertRaises(RuntimeError) as e:
             self.fail_unknown_log()
         log_records = self.caplog.records
-        error_output = (
-            f"Caught an unexpected error at iteration 1: `{__name__}.ExpectedError`."
-        )
+        error_output = f"Caught an unexpected error at iteration 1: `{__name__}.ExpectedError`."
         pprint(log_records)
         assert log_records[0].levelname == "error".upper()
         assert log_records[0].message == error_output
@@ -175,13 +162,12 @@ class TestRetryDecorator(TestCase):
         with self.assertRaises(RuntimeError) as e:
             self.fail_after_n_print(iterations=num_fail_iterations)
         console_print = self.capsys.readouterr()
-        error_output = f"Caught an unexpected error at iteration {num_fail_iterations+1}: `tests.test_retry.UnexpectedError`."
+        error_output = (
+            f"Caught an unexpected error at iteration {num_fail_iterations+1}: `tests.test_retry.UnexpectedError`."
+        )
         error_string = "Caught an expected error at iteration {i}: `{__name__}`. Retrying in 1 seconds..."
         error_message = "\n".join(
-            [
-                error_string.format(i=i, __name__=f"{__name__}.ExpectedError")
-                for i in range(1, num_fail_iterations + 1)
-            ]
+            [error_string.format(i=i, __name__=f"{__name__}.ExpectedError") for i in range(1, num_fail_iterations + 1)]
         )
         error_message += f"\n{error_output}\n"
         assert str(e.exception) == error_output
@@ -200,14 +186,14 @@ class TestRetryDecorator(TestCase):
         with self.assertRaises(RuntimeError) as e:
             self.fail_after_n_log(iterations=num_fail_iterations)
         log_records = self.caplog.records
-        error_output = f"Caught an unexpected error at iteration {num_fail_iterations+1}: `tests.test_retry.UnexpectedError`."
+        error_output = (
+            f"Caught an unexpected error at iteration {num_fail_iterations+1}: `tests.test_retry.UnexpectedError`."
+        )
         error_string = "Caught an expected error at iteration {i}: `{__name__}`. Retrying in 1 seconds..."
         for index, record in enumerate(log_records):
             if index < num_fail_iterations:
                 assert record.levelname == "warning".upper()
-                assert record.message == error_string.format(
-                    i=index + 1, __name__=f"{__name__}.ExpectedError"
-                )
+                assert record.message == error_string.format(i=index + 1, __name__=f"{__name__}.ExpectedError")
             else:
                 assert record.levelname == "error".upper()
                 assert record.message == error_output
@@ -263,10 +249,7 @@ class TestRetryDecorator(TestCase):
         output = f"Successfully executed at iteration {num_fail_iterations+1}."
         error_string = "Caught an expected error at iteration {i}: `{__name__}`. Retrying in 1 seconds..."
         error_message = "\n".join(
-            [
-                error_string.format(i=i, __name__=f"{__name__}.ExpectedError")
-                for i in range(1, num_fail_iterations + 1)
-            ]
+            [error_string.format(i=i, __name__=f"{__name__}.ExpectedError") for i in range(1, num_fail_iterations + 1)]
         )
         error_message += f"\n{output}\n"
         self.assertIsNone(result)
@@ -287,9 +270,7 @@ class TestRetryDecorator(TestCase):
         for index, record in enumerate(log_records):
             if index < num_fail_iterations:
                 assert record.levelname == "warning".upper()
-                assert record.message == error_string.format(
-                    i=index + 1, __name__=f"{__name__}.ExpectedError"
-                )
+                assert record.message == error_string.format(i=index + 1, __name__=f"{__name__}.ExpectedError")
             else:
                 assert record.levelname == "info".upper()
                 assert record.message == output
@@ -314,10 +295,7 @@ class TestRetryDecorator(TestCase):
 
     @staticmethod
     def throw_unexpected_known_error(known_error: type = ValueError) -> None:
-        raise UnexpectedKnownError(
-            f"Throwing UnexpectedError. "
-            f"Containing known Exception: {known_error.__name__}"
-        )
+        raise UnexpectedKnownError(f"Throwing UnexpectedError. " f"Containing known Exception: {known_error.__name__}")
 
     @retry(exceptions=ValueError, tries=5, delay=0, print_or_log="print")
     def succeed_unexpected_known_error(self, known_error: type = ValueError) -> None:
@@ -332,9 +310,7 @@ class TestRetryDecorator(TestCase):
             _ = self.succeed_unexpected_known_error(known_error=ValueError)
         console_print = self.capsys.readouterr()
         num_iterations = 5
-        output = (
-            f"Still could not write after {num_iterations} iterations. Please check."
-        )
+        output = f"Still could not write after {num_iterations} iterations. Please check."
         error_string = (
             "Caught an unexpected, known error at iteration {i}: `{__name__}`.\n"
             "Who's message contains reference to underlying exception(s): ['ValueError'].\n"

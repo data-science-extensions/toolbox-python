@@ -214,9 +214,7 @@ def retry(
     assert_is_valid(tries, ">=", 0)
     assert_is_valid(delay, ">=", 0)
 
-    exceptions = (
-        tuple(exceptions) if isinstance(exceptions, (list, tuple)) else (exceptions,)
-    )
+    exceptions = tuple(exceptions) if isinstance(exceptions, (list, tuple)) else (exceptions,)
 
     log: Optional[Logger] = None
 
@@ -256,11 +254,7 @@ def retry(
                     >>> java.util.concurrent.ExecutionException: io.delta.exceptions.
                     ...     ConcurrentDeleteReadException: This transaction attempted to read one or more files that were deleted (for example part-00001-563449ea-73e4-4d7d-8ba8-53fee1f8a5ff.c000.snappy.parquet in the root of the table) by a concurrent update. Please try the operation again.
                     """
-                    excs = (
-                        [exceptions]
-                        if not isinstance(exceptions, (list, tuple))
-                        else exceptions
-                    )
+                    excs = [exceptions] if not isinstance(exceptions, (list, tuple)) else exceptions
                     exc_names = [exc.__name__ for exc in excs]
                     if any(name in f"{exc}" for name in exc_names):
                         caught_error = [name for name in exc_names if name in f"{exc}"]
@@ -278,10 +272,7 @@ def retry(
                         )
                         sleep(delay)
                     else:
-                        message = (
-                            f"Caught an unexpected error at iteration {i}: "
-                            f"`{get_full_class_name(exc)}`."
-                        )
+                        message = f"Caught an unexpected error at iteration {i}: " f"`{get_full_class_name(exc)}`."
                         print_or_log_output(
                             message=message,
                             print_or_log=print_or_log,

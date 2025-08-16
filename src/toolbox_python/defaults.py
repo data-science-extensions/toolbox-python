@@ -326,11 +326,7 @@ class Defaults:
             - [`Defaults._validate_value_and_default()`][toolbox_python.defaults.Defaults._validate_value_and_default]
             - [`Defaults._validate_type()`][toolbox_python.defaults.Defaults._validate_type]
         """
-        (
-            self._validate_value_and_default(
-                value=value, default=default
-            )._validate_type(check_type=cast)
-        )
+        self._validate_value_and_default(value=value, default=default)._validate_type(check_type=cast)
         if value is None:
             value = default
         if cast is not None:
@@ -418,8 +414,7 @@ class Defaults:
             retype = check_type.__name__  # type: ignore
         if retype is not None and retype not in valid_types:
             raise AttributeError(
-                f"The value for `type` is invalid: `{retype}`.\n"
-                f"Must be a valid type: {valid_types}."
+                f"The value for `type` is invalid: `{retype}`.\n" f"Must be a valid type: {valid_types}."
             )
         return self
 
