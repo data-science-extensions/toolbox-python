@@ -78,10 +78,21 @@ __all__: str_list = ["print_or_log_output", "list_columns"]
 # ---------------------------------------------------------------------------- #
 
 
+@overload
+def print_or_log_output(message: str, print_or_log: Literal["print"]) -> None: ...
+@overload
+def print_or_log_output(
+    message: str,
+    print_or_log: Literal["log"],
+    *,
+    log: Logger,
+    log_level: log_levels = "info",
+) -> None: ...
 @typechecked
 def print_or_log_output(
     message: str,
     print_or_log: Literal["print", "log"] = "print",
+    *,
     log: Optional[Logger] = None,
     log_level: Optional[log_levels] = None,
 ) -> None:
@@ -221,13 +232,11 @@ def print_or_log_output(
     # Check in put for logging
     if not is_type(log, Logger):
         raise TypeError(
-            f"When `print_or_log=='log'` then `log` must be type `Logger`. "
-            f"Here, you have parsed: '{type(log)}'"
+            f"When `print_or_log=='log'` then `log` must be type `Logger`. " f"Here, you have parsed: '{type(log)}'"
         )
     if log_level is None:
         raise ValueError(
-            f"When `print_or_log=='log'` then `log_level` must be parsed "
-            f"with a valid value from: {log_levels}."
+            f"When `print_or_log=='log'` then `log_level` must be parsed " f"with a valid value from: {log_levels}."
         )
 
     # Assertions to keep `mypy` happy
@@ -419,27 +428,19 @@ def list_columns(
 
     # Segment the list into chunks
     segmented_list: list[str_list] = [
-        string_list[index : index + cols_wide]
-        for index in range(0, len(string_list), cols_wide)
+        string_list[index : index + cols_wide] for index in range(0, len(string_list), cols_wide)
     ]
 
     # Ensure the last segment has the correct number of columns
     if columnwise:
         if len(segmented_list[-1]) != cols_wide:
-            segmented_list[-1].extend(
-                [""] * (len(string_list) - len(segmented_list[-1]))
-            )
+            segmented_list[-1].extend([""] * (len(string_list) - len(segmented_list[-1])))
         combined_list: Union[list[str_list], Any] = zip(*segmented_list)
     else:
         combined_list = segmented_list
 
     # Create the formatted string with proper spacing
-    printer: str = "\n".join(
-        [
-            "".join([element.ljust(max_len + gap) for element in group])
-            for group in combined_list
-        ]
-    )
+    printer: str = "\n".join(["".join([element.ljust(max_len + gap) for element in group]) for group in combined_list])
 
     # Print the output if requested
     if print_output:

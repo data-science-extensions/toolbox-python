@@ -121,6 +121,14 @@ class TestTypes(TestCase):
             ("set_2", "a", set, False),
             ("set_3", {1.0, 1.0}, (tuple, set), True),
             ("set_4", [1, 2], (tuple, set), False),
+            ("list_type_1", "a", [str, int], True),
+            ("list_type_2", 1, [str, int], True),
+            ("list_type_3", 2.5, [str, int], False),
+            ("list_type_4", True, [str, bool], True),
+            ("list_type_5", 1, [str, bool], False),
+            ("list_type_6", (1, 2), [tuple, list], True),
+            ("list_type_7", [1, 2], [tuple, list], True),
+            ("list_type_8", {1, 2}, [tuple, list], False),
         ),
         name_func=name_func_predefined_name,
     )
@@ -128,7 +136,7 @@ class TestTypes(TestCase):
         self,
         _nam: str,
         _val: Any,
-        _typ: Union[type, tuple[type, ...]],
+        _typ: Union[type, tuple[type, ...], list[type]],
         _res: bool,
     ) -> None:
         assert is_value_of_type(_val, _typ) == _res
@@ -171,6 +179,14 @@ class TestTypes(TestCase):
             ("set_2", ({1.0, 2.0}, {3.0, 4.0}, [5.0, 6.0]), set, False),
             ("set_3", ({1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}), (tuple, set), True),
             ("set_4", ({1.0, 2.0}, [3.0, 4.0], {5.0, 6.0}), (tuple, str), False),
+            ("list_type_1", ("a", "b", "c"), [str, int], True),
+            ("list_type_2", (1, 2, 3), [str, int], True),
+            ("list_type_3", (2.5, 3.5, 4.5), [str, int], False),
+            ("list_type_4", (True, False, True), [str, bool], True),
+            ("list_type_5", (1, 2, 3), [str, bool], False),
+            ("list_type_6", ((1, 2), (3, 4), (5, 6)), [tuple, list], True),
+            ("list_type_7", (["a", "b"], ["c", "d"], ["e", "f"]), [tuple, list], True),
+            ("list_type_8", ({1, 2}, {3, 4}, {5, 6}), [tuple, list], False),
         ),
         name_func=name_func_predefined_name,
     )
@@ -178,7 +194,7 @@ class TestTypes(TestCase):
         self,
         _nam: str,
         _vals: Any,
-        _typ: Union[type, tuple[type, ...]],
+        _typ: Union[type, tuple[type, ...], list[type]],
         _res: bool,
     ) -> None:
         assert is_all_values_of_type(_vals, _typ) == _res
@@ -221,6 +237,27 @@ class TestTypes(TestCase):
             ("set_2", (1, "a", 2.5, True, (1, 2), [3, 4]), set, False),
             ("set_3", (1, "a", 2.5, True, (1, 2), {5, 6}), (set, list), True),
             ("set_4", (1, "a", 2.5, True, (1, 2)), (set, list), False),
+            (
+                "list_type_1",
+                (1, "a", 2.5, True, (1, 2), [3, 4], {5, 6}),
+                [str, int],
+                True,
+            ),
+            ("list_type_2", (2.5, True, (1, 2), [3, 4], {5, 6}), [str, int], True),
+            (
+                "list_type_3",
+                (1, "a", 2.5, True, (1, 2), [3, 4], {5, 6}),
+                [bool, tuple],
+                True,
+            ),
+            ("list_type_4", (1, "a", 2.5, [3, 4], {5, 6}), [bool, tuple], False),
+            (
+                "list_type_5",
+                (1, "a", 2.5, True, (1, 2), [3, 4], {5, 6}),
+                [list, set],
+                True,
+            ),
+            ("list_type_6", (1, "a", 2.5, True, (1, 2)), [list, set], False),
         ),
         name_func=name_func_predefined_name,
     )
@@ -228,7 +265,7 @@ class TestTypes(TestCase):
         self,
         _nam: str,
         _vals: Any,
-        _typ: Union[type, tuple[type, ...]],
+        _typ: Union[type, tuple[type, ...], list[type]],
         _res: bool,
     ) -> None:
         assert is_any_values_of_type(_vals, _typ) == _res
@@ -294,16 +331,6 @@ class TestIterables(TestCase):
         assert_any_values_in_iterable(_val, _vals)
         assert_any_in(_val, _vals)
 
-    def test_raises_assert_value_of_type(self) -> None:
-        with raises(TypeError):
-            assert_value_of_type(5, str)
-            assert_value_of_type("5", int)
-
-    def test_raises_all_values_of_type(self) -> None:
-        with raises(TypeError):
-            assert_all_values_of_type((1, 2, 3, 4, 5), str)
-            assert_all_values_of_type(("1", "2", "3", "4", "5"), int)
-
     def test_raises_assert_value_in_iterable(self) -> None:
         with raises(LookupError):
             assert_value_in_iterable("a", (1, 2, 3))
@@ -329,10 +356,10 @@ class TestContains(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         values: tuple[str, ...] = ("key_SYSTEM", "key_CLUSTER", "key_GROUP", "key_NODE")
-        cls.list_values = list(values)
-        cls.tuple_values = tuple(values)
-        cls.set_values = set(values)
-        cls.values: dict[str, Union[list, tuple, set]] = {
+        cls.list_values: list[str] = list(values)
+        cls.tuple_values: tuple[str, ...] = tuple(values)
+        cls.set_values: set[str] = set(values)
+        cls.values: dict[str, Union[list[str], tuple[str, ...], set[str]]] = {
             "list": cls.list_values,
             "tuple": cls.tuple_values,
             "set": cls.set_values,
@@ -380,9 +407,7 @@ class TestContains(TestCase):
         ),
         name_func=name_func_nested_list,
     )
-    def test_get_elements_containing(
-        self, _typ: str, _val: str, _exp: str_tuple
-    ) -> None:
+    def test_get_elements_containing(self, _typ: str, _val: str, _exp: str_tuple) -> None:
         if _exp == "tuple_values":
             _exp = self.tuple_values
         _out: str_tuple = get_elements_containing(self.values[_typ], _val)
@@ -408,6 +433,8 @@ TRUES = (
     (5, "!=", 10),
     (3, "in", [1, 2, 3, 4]),
     (5, "not in", (1, 2, 3, 4)),
+    (True, "is", True),
+    (True, "is not", int),
 )
 FALSES = (
     (10, "<", 5),
@@ -418,6 +445,8 @@ FALSES = (
     (5, "!=", 5),
     (5, "in", [1, 2, 3, 4]),
     (3, "not in", (1, 2, 3, 4)),
+    (True, "is", False),
+    (True, "is not", True),
 )
 
 

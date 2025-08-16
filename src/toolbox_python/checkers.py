@@ -108,8 +108,10 @@ OPERATORS: dict[str, Callable[[Any, Any], bool]] = {
     ">=": operator.ge,
     "==": operator.eq,
     "!=": operator.ne,
-    "in": lambda a, b: a in b,
-    "not in": lambda a, b: a not in b,
+    "in": lambda a, b: operator.contains(b, a),
+    "not in": lambda a, b: not operator.contains(b, a),
+    "is": operator.is_,
+    "is not": operator.is_not,
 }
 
 
@@ -129,7 +131,9 @@ OPERATORS: dict[str, Callable[[Any, Any], bool]] = {
 def is_value_of_type(value: Any, check_type: type) -> bool: ...
 @overload
 def is_value_of_type(value: Any, check_type: tuple[type, ...]) -> bool: ...
-def is_value_of_type(value: Any, check_type: Union[type, tuple[type, ...]]) -> bool:
+@overload
+def is_value_of_type(value: Any, check_type: list[type]) -> bool: ...
+def is_value_of_type(value: Any, check_type: Union[type, tuple[type, ...], list[type]]) -> bool:
     """
     !!! note "Summary"
         Check if a given value is of a specified type or types.
@@ -140,7 +144,7 @@ def is_value_of_type(value: Any, check_type: Union[type, tuple[type, ...]]) -> b
     Params:
         value (Any):
             The value to check.
-        check_type (Union[type, tuple[type]]):
+        check_type (Union[type, tuple[type], list[type]]):
             The type or tuple of types to check against.
 
     Returns:
@@ -181,12 +185,19 @@ def is_value_of_type(value: Any, check_type: Union[type, tuple[type, ...]]) -> b
         - [`is_value_of_type()`][toolbox_python.checkers.is_value_of_type]
         - [`is_type()`][toolbox_python.checkers.is_type]
     """
+    check_type = tuple(check_type) if isinstance(check_type, list) else check_type
     return isinstance(value, check_type)
 
 
+@overload
+def is_all_values_of_type(values: any_collection, check_type: type) -> bool: ...
+@overload
+def is_all_values_of_type(values: any_collection, check_type: tuple[type, ...]) -> bool: ...
+@overload
+def is_all_values_of_type(values: any_collection, check_type: list[type]) -> bool: ...
 def is_all_values_of_type(
     values: any_collection,
-    check_type: Union[type, tuple[type, ...]],
+    check_type: Union[type, tuple[type, ...], list[type]],
 ) -> bool:
     """
     !!! note "Summary"
@@ -198,7 +209,7 @@ def is_all_values_of_type(
     Params:
         values (any_collection):
             The iterable containing values to check.
-        check_type (Union[type, tuple[type]]):
+        check_type (Union[type, tuple[type], list[type]]):
             The type or tuple of types to check against.
 
     Returns:
@@ -241,12 +252,19 @@ def is_all_values_of_type(
         - [`is_type()`][toolbox_python.checkers.is_type]
         - [`is_all_type()`][toolbox_python.checkers.is_all_type]
     """
+    check_type = tuple(check_type) if isinstance(check_type, list) else check_type
     return all(isinstance(value, check_type) for value in values)
 
 
+@overload
+def is_any_values_of_type(values: any_collection, check_type: type) -> bool: ...
+@overload
+def is_any_values_of_type(values: any_collection, check_type: tuple[type, ...]) -> bool: ...
+@overload
+def is_any_values_of_type(values: any_collection, check_type: list[type]) -> bool: ...
 def is_any_values_of_type(
     values: any_collection,
-    check_type: Union[type, tuple[type, ...]],
+    check_type: Union[type, tuple[type, ...], list[type]],
 ) -> bool:
     """
     !!! note "Summary"
@@ -258,7 +276,7 @@ def is_any_values_of_type(
     Params:
         values (any_collection):
             The iterable containing values to check.
-        check_type (Union[type, tuple[type]]):
+        check_type (Union[type, tuple[type], list[type]]):
             The type or tuple of types to check against.
 
     Returns:
@@ -301,6 +319,7 @@ def is_any_values_of_type(
         - [`is_type()`][toolbox_python.checkers.is_type]
         - [`is_any_type()`][toolbox_python.checkers.is_any_type]
     """
+    check_type = tuple(check_type) if isinstance(check_type, list) else check_type
     return any(isinstance(value, check_type) for value in values)
 
 
@@ -550,9 +569,7 @@ def is_valid_value(value: Any, op: str, target: Any) -> bool:
         </div>
     """
     if op not in OPERATORS:
-        raise ValueError(
-            f"Unknown operator '{op}'. Valid operators are: {list(OPERATORS.keys())}"
-        )
+        raise ValueError(f"Unknown operator '{op}'. Valid operators are: {list(OPERATORS.keys())}")
     op_func: Callable[[Any, Any], bool] = OPERATORS[op]
     return op_func(value, target)
 
@@ -572,9 +589,15 @@ is_valid = is_valid_value
 ## --------------------------------------------------------------------------- #
 
 
+@overload
+def assert_value_of_type(value: Any, check_type: type) -> None: ...
+@overload
+def assert_value_of_type(value: Any, check_type: tuple[type, ...]) -> None: ...
+@overload
+def assert_value_of_type(value: Any, check_type: list[type]) -> None: ...
 def assert_value_of_type(
     value: Any,
-    check_type: Union[type, tuple[type, ...]],
+    check_type: Union[type, tuple[type, ...], list[type]],
 ) -> None:
     """
     !!! note "Summary"
@@ -586,7 +609,7 @@ def assert_value_of_type(
     Params:
         value (Any):
             The value to check.
-        check_type (Union[type, tuple[type]]):
+        check_type (Union[type, tuple[type], list[type]]):
             The type or tuple of types to check against.
 
     Raises:
@@ -660,9 +683,15 @@ def assert_value_of_type(
         raise TypeError(msg)
 
 
+@overload
+def assert_all_values_of_type(values: any_collection, check_type: type) -> None: ...
+@overload
+def assert_all_values_of_type(values: any_collection, check_type: tuple[type, ...]) -> None: ...
+@overload
+def assert_all_values_of_type(values: any_collection, check_type: list[type]) -> None: ...
 def assert_all_values_of_type(
     values: any_collection,
-    check_type: Union[type, tuple[type, ...]],
+    check_type: Union[type, tuple[type, ...], list[type]],
 ) -> None:
     """
     !!! note "Summary"
@@ -674,7 +703,7 @@ def assert_all_values_of_type(
     Params:
         values (any_collection):
             The iterable containing values to check.
-        check_type (Union[type, tuple[type]]):
+        check_type (Union[type, tuple[type], list[type]]):
             The type or tuple of types to check against.
 
     Raises:
@@ -743,14 +772,8 @@ def assert_all_values_of_type(
     """
     if not is_all_type(values=values, check_type=check_type):
         invalid_values = [value for value in values if not is_type(value, check_type)]
-        invalid_types = [
-            f"'{type(value).__name__}'"
-            for value in values
-            if not is_type(value, check_type)
-        ]
-        msg: str = (
-            f"Some elements {invalid_values} have the incorrect type {invalid_types}. "
-        )
+        invalid_types = [f"'{type(value).__name__}'" for value in values if not is_type(value, check_type)]
+        msg: str = f"Some elements {invalid_values} have the incorrect type {invalid_types}. "
         if isinstance(check_type, type):
             msg += f"Must be '{check_type}'"
         else:
@@ -759,9 +782,15 @@ def assert_all_values_of_type(
         raise TypeError(msg)
 
 
+@overload
+def assert_any_values_of_type(values: any_collection, check_type: type) -> None: ...
+@overload
+def assert_any_values_of_type(values: any_collection, check_type: tuple[type, ...]) -> None: ...
+@overload
+def assert_any_values_of_type(values: any_collection, check_type: list[type]) -> None: ...
 def assert_any_values_of_type(
     values: any_collection,
-    check_type: Union[type, tuple[type, ...]],
+    check_type: Union[type, tuple[type, ...], list[type]],
 ) -> None:
     """
     !!! note "Summary"
@@ -773,7 +802,7 @@ def assert_any_values_of_type(
     Params:
         values (any_collection):
             The iterable containing values to check.
-        check_type (Union[type, tuple[type]]):
+        check_type (Union[type, tuple[type], list[type]]):
             The type or tuple of types to check against.
 
     Raises:
