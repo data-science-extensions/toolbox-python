@@ -94,7 +94,7 @@ def str_replace(
             Defaults to `""`.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
@@ -171,7 +171,7 @@ def str_contains(check_string: str, sub_string: str) -> bool:
             The substring to check.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
@@ -239,7 +239,7 @@ def str_contains_any(
             The collection of substrings to check.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
@@ -313,7 +313,7 @@ def str_contains_all(
             The collection of substrings to check.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
@@ -396,7 +396,7 @@ def str_separate_number_chars(text: str) -> str_list:
             The string to split.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
@@ -492,7 +492,7 @@ def str_to_list(obj: Any) -> Union[str_list, Any]:
             The object to convert to a list if it is a string.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If `obj` is not a string or a list.
 
     Returns:

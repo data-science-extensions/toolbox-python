@@ -116,9 +116,9 @@ def print_or_log_output(
             Defaults to `#!py None`.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
-        AssertError:
+        (AssertError):
             If `#!py print_or_log=="log"` and `#!py log` is not an instance of `#!py Logger`.
 
     Returns:
@@ -311,11 +311,11 @@ def list_columns(
             Defaults to: `#!py True`.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
-        TypeError:
+        (TypeError):
             If `#!py obj` is not a valid type. Must be one of: `#!py list`, `#!py set`, `#!py tuple`, or `#!py Generator`.
-        ValueError:
+        (ValueError):
             If `#!py cols_wide` is not greater than `0`, or if `#!py gap` is not greater than `0`.
 
     Returns:

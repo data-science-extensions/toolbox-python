@@ -204,7 +204,7 @@ class Defaults:
         !!! note "Summary"
             From the value that is parsed in to the `value` parameter, convert it to `default` if `value` is `#!py None`, and convert it to `cast` if `cast` is not `#!py None`.
 
-        ???+ info "Details"
+        ???+ abstract "Details"
             The detailed steps will be:
 
             1. Validate the input (using the internal [`._validate_value_and_default()`][toolbox_python.defaults.Defaults._validate_value_and_default] & [`._validate_type()`][toolbox_python.defaults.Defaults._validate_type] methods),
@@ -226,7 +226,7 @@ class Defaults:
                 Defaults to `#!py None`.
 
         Raises:
-            TypeCheckError:
+            (TypeCheckError):
                 If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
         Returns:
@@ -356,7 +356,7 @@ class Defaults:
                 Defaults to `#!py None`.
 
         Raises:
-            AttributeError: If both `value` and `default` are `#!py None`.
+            (AttributeError): If both `value` and `default` are `#!py None`.
 
         Returns:
             self (Defaults):
@@ -387,7 +387,7 @@ class Defaults:
                 Defaults to `#!py None`.
 
         Raises:
-            AttributeError: If `check_type` is _both_ not `#!py None` _and_ if it is not one of the valid Python types.
+            (AttributeError): If `check_type` is _both_ not `#!py None` _and_ if it is not one of the valid Python types.
 
         Returns:
             self (Defaults):

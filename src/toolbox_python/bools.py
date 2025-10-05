@@ -88,14 +88,14 @@ def strtobool(value: str) -> bool:
         Convert a `#!py str` value in to a `#!py bool` value.
 
     ???+ abstract "Details"
-        This process is necessary because the `d`istutils` module was completely deprecated in Python 3.12.
+        This process is necessary because the `distutils` module was completely deprecated in Python 3.12.
 
     Params:
         value (str):
             The string value to convert. Valid input options are defined in [`STR_TO_BOOL_MAP`][toolbox_python.bools.STR_TO_BOOL_MAP]
 
     Raises:
-        ValueError:
+        (ValueError):
             If the value parse'ed in to `value` is not a valid value to be able to convert to a `#!py bool` value.
 
     Returns:

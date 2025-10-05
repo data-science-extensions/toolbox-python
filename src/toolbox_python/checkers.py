@@ -138,7 +138,7 @@ def is_value_of_type(value: Any, check_type: Union[type, tuple[type, ...], list[
     !!! note "Summary"
         Check if a given value is of a specified type or types.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         This function is used to verify if a given value matches a specified type or any of the types in a tuple of types.
 
     Params:
@@ -203,7 +203,7 @@ def is_all_values_of_type(
     !!! note "Summary"
         Check if all values in an iterable are of a specified type or types.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         This function is used to verify if all values in a given iterable match a specified type or any of the types in a tuple of types.
 
     Params:
@@ -270,7 +270,7 @@ def is_any_values_of_type(
     !!! note "Summary"
         Check if any value in an iterable is of a specified type or types.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         This function is used to verify if any value in a given iterable matches a specified type or any of the types in a tuple of types.
 
     Params:
@@ -332,7 +332,7 @@ def is_value_in_iterable(
     !!! note "Summary"
         Check if a given value is present in an iterable.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         This function is used to verify if a given value exists within an iterable such as a list, tuple, or set.
 
     Params:
@@ -342,7 +342,7 @@ def is_value_in_iterable(
             The iterable to check within.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
@@ -395,7 +395,7 @@ def is_all_values_in_iterable(
     !!! note "Summary"
         Check if all values in an iterable are present in another iterable.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         This function is used to verify if all values in a given iterable exist within another iterable.
 
     Params:
@@ -405,7 +405,7 @@ def is_all_values_in_iterable(
             The iterable to check within.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
@@ -460,7 +460,7 @@ def is_any_values_in_iterable(
     !!! note "Summary"
         Check if any value in an iterable is present in another iterable.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         This function is used to verify if any value in a given iterable exists within another iterable.
 
     Params:
@@ -470,7 +470,7 @@ def is_any_values_in_iterable(
             The iterable to check within.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
@@ -521,7 +521,7 @@ def is_valid_value(value: Any, op: str, target: Any) -> bool:
     !!! note "Summary"
         Check if a value is valid based on a specified operator and target.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         This function checks if a given value meets a condition defined by an operator when compared to a target value. The operator can be one of the predefined operators in the [`OPERATORS`][toolbox_python.checkers.OPERATORS] dictionary.
 
     Params:
@@ -533,7 +533,7 @@ def is_valid_value(value: Any, op: str, target: Any) -> bool:
             The target value to compare against.
 
     Raises:
-        ValueError:
+        (ValueError):
             If the operator is not recognized or is not valid.
 
     Returns:
@@ -603,7 +603,7 @@ def assert_value_of_type(
     !!! note "Summary"
         Assert that a given value is of a specified type or types.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         This function is used to assert that a given value matches a specified type or any of the types in a tuple of types. If the value does not match the specified type(s), a `#!py TypeError` is raised.
 
     Params:
@@ -613,7 +613,7 @@ def assert_value_of_type(
             The type or tuple of types to check against.
 
     Raises:
-        TypeError:
+        (TypeError):
             If the value is not of the specified type or one of the specified types.
 
     Returns:
@@ -697,7 +697,7 @@ def assert_all_values_of_type(
     !!! note "Summary"
         Assert that all values in an iterable are of a specified type or types.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         This function is used to assert that all values in a given iterable match a specified type or any of the types in a tuple of types. If any value does not match the specified type(s), a `#!py TypeError` is raised.
 
     Params:
@@ -707,7 +707,7 @@ def assert_all_values_of_type(
             The type or tuple of types to check against.
 
     Raises:
-        TypeError:
+        (TypeError):
             If any value is not of the specified type or one of the specified types.
 
     Returns:
@@ -796,7 +796,7 @@ def assert_any_values_of_type(
     !!! note "Summary"
         Assert that any value in an iterable is of a specified type or types.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         This function is used to assert that at least one value in a given iterable matches a specified type or any of the types in a tuple of types. If none of the values match the specified type(s), a `#!py TypeError` is raised.
 
     Params:
@@ -806,7 +806,7 @@ def assert_any_values_of_type(
             The type or tuple of types to check against.
 
     Raises:
-        TypeError:
+        (TypeError):
             If none of the values are of the specified type or one of the specified types.
 
     Returns:
@@ -888,7 +888,7 @@ def assert_value_in_iterable(
     !!! note "Summary"
         Assert that a given value is present in an iterable.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         This function is used to assert that a given value exists within an iterable such as a `#!py list`, `#!py tuple`, or `#!py set`. If the value is not found in the iterable, a `#!py LookupError` is raised.
 
     Params:
@@ -898,7 +898,7 @@ def assert_value_in_iterable(
             The iterable to check within.
 
     Raises:
-        LookupError:
+        (LookupError):
             If the value is not found in the iterable.
 
     Returns:
@@ -951,7 +951,7 @@ def assert_any_values_in_iterable(
     !!! note "Summary"
         Assert that any value in an iterable is present in another iterable.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         This function is used to assert that at least one value in a given iterable exists within another iterable. If none of the values are found in the iterable, a `#!py LookupError` is raised.
 
     Params:
@@ -961,7 +961,7 @@ def assert_any_values_in_iterable(
             The iterable to check within.
 
     Raises:
-        LookupError:
+        (LookupError):
             If none of the values are found in the iterable.
 
     Returns:
@@ -1016,7 +1016,7 @@ def assert_all_values_in_iterable(
     !!! note "Summary"
         Assert that all values in an iterable are present in another iterable.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         This function is used to assert that all values in a given iterable exist within another iterable. If any value is not found in the iterable, a `#!py LookupError` is raised.
 
     Params:
@@ -1026,7 +1026,7 @@ def assert_all_values_in_iterable(
             The iterable to check within.
 
     Raises:
-        LookupError:
+        (LookupError):
             If any value is not found in the iterable.
 
     Returns:
@@ -1079,7 +1079,7 @@ def assert_is_valid_value(value: Any, op: str, target: Any) -> None:
     !!! note "Summary"
         Assert that a value is valid based on a specified operator and target.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         This function checks if a given value meets a condition defined by an operator when compared to a target value. The operator can be one of the predefined operators in the [`OPERATORS`][toolbox_python.checkers.OPERATORS] dictionary. If the condition is not met, a `#!py ValueError` is raised.
 
     Params:
@@ -1091,7 +1091,7 @@ def assert_is_valid_value(value: Any, op: str, target: Any) -> None:
             The target value to compare against.
 
     Raises:
-        ValueError:
+        (ValueError):
             If the operator is not recognized or if the value does not meet the condition defined by the operator and target.
 
     Returns:
@@ -1168,7 +1168,7 @@ def any_element_contains(
             The string value to check exists in any of the elements in `iterable`.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
@@ -1225,7 +1225,7 @@ def all_elements_contains(iterable: str_collection, check: str) -> bool:
             The string value to check exists in any of the elements in `iterable`.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
@@ -1279,7 +1279,7 @@ def get_elements_containing(iterable: str_collection, check: str) -> tuple[str, 
             The string value to check exists in any of the elements in `iterable`.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:

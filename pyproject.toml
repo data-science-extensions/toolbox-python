@@ -110,6 +110,7 @@ docs = [
     "mkdocstrings==0.*",
     "mkdocstrings-python==1.*",
     "pygithub==2.*",
+    "docstring-format-checker",
 ]
 test = [
     "mypy==1.*",
@@ -227,6 +228,22 @@ files = [
     { file = "src/toolbox_python/__init__.py", pattern = "__version__ = \"{VERSION}\"" },
     { file = "src/tests/test_version.py", pattern = "__version__ = \"{VERSION}\"" },
     { file = "pyproject.toml", pattern = "version = \"{VERSION}\"" },
+]
+
+[tool.dfc]
+allow_undefined_sections = true
+require_docstrings = false
+check_private = true
+sections = [
+    { order = 1, name = "summary",    type = "free_text",          required = true,  admonition = "note",     prefix = "!!!"  },
+    { order = 2, name = "details",    type = "free_text",          required = false, admonition = "abstract", prefix = "???+" },
+    { order = 3, name = "params",     type = "list_name_and_type", required = false, admonition = false                       },
+    { order = 4, name = "raises",     type = "list_type",          required = false, admonition = false                       },
+    { order = 5, name = "returns",    type = "list_type",          required = false, admonition = false                       },
+    { order = 6, name = "examples",   type = "free_text",          required = false, admonition = "example",  prefix = "???+" },
+    { order = 7, name = "credit",     type = "free_text",          required = false, admonition = "success",  prefix = "???"  },
+    { order = 8, name = "see also",   type = "free_text",          required = false, admonition = "tip",      prefix = "???"  },
+    { order = 9, name = "references", type = "free_text",          required = false, admonition = "question", prefix = "???"  },
 ]
 
 [build-system]

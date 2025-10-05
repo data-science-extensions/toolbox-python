@@ -157,11 +157,11 @@ def retry(
             Defaults to `#!py "print"`.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
-        ValueError:
+        (ValueError):
             If either `tries` or `delay` are less than `#!py 0`
-        RuntimeError:
+        (RuntimeError):
             If _either_ an unexpected `#!py Exception` was thrown, which was not declared in the `exceptions` collection, _or_ if the `func` was still not able to be executed after `tries` number of iterations.
 
     Returns:
