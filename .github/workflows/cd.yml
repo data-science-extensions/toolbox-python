@@ -11,14 +11,27 @@ on:
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "pages"
+  group: "deployment"
   cancel-in-progress: true
+
+permissions:
+  contents: write  # <-- to allow assets to be uploaded to the release
+  id-token: write  # <-- to allow access to the tokens
+  pages: write  # <-- to allow publishing to GitHub Pages
 
 env:
   VERSION: ${{ github.event.release.tag_name }}
+  PACKAGE_NAME: toolbox-python
   UV_LINK_MODE: copy
-  UV_NATIVE_TLS: true
   UV_NO_SYNC: true
+  UV_INDEX_STRATEGY: unsafe-best-match
+  GITHUB_ACTOR: ${{ github.actor }}
+  PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+  REPOSITORY_NAME: data-science-extensions/toolbox-python
+  GIT_BRANCH: ${{ github.event.release.target_commitish }}
+  PYTHON_VERSION: '3.13'
 
 jobs:
 
@@ -109,25 +122,22 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write  #<-- to allow push changes to the repository
-
     steps:
 
       - name: Checkout repository
         id: checkout-repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
-          ref: main
+          ref: ${{ env.GIT_BRANCH }}
 
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v5
+      - name: Set up UV
+        uses: astral-sh/setup-uv@v6
 
       - name: Set up Python
         id: setup-python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
         id: install-dependencies
@@ -152,9 +162,9 @@ jobs:
 
       - name: Upload coverage
         id: upload-coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ env.CODECOV_TOKEN }}
           files: ./cov-report/xml/cov-report.xml
           verbose: true
 
@@ -165,25 +175,22 @@ jobs:
       if: ${{ always() && needs.test.result == 'success' }}
       runs-on: ubuntu-latest
 
-      permissions:
-        contents: write  #<-- to allow assets to be uploaded to the release
-
       steps:
 
         - name: Checkout repository
           id: checkout-repository
-          uses: actions/checkout@v4
+          uses: actions/checkout@v5
           with:
-            ref: main
+            ref: ${{ env.GIT_BRANCH }}
 
-        - name: Set up uv
-          uses: astral-sh/setup-uv@v5
+        - name: Set up UV
+          uses: astral-sh/setup-uv@v6
 
         - name: Setup Python
           id: setup-python
           uses: actions/setup-python@v5
           with:
-            python-version: '3.13'
+            python-version: ${{ env.PYTHON_VERSION }}
 
         - name: Check VERSION
           id: check-version
@@ -211,10 +218,6 @@ jobs:
           id: update-git-version
           run: uv run git-update-version ${VERSION}
 
-        - name: Fix tag reference
-          id: fix-tag-reference
-          run: uv run git-fix-tag-reference ${VERSION}
-
         - name: Build package
           id: build-package
           run: uv build --out-dir=dist
@@ -234,28 +237,34 @@ jobs:
             retention-days: 1
             overwrite: true
 
+        - name: Fix tag reference
+          id: fix-tag-reference
+          run: uv run git-fix-tag-reference ${VERSION}
+
   deploy-package:
 
     name: Deploy to PyPI
     needs: build-package
+    if: ${{ always() && needs.build-package.result == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
 
       - name: Checkout repository
         id: checkout-repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
-          ref: main
+          ref: ${{ env.GIT_BRANCH }}
 
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v5
+      - name: Set up UV
+        uses: astral-sh/setup-uv@v6
 
       - name: Setup Python
         id: setup-python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: ${{ env.PYTHON_VERSION }}
+          python-version-file: pyproject.toml
 
       - name: Download artifacts
         id: download-artifacts
@@ -264,41 +273,38 @@ jobs:
           name: dist
           path: dist
 
-      # - name: Publish package
-      #   id: publish-package
-      #   env:
-      #     PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-      #   run: uv publish --token ${PYPI_TOKEN}
+      - name: Publish package
+        id: publish-package
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: uv publish --token ${PYPI_TOKEN}
 
       - name: Check
         id: check
         run: |
-          echo 'Package deployed to PyPI 👉 https://pypi.org/project/toolbox-python/'
-          uvx pip install --dry-run --no-deps --no-cache toolbox-python
+          echo 'Package deployed to PyPI 👉 https://pypi.org/project/${{ env.PACKAGE_NAME }}'
+          uvx pip install --dry-run --no-deps --no-cache ${{ env.PACKAGE_NAME }}
 
   install-package:
 
-    name: Install Package on '${{ matrix.os }}' with '${{ matrix.python-version }}'
     needs: deploy-package
-
     if: ${{ always() && needs.deploy-package.result == 'success' }}
-
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
       fail-fast: false
       max-parallel: 15
-
+    name: Install Package on '${{ matrix.os }}' with '${{ matrix.python-version }}'
     runs-on: ${{ matrix.os }}
 
     steps:
 
       - name: Checkout repository
         id: checkout-repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
-          ref: main
+          ref: ${{ env.GIT_BRANCH }}
 
       - name: Setup Python
         id: setup-python
@@ -308,36 +314,34 @@ jobs:
 
       - name: Install package
         id: install-package
-        run: pip install --no-cache toolbox-python
+        run: pip install --no-cache --verbose --no-python-version-warning "${{ env.PACKAGE_NAME }}==${{ env.VERSION }}"
 
   build-docs:
 
-    name: Build Docs
     needs:
       - test
       - deploy-package
     if: ${{ always() && needs.test.result == 'success' && needs.deploy-package.result == 'success' }}
+    name: Build Docs
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write  #<-- to allow mike to push to the repository
 
     steps:
 
       - name: Checkout repository
         id: checkout-repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
-          ref: main
+          ref: ${{ env.GIT_BRANCH }}
 
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v5
+      - name: Set up UV
+        uses: astral-sh/setup-uv@v6
 
       - name: Setup Python
         id: setup-python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: ${{ env.PYTHON_VERSION }}
+          python-version-file: pyproject.toml
 
       - name: Install dependencies
         id: install-dependencies
@@ -355,8 +359,8 @@ jobs:
       - name: Generate ChangeLog
         id: generate-changelog
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPOSITORY_NAME: data-science-extensions/toolbox-python
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+          REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
         run: uv run generate-changelog
 
       - name: Commit ChangeLog
@@ -370,3 +374,7 @@ jobs:
       - name: Build docs
         id: build-docs
         run: uv run build-versioned-docs ${VERSION}
+
+      - name: Fix tag reference
+        id: fix-tag-reference
+        run: uv run ./src/utils/scripts.py git_fix_tag_reference_cli ${VERSION}
