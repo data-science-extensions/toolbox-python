@@ -103,6 +103,17 @@ repos:
         # args:
         #   - "--all-groups"
 
+  # Check docstrings
+  - repo: https://github.com/data-science-extensions/docstring-format-checker
+    rev: "v1.3.0"
+    hooks:
+      - id: docstring-format-checker
+        name: Docstring Format Checker
+        args:
+          - "--config=pyproject.toml"
+          - "--output=list"
+          - "--check"
+
   # Everything run locally
   - repo: local
     hooks:
@@ -119,11 +130,11 @@ repos:
           - "-sn" # Don't display the score
 
       # Check
-      - id: check-docstrings
-        name: Check Docstrings
-        entry: uv run --link-mode=copy --no-sync dfc --check
-        language: system
-        types: [python]
-        args:
-          - "--output=list"
-          - "--config=pyproject.toml"
+      # - id: check-docstrings
+      #   name: Check Docstrings
+      #   entry: uv run --link-mode=copy --no-sync dfc --check
+      #   language: system
+      #   types: [python]
+      #   args:
+      #     - "--output=list"
+      #     - "--config=pyproject.toml"
