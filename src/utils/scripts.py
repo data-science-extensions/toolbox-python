@@ -129,12 +129,12 @@ def check_pycln() -> None:
 
 def check_build() -> None:
     run("uv build --out-dir=dist")
-    run("rm --recursive dist")
+    run("rm -r dist")
 
 
 def check_mkdocs() -> None:
     run("mkdocs build --site-dir=temp")
-    run("rm --recursive temp")
+    run("rm -r temp")
 
 
 def check_pytest() -> None:
