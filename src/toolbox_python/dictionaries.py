@@ -311,7 +311,7 @@ class DotDict(dict):
         for key, value in d.items():
             self[key] = self._convert_value(value)
 
-    def _convert_value(self, value):
+    def _convert_value(self, value: Any):
         """
         !!! note "Summary"
             Convert dictionary values recursively.
@@ -334,7 +334,7 @@ class DotDict(dict):
             return {self._convert_value(item) for item in value}
         return value
 
-    def __getattr__(self, key) -> Any:
+    def __getattr__(self, key: str) -> Any:
         """
         !!! note "Summary"
             Allow dictionary keys to be accessed as attributes.
@@ -356,7 +356,7 @@ class DotDict(dict):
         except KeyError as e:
             raise AttributeError(f"Key not found: '{key}'") from e
 
-    def __setattr__(self, key, value) -> None:
+    def __setattr__(self, key: str, value: Any) -> None:
         """
         !!! note "Summary"
             Allow setting dictionary keys via attributes.
@@ -373,7 +373,7 @@ class DotDict(dict):
         """
         self[key] = value
 
-    def __setitem__(self, key, value) -> None:
+    def __setitem__(self, key: str, value: Any) -> None:
         """
         !!! note "Summary"
             Intercept item setting to convert dictionaries.
@@ -390,7 +390,7 @@ class DotDict(dict):
         """
         dict.__setitem__(self, key, self._convert_value(value))
 
-    def __delitem__(self, key) -> None:
+    def __delitem__(self, key: str) -> None:
         """
         !!! note "Summary"
             Intercept item deletion to remove keys.
@@ -412,7 +412,7 @@ class DotDict(dict):
         except KeyError as e:
             raise KeyError(f"Key not found: '{key}'.") from e
 
-    def __delattr__(self, key) -> None:
+    def __delattr__(self, key: str) -> None:
         """
         !!! note "Summary"
             Allow deleting dictionary keys via attributes.
