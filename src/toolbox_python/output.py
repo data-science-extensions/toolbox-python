@@ -261,6 +261,9 @@ def print_or_log_output(
         msg=message,
     )
 
+    # Return
+    return None
+
 
 @overload
 @typechecked
