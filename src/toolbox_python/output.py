@@ -293,7 +293,7 @@ def list_columns(
         Print the given list in evenly-spaced columns.
 
     Params:
-        obj (list):
+        obj (Union[any_list, any_set, any_tuple, Generator]):
             The list to be formatted.
 
         cols_wide (int, optional):

@@ -152,7 +152,7 @@ def retry(
         delay (int, optional):
             The number of seconds to delay between each retry.<br>
             Defaults to `#!py 0`.
-        print_or_log (Optional[Literal["print", "log"]], optional):
+        print_or_log (Literal["print", "log"], optional):
             Whether or not the messages should be written to the terminal in a `#!py print()` statement, or to a log file in a `#!py log()` statement.<br>
             Defaults to `#!py "print"`.
 
@@ -211,6 +211,7 @@ def retry(
         - https://pypi.org/project/retry/
         - https://stackoverflow.com/questions/21786382/pythonic-way-of-retry-running-a-function#answer-21788594
     """
+
     assert_is_valid(tries, ">=", 0)
     assert_is_valid(delay, ">=", 0)
 
