@@ -146,9 +146,7 @@ class TestClassProperty(TestCase):
 
     def test_class_property_with_doc(self) -> None:
         assert MyClass.class_value_with_doc == "original with doc"
-        MyClass.class_value_with_doc.__doc__ == (
-            "This is a class property with a docstring."
-        )
+        MyClass.class_value_with_doc.__doc__ == ("This is a class property with a docstring.")
 
     def test_class_property_errors(self) -> None:
         with raises(AttributeError):
