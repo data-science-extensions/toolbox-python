@@ -125,13 +125,3 @@ repos:
         types: [python]
         pass_filenames: true
         exclude: ^src/tests/.*$
-
-      # Check
-      # - id: check-docstrings
-      #   name: Check Docstrings
-      #   entry: uv run --link-mode=copy --no-sync dfc --check
-      #   language: system
-      #   types: [python]
-      #   args:
-      #     - "--output=list"
-      #     - "--config=pyproject.toml"
