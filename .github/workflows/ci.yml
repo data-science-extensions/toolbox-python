@@ -7,7 +7,7 @@ env:
   UV_LINK_MODE: copy
   UV_NATIVE_TLS: true
   UV_NO_SYNC: true
-  PYTHONINIOENCODING: utf-8
+  PYTHONIOENCODING: utf-8
 
 jobs:
 
