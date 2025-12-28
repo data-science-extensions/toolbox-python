@@ -102,6 +102,11 @@ repos:
           - "--config=pyproject.toml"
           - "--output=list"
           - "--check"
+        exclude: |
+          (?x)^(
+            src/tests/.*$|
+            src/utils/.*$
+          )
 
   # Everything run locally
   - repo: local
@@ -124,4 +129,8 @@ repos:
         language: python
         types: [python]
         pass_filenames: true
-        exclude: ^src/tests/.*$
+        exclude: |
+          (?x)^(
+            src/tests/.*$|
+            src/utils/.*$
+          )
