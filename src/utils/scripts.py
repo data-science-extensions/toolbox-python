@@ -7,6 +7,7 @@
 import subprocess
 import sys
 from pathlib import Path
+from textwrap import dedent
 from typing import Union
 
 
@@ -163,12 +164,13 @@ def check() -> None:
     check_ty()
     check_isort()
     check_codespell()
-    check_pylint()
     check_pycln()
+    check_pylint()
+    check_complexity()
     check_docstrings()
+    check_pytest()
     check_mkdocs()
     check_build()
-    check_pytest()
 
 
 ## --------------------------------------------------------------------------- #
