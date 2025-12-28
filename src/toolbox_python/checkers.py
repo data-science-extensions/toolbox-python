@@ -144,7 +144,7 @@ def is_value_of_type(value: Any, check_type: Union[type, tuple[type, ...], list[
     Params:
         value (Any):
             The value to check.
-        check_type (Union[type, tuple[type], list[type]]):
+        check_type (Union[type, tuple[type, ...], list[type]]):
             The type or tuple of types to check against.
 
     Returns:
@@ -209,7 +209,7 @@ def is_all_values_of_type(
     Params:
         values (any_collection):
             The iterable containing values to check.
-        check_type (Union[type, tuple[type], list[type]]):
+        check_type (Union[type, tuple[type, ...], list[type]]):
             The type or tuple of types to check against.
 
     Returns:
@@ -276,7 +276,7 @@ def is_any_values_of_type(
     Params:
         values (any_collection):
             The iterable containing values to check.
-        check_type (Union[type, tuple[type], list[type]]):
+        check_type (Union[type, tuple[type, ...], list[type]]):
             The type or tuple of types to check against.
 
     Returns:
@@ -609,7 +609,7 @@ def assert_value_of_type(
     Params:
         value (Any):
             The value to check.
-        check_type (Union[type, tuple[type], list[type]]):
+        check_type (Union[type, tuple[type, ...], list[type]]):
             The type or tuple of types to check against.
 
     Raises:
@@ -703,7 +703,7 @@ def assert_all_values_of_type(
     Params:
         values (any_collection):
             The iterable containing values to check.
-        check_type (Union[type, tuple[type], list[type]]):
+        check_type (Union[type, tuple[type, ...], list[type]]):
             The type or tuple of types to check against.
 
     Raises:
@@ -802,7 +802,7 @@ def assert_any_values_of_type(
     Params:
         values (any_collection):
             The iterable containing values to check.
-        check_type (Union[type, tuple[type], list[type]]):
+        check_type (Union[type, tuple[type, ...], list[type]]):
             The type or tuple of types to check against.
 
     Raises:
