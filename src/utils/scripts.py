@@ -34,7 +34,7 @@ def expand_space(lst: Union[list[str], tuple[str, ...]]) -> list[str]:
 def run_command(*command, expand: bool = True) -> None:
     _command: list[str] = expand_space(command) if expand else list(command)
     print("\n", " ".join(_command), sep="", flush=True)
-    subprocess.run(_command, check=True)
+    subprocess.run(_command, check=True, encoding="utf-8")
 
 
 run = run_command
@@ -179,57 +179,51 @@ def check() -> None:
 
 
 def add_git_credentials() -> None:
-    run("git", "config", "--global", "user.name", "github-actions[bot]")
-    run(
-        "git",
-        "config",
-        "--global",
-        "user.email",
-        "github-actions[bot]@users.noreply.github.com",
-    )
+    run("git config --global user.name github-actions[bot]")
+    run("git config --global user.email github-actions[bot]@users.noreply.github.com")
 
 
 def git_refresh_current_branch() -> None:
     run("git remote update")
     run("git fetch --verbose")
     run("git fetch --verbose --tags")
-    run("git pull  --verbose")
+    run("git pull --verbose")
     run("git status --verbose")
     run("git branch --list --verbose")
     run("git tag --list --sort=-creatordate")
 
 
+def git_checkout_branch(branch_name: str) -> None:
+    run(f"git checkout -B {branch_name} --track origin/{branch_name}")
+
+
+def git_switch_to_branch() -> None:
+    if len(sys.argv) < 3:
+        print("Requires argument: <branch_name>")
+        sys.exit(1)
+    git_checkout_branch(sys.argv[2])
+
+
 def git_switch_to_main_branch() -> None:
-    run("git checkout -B main --track origin/main")
+    git_checkout_branch("main")
 
 
 def git_switch_to_docs_branch() -> None:
-    run("git checkout -B docs-site --track origin/docs-site")
+    git_checkout_branch("docs-site")
 
 
 def git_add_coverage_report() -> None:
-    run("cp --recursive --update ./cov-report/html/ ./docs/code/coverage/")
-    run("git add ./docs/code/coverage/*")
-    run(
-        "git",
-        "commit",
-        "--no-verify",
-        '--message="Update coverage report [skip ci]"',
-        expand=False,
-    )
+    run("mkdir -p ./docs/code/coverage/")
+    run("cp -r ./cov-report/html/. ./docs/code/coverage/")
+    run("git add ./docs/code/coverage/")
+    run("git", "commit", "--no-verify", '--message="Update coverage report [skip ci]"', expand=False)
     run("git push")
 
 
 def git_update_version(version: str) -> None:
     run(f'echo VERSION="{version}"')
     run("git add .")
-    run(
-        "git",
-        "commit",
-        "--allow-empty",
-        f'--message="Bump to version `{version}` [skip ci]"',
-        expand=False,
-    )
+    run("git", "commit", "--allow-empty", f'--message="Bump to version `{version}` [skip ci]"', expand=False)
     run("git push --force --no-verify")
     run("git status")
 
@@ -242,15 +236,7 @@ def git_update_version_cli() -> None:
 
 
 def git_fix_tag_reference(version: str) -> None:
-    """
-    Force update the tag to point to the latest commit with correct version number.
-    This also ensures the tag shows the correct version in the `pyproject.toml` file for that tag.
-    """
-
-    ### Force update the tag to point to the current commit ----
     run(f"git tag --force {version}")
-
-    ### Force push the updated tag ----
     run(f"git push --force origin {version}")
 
 
