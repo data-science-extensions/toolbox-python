@@ -45,7 +45,7 @@ from functools import wraps
 from logging import Logger
 from time import sleep
 from types import ModuleType
-from typing import Any, Callable, Literal, Optional, TypeVar, Union, overload
+from typing import Any, Callable, Literal, NoReturn, Optional, TypeVar, Union, overload
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
@@ -127,7 +127,9 @@ class _Retry:
             log (Optional[Logger]):
                 An optional logger instance to use when `print_or_log` is set to `"log"`.
         """
-        self.exceptions: _exceptions = exceptions
+        self.exceptions: tuple[type[Exception], ...] = (
+            tuple(exceptions) if isinstance(exceptions, (list, tuple)) else (exceptions,)
+        )
         self.tries: int = tries
         self.delay: int = delay
         self.print_or_log: Literal["print", "log"] = print_or_log
@@ -200,7 +202,7 @@ class _Retry:
             )
             raise RuntimeError(message) from exc
 
-    def _handle_final_failure(self) -> None:
+    def _handle_final_failure(self) -> NoReturn:
         message: str = f"Still could not write after {self.tries} iterations. Please check."
         print_or_log_output(
             message=message,
