@@ -212,7 +212,7 @@ jobs:
 
         - name: Bump version
           id: bump-version
-          run: uv run bump-version --verbose=true ${VERSION}
+          run: uv version ${VERSION}
 
         - name: Update Git Version
           id: update-git-version
