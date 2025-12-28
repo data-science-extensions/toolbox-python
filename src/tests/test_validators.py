@@ -50,22 +50,22 @@ class TestValidators(TestCase):
         name_func=name_func_predefined_name,
     )
     def test_value_is_between(self, _name, value, min_val, max_val, expected) -> None:
-        assert Validators._value_is_between(value, min_val, max_val) == expected
+        assert Validators.value_is_between(value, min_val, max_val) == expected
 
     def test_value_is_between_raises(self) -> None:
         with raises(ValueError, match="Invalid range"):
-            Validators._value_is_between(5, 10, 0)
+            Validators.value_is_between(5, 10, 0)
 
     ## ----------------------------------------------------------------------- #
     ##  _assert_value_is_between                                            ####
     ## ----------------------------------------------------------------------- #
 
     def test_assert_value_is_between_valid(self) -> None:
-        Validators._assert_value_is_between(5, 0, 10)
+        Validators.assert_value_is_between(5, 0, 10)
 
     def test_assert_value_is_between_invalid(self) -> None:
         with raises(AssertionError, match="Invalid Value"):
-            Validators._assert_value_is_between(11, 0, 10)
+            Validators.assert_value_is_between(11, 0, 10)
 
     ## ----------------------------------------------------------------------- #
     ##  _all_values_are_between                                             ####
@@ -81,15 +81,15 @@ class TestValidators(TestCase):
         name_func=name_func_predefined_name,
     )
     def test_all_values_are_between(self, _name, values, min_val, max_val, expected) -> None:
-        assert Validators._all_values_are_between(values, min_val, max_val) == expected
+        assert Validators.all_values_are_between(values, min_val, max_val) == expected
 
     ## ----------------------------------------------------------------------- #
     ##  _assert_all_values_are_between                                      ####
     ## ----------------------------------------------------------------------- #
 
     def test_assert_all_values_are_between_valid(self) -> None:
-        Validators._assert_all_values_are_between([1, 2, 3], 0, 5)
+        Validators.assert_all_values_are_between([1, 2, 3], 0, 5)
 
     def test_assert_all_values_are_between_invalid(self) -> None:
         with raises(AssertionError, match="Values not between"):
-            Validators._assert_all_values_are_between([1, 6, -1], 0, 5)
+            Validators.assert_all_values_are_between([1, 6, -1], 0, 5)

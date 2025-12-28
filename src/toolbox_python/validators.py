@@ -45,9 +45,19 @@ __all__: list[str] = ["Validators"]
 
 
 class Validators:
+    """
+    !!! note "Summary"
+        A class containing various validation methods.
+
+    Methods:
+        value_is_between(): Check if a value is between two other values.
+        assert_value_is_between(): Assert that a value is between two other values.
+        all_values_are_between(): Check if all values in an array are between two other values.
+        assert_all_values_are_between(): Assert that all values in an array are between two other values
+    """
 
     @staticmethod
-    def _value_is_between(value: Real, min_value: Real, max_value: Real) -> bool:
+    def value_is_between(value: Real, min_value: Real, max_value: Real) -> bool:
         """
         !!! note "Summary"
             Check if a value is between two other values.
@@ -72,7 +82,7 @@ class Validators:
         return result
 
     @staticmethod
-    def _assert_value_is_between(
+    def assert_value_is_between(
         value: Real,
         min_value: Real,
         max_value: Real,
@@ -93,11 +103,11 @@ class Validators:
             (AssertionError):
                 If the value is not between the minimum and maximum values.
         """
-        if not Validators._value_is_between(value, min_value, max_value):
+        if not Validators.value_is_between(value, min_value, max_value):
             raise AssertionError(f"Invalid Value: `{value}`. Must be between `{min_value}` and `{max_value}`")
 
     @staticmethod
-    def _all_values_are_between(
+    def all_values_are_between(
         values: Sequence[Real],
         min_value: Real,
         max_value: Real,
@@ -118,10 +128,10 @@ class Validators:
             (bool):
                 True if all values are between the minimum and maximum values, False otherwise.
         """
-        return all(Validators._value_is_between(value, min_value, max_value) for value in values)
+        return all(Validators.value_is_between(value, min_value, max_value) for value in values)
 
     @staticmethod
-    def _assert_all_values_are_between(
+    def assert_all_values_are_between(
         values: Sequence[Real],
         min_value: Real,
         max_value: Real,
@@ -143,7 +153,7 @@ class Validators:
                 If any value is not between the minimum and maximum values.
         """
         values_not_between: list[Real] = [
-            value for value in values if not Validators._value_is_between(value, min_value, max_value)
+            value for value in values if not Validators.value_is_between(value, min_value, max_value)
         ]
         if not len(values_not_between) == 0:
             raise AssertionError(f"Values not between `{min_value}` and `{max_value}`: {values_not_between}")
