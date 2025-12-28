@@ -168,6 +168,14 @@ disable = [
     "E1137", # unsupported-assignment-operation
 ]
 
+[tool.complexipy]
+paths = "src/toolbox_python"
+max-complexity-allowed = 15
+quiet = false
+ignore-complexity = true
+details = "normal"
+sort = "asc"
+
 [tool.bump_version.replacements]
 files = [
     { file = "src/toolbox_python/__init__.py", pattern = "__version__ = \"{VERSION}\"" },
