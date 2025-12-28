@@ -9,6 +9,226 @@
 .md-nav--secondary .md-nav__list .md-nav__list { display: none; }
 </style>
 
+!!! info "v1.5.0"
+
+    ## **v1.5.0 - Modernise Infrastructure, Refactor Core Logic, and Introduce Numeric Validation**
+
+    <!-- md:tag v1.5.0 --><br>
+    <!-- md:date 2025-12-28 --><br>
+    <!-- md:link [data-science-extensions/toolbox-python/releases/v1.5.0](https://github.com/data-science-extensions/toolbox-python/releases/tag/v1.5.0) -->
+
+    ??? note "Release Notes"
+
+        ### 📋 Summary                Modernise the development infrastructure, refactor core logic for better maintainability, and expand the utility suite with new validation capabilities. Transition the project to `uv` for package management, introduce code complexity analysis, and refactor the `retry()` decorator into a robust class-based implementation.                        ### 🚀 Infrastructure Modernisation                * **Package Management**: Standardise on `uv` for all package management, environment synchronisation, and script execution tasks.        * **Dependency Consolidation**: Remove the `requirements/` directory and `Makefile` in preference for a unified `pyproject.toml` configuration.        * **Python 3.14 Support**: Update CI/CD workflows to include Python 3.14 in the test matrix, ensuring forward compatibility.        * **Windows Compatibility**: Fix `UnicodeEncodeError` in CI by forcing `UTF-8` encoding for log output on Windows runners.                        ### 🛠️ Core Refactoring & Quality                * **Retry Logic**: Refactor the `retry()` decorator into a helper `_Retry()` class, reducing cyclomatic complexity from 17 to 4 and improving modularity.        * **Metadata Management**: Replace hardcoded version strings with dynamic retrieval via the `metadata()` function, simplifying the release process.        * **Type Checking**: Replace `mypy` with `ty` for faster and more consistent type checking across the codebase.        * **Complexity Analysis**: Integrate `complexipy` to automate code complexity monitoring and enforce maintainability standards.                        ### 🧪 New Validation Utilities                * **Validators() Class**: Introduce the `Validators()` class to centralise logic for numeric range validation.        * **Range Checks**: Implement `.value_is_between()` and `.all_values_are_between()` methods for flexible boundary checking.        * **Assertion Support**: Provide `.assert_value_is_between()` and `.assert_all_values_are_between()` methods to raise descriptive `AssertionError()` class exceptions.                        ### 📖 Documentation & DX                * **README Overhaul**: Update `README.md` with modernised setup guides, `uv` workflows, and expanded quality assurance documentation.        * **Docstring Standardisation**: Migrate docstring formatting checks to a pre-commit hook using `docstring-format-checker`.        * **Utility Scripts**: Refactor `src/utils/scripts.py` to use dynamic package constants and improve subprocess handling.                        ### 🔍 Technical Improvements                * **Type Hint Enhancements**: Standardise type annotations using `Optional`, `Union`, and `Literal` for better compatibility and clarity.        * **Pylint Remediation**: Resolve numerous Pylint warnings and suppress specific flags where appropriate to maintain a 10/10 quality score.        * **Exception Handling**: Standardise exception storage and update return type hints (e.g., `NoReturn`) for better static analysis.                        ### 💪 What's Changed                * Modernise Infrastructure, Refactor Core Logic, and Introduce Numeric Validation by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/38                        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.4.1...v1.5.0
+
+    ??? abstract "Updates"
+
+        * [`4b24e77`](https://github.com/data-science-extensions/toolbox-python/commit/4b24e77b8c9096c69fd5e9448e7056caf47a1d25): Add explicit return to `print_or_log_output()`<br>
+            - Optimise function readability and ensure explicit return behaviour for the `print_or_log_output()` function.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`57c8f79`](https://github.com/data-science-extensions/toolbox-python/commit/57c8f796fbcc5572260603a3df983b738ac2b33c): Expose methods in the `Validators()` class<br>
+            - Expose the `.value_is_between()` method, `.assert_value_is_between()` method, `.all_values_are_between()` method, and `.assert_all_values_are_between()` method to make them public.<br>
+            - Add a class-level docstring to the `Validators()` class to summarise its purpose and available methods.<br>
+            - Update unit tests and internal method calls to reference the renamed public methods.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`4b98b35`](https://github.com/data-science-extensions/toolbox-python/commit/4b98b35743a8318fc678855438617a00abf8d9af): Fix typo in environment variable name
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`aad6e43`](https://github.com/data-science-extensions/toolbox-python/commit/aad6e43c751757f532505972fa7eff0322f01ceb): Simplify directory removal flags<br>
+            - Use `-r` instead of `--recursive` in `check_build()` and `check_mkdocs()` functions<br>
+            - Standardise directory removal commands for consistency<br>
+            - Ensure commands can be run on all OS's consistently
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`0511c0e`](https://github.com/data-science-extensions/toolbox-python/commit/0511c0e6429cb09545eff4650604b9ae3d28bb3f): Update CI workflow to run checks with specific script
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`9a8bc46`](https://github.com/data-science-extensions/toolbox-python/commit/9a8bc4626b156190a5e3204810036d6d93b6306e): Delete `requirements/` directory in preference for `pyproject.toml` config
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`152e120`](https://github.com/data-science-extensions/toolbox-python/commit/152e120c13d35ee74bb3eb284e7f734206addbe7): Update README to include package changes<br>
+            - Add `uv` as a supported installation method to improve package management efficiency<br>
+            - Replace legacy `pipenv` and `poetry` setup guides with `uv sync` workflows to simplify environment builds<br>
+            - Standardise development scripts using the `uv run src/utils/scripts.py` script for unified task execution<br>
+            - Expand quality assurance requirements to include complexity and docstring checks for better code maintainability<br>
+            - Update reference links to include `uv`, `ty`, `complexipy`, and `dfc` and fix the documentation URL
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`3718726`](https://github.com/data-science-extensions/toolbox-python/commit/37187269b34473dff0821d78fbf852efbcbb2930): Refactor CI workflow with updated actions and env var<br>
+            Updated CI workflow to use newer action versions and added PACKAGE_NAME environment variable.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`d7ef4f6`](https://github.com/data-science-extensions/toolbox-python/commit/d7ef4f676965fd2113477e3f1a55c061762572ec): Refactor CI/CD and add support Python for 3.14<br>
+            - Include Python `3.14` in test matrices to ensure forward compatibility.<br>
+            - Remove redundant `debug` jobs to reduce workflow clutter and execution time.<br>
+            - Standardise script execution by invoking utility scripts directly via `uv run`.<br>
+            - Force package reinstallation and upgrades using the `--reinstall-package` and `--upgrade` flags in the `uv sync` command.<br>
+            - Set `PYTHONIOENCODING` to `utf-8` to ensure consistent log output.<br>
+            - Increase `max-parallel` to 30 to speed up multi-platform installation checks.<br>
+            - Extend artifact retention to 5 days for better post-build access.<br>
+            - Refine the `uv publish` command to use explicit token flags and disable caching.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`50efdd9`](https://github.com/data-science-extensions/toolbox-python/commit/50efdd980b09437b3a7d89942ca84731f8e98cff): Refactor git utilities and subprocess handling<br>
+            - Add `encoding="utf-8"` to the `run()` function call within the `run_command()` function to standardise text handling<br>
+            - Extract branch checkout logic into a new `git_checkout_branch()` function to deduplicate `git_switch_to_main_branch()` and `git_switch_to_docs_branch()` functions<br>
+            - Introduce `git_switch_to_branch()` function to support branch switching via command-line arguments<br>
+            - Optimise `git_add_coverage_report()` function by ensuring the destination directory exists before copying files<br>
+            - Simplify `add_git_credentials()` and `git_fix_tag_reference()` functions by removing redundant comments and streamlining command execution
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`5999a79`](https://github.com/data-science-extensions/toolbox-python/commit/5999a7940fb6c2c04a03e69c382977ace5b0a3db): Remove redundant metadata attributes<br>
+            - Remove `__license__`, `__url__`, and `__description__` variables<br>
+            - Organise the package root by removing secondary metadata attributes
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`bb46a37`](https://github.com/data-science-extensions/toolbox-python/commit/bb46a37697d2810d8457d26a8eb0280fc771e10c): Standardise exception storage and update type hints<br>
+            - Standardise the `exceptions` attribute in the `_Retry()` class by ensuring it always stores a tuple of exception types.<br>
+            - Update the `._handle_final_failure()` method to use the `NoReturn` type hint as it consistently raises a `RuntimeError()` class.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`2abcd3b`](https://github.com/data-science-extensions/toolbox-python/commit/2abcd3b19e94441065ed92e7d0a43d916c3da7b6): Refactor retry logic into a helper class<br>
+            - Extract the core logic from the `retry()` decorator into a new internal `_Retry()` class to improve maintainability.<br>
+            - Modularise error handling by introducing specific methods like `._handle_expected_error()` and `._handle_unexpected_error()` within the `_Retry()` class.<br>
+            - Update the `retry()` decorator to instantiate the `_Retry()` class and invoke its `.run()` method.<br>
+            - Strengthen type hinting by incorporating `Any` and defining explicit return types for the internal wrapper.<br>
+            - Reduce module complexity from >17 to ~4
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`857900f`](https://github.com/data-science-extensions/toolbox-python/commit/857900fb879a00347801a3497f69030085a12966): Fix misaligned parameter docs and function signatures
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`14781b7`](https://github.com/data-science-extensions/toolbox-python/commit/14781b7869295e87a36f0127a36813b8fadef808): Update `print_or_log_output()` function typing<br>
+            - Add a new `@overload` for the `print_or_log_output()` function to support `Optional` parameters.<br>
+            - Update the `print_or_log_output()` function signature to accept an `Optional` value for the `print_or_log` argument.<br>
+            - Standardise the `log_level` type hint within the docstring of the `print_or_log_output()` function.<br>
+            - Reformat existing `@overload` declarations for the `print_or_log_output()` function to improve readability.<br>
+            - Add an `assert` to ensure that the `print_or_log` parameter is never `None`
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`2e057dd`](https://github.com/data-science-extensions/toolbox-python/commit/2e057dd3e90c633035a695c08ce9db13375a973e): Remove redundant `Makefile`
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`e1d1240`](https://github.com/data-science-extensions/toolbox-python/commit/e1d12401598cdda1e0a46e58d8a0a6d0f4589324): Standardise package metadata and versioning<br>
+            - Replace hardcoded version strings with dynamic retrieval via the `metadata()` function<br>
+            - Remove the custom `bump_version.py` utility and its configuration in the `pyproject.toml` file<br>
+            - Update the `CD` workflow to use the native `uv version` command<br>
+            - Delete the `test_version.py` file as hardcoded version checks are no longer necessary<br>
+            - Expand the `__init__.py` file to dynamically expose package metadata such as version and author
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`9ececa7`](https://github.com/data-science-extensions/toolbox-python/commit/9ececa76977ff4f7e53a998704a2259cbf1e5839): Remove Python version upper bound<br>
+            - Update `requires-python` to remove the `<4.0` restriction<br>
+            - Standardise the configuration to improve forward compatibility
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`48da0dd`](https://github.com/data-science-extensions/toolbox-python/commit/48da0dd0482a86ec8d5cafeb7aeb38ef508502a8): Fix formatting
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`3ea392b`](https://github.com/data-science-extensions/toolbox-python/commit/3ea392b3540ed26c3b182d97ce93e640798bfff5): Fix tuple type hint for nested parameters<br>
+            - Update the `tuple()` class type hint within the `name_func_nested_list()` function to include an ellipsis for variable-length support.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`1eeacc8`](https://github.com/data-science-extensions/toolbox-python/commit/1eeacc8e0840b32beeb6816fab8287469c8dcddd): In the `lists` module, fix types in docstrings to match the function signatures
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`02acdeb`](https://github.com/data-science-extensions/toolbox-python/commit/02acdeb5ccf745484423fdecd3fbfc20dde766b2): Fix docsting error in the `dictionaries` module<br>
+            - Related to the use of `*` in the Params section
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`9bb4c8b`](https://github.com/data-science-extensions/toolbox-python/commit/9bb4c8bc401e474a975a083b592adfec26c19208): Add missing typehints to the functions and methods in the `dictionaries` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`f2d9152`](https://github.com/data-science-extensions/toolbox-python/commit/f2d915217a91cf838d4950ca9a16cf1b69f86841): Add new `validators` utility<br>
+            - Introduce `Validators()` class to centralise logic for checking if numeric values fall within specified bounds<br>
+            - Implement `._value_is_between()` method to perform individual range checks and validate that boundary arguments are logical<br>
+            - Provide `._assert_value_is_between()` method to raise an `AssertionError` when a value violates the defined range<br>
+            - Include `._all_values_are_between()` method and `._assert_all_values_are_between()` method to facilitate bulk validation of sequences<br>
+            - Add unit tests to verify correct behaviour and error handling for the new `Validators()` class
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`4415ef4`](https://github.com/data-science-extensions/toolbox-python/commit/4415ef485290be6ef790febb8da0fae8607d7675): Standardise type hints and improve type checks<br>
+            - Update type annotations to use the `Optional()` and `Union()` classes for better compatibility within the `Defaults()` class.<br>
+            - Replace the `is_type()` function call with the standard `isinstance()` function within the `.get()` method to verify string values.<br>
+            - Standardise method signatures for the `._validate_value_and_default()` and `._validate_type()` methods to use explicit typing constructs.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`43c039d`](https://github.com/data-science-extensions/toolbox-python/commit/43c039df0c88f425b292259daff88bc2caf81c3a): Update `check_type` variadic `tuple` hints<br>
+            - Correct the `tuple` type hint to include the ellipsis `...` to properly represent variadic tuples in the docstrings.<br>
+            - Ensure the `check_type` parameter documentation accurately reflects that multiple types can be provided.<br>
+            - Standardise the docstrings for the `is_value_of_type()`, `is_all_values_of_type()`, `is_any_values_of_type()`, `assert_value_of_type()`, `assert_all_values_of_type()`, and `assert_any_values_of_type()` functions.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`b51e693`](https://github.com/data-science-extensions/toolbox-python/commit/b51e693e0e7df939e1205b92061a564d0ee88c09): Fix missing `complexipy` dependency
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`af5d00c`](https://github.com/data-science-extensions/toolbox-python/commit/af5d00cc24fd09357f6e5cee2b084e14fd89df85): Reorder checks and add complexity validation<br>
+            - Move `check_pylint()` function after `check_pycln()` function to improve linting workflow<br>
+            - Add `check_complexity()` function to the `check()` function sequence to monitor code quality<br>
+            - Prioritise `check_pytest()` function execution by moving it before documentation and build checks
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`1781bf0`](https://github.com/data-science-extensions/toolbox-python/commit/1781bf05fe00ceda8fe7fb2c88f26ee6f05f0063): Refactor and generalise `check_docstrings()`<br>
+            - Relocate the `check_docstrings()` function to improve logical file structure<br>
+            - Update the `check_docstrings()` function to reference the `DIRECTORY_NAME` constant<br>
+            - Standardise the source path within the `check_docstrings()` function to support dynamic directory names
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`6dcf1cd`](https://github.com/data-science-extensions/toolbox-python/commit/6dcf1cd12520d8462893769e8306546245de859a): Update utility scripts to use dynamic package name constants.<br>
+            - Define `PACKAGE_NAME` and `DIRECTORY_NAME` constants to centralise configuration<br>
+            - Update `check_pylint()` function to use the dynamic `DIRECTORY_NAME` constant<br>
+            - Refine `check_pycln()` function to target the specific package directory
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`008cdf5`](https://github.com/data-science-extensions/toolbox-python/commit/008cdf5fc7f59b8cf98690f3d42e8afff89f94c0): Update pre-commit hook exclusions<br>
+            - Expand the exclusion pattern in `.pre-commit-config.yaml` to include the `src/utils/` and `src/tests` directories.<br>
+            - Utilise a multi-line regex format to manage multiple excluded paths more effectively.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`b0da3dd`](https://github.com/data-science-extensions/toolbox-python/commit/b0da3ddce5d747c3a304943de94fdd2e316535fd): Add `complexipy` for code complexity analysis<br>
+            - Define the `check_complexity()` function to automate quality checks and analyse code complexity levels to guide developers<br>
+            - Configure the `[tool.complexipy]` section to establish analysis parameters that enforce coding standards<br>
+            - Set the `max-complexity-allowed` parameter to 15 to ensure code remains maintainable
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`167398f`](https://github.com/data-science-extensions/toolbox-python/commit/167398f359e51d02e743c973e0521be96b989694): Eliminate redundant scripts from the `pyproject.toml` file, prefer the `src/utils/scripts.py` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`0609a01`](https://github.com/data-science-extensions/toolbox-python/commit/0609a0173544ae743138314c828d327e1452baf1): Clean up outdated checks in the `pre-commit` config file
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`baf5032`](https://github.com/data-science-extensions/toolbox-python/commit/baf5032f0f752874119ea019e6f553043288ecfd): Replace `mypy` with `ty` for type checking<br>
+            - Replace `mypy` with `ty` in the `test` dependency group to standardise type checking<br>
+            - Remove the `[tool.mypy]` configuration block<br>
+            - Rename the `check_mypy()` function to the `check_ty()` function<br>
+            - Update the `check_ty()` function to execute the `ty check` command using a dynamic directory path<br>
+            - Update the `check()` function to call the `check_ty()` function
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`1fb978e`](https://github.com/data-science-extensions/toolbox-python/commit/1fb978e07c21cb2ce727fb3daf1ddaa58201e29c): Refactor type annotations and improve commit formatting<br>
+            - Replace union type syntax with `Optional` and `Literal` imports for better compatibility<br>
+            - Enhance commit message processing to filter out co-authored-by lines and empty lines<br>
+            - Update commit output format to include short SHA with link and improved author attribution<br>
+            - Fix release title reference to use `name` property instead of deprecated `title`<br>
+            - Add type ignore comment for repository retrieval to suppress type checker warnings<br>
+            - Include main execution guard for proper script entry point handling
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`b408c39`](https://github.com/data-science-extensions/toolbox-python/commit/b408c3950194652a6ac1ce0da14cd5150684f4f4): Migrate docstring format checker to pre-commit hook<br>
+            - Replace local docstring checking implementation with external pre-commit repository<br>
+            - Use `docstring-format-checker` from `data-science-extensions` organisation at version 1.3.0<br>
+            - Maintain same configuration and output format whilst leveraging standardised tooling<br>
+            - Comment out previous local implementation to preserve configuration for reference
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`ff3dba7`](https://github.com/data-science-extensions/toolbox-python/commit/ff3dba7e7ab7eb4dde9351494568ef2670db1e7c): Standardise GitHub Actions workflow configuration<br>
+            - Consolidate permissions at workflow level instead of per-job for better maintainability<br>
+            - Update all action versions to latest stable releases for improved security and features<br>
+            - Replace hardcoded values with environment variables for better configurability<br>
+            - Enable PyPI package publishing by uncommenting the publish step<br>
+            - Improve package installation verification with explicit version constraints<br>
+            - Reorganise job execution order by moving tag reference fix after package upload<br>
+            - Add python-version-file configuration for consistent Python version management<br>
+            - Correct CI job matrix to run on specified operating systems instead of ubuntu-latest only<br>
+            - Enhance environment variable coverage for tokens, repository details, and build settings
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`e4e7676`](https://github.com/data-science-extensions/toolbox-python/commit/e4e76760de06b85eb998c9e8db24539693218ce1): Comment out project scripts in `pyproject.toml`<br>
+            - Temporarily disable all console script entry points to prevent command-line tool conflicts<br>
+            - Preserve script definitions for future re-enablement by commenting rather than removing<br>
+            - Affects syncing, linting, checking, git operations, and documentation scripts<br>
+            - Maintains project configuration structure whilst removing executable commands
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`5107d2d`](https://github.com/data-science-extensions/toolbox-python/commit/5107d2d12236ecb801510a394763a12ccb99ec37): Refactor docstring validation and fix CLI argument handling<br>
+            - Replace custom docstring validation logic with external `dfc` tool for improved consistency and maintainability<br>
+            - Remove unused imports including `ast`, `re`, `math.e`, and various typing components<br>
+            - Fix CLI argument indexing from `sys.argv[1]` to `sys.argv[2]` across multiple functions to account for function name parameter<br>
+            - Remove complex `FunctionAndClassDetails` class and associated validation methods<br>
+            - Simplify `check_docstrings()` function to use single `dfc --output=table ./src/toolbox_python` command<br>
+            - Add centralised CLI execution logic with function name resolution and error handling<br>
+            - Eliminate over 290 lines of custom docstring parsing and validation code
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`fa4ec29`](https://github.com/data-science-extensions/toolbox-python/commit/fa4ec29d715fd5a7797cc99b4061d080f1cbd0b5): Add `docstring-format-checker` to `docs` dependencies and tidy up all docstrings<br>
+            - Details admonition: `???+ info "Details"` --> `???+ abstract "Details"`<br>
+            - Notes admonition: `???+ info "Notes"` --> `???+ abstract "Notes"`<br>
+            - Generic type list: `Type` --> `(Type)`<br>
+            - Typos: `Parameters` --> `Params`<br>
+            - Missing docstrings
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`713ae0e`](https://github.com/data-science-extensions/toolbox-python/commit/713ae0e8ec4f9c448b6cdc8b8f3645b658a84c23): Run linting for better formatting
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`5f32f50`](https://github.com/data-science-extensions/toolbox-python/commit/5f32f508de8d101f7ee77c3b311720e6390591d9): Enhance type checking in `checkers.py` and `output.py` by adding more comprehensive `@overload` conditions for better clarity and functionality.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`2de8701`](https://github.com/data-science-extensions/toolbox-python/commit/2de8701e1b9dee00d34f4375f92e9eec01f6a118): Remove redundant lines
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`1d9acdd`](https://github.com/data-science-extensions/toolbox-python/commit/1d9acdd65b4c3adb545eec5eafe15b0f88498e2c): Fix missing type hints
+            (by [chrimaho](https://github.com/chrimaho))
+
+
 !!! info "v1.4.1"
 
     ## **v1.4.1 - Documentation Infrastructure Enhancement and Automated Changelog Generation**
@@ -23,26 +243,26 @@
 
     ??? abstract "Updates"
 
-        * Refactor release notes and commit message formatting for improved readability and maintainability (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/4bdc1134aa5dddc29a2f271f876b789b06ad6716)
-
-        * Add environment variable checks for `GITHUB_TOKEN` and `REPOSITORY_NAME` (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/d03763e8882e09895f1be0a6873e4b78bfe9a066)
-
-        * Fix typo (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/e0dde1a731eb380353f079ee578ca2f06c1bcfce)
-
-        * Fix formatting in the `shortcodes` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/2b6ecedac9fc30d53acc874b7ecfb198ec61cc93)
-
-        * Add first draft of `CHANGELOG.md` (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/ae4493ba5fc259343ebafd944444336c45290873)
-
-        * Add `Contribution Guidelines` page (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/761ad62b2b2b63f1b704c5c09e7a2e576cc2d148)
-
-        * Add process for generating changelog during CD pipeline (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/503a5c809ebf6b6b255d425b35c553793a61b432)
-
-        * Add process for generating shortcodes in docs (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/9365042cc6ce63f52db0069fe0ab5be89a4a185a)
-
-        * Initial commit of the `CONTRIBUTING` docs (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/16707a8cc1958b12327120a3e47c609f22d9b43f)
-
-        * Hide the lines in the CD workflow which are causing issues (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/41d39789e75ebb0aa9cb7a235abdf0ce8380a161)
-
+        * [`4bdc113`](https://github.com/data-science-extensions/toolbox-python/commit/4bdc1134aa5dddc29a2f271f876b789b06ad6716): Refactor release notes and commit message formatting for improved readability and maintainability
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`d03763e`](https://github.com/data-science-extensions/toolbox-python/commit/d03763e8882e09895f1be0a6873e4b78bfe9a066): Add environment variable checks for `GITHUB_TOKEN` and `REPOSITORY_NAME`
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`e0dde1a`](https://github.com/data-science-extensions/toolbox-python/commit/e0dde1a731eb380353f079ee578ca2f06c1bcfce): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`2b6eced`](https://github.com/data-science-extensions/toolbox-python/commit/2b6ecedac9fc30d53acc874b7ecfb198ec61cc93): Fix formatting in the `shortcodes` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`ae4493b`](https://github.com/data-science-extensions/toolbox-python/commit/ae4493ba5fc259343ebafd944444336c45290873): Add first draft of `CHANGELOG.md`
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`761ad62`](https://github.com/data-science-extensions/toolbox-python/commit/761ad62b2b2b63f1b704c5c09e7a2e576cc2d148): Add `Contribution Guidelines` page
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`503a5c8`](https://github.com/data-science-extensions/toolbox-python/commit/503a5c809ebf6b6b255d425b35c553793a61b432): Add process for generating changelog during CD pipeline
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`9365042`](https://github.com/data-science-extensions/toolbox-python/commit/9365042cc6ce63f52db0069fe0ab5be89a4a185a): Add process for generating shortcodes in docs
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`16707a8`](https://github.com/data-science-extensions/toolbox-python/commit/16707a8cc1958b12327120a3e47c609f22d9b43f): Initial commit of the `CONTRIBUTING` docs
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`41d3978`](https://github.com/data-science-extensions/toolbox-python/commit/41d39789e75ebb0aa9cb7a235abdf0ce8380a161): Hide the lines in the CD workflow which are causing issues
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v1.4.0"
@@ -59,105 +279,103 @@
 
     ??? abstract "Updates"
 
-        * Fix echo command to use -E flag for proper interpretation of escape sequences (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/d33348982ae62fa493c2db856ff1932fcfeb7f42)
-
-        * Temporarily turn off pypi deployment step (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/f1106243bf9a54c50f0bca599bd38584319e4abf)
-
-        * Refactor versioning commands to accept version as an argument and update related CLI functions (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/0ea16eda38460d887f123032a552513e0ffb4772)
-
-        * Fix bug in the CD debugging job<br>
+        * [`d333489`](https://github.com/data-science-extensions/toolbox-python/commit/d33348982ae62fa493c2db856ff1932fcfeb7f42): Fix echo command to use -E flag for proper interpretation of escape sequences
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`f110624`](https://github.com/data-science-extensions/toolbox-python/commit/f1106243bf9a54c50f0bca599bd38584319e4abf): Temporarily turn off pypi deployment step
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`0ea16ed`](https://github.com/data-science-extensions/toolbox-python/commit/0ea16eda38460d887f123032a552513e0ffb4772): Refactor versioning commands to accept version as an argument and update related CLI functions
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`5dd4c2f`](https://github.com/data-science-extensions/toolbox-python/commit/5dd4c2f48fd7726fedfaeee85ef01c7f0b3bef2b): Fix bug in the CD debugging job<br>
             In the CD workflow, when it will throw an error for the `github.event.release.name` and `github.event.release.body` when they contain code which is surrounded by the back-tick: `<br>
             This is because the `echo` will escape the back-tick and try to execute the inner text as a command.<br>
-            This is undesirable behaviour. (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/5dd4c2f48fd7726fedfaeee85ef01c7f0b3bef2b)
-
-        * Fix version bump command and improve regex pattern matching to ensure correct and accurate execution (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/9520086d651279a3554a816e2c55a2f43cd697e9)
-
-        * Refactor `git` command executions to improve reliability, expandability and readability (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/8a4ffb7816ea5fd6785c60e205250d1bf29df50c)
-
-        * Fix bug in the `scripts.git_add_coverage_report()` function (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/e4de102fe52efbf3598bf358cc1d379643c9a355)
-
-        * Fix typo in `generators` module<br>
-            Co-authored-by: Copilot <175728472+Copilot@users.noreply.github.com> (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/fa1f05045761dd7b99c0bcab94c745c3cea85027)
-
-        * Fix typo in `retry` module<br>
-            Co-authored-by: Copilot <175728472+Copilot@users.noreply.github.com> (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/d4f4e0601ddb1396bb8da2ef834220bbde39556f)
-
-        * Refactor test files to replace any `import pytest` with `from pytest import ...` for improved consistency (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/d4ae239928d57346575a2fa6a0296d9785e94631)
-
-        * Add input validation for retry parameters using `assert_is_valid` (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/498783195f12f72d6b4b579fa27d510a6b688a89)
-
-        * Refactor CD workflow to replace all 'make' commands with 'uv run' commands for improved consistency and performance (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/22b3942ba7b8c862d20dea4103b4e0733e1bdc73)
-
-        * Reorganise the `[project.scripts]` table<br>
+            This is undesirable behaviour.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`9520086`](https://github.com/data-science-extensions/toolbox-python/commit/9520086d651279a3554a816e2c55a2f43cd697e9): Fix version bump command and improve regex pattern matching to ensure correct and accurate execution
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`8a4ffb7`](https://github.com/data-science-extensions/toolbox-python/commit/8a4ffb7816ea5fd6785c60e205250d1bf29df50c): Refactor `git` command executions to improve reliability, expandability and readability
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`e4de102`](https://github.com/data-science-extensions/toolbox-python/commit/e4de102fe52efbf3598bf358cc1d379643c9a355): Fix bug in the `scripts.git_add_coverage_report()` function
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`fa1f050`](https://github.com/data-science-extensions/toolbox-python/commit/fa1f05045761dd7b99c0bcab94c745c3cea85027): Fix typo in `generators` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`d4f4e06`](https://github.com/data-science-extensions/toolbox-python/commit/d4f4e0601ddb1396bb8da2ef834220bbde39556f): Fix typo in `retry` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`d4ae239`](https://github.com/data-science-extensions/toolbox-python/commit/d4ae239928d57346575a2fa6a0296d9785e94631): Refactor test files to replace any `import pytest` with `from pytest import ...` for improved consistency
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`4987831`](https://github.com/data-science-extensions/toolbox-python/commit/498783195f12f72d6b4b579fa27d510a6b688a89): Add input validation for retry parameters using `assert_is_valid`
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`22b3942`](https://github.com/data-science-extensions/toolbox-python/commit/22b3942ba7b8c862d20dea4103b4e0733e1bdc73): Refactor CD workflow to replace all 'make' commands with 'uv run' commands for improved consistency and performance
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`48c7d1e`](https://github.com/data-science-extensions/toolbox-python/commit/48c7d1ef962601203de0b267aa31df5ef2725381): Reorganise the `[project.scripts]` table<br>
             - Change from `cli.scripts:...` to `utils:scripts:...`<br>
             - Reorder in to sections: `Syncing`, `Linting`, `Checking`<br>
-            - Add new sections: `Git`, `Docs` (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/48c7d1ef962601203de0b267aa31df5ef2725381)
-
-        * Move `scripts.py` from`src/cli` to `src/utils` and add functions to handle `git` and `docs` processes (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/8d55c79043b8a515ba122dc24284c811f77cc078)
-
-        * Update `bump_version` util to be better compatable with CLI execution (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/f6ad6dea6553bb7cf921e91d59fe77a047d07e8c)
-
-        * Add `git_checks.sh` script to capture git logs and diffs (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/6ec8292e7e33fe98bd9327ee0277adfc61570d7e)
-
-        * Refactor CI and CD workflows to replace 'make' commands with 'uv' commands for installations and checks (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/7673113cd20151fcc9f5704948613d835068e7c1)
-
-        * Add a more robust way of capturing errors when checking docstrings (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/251e4d0e1f735d52fc39183970dfe06caa01cdf4)
-
-        * Fix typos in all docstrings<br>
+            - Add new sections: `Git`, `Docs`
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`8d55c79`](https://github.com/data-science-extensions/toolbox-python/commit/8d55c79043b8a515ba122dc24284c811f77cc078): Move `scripts.py` from`src/cli` to `src/utils` and add functions to handle `git` and `docs` processes
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`f6ad6de`](https://github.com/data-science-extensions/toolbox-python/commit/f6ad6dea6553bb7cf921e91d59fe77a047d07e8c): Update `bump_version` util to be better compatable with CLI execution
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`6ec8292`](https://github.com/data-science-extensions/toolbox-python/commit/6ec8292e7e33fe98bd9327ee0277adfc61570d7e): Add `git_checks.sh` script to capture git logs and diffs
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`7673113`](https://github.com/data-science-extensions/toolbox-python/commit/7673113cd20151fcc9f5704948613d835068e7c1): Refactor CI and CD workflows to replace 'make' commands with 'uv' commands for installations and checks
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`251e4d0`](https://github.com/data-science-extensions/toolbox-python/commit/251e4d0e1f735d52fc39183970dfe06caa01cdf4): Add a more robust way of capturing errors when checking docstrings
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`de2729a`](https://github.com/data-science-extensions/toolbox-python/commit/de2729acf36c8c98426169b1f42a537cd622a124): Fix typos in all docstrings<br>
             -> From `!!! summary "Summary"`<br>
-            -> To `!!! note "Summary"` (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/de2729acf36c8c98426169b1f42a537cd622a124)
-
-        * Add functions to check docstrings in all Python files and in a specific directory (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/44c6b07ee2990b1cd66297e6b283c0bf79338526)
-
-        * Refactor command execution to support space expansion and simplify command syntax (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/b60a092b0bcbff9229d0ce960b6482a1d8c71248)
-
-        * Fix typo (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/2fb403d7d8ac307c4c14266e247ccef5d65c8717)
-
-        * Add project scripts and update build system dependencies (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/86d033259278c5121c390e35dd688130b135501a)
-
-        * Add comprehensive docstring validation system<br>
+            -> To `!!! note "Summary"`
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`44c6b07`](https://github.com/data-science-extensions/toolbox-python/commit/44c6b07ee2990b1cd66297e6b283c0bf79338526): Add functions to check docstrings in all Python files and in a specific directory
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`b60a092`](https://github.com/data-science-extensions/toolbox-python/commit/b60a092b0bcbff9229d0ce960b6482a1d8c71248): Refactor command execution to support space expansion and simplify command syntax
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`2fb403d`](https://github.com/data-science-extensions/toolbox-python/commit/2fb403d7d8ac307c4c14266e247ccef5d65c8717): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`86d0332`](https://github.com/data-science-extensions/toolbox-python/commit/86d033259278c5121c390e35dd688130b135501a): Add project scripts and update build system dependencies
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`6c6c265`](https://github.com/data-science-extensions/toolbox-python/commit/6c6c26519b40a920ff0c0b6e02289c5937debbbe): Add comprehensive docstring validation system<br>
             - Implements automated docstring checking with strict formatting requirements including mandatory Summary, Params, Returns/Yields, and Examples sections.<br>
             - Add custom `pre-commit` hook integration for continuous validation during development workflow.<br>
-            - Update existing docstrings to comply with new validation standards and fixes inconsistent section formatting across multiple modules. (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/6c6c26519b40a920ff0c0b6e02289c5937debbbe)
-
-        * Fix error with repo icon in docs page (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/e8a9e6f467e7ea6d9ffbc4128dd071c044a8f9b4)
-
-        * Fix typo (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/8c35b5067c95fd754aa5983a6f0a779fcc6f62fc)
-
-        * Improve `checkers` module documentation and formatting (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/f789f2fbf54f4b1bc8f45c0191469f50d01bcafc)
-
-        * Add new `generators` module for on-demand data generation<br>
+            - Update existing docstrings to comply with new validation standards and fixes inconsistent section formatting across multiple modules.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`e8a9e6f`](https://github.com/data-science-extensions/toolbox-python/commit/e8a9e6f467e7ea6d9ffbc4128dd071c044a8f9b4): Fix error with repo icon in docs page
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`8c35b50`](https://github.com/data-science-extensions/toolbox-python/commit/8c35b5067c95fd754aa5983a6f0a779fcc6f62fc): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`f789f2f`](https://github.com/data-science-extensions/toolbox-python/commit/f789f2fbf54f4b1bc8f45c0191469f50d01bcafc): Improve `checkers` module documentation and formatting
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`3bee8e3`](https://github.com/data-science-extensions/toolbox-python/commit/3bee8e36518e5e12c3bc2aed093c96233ca3a3c1): Add new `generators` module for on-demand data generation<br>
             - Introduces a new generators module that provides functions for computing data on-the-fly based on input parameters rather than storing it in databases or files.<br>
             - Includes new `generate_group_cutoffs()` function that divides a total number of items into specified groups, returning start and end indices for each group with proper validation and error handling.<br>
-            - Updates documentation to include the new module in the main index with comprehensive description and examples. (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/3bee8e36518e5e12c3bc2aed093c96233ca3a3c1)
-
-        * Refactors exception handling for the `retry()` function and add logging initialization<br>
+            - Updates documentation to include the new module in the main index with comprehensive description and examples.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`a8e99cb`](https://github.com/data-science-extensions/toolbox-python/commit/a8e99cba359e04ffcac2b01f692c2626489c3c69): Refactors exception handling for the `retry()` function and add logging initialization<br>
             - Normalizes exceptions parameter to always be a tuple for consistent handling regardless of input type.<br>
-            - Moves log variable initialization outside conditional block to improve code clarity and ensure proper variable scope. (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/a8e99cba359e04ffcac2b01f692c2626489c3c69)
-
-        * Add validation to the `list_columns()` function and improve code structure with better comments<br>
+            - Moves log variable initialization outside conditional block to improve code clarity and ensure proper variable scope.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`1169733`](https://github.com/data-science-extensions/toolbox-python/commit/11697338ccc9c4cf1b45116da738f0176e907e84): Add validation to the `list_columns()` function and improve code structure with better comments<br>
             - Enhances function robustness by adding comprehensive parameter validation using assertion functions to ensure type safety and value constraints.<br>
             - Improves code readability through better organization with descriptive comments that clearly separate validation, preparation, processing, and output phases.<br>
-            - Simplifies column width logic by replacing conditional assignment with `min()` function for cleaner code. (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/11697338ccc9c4cf1b45116da738f0176e907e84)
-
-        * Add new `str_to_list()` function with overloads and corresponding tests<br>
+            - Simplifies column width logic by replacing conditional assignment with `min()` function for cleaner code.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`b730c3b`](https://github.com/data-science-extensions/toolbox-python/commit/b730c3b2a05b196e2b9192620a8783f334a7a847): Add new `str_to_list()` function with overloads and corresponding tests<br>
             - Introduces a new utility function that converts strings to single-element lists while preserving other data types unchanged.<br>
             - This enhancement provides a convenient way to normalize string inputs for functions that expect list-like objects, improving code flexibility when handling mixed input types.<br>
-            - Includes comprehensive test coverage with parameterized tests for various input scenarios including strings, lists, tuples, sets, dictionaries, and numeric types. (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/b730c3b2a05b196e2b9192620a8783f334a7a847)
-
-        * Add additional `@overload`'s for `list_columns` and `retry` functions to better enhance type hints in the `output` and `retry` modules (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/58653a39bf403aecacb54415fde125c90b6121e8)
-
-        * Update `pre-commit` hooks versions and remove outdated poetry check (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/d4d0b98d5139521a20deb0b42625c2db83c7923d)
-
-        * Update all code docstrings examples to use `pycon` syntax for better clarity, and refine the `Raises` statements (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/a4b4a152565006328dfdb85a7b68576fc5f00c33)
-
-        * Significant improvements to the `checkers` module<br>
+            - Includes comprehensive test coverage with parameterized tests for various input scenarios including strings, lists, tuples, sets, dictionaries, and numeric types.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`58653a3`](https://github.com/data-science-extensions/toolbox-python/commit/58653a39bf403aecacb54415fde125c90b6121e8): Add additional `@overload`'s for `list_columns` and `retry` functions to better enhance type hints in the `output` and `retry` modules
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`d4d0b98`](https://github.com/data-science-extensions/toolbox-python/commit/d4d0b98d5139521a20deb0b42625c2db83c7923d): Update `pre-commit` hooks versions and remove outdated poetry check
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`a4b4a15`](https://github.com/data-science-extensions/toolbox-python/commit/a4b4a152565006328dfdb85a7b68576fc5f00c33): Update all code docstrings examples to use `pycon` syntax for better clarity, and refine the `Raises` statements
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`9eef933`](https://github.com/data-science-extensions/toolbox-python/commit/9eef93377f1026654662916ca997029fe28020d0): Significant improvements to the `checkers` module<br>
             - Added `OPERATORS` constant dictionary to define comparison operations.<br>
             - Introduced `is_valid_value` and `assert_is_valid_value` functions for value validation based on operators.<br>
             - Updated documentation in `checkers.md` to include new functions and constants.<br>
             - Enhanced test coverage in `test_checkers.py` for the new validation functions.<br>
-            - Improved docstrings across all functions (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/9eef93377f1026654662916ca997029fe28020d0)
-
+            - Improved docstrings across all functions
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v1.3.2"
@@ -174,8 +392,8 @@
 
     ??? abstract "Updates"
 
-        * Reorder classifiers and update Python requirement syntax in `pyproject.toml` (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/eed97d8372a4895703fc47bf93b57c8a8fe46408)
-
+        * [`eed97d8`](https://github.com/data-science-extensions/toolbox-python/commit/eed97d8372a4895703fc47bf93b57c8a8fe46408): Reorder classifiers and update Python requirement syntax in `pyproject.toml`
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v1.3.1"
@@ -192,12 +410,12 @@
 
     ??? abstract "Updates"
 
-        * Add build target location so that `hatchling` knows exactly where the package directory is (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/c6e48f42fed16d02fcd4f1bceb038d1617fa9b73)
-
-        * Add `uv-lock` and `uv-lock-sync` targets to Makefile (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/c7e9d60803ae23035a2ee249b22cbf8e1c51d3b7)
-
-        * Add more collection types (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/8e7abfb7f4b0e13dbaf4c6c55543536be4d18c88)
-
+        * [`c6e48f4`](https://github.com/data-science-extensions/toolbox-python/commit/c6e48f42fed16d02fcd4f1bceb038d1617fa9b73): Add build target location so that `hatchling` knows exactly where the package directory is
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`c7e9d60`](https://github.com/data-science-extensions/toolbox-python/commit/c7e9d60803ae23035a2ee249b22cbf8e1c51d3b7): Add `uv-lock` and `uv-lock-sync` targets to Makefile
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`8e7abfb`](https://github.com/data-science-extensions/toolbox-python/commit/8e7abfb7f4b0e13dbaf4c6c55543536be4d18c88): Add more collection types
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v1.2.1"
@@ -214,16 +432,16 @@
 
     ??? abstract "Updates"
 
-        * Fix `Makefile` for when using `uv` commands to make it more robust<br>
+        * [`95b0500`](https://github.com/data-science-extensions/toolbox-python/commit/95b050016e8e9e6e7bb360e75981e8bd87bd0ee6): Fix `Makefile` for when using `uv` commands to make it more robust<br>
             1. Add `uv-shell` command<br>
-            2. Update all commands to use `--link-mode=copy` (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/95b050016e8e9e6e7bb360e75981e8bd87bd0ee6)
-
-        * Fix ignorances (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/837504493f44dcabf8af6f581f74f797b262d22a)
-
-        * Enhance `class_property` decorator with additional class-level properties, and add unit tests with 100% coverage (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/37d40aabbee8f5e888c95de0e7dc29c461efb17b)
-
-        * Add `@class_property` decorator and corresponding tests (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/7878ad2a9cf719327e5af8de266ce58d0138ff5b)
-
+            2. Update all commands to use `--link-mode=copy`
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`8375044`](https://github.com/data-science-extensions/toolbox-python/commit/837504493f44dcabf8af6f581f74f797b262d22a): Fix ignorances
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`37d40aa`](https://github.com/data-science-extensions/toolbox-python/commit/37d40aabbee8f5e888c95de0e7dc29c461efb17b): Enhance `class_property` decorator with additional class-level properties, and add unit tests with 100% coverage
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`7878ad2`](https://github.com/data-science-extensions/toolbox-python/commit/7878ad2a9cf719327e5af8de266ce58d0138ff5b): Add `@class_property` decorator and corresponding tests
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v1.2.0"
@@ -240,29 +458,28 @@
 
     ??? abstract "Updates"
 
-        * Fix bug (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/b1c5ea0907eaf1a1ca0529bc933b269355f0a2ba)
-
-        * Fix bug in `src/toolbox_python/dictionaries.py::DotDict.to_dict()`<br>
-            Co-authored-by: Copilot <175728472+Copilot@users.noreply.github.com> (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/6e4909e24721e0a366729e4ddf79c5651199a951)
-
-        * Remove redundant comments (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/6449194a797436a64bb8a44995a776eb5839e948)
-
-        * Extend UnitTests for the `dictionaries` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/991bc5a956225470ab326d85a7cab124950772f8)
-
-        * Fix bug. (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/019116f8dd027fdd2522b49b20fa4acb484190df)
-
-        * Refactor `cd` workflow to use `uv` for building and publishing packages (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/aca4d224e59aea28b104473abfe453b48cdf0432)
-
-        * Add the `bump_version` module to configs (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/6160bf93e42526494e1259df6ace2742a5c74fdb)
-
-        * Add new utility for `bump_version` (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/6a7bf6fcb7b6133d320b9df7dd4b29d819cec149)
-
-        * Add new `DotDict` class to the `dictionaries` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/2477de8d56114172833d45f6c04d6e65889bc9f0)
-
-        * Update CI/CD workflows to use `uv` processes (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/7d3e7a6ad7534c3c31e573c7898bd5cff41ed387)
-
-        * Update package config to use `uv` instead of `poetry` (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/ca76c4512d99a9561697152e1ce1bf7f90b32c59)
-
+        * [`b1c5ea0`](https://github.com/data-science-extensions/toolbox-python/commit/b1c5ea0907eaf1a1ca0529bc933b269355f0a2ba): Fix bug
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`6e4909e`](https://github.com/data-science-extensions/toolbox-python/commit/6e4909e24721e0a366729e4ddf79c5651199a951): Fix bug in `src/toolbox_python/dictionaries.py::DotDict.to_dict()`
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`6449194`](https://github.com/data-science-extensions/toolbox-python/commit/6449194a797436a64bb8a44995a776eb5839e948): Remove redundant comments
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`991bc5a`](https://github.com/data-science-extensions/toolbox-python/commit/991bc5a956225470ab326d85a7cab124950772f8): Extend UnitTests for the `dictionaries` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`019116f`](https://github.com/data-science-extensions/toolbox-python/commit/019116f8dd027fdd2522b49b20fa4acb484190df): Fix bug.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`aca4d22`](https://github.com/data-science-extensions/toolbox-python/commit/aca4d224e59aea28b104473abfe453b48cdf0432): Refactor `cd` workflow to use `uv` for building and publishing packages
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`6160bf9`](https://github.com/data-science-extensions/toolbox-python/commit/6160bf93e42526494e1259df6ace2742a5c74fdb): Add the `bump_version` module to configs
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`6a7bf6f`](https://github.com/data-science-extensions/toolbox-python/commit/6a7bf6fcb7b6133d320b9df7dd4b29d819cec149): Add new utility for `bump_version`
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`2477de8`](https://github.com/data-science-extensions/toolbox-python/commit/2477de8d56114172833d45f6c04d6e65889bc9f0): Add new `DotDict` class to the `dictionaries` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`7d3e7a6`](https://github.com/data-science-extensions/toolbox-python/commit/7d3e7a6ad7534c3c31e573c7898bd5cff41ed387): Update CI/CD workflows to use `uv` processes
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`ca76c45`](https://github.com/data-science-extensions/toolbox-python/commit/ca76c4512d99a9561697152e1ce1bf7f90b32c59): Update package config to use `uv` instead of `poetry`
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v1.1.0"
@@ -279,20 +496,20 @@
 
     ??? abstract "Updates"
 
-        * bump optional package dependencies (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/2ced1ff7f7524525f2d81ea1b8a0ed5eb44cccb6)
-
-        * Make Unit Tests a little more efficient (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/6170b1da9d7f23b32732854b96765c7543f0a8ff)
-
-        * Fix linting (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/3bd4012dc853e75c7b5053a9b67e71d5630ef8ea)
-
-        * Restructure the `pyproject.toml` file to be compatible with the latest version of `poetry` (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/bfd473e1059ba86e3a56679e50d7f6576d0ea734)
-
-        * Change where the `__version__` property is stored (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/f4c68c7df880091468d036a042845864bf94137a)
-
-        * Enhance `list_columns()` function to accept different input types (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/a3981f5746c38e19929943487655b2bb40ef9dc1)
-
-        * Fix type definitions across all modules (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/d2bad60a9743289a3e2f7769c8cd9eef473b0512)
-
+        * [`2ced1ff`](https://github.com/data-science-extensions/toolbox-python/commit/2ced1ff7f7524525f2d81ea1b8a0ed5eb44cccb6): bump optional package dependencies
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`6170b1d`](https://github.com/data-science-extensions/toolbox-python/commit/6170b1da9d7f23b32732854b96765c7543f0a8ff): Make Unit Tests a little more efficient
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`3bd4012`](https://github.com/data-science-extensions/toolbox-python/commit/3bd4012dc853e75c7b5053a9b67e71d5630ef8ea): Fix linting
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`bfd473e`](https://github.com/data-science-extensions/toolbox-python/commit/bfd473e1059ba86e3a56679e50d7f6576d0ea734): Restructure the `pyproject.toml` file to be compatible with the latest version of `poetry`
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`f4c68c7`](https://github.com/data-science-extensions/toolbox-python/commit/f4c68c7df880091468d036a042845864bf94137a): Change where the `__version__` property is stored
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`a3981f5`](https://github.com/data-science-extensions/toolbox-python/commit/a3981f5746c38e19929943487655b2bb40ef9dc1): Enhance `list_columns()` function to accept different input types
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`d2bad60`](https://github.com/data-science-extensions/toolbox-python/commit/d2bad60a9743289a3e2f7769c8cd9eef473b0512): Fix type definitions across all modules
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v1.0.4"
@@ -309,10 +526,10 @@
 
     ??? abstract "Updates"
 
-        * Fix type definitions across all modules (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/d2bad60a9743289a3e2f7769c8cd9eef473b0512)
-
-        * Fix another typo (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/3ee76af19f75be58b449dc6c5487599bb8d636ec)
-
+        * [`d2bad60`](https://github.com/data-science-extensions/toolbox-python/commit/d2bad60a9743289a3e2f7769c8cd9eef473b0512): Fix type definitions across all modules
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`3ee76af`](https://github.com/data-science-extensions/toolbox-python/commit/3ee76af19f75be58b449dc6c5487599bb8d636ec): Fix another typo
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v1.0.3"
@@ -329,32 +546,32 @@
 
     ??? abstract "Updates"
 
-        * Fix another typo (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/3ee76af19f75be58b449dc6c5487599bb8d636ec)
-
-        * Add images to docs (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/6000aaaecd2db57c441c3a58ea06479a1580c065)
-
-        * Streamline `deployment` steps in the `Makefile` (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/a7e81119689fb9011e303a92b1f81d061bc96d7c)
-
-        * Add `dict_str_any` to `collection_types` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/6a1382e2d042f3bdce2fdd3cb16862565a49a86d)
-
-        * Fix typo (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/e67d0fd2b9f3be5ec7f80c3d6a650902e099fa0a)
-
-        * Fix Unit Test structure (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/e2b9471f38898c179a26becfa364a870b146b224)
-
-        * Add `docstring-inheritance` to `docs` dependencies (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/c540884eb698688b84f36d3fec81b50a02db2d82)
-
-        * Fix missing Python version check during `CI` workflow (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/7e78864e7abf2245ff4cc0ebfe9250414de944b9)
-
-        * Hide `.js` and `.css` from GitHub language stats (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/127c9f0d62d7ba72cb668c625058e53cec5c9f71)
-
-        * Hide `html` from GitHub language stats (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/bc1355fb193ec3f8b06c03c0359026672aa1a46c)
-
-        * Update package dependencies to make them more flexible (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/cacd235eda487e29b136efe486080f279666af68)
-
-        * Fix bug (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/4cacac84ce78dde6f239d47597a8e154a98d2bd0)
-
-        * Fix permission issue (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/bed5bf9504b7c35ec5e88e95ba852172e3e6c604)
-
+        * [`3ee76af`](https://github.com/data-science-extensions/toolbox-python/commit/3ee76af19f75be58b449dc6c5487599bb8d636ec): Fix another typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`6000aaa`](https://github.com/data-science-extensions/toolbox-python/commit/6000aaaecd2db57c441c3a58ea06479a1580c065): Add images to docs
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`a7e8111`](https://github.com/data-science-extensions/toolbox-python/commit/a7e81119689fb9011e303a92b1f81d061bc96d7c): Streamline `deployment` steps in the `Makefile`
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`6a1382e`](https://github.com/data-science-extensions/toolbox-python/commit/6a1382e2d042f3bdce2fdd3cb16862565a49a86d): Add `dict_str_any` to `collection_types` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`e67d0fd`](https://github.com/data-science-extensions/toolbox-python/commit/e67d0fd2b9f3be5ec7f80c3d6a650902e099fa0a): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`e2b9471`](https://github.com/data-science-extensions/toolbox-python/commit/e2b9471f38898c179a26becfa364a870b146b224): Fix Unit Test structure
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`c540884`](https://github.com/data-science-extensions/toolbox-python/commit/c540884eb698688b84f36d3fec81b50a02db2d82): Add `docstring-inheritance` to `docs` dependencies
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`7e78864`](https://github.com/data-science-extensions/toolbox-python/commit/7e78864e7abf2245ff4cc0ebfe9250414de944b9): Fix missing Python version check during `CI` workflow
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`127c9f0`](https://github.com/data-science-extensions/toolbox-python/commit/127c9f0d62d7ba72cb668c625058e53cec5c9f71): Hide `.js` and `.css` from GitHub language stats
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`bc1355f`](https://github.com/data-science-extensions/toolbox-python/commit/bc1355fb193ec3f8b06c03c0359026672aa1a46c): Hide `html` from GitHub language stats
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`cacd235`](https://github.com/data-science-extensions/toolbox-python/commit/cacd235eda487e29b136efe486080f279666af68): Update package dependencies to make them more flexible
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`4cacac8`](https://github.com/data-science-extensions/toolbox-python/commit/4cacac84ce78dde6f239d47597a8e154a98d2bd0): Fix bug
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`bed5bf9`](https://github.com/data-science-extensions/toolbox-python/commit/bed5bf9504b7c35ec5e88e95ba852172e3e6c604): Fix permission issue
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v1.0.2"
@@ -371,34 +588,34 @@
 
     ??? abstract "Updates"
 
-        * Fix permission issue (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/bed5bf9504b7c35ec5e88e95ba852172e3e6c604)
-
-        * Fix failing `CD` workflow (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/345de5172de2ebc729d9f197ee8e20e724daab4f)
-
-        * Fix failing `CI` workflow (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/25bb14b4e1de21bda48e029731e54f2321084217)
-
-        * Add `git` credentials during `CD` workflow (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/cc6b03df2dadbd668faf21dc4eda675a511ca98e)
-
-        * Re-enable `PyPI` deployment during `CD` workflow (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/ae36c98bc87a1c55579e72bed66bb2865136a414)
-
-        * Enhance `CD` workflow to better handle Code Cov reports (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/97eab31df3f84182b80da68e8ef8f59e348bef9d)
-
-        * Fix structure of `code` docs page (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/b6136744c10b377c93d2b417afefdf97b6ec324a)
-
-        * Fix `mike` config to remove `deploy-prefix` setting (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/65d6660dd3dbf4691061ff8b17eb99889b93e7a5)
-
-        * Remove unnecessary `code-cov` flags in the `pytest` config (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/c2a7604dc41555bd5f391c95967471d6851880a8)
-
-        * Streamline `Makefile` to remove unnecessary recipes, and add one to copy code-cov reports (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/b5870e21334ddd590a868edf47a373c429762a5e)
-
-        * Update CodeCov reports (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/b3b56b18d34076643025738dbe7528178265868a)
-
-        * Remove unnecessary variables in the `CD` workflow (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/082cbc3f494f0e6d3fdb7f743897d17b3db02a28)
-
-        * Remove unnecessary `deploy-docs` job from `CD` workflow (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/316aadefb6c2cc57cfb1a31e05ca433cff287004)
-
-        * Add `git config` using both `--global` and `--local` flags (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/8b204f2689b7a3b53f075f3cbb7a0da06ac89f89)
-
+        * [`bed5bf9`](https://github.com/data-science-extensions/toolbox-python/commit/bed5bf9504b7c35ec5e88e95ba852172e3e6c604): Fix permission issue
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`345de51`](https://github.com/data-science-extensions/toolbox-python/commit/345de5172de2ebc729d9f197ee8e20e724daab4f): Fix failing `CD` workflow
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`25bb14b`](https://github.com/data-science-extensions/toolbox-python/commit/25bb14b4e1de21bda48e029731e54f2321084217): Fix failing `CI` workflow
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`cc6b03d`](https://github.com/data-science-extensions/toolbox-python/commit/cc6b03df2dadbd668faf21dc4eda675a511ca98e): Add `git` credentials during `CD` workflow
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`ae36c98`](https://github.com/data-science-extensions/toolbox-python/commit/ae36c98bc87a1c55579e72bed66bb2865136a414): Re-enable `PyPI` deployment during `CD` workflow
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`97eab31`](https://github.com/data-science-extensions/toolbox-python/commit/97eab31df3f84182b80da68e8ef8f59e348bef9d): Enhance `CD` workflow to better handle Code Cov reports
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`b613674`](https://github.com/data-science-extensions/toolbox-python/commit/b6136744c10b377c93d2b417afefdf97b6ec324a): Fix structure of `code` docs page
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`65d6660`](https://github.com/data-science-extensions/toolbox-python/commit/65d6660dd3dbf4691061ff8b17eb99889b93e7a5): Fix `mike` config to remove `deploy-prefix` setting
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`c2a7604`](https://github.com/data-science-extensions/toolbox-python/commit/c2a7604dc41555bd5f391c95967471d6851880a8): Remove unnecessary `code-cov` flags in the `pytest` config
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`b5870e2`](https://github.com/data-science-extensions/toolbox-python/commit/b5870e21334ddd590a868edf47a373c429762a5e): Streamline `Makefile` to remove unnecessary recipes, and add one to copy code-cov reports
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`b3b56b1`](https://github.com/data-science-extensions/toolbox-python/commit/b3b56b18d34076643025738dbe7528178265868a): Update CodeCov reports
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`082cbc3`](https://github.com/data-science-extensions/toolbox-python/commit/082cbc3f494f0e6d3fdb7f743897d17b3db02a28): Remove unnecessary variables in the `CD` workflow
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`316aade`](https://github.com/data-science-extensions/toolbox-python/commit/316aadefb6c2cc57cfb1a31e05ca433cff287004): Remove unnecessary `deploy-docs` job from `CD` workflow
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`8b204f2`](https://github.com/data-science-extensions/toolbox-python/commit/8b204f2689b7a3b53f075f3cbb7a0da06ac89f89): Add `git config` using both `--global` and `--local` flags
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v1.0.1"
@@ -415,34 +632,34 @@
 
     ??? abstract "Updates"
 
-        * Add `git config` using both `--global` and `--local` flags (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/8b204f2689b7a3b53f075f3cbb7a0da06ac89f89)
-
-        * Fix typos (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/0c594d24f17117b2efb38c59f1bfbabe8029c8fe)
-
-        * Fix typos (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/f361c546000f970d555c8a6f9b7fe6936368531a)
-
-        * Try new authentication username (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/82e753ee9b1b11b42db4bc66c821e106f089d471)
-
-        * Update `remote` url (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/abec43b12866685a0689e2d809ce179d07ccd9c5)
-
-        * Check `git config` from mid-workflow (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/07e2a9bdc76c5fd8aeb9ec4492471410112f8b72)
-
-        * Add checks (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/9f72935ffb89ea9df405ca8136ad85f83413c024)
-
-        * Do testing on env variables parsed to `make` commands (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/466e436e8b0f24dbc5704e89931bafa33428bddf)
-
-        * Add permissions again to `CD` workflow file (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/97cf8637531cbf3773bf9c6a2ef7a6ce585451b0)
-
-        * Fix authentication issue between repos (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/639f7cd830358ed7b5c4d29d0b7e55f39943b605)
-
-        * Fix package URLs (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/ddc5ca38f47fd327f0c734fde3e547dbcbde2352)
-
-        * Remove `deploy-docs` from the `CD` workflow (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/9eaca6b25f7571874998d8ea2022b54d520e0820)
-
-        * Enhance `Makefile` to make recipes more robust and also add `--remote=docs` flag to all `mike` commands (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/fe2a9e9484f42916f9e2eb83879944768f8ab1cc)
-
-        * Fix spacing on README shields (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/5b10cf2f87fa834745f8282543091382ae3b2fe2)
-
+        * [`8b204f2`](https://github.com/data-science-extensions/toolbox-python/commit/8b204f2689b7a3b53f075f3cbb7a0da06ac89f89): Add `git config` using both `--global` and `--local` flags
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`0c594d2`](https://github.com/data-science-extensions/toolbox-python/commit/0c594d24f17117b2efb38c59f1bfbabe8029c8fe): Fix typos
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`f361c54`](https://github.com/data-science-extensions/toolbox-python/commit/f361c546000f970d555c8a6f9b7fe6936368531a): Fix typos
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`82e753e`](https://github.com/data-science-extensions/toolbox-python/commit/82e753ee9b1b11b42db4bc66c821e106f089d471): Try new authentication username
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`abec43b`](https://github.com/data-science-extensions/toolbox-python/commit/abec43b12866685a0689e2d809ce179d07ccd9c5): Update `remote` url
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`07e2a9b`](https://github.com/data-science-extensions/toolbox-python/commit/07e2a9bdc76c5fd8aeb9ec4492471410112f8b72): Check `git config` from mid-workflow
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`9f72935`](https://github.com/data-science-extensions/toolbox-python/commit/9f72935ffb89ea9df405ca8136ad85f83413c024): Add checks
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`466e436`](https://github.com/data-science-extensions/toolbox-python/commit/466e436e8b0f24dbc5704e89931bafa33428bddf): Do testing on env variables parsed to `make` commands
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`97cf863`](https://github.com/data-science-extensions/toolbox-python/commit/97cf8637531cbf3773bf9c6a2ef7a6ce585451b0): Add permissions again to `CD` workflow file
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`639f7cd`](https://github.com/data-science-extensions/toolbox-python/commit/639f7cd830358ed7b5c4d29d0b7e55f39943b605): Fix authentication issue between repos
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`ddc5ca3`](https://github.com/data-science-extensions/toolbox-python/commit/ddc5ca38f47fd327f0c734fde3e547dbcbde2352): Fix package URLs
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`9eaca6b`](https://github.com/data-science-extensions/toolbox-python/commit/9eaca6b25f7571874998d8ea2022b54d520e0820): Remove `deploy-docs` from the `CD` workflow
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`fe2a9e9`](https://github.com/data-science-extensions/toolbox-python/commit/fe2a9e9484f42916f9e2eb83879944768f8ab1cc): Enhance `Makefile` to make recipes more robust and also add `--remote=docs` flag to all `mike` commands
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`5b10cf2`](https://github.com/data-science-extensions/toolbox-python/commit/5b10cf2f87fa834745f8282543091382ae3b2fe2): Fix spacing on README shields
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v1.0.0"
@@ -459,8 +676,8 @@
 
     ??? abstract "Updates"
 
-        * Re-enable PyPI deployment step (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/1d70e4dc240fd37be1d04d74a497be0bfcba7c48)
-
+        * [`1d70e4d`](https://github.com/data-science-extensions/toolbox-python/commit/1d70e4dc240fd37be1d04d74a497be0bfcba7c48): Re-enable PyPI deployment step
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v0.10.3"
@@ -477,24 +694,24 @@
 
     ??? abstract "Updates"
 
-        * Re-enable PyPI deployment step (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/1d70e4dc240fd37be1d04d74a497be0bfcba7c48)
-
-        * Update development Status (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/603863ef84045e5964ac057117b541608b6ebcfd)
-
-        * Fix typo (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/b8a6e1ad0ac305842d5d70c530d7441dfc0ea5ba)
-
-        * Fix up badges on README file (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/4b6379277ac05b25279ebef4a48a12630a9bd0cc)
-
-        * Fix links for logos on home page (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/ac63eb0c5344edd7f031f47d20949c73b89bc064)
-
-        * Add `deploy_prefix` to the `mike deploy` process (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/b37b3bb1544b8fb81c789ffae7d31b621c8587e7)
-
-        * Add step to `cd` workflow to properly handle `CNAME` file (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/48ac825378d7495a102f0e2cd759a7a28165e376)
-
-        * Fix alignment in README (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/8cede3007ffe7030dfa36b819e22411100995520)
-
-        * Fix another typo (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/8c62f24136ad03badc78c415e161e5d8a4c4991e)
-
+        * [`1d70e4d`](https://github.com/data-science-extensions/toolbox-python/commit/1d70e4dc240fd37be1d04d74a497be0bfcba7c48): Re-enable PyPI deployment step
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`603863e`](https://github.com/data-science-extensions/toolbox-python/commit/603863ef84045e5964ac057117b541608b6ebcfd): Update development Status
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`b8a6e1a`](https://github.com/data-science-extensions/toolbox-python/commit/b8a6e1ad0ac305842d5d70c530d7441dfc0ea5ba): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`4b63792`](https://github.com/data-science-extensions/toolbox-python/commit/4b6379277ac05b25279ebef4a48a12630a9bd0cc): Fix up badges on README file
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`ac63eb0`](https://github.com/data-science-extensions/toolbox-python/commit/ac63eb0c5344edd7f031f47d20949c73b89bc064): Fix links for logos on home page
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`b37b3bb`](https://github.com/data-science-extensions/toolbox-python/commit/b37b3bb1544b8fb81c789ffae7d31b621c8587e7): Add `deploy_prefix` to the `mike deploy` process
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`48ac825`](https://github.com/data-science-extensions/toolbox-python/commit/48ac825378d7495a102f0e2cd759a7a28165e376): Add step to `cd` workflow to properly handle `CNAME` file
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`8cede30`](https://github.com/data-science-extensions/toolbox-python/commit/8cede3007ffe7030dfa36b819e22411100995520): Fix alignment in README
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`8c62f24`](https://github.com/data-science-extensions/toolbox-python/commit/8c62f24136ad03badc78c415e161e5d8a4c4991e): Fix another typo
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v0.10.2"
@@ -511,36 +728,36 @@
 
     ??? abstract "Updates"
 
-        * Fix another typo (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/8c62f24136ad03badc78c415e161e5d8a4c4991e)
-
-        * Centre-align header in README (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/ea5432c9c5ee15e9decccb5f479058962d663750)
-
-        * Fix another typo (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/273a4e4fd3b92c8d17bea840cab9cf26c3ad1c45)
-
-        * Fix missing permissions (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/119e5730cef94ac182323fb1e838e4a944c83301)
-
-        * Fix typos (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/58e82f28bc2822c828a27d6aa56ce241eca4c475)
-
-        * Fix missing `pypi` token from the `deploy-package` job in the `cd` workflow (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/0aa8f31af111de892138e0e282842be183885175)
-
-        * Fix artifacts used between jobs in the `cd` workflow (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/4cd12db7e94aa03546f20daba89378fb46f4f4b4)
-
-        * Fix triggers for `cd` workflow (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/016565f580ef001fcc476195c12c9877aa3912e2)
-
-        * Restructure how the `cd` workflow works, splitting out the `build` and `deploy` steps for both the `pypi` and `docs` jobs (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/56e97b46359257e432cad0eb246e85e95bf5e07c)
-
-        * Remove `deploy_prefix` from `mike` builds (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/4b4148bc9814d8f51c5892a55305bf6edc7684cb)
-
-        * Rearrange the directory structure for the docs (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/4e509d0d0e0444080e4d6ad0084e19a932d0dc7f)
-
-        * Fix `docs` commands for `build`/`serve` processes (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/30a66787544935f37d5b608d822b0ee097e57c8a)
-
-        * Add `black` to `docs` dependencies (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/08a037a0ff859d54b67ca4ff30e5917810319195)
-
-        * Fix `deploy_prefix` for `mike` docs deployments (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/c6a3ae02627b6291c5bd2c70250277ec7c16c985)
-
-        * add `make serve-docs-mike` command (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/94884217caaf33a383fdfaec4c4844f65fcb01ab)
-
+        * [`8c62f24`](https://github.com/data-science-extensions/toolbox-python/commit/8c62f24136ad03badc78c415e161e5d8a4c4991e): Fix another typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`ea5432c`](https://github.com/data-science-extensions/toolbox-python/commit/ea5432c9c5ee15e9decccb5f479058962d663750): Centre-align header in README
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`273a4e4`](https://github.com/data-science-extensions/toolbox-python/commit/273a4e4fd3b92c8d17bea840cab9cf26c3ad1c45): Fix another typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`119e573`](https://github.com/data-science-extensions/toolbox-python/commit/119e5730cef94ac182323fb1e838e4a944c83301): Fix missing permissions
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`58e82f2`](https://github.com/data-science-extensions/toolbox-python/commit/58e82f28bc2822c828a27d6aa56ce241eca4c475): Fix typos
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`0aa8f31`](https://github.com/data-science-extensions/toolbox-python/commit/0aa8f31af111de892138e0e282842be183885175): Fix missing `pypi` token from the `deploy-package` job in the `cd` workflow
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`4cd12db`](https://github.com/data-science-extensions/toolbox-python/commit/4cd12db7e94aa03546f20daba89378fb46f4f4b4): Fix artifacts used between jobs in the `cd` workflow
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`016565f`](https://github.com/data-science-extensions/toolbox-python/commit/016565f580ef001fcc476195c12c9877aa3912e2): Fix triggers for `cd` workflow
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`56e97b4`](https://github.com/data-science-extensions/toolbox-python/commit/56e97b46359257e432cad0eb246e85e95bf5e07c): Restructure how the `cd` workflow works, splitting out the `build` and `deploy` steps for both the `pypi` and `docs` jobs
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`4b4148b`](https://github.com/data-science-extensions/toolbox-python/commit/4b4148bc9814d8f51c5892a55305bf6edc7684cb): Remove `deploy_prefix` from `mike` builds
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`4e509d0`](https://github.com/data-science-extensions/toolbox-python/commit/4e509d0d0e0444080e4d6ad0084e19a932d0dc7f): Rearrange the directory structure for the docs
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`30a6678`](https://github.com/data-science-extensions/toolbox-python/commit/30a66787544935f37d5b608d822b0ee097e57c8a): Fix `docs` commands for `build`/`serve` processes
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`08a037a`](https://github.com/data-science-extensions/toolbox-python/commit/08a037a0ff859d54b67ca4ff30e5917810319195): Add `black` to `docs` dependencies
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`c6a3ae0`](https://github.com/data-science-extensions/toolbox-python/commit/c6a3ae02627b6291c5bd2c70250277ec7c16c985): Fix `deploy_prefix` for `mike` docs deployments
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`9488421`](https://github.com/data-science-extensions/toolbox-python/commit/94884217caaf33a383fdfaec4c4844f65fcb01ab): add `make serve-docs-mike` command
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v0.10.1"
@@ -557,86 +774,86 @@
 
     ??? abstract "Updates"
 
-        * Fix another typo (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/74036784eab7f30ff9d8b1a1b698cb750b72e38f)
-
-        * Fix typo (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/ba6f0ae1e3aa5d70c82a875aa9c1000a9b250803)
-
-        * Add `docs` deployment script to GH Actions (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/79099751deaa7951247ff17395c33d59a1f8d7ca)
-
-        * Fix `actions/setup-python` version in GitHub Actions (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/b7bf401663e091dc97fdf917556cd2932ee44184)
-
-        * Update `mike` docs deployment scripts (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/8d53acd826d47e9c358585013aa98994e2a57db5)
-
-        * Update versions in `pre-commit`  config file (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/02ac9061e455ad79ede8a9bdd958f03d536848e8)
-
-        * Fix typos (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/1c79b192c134d7b47b7ea76528bca185a23b0c0f)
-
-        * Add `ipykernel` to list of `dev` dependencies (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/793c208114cf173904b5dcc8b29ca0fd1b184888)
-
-        * Fix install scripts (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/13ab8e5dc4f65fbb55dc057a84779ab0a89eaef3)
-
-        * Enhance the custom `css` for both `admonitions` and `code-chunks` (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/7ee169894affb78deaf61c4f87695aeeea3b11aa)
-
-        * Fix examples for the docstrings in all functions in all modules. (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/78ca2b42b8eb8134b01678c03b9ecdd44f7a697f)
-
-        * Update ci.yml (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/ae99983aa51e04847a33df7f6634d7e9d860f7c6)
-
-        * Update Makefile (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/97e95718242d22c9a1787f4b22993a074f6fa80c)
-
-        * Add `codecov` step to `CD` pipeline (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/693d049da1509475388bcf8dff7b8cc89d029721)
-
-        * Add `README` to `overview` docs page (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/bcb56e7f889e206134191ea04f43d97f7fb42eef)
-
-        * Add new check for `mkdocs` build (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/679024c052837ed97b95f7067de1673db9f709c0)
-
-        * Update the `README` (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/dba26978852dcb0f5b2d4d10aa50c1d81c6081a3)
-
-        * Fix typos (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/684ce778051ccf710aa5c10623058b5f38ff454b)
-
-        * Add docs for the `defaults` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/1b022b10a2465b28c95b0e081ff03cf5d5c2c5e4)
-
-        * Add docs for the `retry` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/444b16bdaa168e3cc0f35c03e2ecd3808d0e7e38)
-
-        * Fix typos in the `Examples` sections for each of the docstrings (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/e4f77226d1dad0bee0622546d3549f1a4f64f517)
-
-        * Add docs for the `output` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/8912e86796b2cdee53ac14d3323f850bf57e6bf8)
-
-        * Fix typos (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/d901e394dbec0f6189a64c58464166ef39bec93c)
-
-        * Update `code-cov` report (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/b2255824fd9e02ba5a0fc42393f62eb2aeed43fb)
-
-        * Fix typo (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/519d8a5a8f432fc16b4f6cd8102074bf4c2a7be4)
-
-        * Fix missing exports from the `checkers` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/d43504da7e338df707362855e87b7d03d5801b36)
-
-        * Update unit tests for the `checkers` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/60968c61478920f7757992f915928479133fbb5b)
-
-        * Fix failing unit tests from the `lists` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/bd5d339cc2414886f380128ee1d512dee6789626)
-
-        * Expand predefined types from the `collection_types` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/732821c37607d3f8c3743981cd0e96adf0c8405f)
-
-        * Finish adding docs to the `checkers` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/81f4fb4d715fc88568f1979d22415450c8ae00b3)
-
-        * Add docs for the `dictionaries` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/724b1e0e6f491b9e161c20c03c33443349bed51a)
-
-        * Fix typos (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/bf199171945ea3e835d8b34a924590e2f8f19a3b)
-
-        * Add docs for the `strings` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/d368386ced0b1138d0d71402388c0ea7d53277d6)
-
-        * Add the docs for the `lists` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/8ce8a7a2d63def5c9274417f5d1950bc3a03276b)
-
-        * Add the docs for the `classes` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/a7910c3930bd0f52bb98b138cd4cbfdea6f96542)
-
-        * Fix version values in all dependencies (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/19afc26bf4c4e7ef521eb5c08bdf21ac2039fb1a)
-
-        * Update `code-cov` report (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/e787288cbb95a6a6176de392657bf5f0fd8e4126)
-
-        * Fix typos (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/c1cfc949721d88e6b07f7e8e9ea9215a8747c7f7)
-
-        * Add docs for `bools` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/840c31e60552183500101b8de1824878c04fd89e)
-
-        * Set up configuration for the `mkdocs` documentation (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/ae4f4b1853a0ebb597fc13695e3d6d9e4a138124)
-
+        * [`7403678`](https://github.com/data-science-extensions/toolbox-python/commit/74036784eab7f30ff9d8b1a1b698cb750b72e38f): Fix another typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`ba6f0ae`](https://github.com/data-science-extensions/toolbox-python/commit/ba6f0ae1e3aa5d70c82a875aa9c1000a9b250803): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`7909975`](https://github.com/data-science-extensions/toolbox-python/commit/79099751deaa7951247ff17395c33d59a1f8d7ca): Add `docs` deployment script to GH Actions
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`b7bf401`](https://github.com/data-science-extensions/toolbox-python/commit/b7bf401663e091dc97fdf917556cd2932ee44184): Fix `actions/setup-python` version in GitHub Actions
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`8d53acd`](https://github.com/data-science-extensions/toolbox-python/commit/8d53acd826d47e9c358585013aa98994e2a57db5): Update `mike` docs deployment scripts
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`02ac906`](https://github.com/data-science-extensions/toolbox-python/commit/02ac9061e455ad79ede8a9bdd958f03d536848e8): Update versions in `pre-commit`  config file
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`1c79b19`](https://github.com/data-science-extensions/toolbox-python/commit/1c79b192c134d7b47b7ea76528bca185a23b0c0f): Fix typos
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`793c208`](https://github.com/data-science-extensions/toolbox-python/commit/793c208114cf173904b5dcc8b29ca0fd1b184888): Add `ipykernel` to list of `dev` dependencies
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`13ab8e5`](https://github.com/data-science-extensions/toolbox-python/commit/13ab8e5dc4f65fbb55dc057a84779ab0a89eaef3): Fix install scripts
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`7ee1698`](https://github.com/data-science-extensions/toolbox-python/commit/7ee169894affb78deaf61c4f87695aeeea3b11aa): Enhance the custom `css` for both `admonitions` and `code-chunks`
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`78ca2b4`](https://github.com/data-science-extensions/toolbox-python/commit/78ca2b42b8eb8134b01678c03b9ecdd44f7a697f): Fix examples for the docstrings in all functions in all modules.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`ae99983`](https://github.com/data-science-extensions/toolbox-python/commit/ae99983aa51e04847a33df7f6634d7e9d860f7c6): Update ci.yml
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`97e9571`](https://github.com/data-science-extensions/toolbox-python/commit/97e95718242d22c9a1787f4b22993a074f6fa80c): Update Makefile
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`693d049`](https://github.com/data-science-extensions/toolbox-python/commit/693d049da1509475388bcf8dff7b8cc89d029721): Add `codecov` step to `CD` pipeline
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`bcb56e7`](https://github.com/data-science-extensions/toolbox-python/commit/bcb56e7f889e206134191ea04f43d97f7fb42eef): Add `README` to `overview` docs page
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`679024c`](https://github.com/data-science-extensions/toolbox-python/commit/679024c052837ed97b95f7067de1673db9f709c0): Add new check for `mkdocs` build
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`dba2697`](https://github.com/data-science-extensions/toolbox-python/commit/dba26978852dcb0f5b2d4d10aa50c1d81c6081a3): Update the `README`
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`684ce77`](https://github.com/data-science-extensions/toolbox-python/commit/684ce778051ccf710aa5c10623058b5f38ff454b): Fix typos
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`1b022b1`](https://github.com/data-science-extensions/toolbox-python/commit/1b022b10a2465b28c95b0e081ff03cf5d5c2c5e4): Add docs for the `defaults` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`444b16b`](https://github.com/data-science-extensions/toolbox-python/commit/444b16bdaa168e3cc0f35c03e2ecd3808d0e7e38): Add docs for the `retry` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`e4f7722`](https://github.com/data-science-extensions/toolbox-python/commit/e4f77226d1dad0bee0622546d3549f1a4f64f517): Fix typos in the `Examples` sections for each of the docstrings
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`8912e86`](https://github.com/data-science-extensions/toolbox-python/commit/8912e86796b2cdee53ac14d3323f850bf57e6bf8): Add docs for the `output` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`d901e39`](https://github.com/data-science-extensions/toolbox-python/commit/d901e394dbec0f6189a64c58464166ef39bec93c): Fix typos
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`b225582`](https://github.com/data-science-extensions/toolbox-python/commit/b2255824fd9e02ba5a0fc42393f62eb2aeed43fb): Update `code-cov` report
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`519d8a5`](https://github.com/data-science-extensions/toolbox-python/commit/519d8a5a8f432fc16b4f6cd8102074bf4c2a7be4): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`d43504d`](https://github.com/data-science-extensions/toolbox-python/commit/d43504da7e338df707362855e87b7d03d5801b36): Fix missing exports from the `checkers` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`60968c6`](https://github.com/data-science-extensions/toolbox-python/commit/60968c61478920f7757992f915928479133fbb5b): Update unit tests for the `checkers` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`bd5d339`](https://github.com/data-science-extensions/toolbox-python/commit/bd5d339cc2414886f380128ee1d512dee6789626): Fix failing unit tests from the `lists` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`732821c`](https://github.com/data-science-extensions/toolbox-python/commit/732821c37607d3f8c3743981cd0e96adf0c8405f): Expand predefined types from the `collection_types` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`81f4fb4`](https://github.com/data-science-extensions/toolbox-python/commit/81f4fb4d715fc88568f1979d22415450c8ae00b3): Finish adding docs to the `checkers` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`724b1e0`](https://github.com/data-science-extensions/toolbox-python/commit/724b1e0e6f491b9e161c20c03c33443349bed51a): Add docs for the `dictionaries` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`bf19917`](https://github.com/data-science-extensions/toolbox-python/commit/bf199171945ea3e835d8b34a924590e2f8f19a3b): Fix typos
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`d368386`](https://github.com/data-science-extensions/toolbox-python/commit/d368386ced0b1138d0d71402388c0ea7d53277d6): Add docs for the `strings` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`8ce8a7a`](https://github.com/data-science-extensions/toolbox-python/commit/8ce8a7a2d63def5c9274417f5d1950bc3a03276b): Add the docs for the `lists` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`a7910c3`](https://github.com/data-science-extensions/toolbox-python/commit/a7910c3930bd0f52bb98b138cd4cbfdea6f96542): Add the docs for the `classes` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`19afc26`](https://github.com/data-science-extensions/toolbox-python/commit/19afc26bf4c4e7ef521eb5c08bdf21ac2039fb1a): Fix version values in all dependencies
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`e787288`](https://github.com/data-science-extensions/toolbox-python/commit/e787288cbb95a6a6176de392657bf5f0fd8e4126): Update `code-cov` report
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`c1cfc94`](https://github.com/data-science-extensions/toolbox-python/commit/c1cfc949721d88e6b07f7e8e9ea9215a8747c7f7): Fix typos
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`840c31e`](https://github.com/data-science-extensions/toolbox-python/commit/840c31e60552183500101b8de1824878c04fd89e): Add docs for `bools` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`ae4f4b1`](https://github.com/data-science-extensions/toolbox-python/commit/ae4f4b1853a0ebb597fc13695e3d6d9e4a138124): Set up configuration for the `mkdocs` documentation
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v0.9.1"
@@ -653,10 +870,10 @@
 
     ??? abstract "Updates"
 
-        * Fix typos (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/54616d760e4a4c8c9d686b0881a21f331c905e4d)
-
-        * Add `retry` module and all unit tests (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/c4083675d244751b8dde8a4d533b1417865a6fb8)
-
+        * [`54616d7`](https://github.com/data-science-extensions/toolbox-python/commit/54616d760e4a4c8c9d686b0881a21f331c905e4d): Fix typos
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`c408367`](https://github.com/data-science-extensions/toolbox-python/commit/c4083675d244751b8dde8a4d533b1417865a6fb8): Add `retry` module and all unit tests
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v0.8.1"
@@ -673,8 +890,8 @@
 
     ??? abstract "Updates"
 
-        * Add `output` module and all unit tests (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/cc3d809b806dd5bd9af67680438938b2737aafd2)
-
+        * [`cc3d809`](https://github.com/data-science-extensions/toolbox-python/commit/cc3d809b806dd5bd9af67680438938b2737aafd2): Add `output` module and all unit tests
+            (by [chrimaho](https://github.com/chrimaho))
 
 
 !!! info "v0.7.1"
@@ -691,8 +908,8 @@
 
     ??? abstract "Updates"
 
-        * Add `*_contains()` functions to `checkers` module (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/10e27e61cf344af5bd90cc2414d821ca9760462a)
-
+        * [`10e27e6`](https://github.com/data-science-extensions/toolbox-python/commit/10e27e61cf344af5bd90cc2414d821ca9760462a): Add `*_contains()` functions to `checkers` module
+            (by []())
 
 
 !!! info "v0.6.1"
@@ -709,10 +926,10 @@
 
     ??? abstract "Updates"
 
-        * Add `lists` module and all unit tests (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/794dfcf49212b86279111221782798afac2b1994)
-
-        * Add `more-itertools` to main dependencies (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/effb9e8f89f31c19a74935180da028fe8d4248a1)
-
+        * [`794dfcf`](https://github.com/data-science-extensions/toolbox-python/commit/794dfcf49212b86279111221782798afac2b1994): Add `lists` module and all unit tests
+            (by []())
+        * [`effb9e8`](https://github.com/data-science-extensions/toolbox-python/commit/effb9e8f89f31c19a74935180da028fe8d4248a1): Add `more-itertools` to main dependencies
+            (by []())
 
 
 !!! info "v0.5.1"
@@ -729,10 +946,10 @@
 
     ??? abstract "Updates"
 
-        * Fix `ci` workflow triggers (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/25aa9b8328eaa28305d6786df346ce668f5809e3)
-
-        * Add `strings` module and all unit tests (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/4f95fcea646386572a89033371cb4b9418de4301)
-
+        * [`25aa9b8`](https://github.com/data-science-extensions/toolbox-python/commit/25aa9b8328eaa28305d6786df346ce668f5809e3): Fix `ci` workflow triggers
+            (by []())
+        * [`4f95fce`](https://github.com/data-science-extensions/toolbox-python/commit/4f95fcea646386572a89033371cb4b9418de4301): Add `strings` module and all unit tests
+            (by []())
 
 
 !!! info "v0.4.1"
@@ -749,8 +966,8 @@
 
     ??? abstract "Updates"
 
-        * Add `classes` module and all unit tests (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/cca2643af279a5e5f2161718bbb8256203f6aace)
-
+        * [`cca2643`](https://github.com/data-science-extensions/toolbox-python/commit/cca2643af279a5e5f2161718bbb8256203f6aace): Add `classes` module and all unit tests
+            (by []())
 
 
 !!! info "v0.3.1"
@@ -767,10 +984,10 @@
 
     ??? abstract "Updates"
 
-        * Add `defaults` module and all unit tests (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/744867ae64ccab5d367388d8098725947f9743be)
-
-        * Fix typos (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/1d16d496983a11d4d4f99ddb43c375d6e6ad0cb9)
-
+        * [`744867a`](https://github.com/data-science-extensions/toolbox-python/commit/744867ae64ccab5d367388d8098725947f9743be): Add `defaults` module and all unit tests
+            (by []())
+        * [`1d16d49`](https://github.com/data-science-extensions/toolbox-python/commit/1d16d496983a11d4d4f99ddb43c375d6e6ad0cb9): Fix typos
+            (by []())
 
 
 !!! info "v0.2.1"
@@ -787,36 +1004,36 @@
 
     ??? abstract "Updates"
 
-        * Fix type bugs for Python 3.9 (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/553aaa199c8ab30a86c81d1a79a3549d51c3cdb4)
-
-        * Complete unit tests for the `checkers` module (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/dc9c2b4a41dd614bfb0e488357aa0fb4eafaab91)
-
-        * Fix `mypy` errors (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/1a2c124974351b8e941a85ae1f89c15d0132392a)
-
-        * Add the `dictionaries` module and unit tests (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/3febc7d01c9ca9a07fe64f38701d192e403c6fbb)
-
-        * Streamline the unit tests for the `bools` module (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/ecd27bd4ac2f4fdeac14855cbb3447bb8f4de8aa)
-
-        * Expand `collection_types` module (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/44369f00cf455a55635b30639d010b208e4160cd)
-
-        * Add generic functions for unit tests (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/60646e514abca52fe34375a776836297d5d81f51)
-
-        * Fix install commands (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/763ff0e7108e16bc98d92fe10862c5e2ee84d51c)
-
-        * Add `parameterized` to the `test` dependencies (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/a1e4c59cf9b124984df2eed06e5539211efd4b77)
-
-        * Reformat the descriptions in the `bools` module (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/fb12849b3967dc3bc21eaeb89c00cf9f9d8ab0a2)
-
-        * Add the `collection_types` and `checkers` modules (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/fdeb8654ae00496d13e16bac4301777b76f9840d)
-
-        * Fix version (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/dbb9364d665e536289240c928e37341d264eafa2)
-
-        * Add URLs back in to config (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/92fc124ffcba09a59a631e9f012e55805ea50996)
-
-        * Fix version (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/8f201c671eada298afe332f0b6d42d355f7d315c)
-
-        * Add URLs back in to config (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/00b3a7d8eb1dc60bfc070a141072785d0aa8dba2)
-
+        * [`553aaa1`](https://github.com/data-science-extensions/toolbox-python/commit/553aaa199c8ab30a86c81d1a79a3549d51c3cdb4): Fix type bugs for Python 3.9
+            (by []())
+        * [`dc9c2b4`](https://github.com/data-science-extensions/toolbox-python/commit/dc9c2b4a41dd614bfb0e488357aa0fb4eafaab91): Complete unit tests for the `checkers` module
+            (by []())
+        * [`1a2c124`](https://github.com/data-science-extensions/toolbox-python/commit/1a2c124974351b8e941a85ae1f89c15d0132392a): Fix `mypy` errors
+            (by []())
+        * [`3febc7d`](https://github.com/data-science-extensions/toolbox-python/commit/3febc7d01c9ca9a07fe64f38701d192e403c6fbb): Add the `dictionaries` module and unit tests
+            (by []())
+        * [`ecd27bd`](https://github.com/data-science-extensions/toolbox-python/commit/ecd27bd4ac2f4fdeac14855cbb3447bb8f4de8aa): Streamline the unit tests for the `bools` module
+            (by []())
+        * [`44369f0`](https://github.com/data-science-extensions/toolbox-python/commit/44369f00cf455a55635b30639d010b208e4160cd): Expand `collection_types` module
+            (by []())
+        * [`60646e5`](https://github.com/data-science-extensions/toolbox-python/commit/60646e514abca52fe34375a776836297d5d81f51): Add generic functions for unit tests
+            (by []())
+        * [`763ff0e`](https://github.com/data-science-extensions/toolbox-python/commit/763ff0e7108e16bc98d92fe10862c5e2ee84d51c): Fix install commands
+            (by []())
+        * [`a1e4c59`](https://github.com/data-science-extensions/toolbox-python/commit/a1e4c59cf9b124984df2eed06e5539211efd4b77): Add `parameterized` to the `test` dependencies
+            (by []())
+        * [`fb12849`](https://github.com/data-science-extensions/toolbox-python/commit/fb12849b3967dc3bc21eaeb89c00cf9f9d8ab0a2): Reformat the descriptions in the `bools` module
+            (by []())
+        * [`fdeb865`](https://github.com/data-science-extensions/toolbox-python/commit/fdeb8654ae00496d13e16bac4301777b76f9840d): Add the `collection_types` and `checkers` modules
+            (by []())
+        * [`dbb9364`](https://github.com/data-science-extensions/toolbox-python/commit/dbb9364d665e536289240c928e37341d264eafa2): Fix version
+            (by []())
+        * [`92fc124`](https://github.com/data-science-extensions/toolbox-python/commit/92fc124ffcba09a59a631e9f012e55805ea50996): Add URLs back in to config
+            (by []())
+        * [`8f201c6`](https://github.com/data-science-extensions/toolbox-python/commit/8f201c671eada298afe332f0b6d42d355f7d315c): Fix version
+            (by []())
+        * [`00b3a7d`](https://github.com/data-science-extensions/toolbox-python/commit/00b3a7d8eb1dc60bfc070a141072785d0aa8dba2): Add URLs back in to config
+            (by []())
 
 
 !!! info "v0.1.1"
@@ -833,65 +1050,65 @@
 
     ??? abstract "Updates"
 
-        * Fix (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/f11e91d8f9a55396ca9db3e3dada09ac8871ca99)
-
-        * Clean up workflows (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/4bbecc190e06f1c423dac55181fe598686f9bed6)
-
-        * Check whether `git` can checkout the `main` branch during workflow (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/7efcecac73ccdab6439e579c3aebbf55436b06fa)
-
-        * Check `git` switch to new branch (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/c1fd9d3aa8fa20dc17556bb57ed11f715e7f03a4)
-
-        * Fix missing `git` repo (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/90fea6c8db16d2e1adeb30e61a8977f96d4a01cc)
-
-        * Check Git details (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/f0a1c864fa4f2e2d3cd56665017c29862f3e455e)
-
-        * Add process to push updated version back to Git `main` branch (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/3e09f81b6050eb83920a24342933fb43c7c61d73)
-
-        * Hide URLs from `pypoetry` config file (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/993eafd673d3ff77136753cfbb96bb201b5f2908)
-
-        * Fix permissions in `cd` workflow (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/1a022a4b87d1d9b1c47403626baa14066f2b91f2)
-
-        * Add step to upload assets to the release, and also turn off `--dry-run` for pypi upload (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/b55ab3e906ddd45a416c0a1571bf18b66f5cccf6)
-
-        * Add `cd` workflow (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/cf7b836659b25dc28e49676d704cef819c225fdc)
-
-        * Add more debugging scripts (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/92dc8f97e7eb85517ac603fe2e67b867214363c3)
-
-        * Fix typos (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/05399bd4fc9135e78b05ae4def6ed782bc498f54)
-
-        * Enhance the `ci` workflow to do some debugging (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/bc96ae8034e3551aafc00976155405b18d7458a3)
-
-        * Extend `ci` workflow to include extensive checking when merge to `main` (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/5c84ff92219403c4dac727ef67937054034017b7)
-
-        * Enhance poetry install commands (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/46a91bf1f259ef30c8fd68630428db591a3b99ae)
-
-        * Add `ci` file to run checks when push to any branch except `main` (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/535084cb29fe696dbb98d22f7bd3bc70026afa38)
-
-        * Add `Makefile` commands (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/66e19af8cc1944c1b0b6d5b6a81fb04c07456e35)
-
-        * Hide `pipenv` config files (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/8243d1f0f872cecd448edf17e34e496c92268e5e)
-
-        * Clean comments (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/0c3f473a2fa577c418e4f4afe8f5db5a789756c3)
-
-        * Fix `pre-commit` config (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/4be73476e352fb8ff7b92e44c947975638de5a1b)
-
-        * Enhance install scripts (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/04a237d7dcd9e365b82044b2b998d891af1e87d1)
-
-        * Add all relevant modules (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/a95dd2ac7d4ba8a61119b15114a3176c4a9bf679)
-
-        * Update main config file (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/3dabcb517a85f5503ae585a8487f6542a23100d0)
-
-        * Add `pyupgrade` to `pre-commit` config (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/c767da2f90e4f961ddfc2432eb397c6351a5de41)
-
-        * Add `.pre-commit` config (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/f6e4aeacb52933d2d146ba656ea18baf7a65837d)
-
-        * Add installation config and scripts (by []()) [View](https://github.com/data-science-extensions/toolbox-python/commit/c7c257e51497759ea023c533481480885e32f1b2)
-
-        * Add info to `bools` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/47795a778c9b2b0f2b83d8cdf9aca29525358949)
-
-        * Add `bools` module (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/7a6a871dedbc11ca14456d0f10cf12df517d18f0)
-
-        * Initial commit (by [chrimaho](https://github.com/chrimaho)) [View](https://github.com/data-science-extensions/toolbox-python/commit/94bad5dee056d7796512c773e5f6ff0f92d83244)
-
+        * [`f11e91d`](https://github.com/data-science-extensions/toolbox-python/commit/f11e91d8f9a55396ca9db3e3dada09ac8871ca99): Fix
+            (by []())
+        * [`4bbecc1`](https://github.com/data-science-extensions/toolbox-python/commit/4bbecc190e06f1c423dac55181fe598686f9bed6): Clean up workflows
+            (by []())
+        * [`7efceca`](https://github.com/data-science-extensions/toolbox-python/commit/7efcecac73ccdab6439e579c3aebbf55436b06fa): Check whether `git` can checkout the `main` branch during workflow
+            (by []())
+        * [`c1fd9d3`](https://github.com/data-science-extensions/toolbox-python/commit/c1fd9d3aa8fa20dc17556bb57ed11f715e7f03a4): Check `git` switch to new branch
+            (by []())
+        * [`90fea6c`](https://github.com/data-science-extensions/toolbox-python/commit/90fea6c8db16d2e1adeb30e61a8977f96d4a01cc): Fix missing `git` repo
+            (by []())
+        * [`f0a1c86`](https://github.com/data-science-extensions/toolbox-python/commit/f0a1c864fa4f2e2d3cd56665017c29862f3e455e): Check Git details
+            (by []())
+        * [`3e09f81`](https://github.com/data-science-extensions/toolbox-python/commit/3e09f81b6050eb83920a24342933fb43c7c61d73): Add process to push updated version back to Git `main` branch
+            (by []())
+        * [`993eafd`](https://github.com/data-science-extensions/toolbox-python/commit/993eafd673d3ff77136753cfbb96bb201b5f2908): Hide URLs from `pypoetry` config file
+            (by []())
+        * [`1a022a4`](https://github.com/data-science-extensions/toolbox-python/commit/1a022a4b87d1d9b1c47403626baa14066f2b91f2): Fix permissions in `cd` workflow
+            (by []())
+        * [`b55ab3e`](https://github.com/data-science-extensions/toolbox-python/commit/b55ab3e906ddd45a416c0a1571bf18b66f5cccf6): Add step to upload assets to the release, and also turn off `--dry-run` for pypi upload
+            (by []())
+        * [`cf7b836`](https://github.com/data-science-extensions/toolbox-python/commit/cf7b836659b25dc28e49676d704cef819c225fdc): Add `cd` workflow
+            (by []())
+        * [`92dc8f9`](https://github.com/data-science-extensions/toolbox-python/commit/92dc8f97e7eb85517ac603fe2e67b867214363c3): Add more debugging scripts
+            (by []())
+        * [`05399bd`](https://github.com/data-science-extensions/toolbox-python/commit/05399bd4fc9135e78b05ae4def6ed782bc498f54): Fix typos
+            (by []())
+        * [`bc96ae8`](https://github.com/data-science-extensions/toolbox-python/commit/bc96ae8034e3551aafc00976155405b18d7458a3): Enhance the `ci` workflow to do some debugging
+            (by []())
+        * [`5c84ff9`](https://github.com/data-science-extensions/toolbox-python/commit/5c84ff92219403c4dac727ef67937054034017b7): Extend `ci` workflow to include extensive checking when merge to `main`
+            (by []())
+        * [`46a91bf`](https://github.com/data-science-extensions/toolbox-python/commit/46a91bf1f259ef30c8fd68630428db591a3b99ae): Enhance poetry install commands
+            (by []())
+        * [`535084c`](https://github.com/data-science-extensions/toolbox-python/commit/535084cb29fe696dbb98d22f7bd3bc70026afa38): Add `ci` file to run checks when push to any branch except `main`
+            (by []())
+        * [`66e19af`](https://github.com/data-science-extensions/toolbox-python/commit/66e19af8cc1944c1b0b6d5b6a81fb04c07456e35): Add `Makefile` commands
+            (by []())
+        * [`8243d1f`](https://github.com/data-science-extensions/toolbox-python/commit/8243d1f0f872cecd448edf17e34e496c92268e5e): Hide `pipenv` config files
+            (by []())
+        * [`0c3f473`](https://github.com/data-science-extensions/toolbox-python/commit/0c3f473a2fa577c418e4f4afe8f5db5a789756c3): Clean comments
+            (by []())
+        * [`4be7347`](https://github.com/data-science-extensions/toolbox-python/commit/4be73476e352fb8ff7b92e44c947975638de5a1b): Fix `pre-commit` config
+            (by []())
+        * [`04a237d`](https://github.com/data-science-extensions/toolbox-python/commit/04a237d7dcd9e365b82044b2b998d891af1e87d1): Enhance install scripts
+            (by []())
+        * [`a95dd2a`](https://github.com/data-science-extensions/toolbox-python/commit/a95dd2ac7d4ba8a61119b15114a3176c4a9bf679): Add all relevant modules
+            (by []())
+        * [`3dabcb5`](https://github.com/data-science-extensions/toolbox-python/commit/3dabcb517a85f5503ae585a8487f6542a23100d0): Update main config file
+            (by []())
+        * [`c767da2`](https://github.com/data-science-extensions/toolbox-python/commit/c767da2f90e4f961ddfc2432eb397c6351a5de41): Add `pyupgrade` to `pre-commit` config
+            (by []())
+        * [`f6e4aea`](https://github.com/data-science-extensions/toolbox-python/commit/f6e4aeacb52933d2d146ba656ea18baf7a65837d): Add `.pre-commit` config
+            (by []())
+        * [`c7c257e`](https://github.com/data-science-extensions/toolbox-python/commit/c7c257e51497759ea023c533481480885e32f1b2): Add installation config and scripts
+            (by []())
+        * [`47795a7`](https://github.com/data-science-extensions/toolbox-python/commit/47795a778c9b2b0f2b83d8cdf9aca29525358949): Add info to `bools` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`7a6a871`](https://github.com/data-science-extensions/toolbox-python/commit/7a6a871dedbc11ca14456d0f10cf12df517d18f0): Add `bools` module
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`94bad5d`](https://github.com/data-science-extensions/toolbox-python/commit/94bad5dee056d7796512c773e5f6ff0f92d83244): Initial commit
+            (by [chrimaho](https://github.com/chrimaho))
 
 
