@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: uv sync --no-cache --all-groups --upgrade --reinstall-package=${{ env.PACKAGE_NAME }}
       - name: Run checks
-        run: uv run check
+        run: uv run ./src/utils/scripts.py check
 
   ci:
     if: github.event_name == 'pull_request' && github.base_ref == 'main'
@@ -51,4 +51,4 @@ jobs:
       - name: Install dependencies
         run: uv sync --no-cache --all-groups --upgrade --reinstall-package=${{ env.PACKAGE_NAME }}
       - name: Run checks
-        run: uv run check
+        run: uv run ./src/utils/scripts.py check
