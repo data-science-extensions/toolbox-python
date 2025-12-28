@@ -139,6 +139,11 @@ def check_mkdocs() -> None:
 def check_pytest() -> None:
     run("pytest --config-file=pyproject.toml")
 
+
+def check_docstrings() -> None:
+    run(f"dfc --output=table ./src/{DIRECTORY_NAME}")
+
+
 def check_complexity() -> None:
     notes: str = dedent(
         """
@@ -344,15 +349,6 @@ def build_versioned_docs_cli() -> None:
         print("Requires argument: <version>")
         sys.exit(1)
     build_versioned_docs(sys.argv[2])
-
-
-## --------------------------------------------------------------------------- #
-##  Docstrings                                                              ####
-## --------------------------------------------------------------------------- #
-
-
-def check_docstrings() -> None:
-    run("dfc --output=table ./src/toolbox_python")
 
 
 ## --------------------------------------------------------------------------- #
