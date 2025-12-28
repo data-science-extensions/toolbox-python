@@ -78,10 +78,32 @@ __all__: str_list = ["print_or_log_output", "list_columns"]
 # ---------------------------------------------------------------------------- #
 
 
+@overload
+def print_or_log_output(
+    message: str,
+    print_or_log: Literal["print"],
+) -> None: ...
+@overload
+def print_or_log_output(
+    message: str,
+    print_or_log: Literal["log"],
+    *,
+    log: Logger,
+    log_level: log_levels = "info",
+) -> None: ...
+@overload
+def print_or_log_output(
+    message: str,
+    print_or_log: Optional[Literal["print", "log"]] = None,
+    *,
+    log: Optional[Logger] = None,
+    log_level: Optional[log_levels] = None,
+) -> None: ...
 @typechecked
 def print_or_log_output(
     message: str,
-    print_or_log: Literal["print", "log"] = "print",
+    print_or_log: Optional[Literal["print", "log"]] = "print",
+    *,
     log: Optional[Logger] = None,
     log_level: Optional[log_levels] = None,
 ) -> None:
@@ -99,15 +121,15 @@ def print_or_log_output(
             If `#!py print_or_log=="log"`, then this parameter must contain the `#!py Logger` object to be processed,
             otherwise it will raise an `#!py AssertError`.<br>
             Defaults to `#!py None`.
-        log_level (Optional[_log_levels], optional):
+        log_level (Optional[log_levels], optional):
             If `#!py print_or_log=="log"`, then this parameter must contain the required log level for the `message`.
             Must be one of the log-levels available in the `#!py logging` module.<br>
             Defaults to `#!py None`.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
-        AssertError:
+        (AssertError):
             If `#!py print_or_log=="log"` and `#!py log` is not an instance of `#!py Logger`.
 
     Returns:
@@ -221,16 +243,15 @@ def print_or_log_output(
     # Check in put for logging
     if not is_type(log, Logger):
         raise TypeError(
-            f"When `print_or_log=='log'` then `log` must be type `Logger`. "
-            f"Here, you have parsed: '{type(log)}'"
+            f"When `print_or_log=='log'` then `log` must be type `Logger`. " f"Here, you have parsed: '{type(log)}'"
         )
     if log_level is None:
         raise ValueError(
-            f"When `print_or_log=='log'` then `log_level` must be parsed "
-            f"with a valid value from: {log_levels}."
+            f"When `print_or_log=='log'` then `log_level` must be parsed " f"with a valid value from: {log_levels}."
         )
 
     # Assertions to keep `mypy` happy
+    assert print_or_log is not None
     assert log is not None
     assert log_level is not None
 
@@ -239,6 +260,9 @@ def print_or_log_output(
         level=_nameToLevel[log_level.upper()],
         msg=message,
     )
+
+    # Return
+    return None
 
 
 @overload
@@ -272,7 +296,7 @@ def list_columns(
         Print the given list in evenly-spaced columns.
 
     Params:
-        obj (list):
+        obj (Union[any_list, any_set, any_tuple, Generator]):
             The list to be formatted.
 
         cols_wide (int, optional):
@@ -302,11 +326,11 @@ def list_columns(
             Defaults to: `#!py True`.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
-        TypeError:
+        (TypeError):
             If `#!py obj` is not a valid type. Must be one of: `#!py list`, `#!py set`, `#!py tuple`, or `#!py Generator`.
-        ValueError:
+        (ValueError):
             If `#!py cols_wide` is not greater than `0`, or if `#!py gap` is not greater than `0`.
 
     Returns:
@@ -419,27 +443,19 @@ def list_columns(
 
     # Segment the list into chunks
     segmented_list: list[str_list] = [
-        string_list[index : index + cols_wide]
-        for index in range(0, len(string_list), cols_wide)
+        string_list[index : index + cols_wide] for index in range(0, len(string_list), cols_wide)
     ]
 
     # Ensure the last segment has the correct number of columns
     if columnwise:
         if len(segmented_list[-1]) != cols_wide:
-            segmented_list[-1].extend(
-                [""] * (len(string_list) - len(segmented_list[-1]))
-            )
+            segmented_list[-1].extend([""] * (len(string_list) - len(segmented_list[-1])))
         combined_list: Union[list[str_list], Any] = zip(*segmented_list)
     else:
         combined_list = segmented_list
 
     # Create the formatted string with proper spacing
-    printer: str = "\n".join(
-        [
-            "".join([element.ljust(max_len + gap) for element in group])
-            for group in combined_list
-        ]
-    )
+    printer: str = "\n".join(["".join([element.ljust(max_len + gap) for element in group]) for group in combined_list])
 
     # Print the output if requested
     if print_output:

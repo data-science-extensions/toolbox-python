@@ -48,9 +48,7 @@ class TestDictReverseKeysAndValues(TestCase):
 
         cls.dict_basic: dict_str_int = {"a": 1, "b": 2, "c": 3}
 
-        cls.dict_iterables: dict[
-            str, Union[str_list, int_list, str_tuple, int_tuple]
-        ] = {
+        cls.dict_iterables: dict[str, Union[str_list, int_list, str_tuple, int_tuple]] = {
             "a": ["1", "2", "3"],
             "b": [4, 5, 6],
             "c": ("7", "8", "9"),

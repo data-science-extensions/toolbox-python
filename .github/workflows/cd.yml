@@ -11,97 +11,30 @@ on:
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "pages"
+  group: "deployment"
   cancel-in-progress: true
+
+permissions:
+  contents: write  # <-- to allow assets to be uploaded to the release
+  id-token: write  # <-- to allow access to the tokens
+  pages: write  # <-- to allow publishing to GitHub Pages
 
 env:
   VERSION: ${{ github.event.release.tag_name }}
+  PACKAGE_NAME: toolbox-python
   UV_LINK_MODE: copy
-  UV_NATIVE_TLS: true
   UV_NO_SYNC: true
+  UV_INDEX_STRATEGY: unsafe-best-match
+  GITHUB_ACTOR: ${{ github.actor }}
+  PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+  REPOSITORY_NAME: data-science-extensions/toolbox-python
+  GIT_BRANCH: ${{ github.event.release.target_commitish }}
+  PYTHON_VERSION: '3.14'
+  PYTHONIOENCODING: utf-8
 
 jobs:
-
-  debug:
-
-    name: Run Debugging
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          ref: main
-
-      - name: Check variables
-        run: |
-          echo "github.action: ${{ github.action }}"
-          echo "github.action_path: ${{ github.action_path }}"
-          echo "github.action_ref: ${{ github.action_ref }}"
-          echo "github.action_repository: ${{ github.action_repository }}"
-          echo "github.action_status: ${{ github.action_status }}"
-          echo "github.actor: ${{ github.actor }}"
-          echo "github.actor_id: ${{ github.actor_id }}"
-          echo "github.api_url: ${{ github.api_url }}"
-          echo "github.base_ref: ${{ github.base_ref }}"
-          echo "github.env: ${{ github.env }}"
-          echo "github.event_name: ${{ github.event_name }}"
-          echo "github.event_path: ${{ github.event_path }}"
-          echo "github.graphql_url: ${{ github.graphql_url }}"
-          echo "github.head_ref: ${{ github.head_ref }}"
-          echo "github.job: ${{ github.job }}"
-          echo "github.job_workflow_sha: ${{ github.job_workflow_sha }}"
-          echo "github.path: ${{ github.path }}"
-          echo "github.ref: ${{ github.ref }}"
-          echo "github.ref_name: ${{ github.ref_name }}"
-          echo "github.ref_protected: ${{ github.ref_protected }}"
-          echo "github.ref_type: ${{ github.ref_type }}"
-          echo "github.repository: ${{ github.repository }}"
-          echo "github.repository_id: ${{ github.repository_id }}"
-          echo "github.repository_owner: ${{ github.repository_owner }}"
-          echo "github.repository_owner_id: ${{ github.repository_owner_id }}"
-          echo "github.repositoryUrl: ${{ github.repositoryUrl }}"
-          echo "github.retention_days: ${{ github.retention_days }}"
-          echo "github.run_attempt: ${{ github.run_attempt }}"
-          echo "github.run_id: ${{ github.run_id }}"
-          echo "github.run_number: ${{ github.run_number }}"
-          echo "github.secret_source: ${{ github.secret_source }}"
-          echo "github.server_url: ${{ github.server_url }}"
-          echo "github.sha: ${{ github.sha }}"
-          echo "github.token: ${{ github.token }}"
-          echo "github.triggering_actor: ${{ github.triggering_actor }}"
-          echo "github.workflow: ${{ github.workflow }}"
-          echo "github.workflow_ref: ${{ github.workflow_ref }}"
-          echo "github.workflow_sha: ${{ github.workflow_sha }}"
-          echo "github.workspace: ${{ github.workspace }}"
-          echo "github.event.action: ${{ github.event.action }}"
-          echo "github.event.enterprise: ${{ github.event.enterprise }}"
-          echo "github.event.organization: ${{ github.event.organization }}"
-          echo "github.event.repository: ${{ github.event.repository }}"
-          echo "github.event.sender: ${{ github.event.sender }}"
-          echo "github.event.release.assets_url: ${{ github.event.release.assets_url }}"
-          echo "github.event.release.author: ${{ github.event.release.author }}"
-          echo "github.event.release.created_at: ${{ github.event.release.created_at }}"
-          echo "github.event.release.draft: ${{ github.event.release.draft }}"
-          echo "github.event.release.html_url: ${{ github.event.release.html_url }}"
-          echo "github.event.release.id: ${{ github.event.release.id }}"
-          echo "github.event.release.node_id: ${{ github.event.release.node_id }}"
-          echo "github.event.release.prerelease: ${{ github.event.release.prerelease }}"
-          echo "github.event.release.published_at: ${{ github.event.release.published_at }}"
-          echo "github.event.release.tag_name: ${{ github.event.release.tag_name }}"
-          echo "github.event.release.tarball_url: ${{ github.event.release.tarball_url }}"
-          echo "github.event.release.target_commitish: ${{ github.event.release.target_commitish }}"
-          echo "github.event.release.upload_url: ${{ github.event.release.upload_url }}"
-          echo "github.event.release.url: ${{ github.event.release.url }}"
-          echo "github.event.release.zipball_url: ${{ github.event.release.zipball_url }}"
-          echo -E "github.event.release.name: ${{ github.event.release.name }}"
-          echo -E "github.event.release.body: ${{ github.event.release.body }}"
-
-      - name: Check Git
-        run: |
-          git status
-          git branch
 
   test:
 
@@ -109,153 +42,148 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write  #<-- to allow push changes to the repository
-
     steps:
 
       - name: Checkout repository
         id: checkout-repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
-          ref: main
+          ref: ${{ env.GIT_BRANCH }}
 
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v5
+      - name: Set up UV
+        uses: astral-sh/setup-uv@v6
 
       - name: Set up Python
         id: setup-python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
         id: install-dependencies
-        run: uv sync --no-cache --all-groups
+        run: uv sync --no-cache --all-groups --upgrade --reinstall-package=${{ env.PACKAGE_NAME }}
 
       - name: Set up Git
         id: setup-git
         env:
           GITHUB_ACTOR: ${{ github.actor }}
         run: |
-          uv run add-git-credentials
-          uv run git-switch-to-main-branch
-          uv run git-refresh-current-branch
+          uv run ./src/utils/scripts.py add_git_credentials
+          uv run ./src/utils/scripts.py git_switch_to_branch ${{ env.GIT_BRANCH }}
+          uv run ./src/utils/scripts.py git_refresh_current_branch
 
       - name: Run checks
         id: run-checks
-        run: uv run check
+        run: uv run ./src/utils/scripts.py check
 
       - name: Add coverage report
         id: add-coverage-report
-        run: uv run git-add-coverage-report
+        run: uv run ./src/utils/scripts.py git_add_coverage_report
 
       - name: Upload coverage
         id: upload-coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ env.CODECOV_TOKEN }}
           files: ./cov-report/xml/cov-report.xml
           verbose: true
 
   build-package:
 
-      name: Build Package
-      needs: test
-      if: ${{ always() && needs.test.result == 'success' }}
-      runs-on: ubuntu-latest
-
-      permissions:
-        contents: write  #<-- to allow assets to be uploaded to the release
-
-      steps:
-
-        - name: Checkout repository
-          id: checkout-repository
-          uses: actions/checkout@v4
-          with:
-            ref: main
-
-        - name: Set up uv
-          uses: astral-sh/setup-uv@v5
-
-        - name: Setup Python
-          id: setup-python
-          uses: actions/setup-python@v5
-          with:
-            python-version: '3.13'
-
-        - name: Check VERSION
-          id: check-version
-          run: |
-            if [ -z "${VERSION}" ]; then
-              echo "/$VERSION is missing. Please try again."
-              exit 1
-            fi
-
-        - name: Install dependencies
-          run: uv sync --no-cache
-
-        - name: Setup Git
-          id: setup-git
-          run: |
-            uv run add-git-credentials
-            uv run git-switch-to-main-branch
-            uv run git-refresh-current-branch
-
-        - name: Bump version
-          id: bump-version
-          run: uv run bump-version --verbose=true ${VERSION}
-
-        - name: Update Git Version
-          id: update-git-version
-          run: uv run git-update-version ${VERSION}
-
-        - name: Fix tag reference
-          id: fix-tag-reference
-          run: uv run git-fix-tag-reference ${VERSION}
-
-        - name: Build package
-          id: build-package
-          run: uv build --out-dir=dist
-
-        - name: Upload assets
-          id: upload-assets
-          uses: softprops/action-gh-release@v2
-          with:
-            files: dist/*
-
-        - name: Upload artifacts
-          id: upload-artifacts
-          uses: actions/upload-artifact@v4
-          with:
-            name: dist
-            path: dist/*
-            retention-days: 1
-            overwrite: true
-
-  deploy-package:
-
-    name: Deploy to PyPI
-    needs: build-package
+    name: Build Package
+    needs: test
+    if: ${{ always() && needs.test.result == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
 
       - name: Checkout repository
         id: checkout-repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
-          ref: main
+          ref: ${{ env.GIT_BRANCH }}
 
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v5
+      - name: Set up UV
+        uses: astral-sh/setup-uv@v6
 
       - name: Setup Python
         id: setup-python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Check VERSION
+        id: check-version
+        run: |
+          if [ -z "${{ env.VERSION }}" ]; then
+            echo "/$VERSION is missing. Please try again."
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: uv sync --no-cache --upgrade --reinstall-package=${{ env.PACKAGE_NAME }}
+
+      - name: Setup Git
+        id: setup-git
+        run: |
+          uv run ./src/utils/scripts.py add_git_credentials
+          uv run ./src/utils/scripts.py git_switch_to_branch ${{ env.GIT_BRANCH }}
+          uv run ./src/utils/scripts.py git_refresh_current_branch
+
+      - name: Bump version
+        id: bump-version
+        run: uv version ${VERSION}
+
+      - name: Update Git Version
+        id: update-git-version
+        run: uv run ./src/utils/scripts.py git_update_version_cli ${VERSION}
+
+      - name: Build package
+        id: build-package
+        run: uv build --out-dir=dist
+
+      - name: Upload assets
+        id: upload-assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+
+      - name: Upload artifacts
+        id: upload-artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/*
+          retention-days: 5
+          overwrite: true
+
+      - name: Fix tag reference
+        id: fix-tag-reference
+        run: uv run ./src/utils/scripts.py git_fix_tag_reference_cli ${{ env.VERSION }}
+
+  deploy-package:
+
+    name: Deploy to PyPI
+    needs: build-package
+    if: ${{ always() && needs.build-package.result == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        id: checkout-repository
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ env.GIT_BRANCH }}
+
+      - name: Set up UV
+        uses: astral-sh/setup-uv@v6
+
+      - name: Setup Python
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Download artifacts
         id: download-artifacts
@@ -264,41 +192,36 @@ jobs:
           name: dist
           path: dist
 
-      # - name: Publish package
-      #   id: publish-package
-      #   env:
-      #     PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-      #   run: uv publish --token ${PYPI_TOKEN}
+      - name: Publish package
+        id: publish-package
+        run: uv publish --token=${{ env.PYPI_TOKEN }} --no-cache dist/*
 
       - name: Check
         id: check
         run: |
-          echo 'Package deployed to PyPI 👉 https://pypi.org/project/toolbox-python/'
-          uvx pip install --dry-run --no-deps --no-cache toolbox-python
+          echo 'Package deployed to PyPI 👉 https://pypi.org/project/${{ env.PACKAGE_NAME }}'
+          uvx pip install --dry-run --no-deps --no-cache ${{ env.PACKAGE_NAME }}
 
   install-package:
 
-    name: Install Package on '${{ matrix.os }}' with '${{ matrix.python-version }}'
     needs: deploy-package
-
     if: ${{ always() && needs.deploy-package.result == 'success' }}
-
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
-        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
       fail-fast: false
-      max-parallel: 15
-
+      max-parallel: 30
+    name: Install Package on '${{ matrix.os }}' with '${{ matrix.python-version }}'
     runs-on: ${{ matrix.os }}
 
     steps:
 
       - name: Checkout repository
         id: checkout-repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
-          ref: main
+          ref: ${{ env.GIT_BRANCH }}
 
       - name: Setup Python
         id: setup-python
@@ -308,65 +231,66 @@ jobs:
 
       - name: Install package
         id: install-package
-        run: pip install --no-cache toolbox-python
+        run: pip install --no-cache --verbose --no-python-version-warning "${{ env.PACKAGE_NAME }}==${{ env.VERSION }}"
 
   build-docs:
 
-    name: Build Docs
     needs:
       - test
       - deploy-package
     if: ${{ always() && needs.test.result == 'success' && needs.deploy-package.result == 'success' }}
+    name: Build Docs
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write  #<-- to allow mike to push to the repository
 
     steps:
 
       - name: Checkout repository
         id: checkout-repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
-          ref: main
+          ref: ${{ env.GIT_BRANCH }}
 
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v5
+      - name: Set up UV
+        uses: astral-sh/setup-uv@v6
 
       - name: Setup Python
         id: setup-python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
         id: install-dependencies
-        run: uv sync --group=docs
+        run: uv sync --no-cache --upgrade --group=docs --reinstall-package=${{ env.PACKAGE_NAME}}
 
       - name: Setup Git
         id: setup-git
         env:
           GITHUB_ACTOR: ${{ github.actor }}
         run: |
-          uv run add-git-credentials
-          uv run git-switch-to-main-branch
-          uv run git-refresh-current-branch
+          uv run ./src/utils/scripts.py add_git_credentials
+          uv run ./src/utils/scripts.py git_switch_to_branch ${{ env.GIT_BRANCH }}
+          uv run ./src/utils/scripts.py git_refresh_current_branch
 
       - name: Generate ChangeLog
         id: generate-changelog
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPOSITORY_NAME: data-science-extensions/toolbox-python
-        run: uv run generate-changelog
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+          REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+        run: uv run ./src/utils/changelog.py
 
       - name: Commit ChangeLog
         id: commit-changelog
         run: |
           git add .
-          git commit --message "Update changelog to \`${VERSION}\` [skip ci]" || echo "No changes to commit"
+          git commit --message "Update changelog to \`${{ env.VERSION }}\` [skip ci]" || echo "No changes to commit"
           git push --force --no-verify
           git status
 
       - name: Build docs
         id: build-docs
-        run: uv run build-versioned-docs ${VERSION}
+        run: uv run ./src/utils/scripts.py build_versioned_docs_cli ${{ env.VERSION }}
+
+      - name: Fix tag reference
+        id: fix-tag-reference
+        run: uv run ./src/utils/scripts.py git_fix_tag_reference_cli ${{ env.VERSION }}

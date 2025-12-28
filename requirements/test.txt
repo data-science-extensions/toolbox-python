@@ -1,9 +1,0 @@
-requests==2.*
-pytest==8.*
-pytest-clarity==1.*
-pytest-cov==6.*
-pytest-sugar==1.*
-pytest-icdiff==0.*
-pytest-xdist==3.*
-mypy==1.*
-parameterized==0.*

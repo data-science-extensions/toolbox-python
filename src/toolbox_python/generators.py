@@ -61,13 +61,14 @@ __all__: str_list = ["generate_group_cutoffs"]
 
 @typechecked
 def generate_group_cutoffs(
-    total_number: int, num_groups: int
+    total_number: int,
+    num_groups: int,
 ) -> tuple[tuple[int, int], ...]:
     """
     !!! note "Summary"
         Generate group cutoffs for a given total number and number of groups.
 
-    !!! details "Details"
+    !!! abstract "Details"
         This function divides a total number of items into a specified number of groups, returning a `#!py tuple` of `#!py tuple`'s where each inner `#!py tuple` contains the start and end indices for each group. The last group may contain fewer items if the total number is not evenly divisible by the number of groups.
 
     Params:
@@ -77,9 +78,9 @@ def generate_group_cutoffs(
             The number of groups to create.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
-        ValueError:
+        (ValueError):
             If `total_number` is less than 1, or if `num_groups` is less than 1, or if `total_number` is less than `num_groups`. Uses the [`assert_is_valid`][toolbox_python.checkers.assert_is_valid] function to validate the inputs.
 
     Returns:

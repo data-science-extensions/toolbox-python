@@ -45,7 +45,7 @@ from functools import wraps
 from logging import Logger
 from time import sleep
 from types import ModuleType
-from typing import Callable, Literal, Optional, TypeVar, Union, overload
+from typing import Any, Callable, Literal, NoReturn, Optional, TypeVar, Union, overload
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
@@ -91,8 +91,126 @@ R = TypeVar("R")
 # ---------------------------------------------------------------------------- #
 
 
-class Retry:
-    pass
+class _Retry:
+    """
+    !!! note "Summary"
+        A helper class to handle the retry logic for the `retry` decorator.
+
+    ???+ abstract "Details"
+        This class is not intended to be used directly. Instead, it is used internally by the `retry` decorator to manage the retry logic.
+
+    Methods:
+        run(): Run the retry loop for the given function.
+    """
+
+    def __init__(
+        self,
+        exceptions: _exceptions,
+        tries: int,
+        delay: int,
+        print_or_log: Literal["print", "log"],
+        log: Optional[Logger],
+    ) -> None:
+        """
+        !!! note "Summary"
+            Initialize the `_Retry` class with the given parameters.
+
+        Params:
+            exceptions (_exceptions):
+                A given single or collection of expected exceptions for which to catch and retry for.
+            tries (int):
+                The number of retries to attempt.
+            delay (int):
+                The number of seconds to delay between each retry.
+            print_or_log (Literal["print", "log"]):
+                Whether or not the messages should be written to the terminal in a `#!py print()` statement, or to a log file in a `#!py log()` statement.
+            log (Optional[Logger]):
+                An optional logger instance to use when `print_or_log` is set to `"log"`.
+        """
+        self.exceptions: tuple[type[Exception], ...] = (
+            tuple(exceptions) if isinstance(exceptions, (list, tuple)) else (exceptions,)
+        )
+        self.tries: int = tries
+        self.delay: int = delay
+        self.print_or_log: Literal["print", "log"] = print_or_log
+        self.log: Optional[Logger] = log
+
+    def run(self, func: Callable[..., R], *args: Any, **kwargs: Any) -> R:
+        """
+        !!! note "Summary"
+            Run the retry loop for the given function.
+        """
+        for i in range(1, self.tries + 1):
+            try:
+                results = func(*args, **kwargs)
+                self._handle_success(i)
+                return results
+            except self.exceptions as e:
+                self._handle_expected_error(i, e)
+            except Exception as exc:
+                self._handle_unexpected_error(i, exc)
+        self._handle_final_failure()
+
+    def _handle_success(self, i: int) -> None:
+        message: str = f"Successfully executed at iteration {i}."
+        print_or_log_output(
+            message=message,
+            print_or_log=self.print_or_log,
+            log=self.log,
+            log_level="info",
+        )
+
+    def _handle_expected_error(self, i: int, e: Exception) -> None:
+        message = (
+            f"Caught an expected error at iteration {i}: "
+            f"`{get_full_class_name(e)}`. "
+            f"Retrying in {self.delay} seconds..."
+        )
+        print_or_log_output(
+            message=message,
+            print_or_log=self.print_or_log,
+            log=self.log,
+            log_level="warning",
+        )
+        sleep(self.delay)
+
+    def _handle_unexpected_error(self, i: int, exc: Exception) -> None:
+        excs = self.exceptions if isinstance(self.exceptions, (list, tuple)) else (self.exceptions,)
+        exc_names: list[str] = [e.__name__ for e in excs]
+        if any(name in f"{exc}" for name in exc_names):
+            caught_errors: list[str] = [name for name in exc_names if name in f"{exc}"]
+            message: str = (
+                f"Caught an unexpected, known error at iteration {i}: "
+                f"`{get_full_class_name(exc)}`.\n"
+                f"Who's message contains reference to underlying exception(s): {caught_errors}.\n"
+                f"Retrying in {self.delay} seconds..."
+            )
+            print_or_log_output(
+                message=message,
+                print_or_log=self.print_or_log,
+                log=self.log,
+                log_level="warning",
+            )
+            sleep(self.delay)
+        else:
+            message = f"Caught an unexpected error at iteration {i}: `{get_full_class_name(exc)}`."
+            print_or_log_output(
+                message=message,
+                print_or_log=self.print_or_log,
+                log=self.log,
+                log_level="error",
+            )
+            raise RuntimeError(message) from exc
+
+    def _handle_final_failure(self) -> NoReturn:
+        message: str = f"Still could not write after {self.tries} iterations. Please check."
+        print_or_log_output(
+            message=message,
+            print_or_log=self.print_or_log,
+            log=self.log,
+            log_level="error",
+        )
+        raise RuntimeError(message)
 
 
 # ---------------------------------------------------------------------------- #
@@ -152,16 +270,16 @@ def retry(
         delay (int, optional):
             The number of seconds to delay between each retry.<br>
             Defaults to `#!py 0`.
-        print_or_log (Optional[Literal["print", "log"]], optional):
+        print_or_log (Literal["print", "log"], optional):
             Whether or not the messages should be written to the terminal in a `#!py print()` statement, or to a log file in a `#!py log()` statement.<br>
             Defaults to `#!py "print"`.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
-        ValueError:
+        (ValueError):
             If either `tries` or `delay` are less than `#!py 0`
-        RuntimeError:
+        (RuntimeError):
             If _either_ an unexpected `#!py Exception` was thrown, which was not declared in the `exceptions` collection, _or_ if the `func` was still not able to be executed after `tries` number of iterations.
 
     Returns:
@@ -211,12 +329,11 @@ def retry(
         - https://pypi.org/project/retry/
         - https://stackoverflow.com/questions/21786382/pythonic-way-of-retry-running-a-function#answer-21788594
     """
+
     assert_is_valid(tries, ">=", 0)
     assert_is_valid(delay, ">=", 0)
 
-    exceptions = (
-        tuple(exceptions) if isinstance(exceptions, (list, tuple)) else (exceptions,)
-    )
+    exceptions = tuple(exceptions) if isinstance(exceptions, (list, tuple)) else (exceptions,)
 
     log: Optional[Logger] = None
 
@@ -226,87 +343,18 @@ def retry(
         if mod is not None:
             log: Optional[Logger] = logging.getLogger(mod.__name__)
 
-    def decorator(func: Callable):
+    def decorator(func: Callable[..., R]) -> Callable[..., R]:
         @wraps(func)
-        def result(*args, **kwargs):
-            for i in range(1, tries + 1):
-                try:
-                    results = func(*args, **kwargs)
-                except exceptions as e:
-                    # Catch raw exceptions as defined in the `exceptions` parameter.
-                    message = (
-                        f"Caught an expected error at iteration {i}: "
-                        f"`{get_full_class_name(e)}`. "
-                        f"Retrying in {delay} seconds..."
-                    )
-                    print_or_log_output(
-                        message=message,
-                        print_or_log=print_or_log,
-                        log=log,
-                        log_level="warning",
-                    )
-                    sleep(delay)
-                except Exception as exc:
-                    """
-                    Catch unknown exception, however still need to check whether the name of any of the exceptions defined in `exceptions` are somehow listed in the text output of the caught exception.
-                    The cause here is shown in the below chunk. You see here that it throws a 'Py4JJavaError', which was not listed in the `exceptions` parameter, yet within the text output, it showed the 'ConcurrentDeleteReadException' which _was_ listed in the `exceptions` parameter. Therefore, in this instance, we still want to sleep and retry
-
-                    >>> Caught an unexpected error at iteration 1: `py4j.protocol.Py4JJavaError`.
-                    >>> Time for fct_Receipt: 27secs
-                    >>> java.util.concurrent.ExecutionException: io.delta.exceptions.
-                    ...     ConcurrentDeleteReadException: This transaction attempted to read one or more files that were deleted (for example part-00001-563449ea-73e4-4d7d-8ba8-53fee1f8a5ff.c000.snappy.parquet in the root of the table) by a concurrent update. Please try the operation again.
-                    """
-                    excs = (
-                        [exceptions]
-                        if not isinstance(exceptions, (list, tuple))
-                        else exceptions
-                    )
-                    exc_names = [exc.__name__ for exc in excs]
-                    if any(name in f"{exc}" for name in exc_names):
-                        caught_error = [name for name in exc_names if name in f"{exc}"]
-                        message = (
-                            f"Caught an unexpected, known error at iteration {i}: "
-                            f"`{get_full_class_name(exc)}`.\n"
-                            f"Who's message contains reference to underlying exception(s): {caught_error}.\n"
-                            f"Retrying in {delay} seconds..."
-                        )
-                        print_or_log_output(
-                            message=message,
-                            print_or_log=print_or_log,
-                            log=log,
-                            log_level="warning",
-                        )
-                        sleep(delay)
-                    else:
-                        message = (
-                            f"Caught an unexpected error at iteration {i}: "
-                            f"`{get_full_class_name(exc)}`."
-                        )
-                        print_or_log_output(
-                            message=message,
-                            print_or_log=print_or_log,
-                            log=log,
-                            log_level="error",
-                        )
-                        raise RuntimeError(message) from exc
-                else:
-                    message = f"Successfully executed at iteration {i}."
-                    print_or_log_output(
-                        message=message,
-                        print_or_log=print_or_log,
-                        log=log,
-                        log_level="info",
-                    )
-                    return results
-            message = f"Still could not write after {tries} iterations. Please check."
-            print_or_log_output(
-                message=message,
+        def wrapper(*args: Any, **kwargs: Any) -> R:
+            retry_handler = _Retry(
+                exceptions=exceptions,
+                tries=tries,
+                delay=delay,
                 print_or_log=print_or_log,
                 log=log,
-                log_level="error",
             )
-            raise RuntimeError(message)
+            return retry_handler.run(func, *args, **kwargs)
 
-        return result
+        return wrapper
 
     return decorator

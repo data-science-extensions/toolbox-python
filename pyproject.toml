@@ -25,7 +25,7 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Intended Audience :: Developers",
 ]
-requires-python = ">=3.9,<4.0"
+requires-python = ">=3.9"
 dependencies = [
     "typeguard==4.*",
     "more-itertools==10.*",
@@ -37,52 +37,6 @@ Documentation = "https://data-science-extensions.com/python-toolbox"
 Repository = "https://github.com/data-science-extensions/toolbox-python"
 Changelog = "https://github.com/data-science-extensions/toolbox-python/releases"
 Issues = "https://github.com/data-science-extensions/toolbox-python/issues"
-
-[project.scripts]
-# Syncing
-sync = "utils.scripts:uv_sync"
-# Linting
-run-black = "utils.scripts:run_black"
-run-blacken_docs = "utils.scripts:run_blacken_docs"
-run-isort = "utils.scripts:run_isort"
-run-pycln = "utils.scripts:run_pycln"
-run-pyupgrade = "utils.scripts:run_pyupgrade"
-lint = "utils.scripts:lint"
-# Checking
-check-black = "utils.scripts:check_black"
-check-blacken_docs = "utils.scripts:check_blacken_docs"
-check-mypy = "utils.scripts:check_mypy"
-check-isort = "utils.scripts:check_isort"
-check-codespell = "utils.scripts:check_codespell"
-check-pylint = "utils.scripts:check_pylint"
-check-pycln = "utils.scripts:check_pycln"
-check-build = "utils.scripts:check_build"
-check-mkdocs = "utils.scripts:check_mkdocs"
-check-pytest = "utils.scripts:check_pytest"
-check-docstrings = "utils.scripts:check_docstrings_cli"
-check = "utils.scripts:check"
-lint-check = "utils.scripts:lint_check"
-# Git
-add-git-credentials = "utils.scripts:add_git_credentials"
-git-switch-to-main-branch = "utils.scripts:git_switch_to_main_branch"
-git-switch-to-docs-branch = "utils.scripts:git_switch_to_docs_branch"
-git-refresh-current-branch = "utils.scripts:git_refresh_current_branch"
-git-add-coverage-report = "utils.scripts:git_add_coverage_report"
-bump-version = "utils.bump_version:main"
-git-update-version = "utils.scripts:git_update_version_cli"
-git-fix-tag-reference = "utils.scripts:git_fix_tag_reference_cli"
-# Docs
-docs-serve-static = "utils.scripts:docs_serve_static"
-docs-serve-versioned = "utils.scripts:docs_serve_versioned"
-docs-build-static = "utils.scripts:docs_build_static"
-docs-build-versioned = "utils.scripts:docs_build_versioned_cli"
-update-git-docs = "utils.scripts:update_git_docs_cli"
-docs-check-versions = "utils.scripts:docs_check_versions"
-docs-delete-version = "utils.scripts:docs_delete_version_cli"
-docs-set-default = "utils.scripts:docs_set_default"
-build-static-docs = "utils.scripts:build_static_docs_cli"
-build-versioned-docs = "utils.scripts:build_versioned_docs_cli"
-generate-changelog = "utils.changelog:main"
 
 [dependency-groups]
 dev = [
@@ -110,9 +64,10 @@ docs = [
     "mkdocstrings==0.*",
     "mkdocstrings-python==1.*",
     "pygithub==2.*",
+    "docstring-format-checker",
 ]
 test = [
-    "mypy==1.*",
+    "ty==0.*",
     "parameterized==0.*",
     "pytest==8.*",
     "pytest-clarity==1.*",
@@ -121,9 +76,11 @@ test = [
     "pytest-sugar==1.*",
     "pytest-xdist==3.*",
     "requests==2.*",
+    "complexipy==4.*",
 ]
 
 [tool.black]
+line-length = 120
 color = true
 exclude = '''
 /(
@@ -156,15 +113,6 @@ addopts = [
 ]
 testpaths = [
     "src/tests",
-]
-
-[tool.mypy]
-ignore_missing_imports = true
-pretty = true
-disable_error_code = [
-    "valid-type",
-    "attr-defined",
-    "no-redef",
 ]
 
 [tool.isort]
@@ -221,11 +169,28 @@ disable = [
     "E1137", # unsupported-assignment-operation
 ]
 
-[tool.bump_version.replacements]
-files = [
-    { file = "src/toolbox_python/__init__.py", pattern = "__version__ = \"{VERSION}\"" },
-    { file = "src/tests/test_version.py", pattern = "__version__ = \"{VERSION}\"" },
-    { file = "pyproject.toml", pattern = "version = \"{VERSION}\"" },
+[tool.complexipy]
+paths = "src/toolbox_python"
+max-complexity-allowed = 15
+quiet = false
+ignore-complexity = true
+details = "normal"
+sort = "asc"
+
+[tool.dfc]
+allow_undefined_sections = true
+require_docstrings = false
+check_private = true
+sections = [
+    { order = 1, name = "summary",    type = "free_text",          required = true,  admonition = "note",     prefix = "!!!"  },
+    { order = 2, name = "details",    type = "free_text",          required = false, admonition = "abstract", prefix = "???+" },
+    { order = 3, name = "params",     type = "list_name_and_type", required = false, admonition = false                       },
+    { order = 4, name = "raises",     type = "list_type",          required = false, admonition = false                       },
+    { order = 5, name = "returns",    type = "list_type",          required = false, admonition = false                       },
+    { order = 6, name = "examples",   type = "free_text",          required = false, admonition = "example",  prefix = "???+" },
+    { order = 7, name = "credit",     type = "free_text",          required = false, admonition = "success",  prefix = "???"  },
+    { order = 8, name = "see also",   type = "free_text",          required = false, admonition = "tip",      prefix = "???"  },
+    { order = 9, name = "references", type = "free_text",          required = false, admonition = "question", prefix = "???"  },
 ]
 
 [build-system]

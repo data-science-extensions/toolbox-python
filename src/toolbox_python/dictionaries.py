@@ -68,7 +68,7 @@ def dict_reverse_keys_and_values(dictionary: dict_any) -> dict_str_any:
     !!! note "Summary"
         Take the `key` and `values` of a dictionary, and reverse them.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         This process is simple enough if the `values` are atomic types, like `#!py str`, `#!py int`, or `#!py float` types. But it is a little more tricky when the `values` are more complex types, like `#!py list` or `#!py dict`; here we need to use some recursion.
 
     Params:
@@ -76,9 +76,9 @@ def dict_reverse_keys_and_values(dictionary: dict_any) -> dict_str_any:
             The input `#!py dict` that you'd like to have the `keys` and `values` switched.
 
     Raises:
-        TypeCheckError:
+        (TypeCheckError):
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
-        KeyError:
+        (KeyError):
             When there are duplicate `values` being coerced to `keys` in the new dictionary. Raised because a Python `#!py dict` cannot have duplicate keys of the same value.
 
     Returns:
@@ -305,14 +305,25 @@ class DotDict(dict):
         </div>
     """
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         dict.__init__(self)
         d = dict(*args, **kwargs)
         for key, value in d.items():
             self[key] = self._convert_value(value)
 
-    def _convert_value(self, value):
-        """Convert dictionary values recursively."""
+    def _convert_value(self, value: Any):
+        """
+        !!! note "Summary"
+            Convert dictionary values recursively.
+
+        Params:
+            value (Any):
+                The value to convert.
+
+        Returns:
+            (Any):
+                The converted value.
+        """
         if isinstance(value, dict):
             return DotDict(value)
         elif isinstance(value, list):
@@ -320,47 +331,118 @@ class DotDict(dict):
         elif isinstance(value, tuple):
             return tuple(self._convert_value(item) for item in value)
         elif isinstance(value, set):
-            return set(self._convert_value(item) for item in value)
+            return {self._convert_value(item) for item in value}
         return value
 
-    def __getattr__(self, key) -> Any:
-        """Allow dictionary keys to be accessed as attributes."""
+    def __getattr__(self, key: str) -> Any:
+        """
+        !!! note "Summary"
+            Allow dictionary keys to be accessed as attributes.
+
+        Params:
+            key (str):
+                The key to access.
+
+        Raises:
+            (AttributeError):
+                If the key does not exist in the dictionary.
+
+        Returns:
+            (Any):
+                The value associated with the key.
+        """
         try:
             return self[key]
         except KeyError as e:
             raise AttributeError(f"Key not found: '{key}'") from e
 
-    def __setattr__(self, key, value) -> None:
-        """Allow setting dictionary keys via attributes."""
+    def __setattr__(self, key: str, value: Any) -> None:
+        """
+        !!! note "Summary"
+            Allow setting dictionary keys via attributes.
+
+        Params:
+            key (str):
+                The key to set.
+            value (Any):
+                The value to set.
+
+        Returns:
+            (None):
+                This function does not return a value. It sets the key-value pair in the dictionary.
+        """
         self[key] = value
 
-    def __setitem__(self, key, value) -> None:
-        """Intercept item setting to convert dictionaries."""
+    def __setitem__(self, key: str, value: Any) -> None:
+        """
+        !!! note "Summary"
+            Intercept item setting to convert dictionaries.
+
+        Params:
+            key (str):
+                The key to set.
+            value (Any):
+                The value to set.
+
+        Returns:
+            (None):
+                This function does not return a value. It sets the key-value pair in the dictionary.
+        """
         dict.__setitem__(self, key, self._convert_value(value))
 
-    def __delitem__(self, key) -> None:
-        """Intercept item deletion to remove keys."""
+    def __delitem__(self, key: str) -> None:
+        """
+        !!! note "Summary"
+            Intercept item deletion to remove keys.
+
+        Params:
+            key (str):
+                The key to delete.
+
+        Raises:
+            (KeyError):
+                If the key does not exist in the dictionary.
+
+        Returns:
+            (None):
+                This function does not return a value. It deletes the key-value pair from the dictionary.
+        """
         try:
             dict.__delitem__(self, key)
         except KeyError as e:
             raise KeyError(f"Key not found: '{key}'.") from e
 
-    def __delattr__(self, key) -> None:
-        """Allow deleting dictionary keys via attributes."""
+    def __delattr__(self, key: str) -> None:
+        """
+        !!! note "Summary"
+            Allow deleting dictionary keys via attributes.
+
+        Params:
+            key (str):
+                The key to delete.
+
+        Raises:
+            (AttributeError):
+                If the key does not exist in the dictionary.
+
+        Returns:
+            (None):
+                This function does not return a value. It deletes the key-value pair from the dictionary.
+        """
         try:
             del self[key]
         except KeyError as e:
             raise AttributeError(f"Key not found: '{key}'") from e
 
-    def update(self, *args, **kwargs) -> None:
+    def update(self, *args: Any, **kwargs: Any) -> None:
         """
         !!! note "Summary"
             Override update to convert new values.
 
-        Parameters:
-            *args:
+        Params:
+            args (Any):
                 Variable length argument list.
-            **kwargs:
+            kwargs (Any):
                 Arbitrary keyword arguments.
 
         Returns:
@@ -414,7 +496,7 @@ class DotDict(dict):
             elif isinstance(obj, tuple):
                 return tuple(_convert_back(item) for item in obj)
             elif isinstance(obj, set):
-                return set(_convert_back(item) for item in obj)
+                return {_convert_back(item) for item in obj}
             return obj
 
         return _convert_back(self)

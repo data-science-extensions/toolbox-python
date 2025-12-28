@@ -5,7 +5,7 @@
 repos:
   # Fixes
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: "v5.0.0"
+    rev: "v6.0.0"
     hooks:
       # File name fixes
       - id: check-case-conflict
@@ -33,33 +33,22 @@ repos:
 
   # Linter
   - repo: https://github.com/psf/black
-    rev: "25.1.0"
+    rev: "25.12.0"
     hooks:
       - id: black
         language_version: python3.13
         args:
           - "--config=pyproject.toml"
   - repo: https://github.com/adamchainz/blacken-docs
-    rev: "1.19.1"
+    rev: "1.20.0"
     hooks:
       - id: blacken-docs
         additional_dependencies:
           - "black>=23.3"
 
-  # Run MyPy type checks
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.16.1"
-    hooks:
-      - id: mypy
-        files: src/toolbox_python
-        args:
-          - "--install-types"
-          - "--config-file=pyproject.toml"
-          - "--allow-redefinition"
-
   # Reorder Python imports
   - repo: https://github.com/pycqa/isort
-    rev: "6.0.1"
+    rev: "7.0.0"
     hooks:
       - id: isort
         name: isort (python)
@@ -68,7 +57,7 @@ repos:
 
   # Find any outdated syntax and replace with modern equivalents
   - repo: https://github.com/asottile/pyupgrade
-    rev: "v3.20.0"
+    rev: "v3.21.2"
     hooks:
       - id: pyupgrade
         name: Upgrade Python features
@@ -88,7 +77,7 @@ repos:
 
   # Remove unused import statements
   - repo: https://github.com/hadialqattan/pycln
-    rev: "v2.5.0"
+    rev: "v2.6.0"
     hooks:
       - id: pycln
         args:
@@ -96,12 +85,28 @@ repos:
 
   # Check uv configs
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: "0.7.20"
+    rev: "0.9.18"
     hooks:
       - id: uv-lock
       - id: uv-sync
         # args:
         #   - "--all-groups"
+
+  # Check docstrings
+  - repo: https://github.com/data-science-extensions/docstring-format-checker
+    rev: "v1.9.0"
+    hooks:
+      - id: docstring-format-checker
+        name: Docstring Format Checker
+        args:
+          - "--config=pyproject.toml"
+          - "--output=list"
+          - "--check"
+        exclude: |
+          (?x)^(
+            src/tests/.*$|
+            src/utils/.*$
+          )
 
   # Everything run locally
   - repo: local
@@ -118,9 +123,14 @@ repos:
           - "-rn" # Only display messages
           - "-sn" # Don't display the score
 
-      # Check
-      - id: check-docstrings
-        name: Check Docstrings
-        entry: uv run --no-sync --link-mode=copy check-docstrings
-        language: system
+      - id: ty
+        name: ty-check
+        entry: uv run ty check ./src/toolbox_python
+        language: python
         types: [python]
+        pass_filenames: true
+        exclude: |
+          (?x)^(
+            src/tests/.*$|
+            src/utils/.*$
+          )

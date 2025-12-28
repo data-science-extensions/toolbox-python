@@ -263,9 +263,7 @@ class TestListColumnsOutput(TestCase):
         assert output == expected
 
     @parameterized.expand([("list"), ("tuple"), ("set"), ("generator")])
-    def test_6_types(
-        self, input_type: Literal["list", "tuple", "set", "generator"]
-    ) -> None:
+    def test_6_types(self, input_type: Literal["list", "tuple", "set", "generator"]) -> None:
         words: str_list = self.get_list_of_words(4 * 3)
         expected: str = "\n".join(
             [

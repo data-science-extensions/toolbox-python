@@ -40,7 +40,7 @@
 from __future__ import annotations
 
 # ## Python StdLib Imports ----
-from typing import Any
+from typing import Any, Optional, Union
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
@@ -197,14 +197,14 @@ class Defaults:
     def get(
         self,
         value: Any,
-        default: Any | None = None,
-        cast: str | type | None = None,
+        default: Optional[Any] = None,
+        cast: Optional[Union[str, type]] = None,
     ) -> Any:
         """
         !!! note "Summary"
             From the value that is parsed in to the `value` parameter, convert it to `default` if `value` is `#!py None`, and convert it to `cast` if `cast` is not `#!py None`.
 
-        ???+ info "Details"
+        ???+ abstract "Details"
             The detailed steps will be:
 
             1. Validate the input (using the internal [`._validate_value_and_default()`][toolbox_python.defaults.Defaults._validate_value_and_default] & [`._validate_type()`][toolbox_python.defaults.Defaults._validate_type] methods),
@@ -226,7 +226,7 @@ class Defaults:
                 Defaults to `#!py None`.
 
         Raises:
-            TypeCheckError:
+            (TypeCheckError):
                 If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
         Returns:
@@ -326,15 +326,11 @@ class Defaults:
             - [`Defaults._validate_value_and_default()`][toolbox_python.defaults.Defaults._validate_value_and_default]
             - [`Defaults._validate_type()`][toolbox_python.defaults.Defaults._validate_type]
         """
-        (
-            self._validate_value_and_default(
-                value=value, default=default
-            )._validate_type(check_type=cast)
-        )
+        self._validate_value_and_default(value=value, default=default)._validate_type(check_type=cast)
         if value is None:
             value = default
         if cast is not None:
-            if (cast is bool or cast == "bool") and is_type(value, str):
+            if (cast is bool or cast == "bool") and isinstance(value, str):
                 value = bool(strtobool(value))
             elif isinstance(cast, str):
                 value = eval(cast)(value)
@@ -344,8 +340,8 @@ class Defaults:
 
     def _validate_value_and_default(
         self,
-        value: Any | None = None,
-        default: Any | None = None,
+        value: Optional[Any] = None,
+        default: Optional[Any] = None,
     ) -> Defaults:
         """
         !!! note "Summary"
@@ -360,7 +356,7 @@ class Defaults:
                 Defaults to `#!py None`.
 
         Raises:
-            AttributeError: If both `value` and `default` are `#!py None`.
+            (AttributeError): If both `value` and `default` are `#!py None`.
 
         Returns:
             self (Defaults):
@@ -378,7 +374,7 @@ class Defaults:
 
     def _validate_type(
         self,
-        check_type: str | type | None = None,
+        check_type: Optional[Union[str, type]] = None,
     ) -> Defaults:
         """
         !!! note "Summary"
@@ -391,7 +387,7 @@ class Defaults:
                 Defaults to `#!py None`.
 
         Raises:
-            AttributeError: If `check_type` is _both_ not `#!py None` _and_ if it is not one of the valid Python types.
+            (AttributeError): If `check_type` is _both_ not `#!py None` _and_ if it is not one of the valid Python types.
 
         Returns:
             self (Defaults):
@@ -418,8 +414,7 @@ class Defaults:
             retype = check_type.__name__  # type: ignore
         if retype is not None and retype not in valid_types:
             raise AttributeError(
-                f"The value for `type` is invalid: `{retype}`.\n"
-                f"Must be a valid type: {valid_types}."
+                f"The value for `type` is invalid: `{retype}`.\n" f"Must be a valid type: {valid_types}."
             )
         return self
 

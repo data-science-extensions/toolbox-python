@@ -34,6 +34,7 @@
     <img src="https://github.com/data-science-extensions/toolbox-python/actions/workflows/cd.yml/badge.svg?event=release" alt="CD"></a>
 </p>
 
+
 ### Introduction
 
 The purpose of this package is to provide some helper files/functions/classes for generic Python processes.
@@ -43,16 +44,16 @@ The purpose of this package is to provide some helper files/functions/classes fo
 
 For reference, these URL's are used:
 
-| Type | Source | URL |
-|---|---|---|
-| Git Repo | GitHub | https://github.com/data-science-extensions/toolbox-python |
-| Python Package | PyPI | https://pypi.org/project/toolbox-python |
-| Package Docs | Pages | https://data-science-extensions.com/python-toolbox/ |
+| Type           | Source | URL                                                       |
+| -------------- | ------ | --------------------------------------------------------- |
+| Git Repo       | GitHub | https://github.com/data-science-extensions/toolbox-python |
+| Python Package | PyPI   | https://pypi.org/project/toolbox-python                   |
+| Package Docs   | Pages  | https://data-science-extensions.com/python-toolbox/       |
 
 
 ### Installation
 
-You can install and use this package multiple ways by using [`pip`][pip], [`pipenv`][pipenv], or [`poetry`][poetry].
+You can install and use this package multiple ways by using [`pip`][pip], [`uv`][uv], [`pipenv`][pipenv], or [`poetry`][poetry].
 
 
 #### Using [`pip`][pip]:
@@ -75,6 +76,15 @@ You can install and use this package multiple ways by using [`pip`][pip], [`pipe
     ```sh
     python3 -m pip install --upgrade pip
     python3 -m pip install --requirement=requirements.txt
+    ```
+
+
+#### Using [`uv`][uv]:
+
+1. In your terminal, run:
+
+    ```sh
+    uv add toolbox-python
     ```
 
 
@@ -154,52 +164,18 @@ Contribution is always welcome.
 
 3. Build your environment:
 
-    1. With [`pipenv`][pipenv] on Windows:
+    1. With [`uv`][uv] on Windows:
 
         ```pwsh
-        if (-not (Test-Path .venv)) {mkdir .venv}
-        python -m pipenv install --requirements requirements.txt --requirements requirements-dev.txt --skip-lock
-        python -m poetry run pre-commit install
-        python -m poetry shell
+        uv sync --all-groups
+        uv run pre-commit install
         ```
 
-    2. With [`pipenv`][pipenv] on Linux:
+    2. With [`uv`][uv] on Linux:
 
         ```sh
-        mkdir .venv
-        python3 -m pipenv install --requirements requirements.txt --requirements requirements-dev.txt --skip-lock
-        python3 -m poetry run pre-commit install
-        python3 -m poetry shell
-        ```
-
-    3. With [`poetry`][poetry] on Windows:
-
-        ```pwsh
-        python -m pip install --upgrade pip
-        python -m pip install poetry
-        python -m poetry init
-        python -m poetry add $(cat requirements/root.txt)
-        python -m poetry add --group=dev $(cat requirements/dev.txt)
-        python -m poetry add --group=test $(cat requirements/test.txt)
-        python -m poetry add --group=docs $(cat requirements/docs.txt)
-        python -m poetry install
-        python -m poetry run pre-commit install
-        python -m poetry shell
-        ```
-
-    4. With [`poetry`][poetry] on Linux:
-
-        ```sh
-        python3 -m pip install --upgrade pip
-        python3 -m pip install poetry
-        python3 -m poetry init
-        python3 -m poetry add $(cat requirements/root.txt)
-        python3 -m poetry add --group=dev $(cat requirements/dev.txt)
-        python3 -m poetry add --group=test $(cat requirements/test.txt)
-        python3 -m poetry add --group=docs $(cat requirements/docs.txt)
-        python3 -m poetry install
-        python3 -m poetry run pre-commit install
-        python3 -m poetry shell
+        uv sync --all-groups
+        uv run pre-commit install
         ```
 
 4. Start contributing.
@@ -215,32 +191,44 @@ To ensure that the package is working as expected, please ensure that:
 2. You write a [UnitTest][unittest] for each function/feature you include.
 3. The [CodeCoverage][codecov] is 100%.
 4. All [UnitTests][pytest] are passing.
-5. [MyPy][mypy] is passing 100%.
+5. [Type Checking][ty] is passing 100%.
+6. [Complexity][complexipy] is within the required standard.
+7. [Docstrings][dfc] are correctly formatted.
 
 
 #### Testing
 
-- Run them all together
+- Run them all together:
 
     ```sh
-    poetry run make check
+    uv run src/utils/scripts.py check
     ```
 
 - Or run them individually:
 
-    - [Black][black]
-        ```pysh
-        poetry run make check-black
+    - [Black][black]:
+        ```sh
+        uv run src/utils/scripts.py check-black
         ```
 
     - [PyTests][pytest]:
         ```sh
-        poetry run make ckeck-pytest
+        uv run src/utils/scripts.py check-pytest
         ```
 
-    - [MyPy][mypy]:
+    - [Type Checking][ty]:
         ```sh
-        poetry run make check-mypy
+        uv run src/utils/scripts.py check-ty
+        ```
+
+    - [Complexity][complexipy]:
+        ```sh
+        uv run src/utils/scripts.py check-complexity
+        ```
+
+    - [Docstrings][dfc]:
+        ```sh
+        uv run src/utils/scripts.py check-docstrings
         ```
 
 
@@ -251,8 +239,9 @@ To ensure that the package is working as expected, please ensure that:
 [github-license]: https://github.com/data-science-extensions/toolbox-python/blob/main/LICENSE
 [codecov-repo]: https://codecov.io/gh/data-science-extensions/toolbox-python
 [pypi]: https://pypi.org/project/toolbox-python
-[docs]: ...
+[docs]: https://data-science-extensions.com/python-toolbox/
 [pip]: https://pypi.org/project/pip
+[uv]: https://docs.astral.sh/uv/
 [pipenv]: https://github.com/pypa/pipenv
 [poetry]: https://python-poetry.org
 [github-fork]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo
@@ -263,5 +252,7 @@ To ensure that the package is working as expected, please ensure that:
 [unittest]: https://docs.python.org/3/library/unittest.html
 [codecov]: https://codecov.io/
 [pytest]: https://docs.pytest.org
-[mypy]: http://www.mypy-lang.org/
+[ty]: https://github.com/alexpovel/ty
+[complexipy]: https://github.com/rohaquinlop/complexipy
+[dfc]: https://github.com/data-science-extensions/docstring-format-checker
 [black]: https://black.readthedocs.io/

@@ -187,7 +187,7 @@ class class_property(property):
         !!! failure "Conclusion: Failed to set a class property."
         </div>
 
-    ???+ info "Notes"
+    ???+ abstract "Notes"
         - `@class_property` only works for *read-only* properties. It does not currently allow writeable/deletable properties, due to subtleties of how Python descriptors work. In order to implement such properties on a class, a metaclass for that class must be implemented.
         - `@class_property` is not a drop-in replacement for `property`. It is designed to be used as a class-level property, not an instance-level property. If you need to use it as an instance-level property, you will need to use the `@property` decorator instead.
         - `@class_property` is defined at class scope, not instance scope. This means that it is not bound to the instance of the class, but rather to the class itself; hence the name `class_property`. This means that it is designed to be used as a class-level property and is accessed through the class itself, not an instance-level property which is accessed through the instance of a class. If it is necessary to access the instance-level property, you will need to use the instance itself (eg. `instantiated_class_name._internal_attribute`) or create an instance-level property using the `@property` decorator.

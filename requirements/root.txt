@@ -1,2 +1,0 @@
-typeguard==4.*
-more-itertools==10.*

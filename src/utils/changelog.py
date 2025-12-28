@@ -23,6 +23,7 @@
 import os
 import re
 from pathlib import Path
+from typing import Literal, Optional
 
 # ## Python Third Party Imports ----
 from github import Auth, Github
@@ -39,26 +40,22 @@ from github.Repository import Repository
 
 
 ### Environment Variables ----
-TOKEN: str | None = os.environ.get("GITHUB_TOKEN")
-REPOSITORY_NAME: str | None = os.environ.get("REPOSITORY_NAME")
+TOKEN: Optional[str] = os.environ.get("GITHUB_TOKEN")
+REPOSITORY_NAME: Optional[str] = os.environ.get("REPOSITORY_NAME")
 if TOKEN is None:
-    raise RuntimeError(
-        "Environment variable `GITHUB_TOKEN` is not set. Please set it before running the script."
-    )
+    raise RuntimeError("Environment variable `GITHUB_TOKEN` is not set. Please set it before running the script.")
 if REPOSITORY_NAME is None:
-    raise RuntimeError(
-        "Environment variable `REPOSITORY_NAME` is not set. Please set it before running the script."
-    )
+    raise RuntimeError("Environment variable `REPOSITORY_NAME` is not set. Please set it before running the script.")
 
 
 ### Static ----
-OUTPUT_FILENAME: str = "CHANGELOG.md"
+OUTPUT_FILENAME: Literal["CHANGELOG.md"] = "CHANGELOG.md"
 OUTPUT_FILEPATH: Path = Path(OUTPUT_FILENAME)
 AUTH: Token = Auth.Token(TOKEN)
-NEW_LINE: str = "\n"
-BLANK_LINE: str = "\n\n"
-LINE_BREAK: str = "<br>"
-TAB: str = "    "
+NEW_LINE: Literal["\n"] = "\n"
+BLANK_LINE: Literal["\n\n"] = "\n\n"
+LINE_BREAK: Literal["<br>"] = "<br>"
+TAB: Literal["    "] = "    "
 
 
 # ---------------------------------------------------------------------------- #
@@ -129,7 +126,7 @@ def add_release_info(release: GitRelease, repo: Repository) -> str:
     return (
         f'!!! info "{release.tag_name}"{NEW_LINE}'
         f"{NEW_LINE}"
-        f"{TAB}## **{release.title}**{BLANK_LINE}"
+        f"{TAB}## **{release.name}**{BLANK_LINE}"
         f"{TAB}<!-- md:tag {release.tag_name} -->{LINE_BREAK}{NEW_LINE}"
         f"{TAB}<!-- md:date {release.created_at.date()} -->{LINE_BREAK}{NEW_LINE}"
         f"{TAB}<!-- md:link [{repo.full_name}/releases/{release.tag_name}]({release.html_url}) -->{BLANK_LINE}"
@@ -143,14 +140,9 @@ def add_release_notes(release: GitRelease) -> str:
     including the release body and any additional information.
     """
     release_body: str = (
-        release.body.replace(f"{BLANK_LINE}", NEW_LINE)
-        .replace("## ", "### ")
-        .replace(NEW_LINE, f"{TAB * 2}")
+        release.body.replace(f"{BLANK_LINE}", NEW_LINE).replace("## ", "### ").replace(NEW_LINE, f"{TAB * 2}")
     )
-    return (
-        f'{TAB}??? note "Release Notes"{BLANK_LINE}'
-        f"{TAB * 2}{release_body}{BLANK_LINE}"
-    )
+    return f'{TAB}??? note "Release Notes"{BLANK_LINE}' f"{TAB * 2}{release_body}{BLANK_LINE}"
 
 
 def add_commit_info(commit: Commit) -> str:
@@ -162,13 +154,26 @@ def add_commit_info(commit: Commit) -> str:
     # NOTE: We write the commit message to the output file.
     # We format the commit message to replace newlines with `{LINE_BREAK}` tags for better readability in Markdown.
     # We also include the author's login and a link to their GitHub profile, as well as a link to the commit itself.
-    commit_message: str = commit.commit.message.replace(BLANK_LINE, NEW_LINE).replace(
-        NEW_LINE, f"{LINE_BREAK}{NEW_LINE}{TAB * 3}"
-    )
+
+    commit_message_list: list[str] = []
+    for idx, line in enumerate(commit.commit.message.split(NEW_LINE)):
+        if idx == 0:
+            commit_message_list.append(line.strip())
+        elif line.strip() == "":
+            continue
+        elif line.lower().startswith("co-authored-by:"):
+            continue
+        else:
+            commit_message_list.append(line.strip())
+
+    commit_message_str: str = "\n".join(commit_message_list)
+    commit_message_str: str = commit_message_str.replace(NEW_LINE, f"{LINE_BREAK}{NEW_LINE}{TAB * 3}")
+
     return (
-        f"{TAB * 2}* {commit_message}"
-        f" (by [{commit.author.login if commit.author else ''}]({commit.author.html_url if commit.author else ''}))"
-        f" [View]({commit.html_url}){BLANK_LINE}"
+        f"{TAB * 2}* [`{commit.sha[:7]}`]({commit.html_url}): {commit_message_str}"
+        f"{NEW_LINE}"
+        f"{TAB * 3}(by [{commit.author.login if commit.author else ''}]({commit.author.html_url if commit.author else ''}))"
+        f"{NEW_LINE}"
     )
 
 
@@ -193,7 +198,7 @@ def main() -> None:
     with Github(auth=AUTH) as g, open(OUTPUT_FILENAME, "w") as f:
 
         ### Get the repository ----
-        REPO: Repository = g.get_repo(REPOSITORY_NAME)
+        REPO: Repository = g.get_repo(REPOSITORY_NAME)  # type: ignore
 
         ### Write the header to the output file ----
         f.write(add_header(REPO))
@@ -218,9 +223,7 @@ def main() -> None:
             # If there is no previous release, we fetch all commits until the current release. This is the case for the very first release in the repo.
 
             ### Determine the previous tag if it exists, otherwise set it to "0"
-            previous_tag: str = (
-                releases[index + 1].tag_name if index + 1 < len(releases) else "0"
-            )
+            previous_tag: str = releases[index + 1].tag_name if index + 1 < len(releases) else "0"
 
             ### Write the release information to the output file ----
             f.write(add_release_info(release, REPO))
@@ -238,11 +241,7 @@ def main() -> None:
             ### Fetch the commits for the current release ----
             commits: list[Commit] = sorted(
                 REPO.get_commits(
-                    since=(
-                        releases[index + 1].created_at
-                        if previous_tag != "0"
-                        else NotSet
-                    ),
+                    since=(releases[index + 1].created_at if previous_tag != "0" else NotSet),
                     until=release.created_at,
                 ),
                 key=lambda c: c.commit.committer.date,
@@ -268,3 +267,14 @@ def main() -> None:
 
             ### Add a newline after each release section ----
             f.write(f"{BLANK_LINE}")
+
+
+# ---------------------------------------------------------------------------- #
+#                                                                              #
+#     Execute                                                               ####
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+
+
+if __name__ == "__main__":
+    main()
