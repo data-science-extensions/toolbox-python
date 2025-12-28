@@ -440,9 +440,9 @@ class DotDict(dict):
             Override update to convert new values.
 
         Params:
-            *args (Any):
+            args (Any):
                 Variable length argument list.
-            **kwargs (Any):
+            kwargs (Any):
                 Arbitrary keyword arguments.
 
         Returns:
