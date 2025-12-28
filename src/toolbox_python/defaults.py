@@ -40,7 +40,7 @@
 from __future__ import annotations
 
 # ## Python StdLib Imports ----
-from typing import Any
+from typing import Any, Optional, Union
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
@@ -197,8 +197,8 @@ class Defaults:
     def get(
         self,
         value: Any,
-        default: Any | None = None,
-        cast: str | type | None = None,
+        default: Optional[Any] = None,
+        cast: Optional[Union[str, type]] = None,
     ) -> Any:
         """
         !!! note "Summary"
@@ -330,7 +330,7 @@ class Defaults:
         if value is None:
             value = default
         if cast is not None:
-            if (cast is bool or cast == "bool") and is_type(value, str):
+            if (cast is bool or cast == "bool") and isinstance(value, str):
                 value = bool(strtobool(value))
             elif isinstance(cast, str):
                 value = eval(cast)(value)
@@ -340,8 +340,8 @@ class Defaults:
 
     def _validate_value_and_default(
         self,
-        value: Any | None = None,
-        default: Any | None = None,
+        value: Optional[Any] = None,
+        default: Optional[Any] = None,
     ) -> Defaults:
         """
         !!! note "Summary"
@@ -374,7 +374,7 @@ class Defaults:
 
     def _validate_type(
         self,
-        check_type: str | type | None = None,
+        check_type: Optional[Union[str, type]] = None,
     ) -> Defaults:
         """
         !!! note "Summary"
