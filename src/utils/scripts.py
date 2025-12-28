@@ -11,6 +11,17 @@ from typing import Union
 
 
 ## --------------------------------------------------------------------------- #
+##  Constants                                                               ####
+## --------------------------------------------------------------------------- #
+
+
+PACKAGE_NAME: str = "toolbox-python"
+'''PACKAGE_NAME="toolbox-python"'''
+DIRECTORY_NAME: str = PACKAGE_NAME.replace("-", "_")
+'''DIRECTORY_NAME="toolbox_python"'''
+
+
+## --------------------------------------------------------------------------- #
 ##  Generic                                                                 ####
 ## --------------------------------------------------------------------------- #
 
@@ -108,11 +119,11 @@ def check_codespell() -> None:
 
 
 def check_pylint() -> None:
-    run("pylint --rcfile=pyproject.toml src/toolbox_python")
+    run(f"pylint --rcfile=pyproject.toml src/{DIRECTORY_NAME}")
 
 
 def check_pycln() -> None:
-    run("pycln --check --config=pyproject.toml src/")
+    run(f"pycln --check --config=pyproject.toml src/{DIRECTORY_NAME}")
 
 
 def check_build() -> None:
