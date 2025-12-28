@@ -46,17 +46,6 @@ repos:
         additional_dependencies:
           - "black>=23.3"
 
-  # Run MyPy type checks
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.16.1"
-    hooks:
-      - id: mypy
-        files: src/toolbox_python
-        args:
-          - "--install-types"
-          - "--config-file=pyproject.toml"
-          - "--allow-redefinition"
-
   # Reorder Python imports
   - repo: https://github.com/pycqa/isort
     rev: "6.0.1"
@@ -128,6 +117,14 @@ repos:
           - "--rcfile=pyproject.toml"
           - "-rn" # Only display messages
           - "-sn" # Don't display the score
+
+      - id: ty
+        name: ty-check
+        entry: uv run ty check ./src/toolbox_python
+        language: python
+        types: [python]
+        pass_filenames: true
+        exclude: ^src/tests/.*$
 
       # Check
       # - id: check-docstrings

@@ -113,7 +113,7 @@ docs = [
     "docstring-format-checker",
 ]
 test = [
-    "mypy==1.*",
+    "ty==0.*",
     "parameterized==0.*",
     "pytest==8.*",
     "pytest-clarity==1.*",
@@ -158,15 +158,6 @@ addopts = [
 ]
 testpaths = [
     "src/tests",
-]
-
-[tool.mypy]
-ignore_missing_imports = true
-pretty = true
-disable_error_code = [
-    "valid-type",
-    "attr-defined",
-    "no-redef",
 ]
 
 [tool.isort]
