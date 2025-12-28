@@ -79,7 +79,10 @@ __all__: str_list = ["print_or_log_output", "list_columns"]
 
 
 @overload
-def print_or_log_output(message: str, print_or_log: Literal["print"]) -> None: ...
+def print_or_log_output(
+    message: str,
+    print_or_log: Literal["print"],
+) -> None: ...
 @overload
 def print_or_log_output(
     message: str,
@@ -88,10 +91,18 @@ def print_or_log_output(
     log: Logger,
     log_level: log_levels = "info",
 ) -> None: ...
+@overload
+def print_or_log_output(
+    message: str,
+    print_or_log: Optional[Literal["print", "log"]] = None,
+    *,
+    log: Optional[Logger] = None,
+    log_level: Optional[log_levels] = None,
+) -> None: ...
 @typechecked
 def print_or_log_output(
     message: str,
-    print_or_log: Literal["print", "log"] = "print",
+    print_or_log: Optional[Literal["print", "log"]] = "print",
     *,
     log: Optional[Logger] = None,
     log_level: Optional[log_levels] = None,
@@ -110,7 +121,7 @@ def print_or_log_output(
             If `#!py print_or_log=="log"`, then this parameter must contain the `#!py Logger` object to be processed,
             otherwise it will raise an `#!py AssertError`.<br>
             Defaults to `#!py None`.
-        log_level (Optional[_log_levels], optional):
+        log_level (Optional[log_levels], optional):
             If `#!py print_or_log=="log"`, then this parameter must contain the required log level for the `message`.
             Must be one of the log-levels available in the `#!py logging` module.<br>
             Defaults to `#!py None`.
@@ -240,6 +251,7 @@ def print_or_log_output(
         )
 
     # Assertions to keep `mypy` happy
+    assert print_or_log is not None
     assert log is not None
     assert log_level is not None
 
