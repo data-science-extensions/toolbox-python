@@ -9,6 +9,44 @@
 .md-nav--secondary .md-nav__list .md-nav__list { display: none; }
 </style>
 
+!!! info "v1.6.0"
+
+    ## **v1.6.0 - Standardise Type Safety, Simplify Overloads, and Enhance Documentation**
+
+    <!-- md:tag v1.6.0 --><br>
+    <!-- md:date 2026-01-02 --><br>
+    <!-- md:link [data-science-extensions/toolbox-python/releases/v1.6.0](https://github.com/data-science-extensions/toolbox-python/releases/tag/v1.6.0) -->
+
+    ??? note "Release Notes"
+
+        ### 📋 Summary                Standardise the type hinting system across the entire library, transitioning from custom type aliases to native Python typing constructs. Simplify complex function overloads in the `checkers.py` and `output.py` modules, improve the robustness of type checking logic, and expand the documentation for core utility classes.                        ### 🛡️ Type Safety & Standardisation                * **Native Typing**: Replace custom type aliases like `any_collection`, `str_collection`, and `scalar` with standard library types such as `Collection[Any]`, `Collection[str]`, and `Any`.        * **Explicit Callables**: Add explicit `Callable[..., bool]` and `Callable[..., None]` type annotations to function aliases in the `checkers.py` module for improved static analysis.        * **Generic Collections**: Refactor internal logic to use `Collection[type]` instead of specific `list` or `tuple` types, allowing for more flexible input handling.        * **List Standardisation**: Update all `__all__` export lists and internal string lists to use the native `list[str]` type.                        ### ⚙️ Logic & Overload Simplification                * **Overload Consolidation**: Reduce the number of `@overload` definitions for `is_all_values_of_type()`, `assert_value_of_type()`, and `list_columns()` by using more general collection types.        * **Robust Type Checking**: Improve the `is_value_of_type()` function to correctly handle non-type iterables by using a more direct `not isinstance(check_type, type)` check.        * **Constant Relocation**: Move the `log_levels` `Literal` from `collection_types.py` to `output.py` to better align with its primary usage in logging utilities.        * **Flattening Logic**: Refine the `flatten()` function to use `Collection[Collection[Any]]` for input parameters, removing the need for internal type ignores.                        ### 📖 Documentation & DX                * **Class Methods Documentation**: Update the `Defaults()` class docstring to include a dedicated "Methods" section, documenting the `.get()`, `._validate_value_and_default()`, and `._validate_type()` methods.        * **Docstring Accuracy**: Refactor parameter descriptions across multiple modules to reflect the shift from "tuple of types" to "Sequence of types" or "Collection of types".        * **Retry Metadata**: Add descriptive docstrings for internal type aliases and generic type variables in the `retry.py` module.                        ### 🛠️ Bug Fixes & Refinements                * **Attribute Errors**: Fix a missing `.__name__` attribute access in error message generation for type assertions.        * **Typo Remediation**: Correct several typos in docstrings and internal variable names across the `checkers.py` and `bools.py` modules.        * **Dictionary Reversal**: Update `dict_reverse_keys_and_values()` to return explicit `dict[str, Any]` types, ensuring better compatibility with downstream consumers.                        ### 💪 What's Changed                * Standardise Type Hints, Simplify Overloads, and Refactor Core Utilities by @chrimaho in https://github.com/data-science-extensions/toolbox-python/pull/39                        **Full Changelog**: https://github.com/data-science-extensions/toolbox-python/compare/v1.5.0...v1.6.0        
+
+    ??? abstract "Updates"
+
+        * [`d7d73f1`](https://github.com/data-science-extensions/toolbox-python/commit/d7d73f1f22b515f656f323838c716acc87a1c399): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`512d560`](https://github.com/data-science-extensions/toolbox-python/commit/512d5607bd6765430b5c709c3e3bf21b73609216): Fix missing `.__name__` attribute<br>
+            When accessing and formatting the type in the error message. This line should be `msg += f"Must be '{check_type.__name__}'"` to be consistent with line 647 in `assert_value_of_type()` and to produce cleaner error messages that show just the type name (e.g., `'int'`) rather than the full type object representation (e.g., `<class 'int'>`).
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`81b4053`](https://github.com/data-science-extensions/toolbox-python/commit/81b4053801c7cb66096ff6558d327c3579622257): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`469fc66`](https://github.com/data-science-extensions/toolbox-python/commit/469fc66c762559435c2212b889330e41e2bd6685): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`d487a03`](https://github.com/data-science-extensions/toolbox-python/commit/d487a03700b75445b0009d2064ed310e9f0e0d94): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`7eb6a37`](https://github.com/data-science-extensions/toolbox-python/commit/7eb6a372bd67178b57387b4b58b40504ca2d88e6): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`0d523a9`](https://github.com/data-science-extensions/toolbox-python/commit/0d523a9a751d53bf1b9450d33c81c5699a8b8773): Standardise type hints and simplify overloads<br>
+            - Replace custom type aliases from the `toolbox_python.collection_types` module with standard library types like `list[str]`, `Collection[Any]`, and `Dict[Any, Any]`.<br>
+            - Simplify `is_value_of_type()` and `assert_value_of_type()` function overloads by using `Collection[type]` to handle multiple input sequences.<br>
+            - Relocate the `log_levels` type literal to `output.py` module to better align with its usage in output formatting.<br>
+            - Add explicit `Callable` type hints to function aliases within the `checkers.py` module for improved type clarity.<br>
+            - Update the `Defaults()` class docstring to include a dedicated methods section documenting the `.get()` method.<br>
+            - Refactor the `flatten()` function and the `list_columns()` function to use standard collection types and remove redundant `@overload` definitions.<br>
+            - Improve type checking logic in the `checkers.py` module to handle generic collections of types more robustly.
+            (by [chrimaho](https://github.com/chrimaho))
+
+
 !!! info "v1.5.0"
 
     ## **v1.5.0 - Modernise Infrastructure, Refactor Core Logic, and Introduce Numeric Validation**
