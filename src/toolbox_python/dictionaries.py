@@ -44,15 +44,13 @@ from typing import Any
 # ## Python Third Party Imports ----
 from typeguard import typechecked
 
-# ## Local First Party Imports ----
-from toolbox_python.collection_types import dict_any, dict_str_any, str_list
-
 
 # ---------------------------------------------------------------------------- #
 #  Exports                                                                  ####
 # ---------------------------------------------------------------------------- #
 
-__all__: str_list = ["dict_reverse_keys_and_values", "DotDict"]
+
+__all__: list[str] = ["dict_reverse_keys_and_values", "DotDict"]
 
 
 # ---------------------------------------------------------------------------- #
@@ -63,7 +61,7 @@ __all__: str_list = ["dict_reverse_keys_and_values", "DotDict"]
 
 
 @typechecked
-def dict_reverse_keys_and_values(dictionary: dict_any) -> dict_str_any:
+def dict_reverse_keys_and_values(dictionary: dict[Any, Any]) -> dict[str, Any]:
     """
     !!! note "Summary"
         Take the `key` and `values` of a dictionary, and reverse them.
@@ -72,7 +70,7 @@ def dict_reverse_keys_and_values(dictionary: dict_any) -> dict_str_any:
         This process is simple enough if the `values` are atomic types, like `#!py str`, `#!py int`, or `#!py float` types. But it is a little more tricky when the `values` are more complex types, like `#!py list` or `#!py dict`; here we need to use some recursion.
 
     Params:
-        dictionary (dict_any):
+        dictionary (Dict[Any, Any]):
             The input `#!py dict` that you'd like to have the `keys` and `values` switched.
 
     Raises:
@@ -82,7 +80,7 @@ def dict_reverse_keys_and_values(dictionary: dict_any) -> dict_str_any:
             When there are duplicate `values` being coerced to `keys` in the new dictionary. Raised because a Python `#!py dict` cannot have duplicate keys of the same value.
 
     Returns:
-        output_dict (dict_str_int):
+        output_dict (Dict[str,Any]):
             The updated `#!py dict`.
 
     ???+ example "Examples"
@@ -204,7 +202,7 @@ def dict_reverse_keys_and_values(dictionary: dict_any) -> dict_str_any:
         !!! observation "Here, the process would be to run a recursive process when it recognises that any `value` is a `#!py dict` object. So long as there are no duplicate values in any of the contained `#!py dict`'s, the resulting output will be a big, flat dictionary."
         </div>
     """
-    output_dict: dict_str_any = dict()
+    output_dict: dict[str, Any] = dict()
     for key, value in dictionary.items():
         if isinstance(value, (str, int, float)):
             output_dict[str(value)] = key
@@ -219,7 +217,7 @@ def dict_reverse_keys_and_values(dictionary: dict_any) -> dict_str_any:
                     )
                 output_dict[str(elem)] = key
         elif isinstance(value, dict):
-            interim_dict: dict_str_any = dict_reverse_keys_and_values(value)
+            interim_dict: dict[str, Any] = dict_reverse_keys_and_values(value)
             output_dict = {
                 **output_dict,
                 **interim_dict,

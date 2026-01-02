@@ -48,7 +48,6 @@ from typeguard import typechecked
 # ## Local First Party Imports ----
 from toolbox_python.bools import strtobool
 from toolbox_python.checkers import is_type
-from toolbox_python.collection_types import str_list
 
 
 # ---------------------------------------------------------------------------- #
@@ -56,7 +55,7 @@ from toolbox_python.collection_types import str_list
 # ---------------------------------------------------------------------------- #
 
 
-__all__: str_list = ["defaults", "Defaults"]
+__all__: list[str] = ["defaults", "Defaults"]
 
 
 # ---------------------------------------------------------------------------- #
@@ -76,6 +75,11 @@ class Defaults:
     !!! note "Summary"
         When we create and use Python variables, it is sometimes handy to add a default value for that variable.
         This class will handle that process.
+
+    Methods:
+        - get(): From the value that is parsed in to the `value` parameter, convert it to `default` if `value` is `#!py None`, and convert it to `cast` if `cast` is not `#!py None`.
+        - _validate_value_and_default(): Validate to ensure that `value` and `default` are not both `#!py None`.
+        - _validate_type(): Check to ensure that `check_type` is a valid Python type
 
     ???+ example "Examples"
 
@@ -396,7 +400,7 @@ class Defaults:
         ??? tip "See Also"
             - [`Defaults.get()`][toolbox_python.defaults.Defaults.get]
         """
-        valid_types: str_list = [
+        valid_types: list[str] = [
             "bool",
             "dict",
             "int",
