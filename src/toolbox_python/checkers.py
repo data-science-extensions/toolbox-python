@@ -666,7 +666,7 @@ def assert_all_values_of_type(values: Collection[Any], check_type: Union[type, C
         values (Collection[Any]):
             The iterable containing values to check.
         check_type (Union[type, Collection[type]]):
-            The type or tuple of types to check against.
+            The type or Collection of types to check against.
 
     Raises:
         (TypeError):
@@ -760,7 +760,7 @@ def assert_any_values_of_type(values: Collection[Any], check_type: Union[type, C
         values (Collection[Any]):
             The iterable containing values to check.
         check_type (Union[type, Collection[type]]):
-            The type or tuple of types to check against.
+            The type or Collection of types to check against.
 
     Raises:
         (TypeError):
