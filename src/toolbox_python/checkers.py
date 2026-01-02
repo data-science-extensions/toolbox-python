@@ -136,7 +136,7 @@ def is_value_of_type(value: Any, check_type: Union[type, Collection[type]]) -> b
         value (Any):
             The value to check.
         check_type (Union[type, Collection[type]]):
-            The type or Sequence of types to check against.
+            The type or Collection of types to check against.
 
     Returns:
         (bool):
