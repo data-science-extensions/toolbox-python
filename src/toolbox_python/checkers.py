@@ -38,18 +38,11 @@
 
 # ## Python StdLib Imports ----
 import operator
+from collections.abc import Collection
 from typing import Any, Callable, Union, overload
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
-
-# ## Local First Party Imports ----
-from toolbox_python.collection_types import (
-    any_collection,
-    scalar,
-    str_collection,
-    str_list,
-)
 
 
 ## --------------------------------------------------------------------------- #
@@ -57,7 +50,7 @@ from toolbox_python.collection_types import (
 ## --------------------------------------------------------------------------- #
 
 
-__all__: str_list = [
+__all__: list[str] = [
     "OPERATORS",
     "is_value_of_type",
     "is_all_values_of_type",
@@ -130,10 +123,8 @@ OPERATORS: dict[str, Callable[[Any, Any], bool]] = {
 @overload
 def is_value_of_type(value: Any, check_type: type) -> bool: ...
 @overload
-def is_value_of_type(value: Any, check_type: tuple[type, ...]) -> bool: ...
-@overload
-def is_value_of_type(value: Any, check_type: list[type]) -> bool: ...
-def is_value_of_type(value: Any, check_type: Union[type, tuple[type, ...], list[type]]) -> bool:
+def is_value_of_type(value: Any, check_type: Collection[type]) -> bool: ...
+def is_value_of_type(value: Any, check_type: Union[type, Collection[type]]) -> bool:
     """
     !!! note "Summary"
         Check if a given value is of a specified type or types.
@@ -144,8 +135,8 @@ def is_value_of_type(value: Any, check_type: Union[type, tuple[type, ...], list[
     Params:
         value (Any):
             The value to check.
-        check_type (Union[type, tuple[type, ...], list[type]]):
-            The type or tuple of types to check against.
+        check_type (Union[type, Collection[type]]):
+            The type or Collection of types to check against.
 
     Returns:
         (bool):
@@ -185,20 +176,15 @@ def is_value_of_type(value: Any, check_type: Union[type, tuple[type, ...], list[
         - [`is_value_of_type()`][toolbox_python.checkers.is_value_of_type]
         - [`is_type()`][toolbox_python.checkers.is_type]
     """
-    check_type = tuple(check_type) if isinstance(check_type, list) else check_type
+    check_type = tuple(check_type) if not isinstance(check_type, type) else check_type
     return isinstance(value, check_type)
 
 
 @overload
-def is_all_values_of_type(values: any_collection, check_type: type) -> bool: ...
+def is_all_values_of_type(values: Collection[Any], check_type: type) -> bool: ...
 @overload
-def is_all_values_of_type(values: any_collection, check_type: tuple[type, ...]) -> bool: ...
-@overload
-def is_all_values_of_type(values: any_collection, check_type: list[type]) -> bool: ...
-def is_all_values_of_type(
-    values: any_collection,
-    check_type: Union[type, tuple[type, ...], list[type]],
-) -> bool:
+def is_all_values_of_type(values: Collection[Any], check_type: Collection[type]) -> bool: ...
+def is_all_values_of_type(values: Collection[Any], check_type: Union[type, Collection[type]]) -> bool:
     """
     !!! note "Summary"
         Check if all values in an iterable are of a specified type or types.
@@ -207,10 +193,10 @@ def is_all_values_of_type(
         This function is used to verify if all values in a given iterable match a specified type or any of the types in a tuple of types.
 
     Params:
-        values (any_collection):
+        values (Collection[Any]):
             The iterable containing values to check.
-        check_type (Union[type, tuple[type, ...], list[type]]):
-            The type or tuple of types to check against.
+        check_type (Union[type, Collection[type]]):
+            The type or Collection of types to check against.
 
     Returns:
         (bool):
@@ -252,20 +238,15 @@ def is_all_values_of_type(
         - [`is_type()`][toolbox_python.checkers.is_type]
         - [`is_all_type()`][toolbox_python.checkers.is_all_type]
     """
-    check_type = tuple(check_type) if isinstance(check_type, list) else check_type
+    check_type = tuple(check_type) if not isinstance(check_type, type) else check_type
     return all(isinstance(value, check_type) for value in values)
 
 
 @overload
-def is_any_values_of_type(values: any_collection, check_type: type) -> bool: ...
+def is_any_values_of_type(values: Collection[Any], check_type: type) -> bool: ...
 @overload
-def is_any_values_of_type(values: any_collection, check_type: tuple[type, ...]) -> bool: ...
-@overload
-def is_any_values_of_type(values: any_collection, check_type: list[type]) -> bool: ...
-def is_any_values_of_type(
-    values: any_collection,
-    check_type: Union[type, tuple[type, ...], list[type]],
-) -> bool:
+def is_any_values_of_type(values: Collection[Any], check_type: Collection[type]) -> bool: ...
+def is_any_values_of_type(values: Collection[Any], check_type: Union[type, Collection[type]]) -> bool:
     """
     !!! note "Summary"
         Check if any value in an iterable is of a specified type or types.
@@ -274,10 +255,10 @@ def is_any_values_of_type(
         This function is used to verify if any value in a given iterable matches a specified type or any of the types in a tuple of types.
 
     Params:
-        values (any_collection):
+        values (Collection[Any]):
             The iterable containing values to check.
-        check_type (Union[type, tuple[type, ...], list[type]]):
-            The type or tuple of types to check against.
+        check_type (Union[type, Collection[type]]):
+            The type or Collection of types to check against.
 
     Returns:
         (bool):
@@ -319,15 +300,12 @@ def is_any_values_of_type(
         - [`is_type()`][toolbox_python.checkers.is_type]
         - [`is_any_type()`][toolbox_python.checkers.is_any_type]
     """
-    check_type = tuple(check_type) if isinstance(check_type, list) else check_type
+    check_type = tuple(check_type) if not isinstance(check_type, type) else check_type
     return any(isinstance(value, check_type) for value in values)
 
 
 @typechecked
-def is_value_in_iterable(
-    value: scalar,
-    iterable: any_collection,
-) -> bool:
+def is_value_in_iterable(value: Any, iterable: Collection[Any]) -> bool:
     """
     !!! note "Summary"
         Check if a given value is present in an iterable.
@@ -336,9 +314,9 @@ def is_value_in_iterable(
         This function is used to verify if a given value exists within an iterable such as a list, tuple, or set.
 
     Params:
-        value (scalar):
+        value (Any):
             The value to check.
-        iterable (any_collection):
+        iterable (Collection[Any]):
             The iterable to check within.
 
     Raises:
@@ -387,10 +365,7 @@ def is_value_in_iterable(
 
 
 @typechecked
-def is_all_values_in_iterable(
-    values: any_collection,
-    iterable: any_collection,
-) -> bool:
+def is_all_values_in_iterable(values: Collection[Any], iterable: Collection[Any]) -> bool:
     """
     !!! note "Summary"
         Check if all values in an iterable are present in another iterable.
@@ -399,9 +374,9 @@ def is_all_values_in_iterable(
         This function is used to verify if all values in a given iterable exist within another iterable.
 
     Params:
-        values (any_collection):
+        values (Collection[Any]):
             The iterable containing values to check.
-        iterable (any_collection):
+        iterable (Collection[Any]):
             The iterable to check within.
 
     Raises:
@@ -452,10 +427,7 @@ def is_all_values_in_iterable(
 
 
 @typechecked
-def is_any_values_in_iterable(
-    values: any_collection,
-    iterable: any_collection,
-) -> bool:
+def is_any_values_in_iterable(values: Collection[Any], iterable: Collection[Any]) -> bool:
     """
     !!! note "Summary"
         Check if any value in an iterable is present in another iterable.
@@ -464,9 +436,9 @@ def is_any_values_in_iterable(
         This function is used to verify if any value in a given iterable exists within another iterable.
 
     Params:
-        values (any_collection):
+        values (Collection[Any]):
             The iterable containing values to check.
-        iterable (any_collection):
+        iterable (Collection[Any]):
             The iterable to check within.
 
     Raises:
@@ -575,13 +547,13 @@ def is_valid_value(value: Any, op: str, target: Any) -> bool:
 
 
 ### Aliases ----
-is_type = is_value_of_type
-is_all_type = is_all_values_of_type
-is_any_type = is_any_values_of_type
-is_in = is_value_in_iterable
-is_any_in = is_any_values_in_iterable
-is_all_in = is_all_values_in_iterable
-is_valid = is_valid_value
+is_type: Callable[..., bool] = is_value_of_type
+is_all_type: Callable[..., bool] = is_all_values_of_type
+is_any_type: Callable[..., bool] = is_any_values_of_type
+is_in: Callable[..., bool] = is_value_in_iterable
+is_any_in: Callable[..., bool] = is_any_values_in_iterable
+is_all_in: Callable[..., bool] = is_all_values_in_iterable
+is_valid: Callable[..., bool] = is_valid_value
 
 
 ## --------------------------------------------------------------------------- #
@@ -592,13 +564,8 @@ is_valid = is_valid_value
 @overload
 def assert_value_of_type(value: Any, check_type: type) -> None: ...
 @overload
-def assert_value_of_type(value: Any, check_type: tuple[type, ...]) -> None: ...
-@overload
-def assert_value_of_type(value: Any, check_type: list[type]) -> None: ...
-def assert_value_of_type(
-    value: Any,
-    check_type: Union[type, tuple[type, ...], list[type]],
-) -> None:
+def assert_value_of_type(value: Any, check_type: Collection[type]) -> None: ...
+def assert_value_of_type(value: Any, check_type: Union[type, Collection[type]]) -> None:
     """
     !!! note "Summary"
         Assert that a given value is of a specified type or types.
@@ -609,8 +576,8 @@ def assert_value_of_type(
     Params:
         value (Any):
             The value to check.
-        check_type (Union[type, tuple[type, ...], list[type]]):
-            The type or tuple of types to check against.
+        check_type (Union[type, Collection[type]]):
+            The type or Collection of types to check against.
 
     Raises:
         (TypeError):
@@ -684,15 +651,10 @@ def assert_value_of_type(
 
 
 @overload
-def assert_all_values_of_type(values: any_collection, check_type: type) -> None: ...
+def assert_all_values_of_type(values: Collection[Any], check_type: type) -> None: ...
 @overload
-def assert_all_values_of_type(values: any_collection, check_type: tuple[type, ...]) -> None: ...
-@overload
-def assert_all_values_of_type(values: any_collection, check_type: list[type]) -> None: ...
-def assert_all_values_of_type(
-    values: any_collection,
-    check_type: Union[type, tuple[type, ...], list[type]],
-) -> None:
+def assert_all_values_of_type(values: Collection[Any], check_type: Collection[type]) -> None: ...
+def assert_all_values_of_type(values: Collection[Any], check_type: Union[type, Collection[type]]) -> None:
     """
     !!! note "Summary"
         Assert that all values in an iterable are of a specified type or types.
@@ -701,10 +663,10 @@ def assert_all_values_of_type(
         This function is used to assert that all values in a given iterable match a specified type or any of the types in a tuple of types. If any value does not match the specified type(s), a `#!py TypeError` is raised.
 
     Params:
-        values (any_collection):
+        values (Collection[Any]):
             The iterable containing values to check.
-        check_type (Union[type, tuple[type, ...], list[type]]):
-            The type or tuple of types to check against.
+        check_type (Union[type, Collection[type]]):
+            The type or Collection of types to check against.
 
     Raises:
         (TypeError):
@@ -771,27 +733,22 @@ def assert_all_values_of_type(
         - [`is_all_type()`][toolbox_python.checkers.is_all_type]
     """
     if not is_all_type(values=values, check_type=check_type):
-        invalid_values = [value for value in values if not is_type(value, check_type)]
-        invalid_types = [f"'{type(value).__name__}'" for value in values if not is_type(value, check_type)]
+        invalid_values: list[Any] = [value for value in values if not is_type(value, check_type)]
+        invalid_types: list[str] = [f"'{type(value).__name__}'" for value in values if not is_type(value, check_type)]
         msg: str = f"Some elements {invalid_values} have the incorrect type {invalid_types}. "
         if isinstance(check_type, type):
-            msg += f"Must be '{check_type}'"
+            msg += f"Must be '{check_type.__name__}'"
         else:
-            types: str_list = [f"'{typ.__name__}'" for typ in check_type]
+            types: list[str] = [f"'{typ.__name__}'" for typ in check_type]
             msg += f"Must be: {' or '.join(types)}"
         raise TypeError(msg)
 
 
 @overload
-def assert_any_values_of_type(values: any_collection, check_type: type) -> None: ...
+def assert_any_values_of_type(values: Collection[Any], check_type: type) -> None: ...
 @overload
-def assert_any_values_of_type(values: any_collection, check_type: tuple[type, ...]) -> None: ...
-@overload
-def assert_any_values_of_type(values: any_collection, check_type: list[type]) -> None: ...
-def assert_any_values_of_type(
-    values: any_collection,
-    check_type: Union[type, tuple[type, ...], list[type]],
-) -> None:
+def assert_any_values_of_type(values: Collection[Any], check_type: Collection[type]) -> None: ...
+def assert_any_values_of_type(values: Collection[Any], check_type: Union[type, Collection[type]]) -> None:
     """
     !!! note "Summary"
         Assert that any value in an iterable is of a specified type or types.
@@ -800,10 +757,10 @@ def assert_any_values_of_type(
         This function is used to assert that at least one value in a given iterable matches a specified type or any of the types in a tuple of types. If none of the values match the specified type(s), a `#!py TypeError` is raised.
 
     Params:
-        values (any_collection):
+        values (Collection[Any]):
             The iterable containing values to check.
-        check_type (Union[type, tuple[type, ...], list[type]]):
-            The type or tuple of types to check against.
+        check_type (Union[type, Collection[type]]):
+            The type or Collection of types to check against.
 
     Raises:
         (TypeError):
@@ -870,20 +827,17 @@ def assert_any_values_of_type(
         - [`is_any_type()`][toolbox_python.checkers.is_any_type]
     """
     if not is_any_type(values=values, check_type=check_type):
-        invalid_values = [value for value in values if not is_type(value, check_type)]
+        invalid_values: list[Any] = [value for value in values if not is_type(value, check_type)]
         msg: str = f"None of the elements in {invalid_values} have the correct type. "
         if isinstance(check_type, type):
             msg += f"Must be: '{check_type.__name__}'"
         else:
-            types: str_list = [f"'{typ.__name__}'" for typ in check_type]
+            types: list[str] = [f"'{typ.__name__}'" for typ in check_type]
             msg += f"Must be: {' or '.join(types)}"
         raise TypeError(msg)
 
 
-def assert_value_in_iterable(
-    value: scalar,
-    iterable: any_collection,
-) -> None:
+def assert_value_in_iterable(value: Any, iterable: Collection[Any]) -> None:
     """
     !!! note "Summary"
         Assert that a given value is present in an iterable.
@@ -892,9 +846,9 @@ def assert_value_in_iterable(
         This function is used to assert that a given value exists within an iterable such as a `#!py list`, `#!py tuple`, or `#!py set`. If the value is not found in the iterable, a `#!py LookupError` is raised.
 
     Params:
-        value (scalar):
+        value (Any):
             The value to check.
-        iterable (any_collection):
+        iterable (Collection[Any]):
             The iterable to check within.
 
     Raises:
@@ -943,10 +897,7 @@ def assert_value_in_iterable(
         raise LookupError(f"Value '{value}' not found in iterable: {iterable}")
 
 
-def assert_any_values_in_iterable(
-    values: any_collection,
-    iterable: any_collection,
-) -> None:
+def assert_any_values_in_iterable(values: Collection[Any], iterable: Collection[Any]) -> None:
     """
     !!! note "Summary"
         Assert that any value in an iterable is present in another iterable.
@@ -955,9 +906,9 @@ def assert_any_values_in_iterable(
         This function is used to assert that at least one value in a given iterable exists within another iterable. If none of the values are found in the iterable, a `#!py LookupError` is raised.
 
     Params:
-        values (any_collection):
+        values (Collection[Any]):
             The iterable containing values to check.
-        iterable (any_collection):
+        iterable (Collection[Any]):
             The iterable to check within.
 
     Raises:
@@ -1008,10 +959,7 @@ def assert_any_values_in_iterable(
         raise LookupError(f"None of the values in {values} can be found in {iterable}")
 
 
-def assert_all_values_in_iterable(
-    values: any_collection,
-    iterable: any_collection,
-) -> None:
+def assert_all_values_in_iterable(values: Collection[Any], iterable: Collection[Any]) -> None:
     """
     !!! note "Summary"
         Assert that all values in an iterable are present in another iterable.
@@ -1020,9 +968,9 @@ def assert_all_values_in_iterable(
         This function is used to assert that all values in a given iterable exist within another iterable. If any value is not found in the iterable, a `#!py LookupError` is raised.
 
     Params:
-        values (any_collection):
+        values (Collection[Any]):
             The iterable containing values to check.
-        iterable (any_collection):
+        iterable (Collection[Any]):
             The iterable to check within.
 
     Raises:
@@ -1070,7 +1018,7 @@ def assert_all_values_in_iterable(
         - [`is_all_in()`][toolbox_python.checkers.is_all_in]
     """
     if not is_all_in(values=values, iterable=iterable):
-        missing_values = [value for value in values if not is_in(value, iterable)]
+        missing_values: list[Any] = [value for value in values if not is_in(value, iterable)]
         raise LookupError(f"Some values {missing_values} are missing from {iterable}")
 
 
@@ -1131,16 +1079,16 @@ def assert_is_valid_value(value: Any, op: str, target: Any) -> None:
 
 
 ### Aliases ----
-assert_type = assert_value_of_type
-assert_is_type = assert_value_of_type
-assert_all_type = assert_all_values_of_type
-assert_all_is_type = assert_all_values_of_type
-assert_any_type = assert_any_values_of_type
-assert_any_is_type = assert_any_values_of_type
-assert_in = assert_value_in_iterable
-assert_any_in = assert_any_values_in_iterable
-assert_all_in = assert_all_values_in_iterable
-assert_is_valid = assert_is_valid_value
+assert_type: Callable[..., None] = assert_value_of_type
+assert_is_type: Callable[..., None] = assert_value_of_type
+assert_all_type: Callable[..., None] = assert_all_values_of_type
+assert_all_is_type: Callable[..., None] = assert_all_values_of_type
+assert_any_type: Callable[..., None] = assert_any_values_of_type
+assert_any_is_type: Callable[..., None] = assert_any_values_of_type
+assert_in: Callable[..., None] = assert_value_in_iterable
+assert_any_in: Callable[..., None] = assert_any_values_in_iterable
+assert_all_in: Callable[..., None] = assert_all_values_in_iterable
+assert_is_valid: Callable[..., None] = assert_is_valid_value
 
 
 ## --------------------------------------------------------------------------- #
@@ -1149,10 +1097,7 @@ assert_is_valid = assert_is_valid_value
 
 
 @typechecked
-def any_element_contains(
-    iterable: str_collection,
-    check: str,
-) -> bool:
+def any_element_contains(iterable: Collection[str], check: str) -> bool:
     """
     !!! note "Summary"
         Check to see if any element in a given iterable contains a given string value.
@@ -1162,7 +1107,7 @@ def any_element_contains(
         This function is helpful for doing a quick check to see if any element in a `#!py list` contains a given `#!py str` value. For example, checking if any column header contains a specific string value.
 
     Params:
-        iterable (str_collection):
+        iterable (Collection[str]):
             The iterables to check within. Because this function uses an `#!py in` operation to check if `check` string exists in the elements of `iterable`, therefore all elements of `iterable` must be `#!py str` type.
         check (str):
             The string value to check exists in any of the elements in `iterable`.
@@ -1209,7 +1154,7 @@ def any_element_contains(
 
 
 @typechecked
-def all_elements_contains(iterable: str_collection, check: str) -> bool:
+def all_elements_contains(iterable: Collection[str], check: str) -> bool:
     """
     !!! note "Summary"
         Check to see if all elements in a given iterable contains a given string value.
@@ -1219,7 +1164,7 @@ def all_elements_contains(iterable: str_collection, check: str) -> bool:
         This function is helpful for doing a quick check to see if all element in a `#!py list` contains a given `#!py str` value. For example, checking if all columns in a DataFrame contains a specific string value.
 
     Params:
-        iterable (str_collection):
+        iterable (Collection[str]):
             The iterables to check within. Because this function uses an `#!py in` operation to check if `check` string exists in the elements of `iterable`, therefore all elements of `iterable` must be `#!py str` type.
         check (str):
             The string value to check exists in any of the elements in `iterable`.
@@ -1266,14 +1211,14 @@ def all_elements_contains(iterable: str_collection, check: str) -> bool:
 
 
 @typechecked
-def get_elements_containing(iterable: str_collection, check: str) -> tuple[str, ...]:
+def get_elements_containing(iterable: Collection[str], check: str) -> tuple[str, ...]:
     """
     !!! note "Summary"
         Extract all elements in a given iterable which contains a given string value.
         !!! warning "Note: This check _is_ case sensitive."
 
     Params:
-        iterable (str_collection):
+        iterable (Collection[str]):
             The iterables to check within. Because this function uses an `#!py in` operation to check if `check` string exists in the elements of `iterable`, therefore all elements of `iterable` must be `#!py str` type.
         check (str):
             The string value to check exists in any of the elements in `iterable`.

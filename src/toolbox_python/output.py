@@ -39,7 +39,7 @@
 
 
 # ## Python StdLib Imports ----
-from collections.abc import Generator
+from collections.abc import Collection, Generator
 from logging import Logger, _nameToLevel
 from math import ceil
 from typing import Any, Literal, Optional, Union, overload
@@ -54,13 +54,6 @@ from toolbox_python.checkers import (
     assert_is_valid,
     is_type,
 )
-from toolbox_python.collection_types import (
-    any_list,
-    any_set,
-    any_tuple,
-    log_levels,
-    str_list,
-)
 
 
 # ---------------------------------------------------------------------------- #
@@ -68,7 +61,24 @@ from toolbox_python.collection_types import (
 # ---------------------------------------------------------------------------- #
 
 
-__all__: str_list = ["print_or_log_output", "list_columns"]
+__all__: list[str] = ["print_or_log_output", "list_columns", "log_levels"]
+
+
+## --------------------------------------------------------------------------- #
+##  Constants                                                               ####
+## --------------------------------------------------------------------------- #
+
+
+log_levels = Literal["debug", "info", "warning", "error", "critical"]
+"""
+!!! note "Summary"
+    To streamline other functions, this `type` alias is created for all of the `log` levels available.
+!!! abstract "Details"
+    The structure of the `type` is as follows:
+    ```pycon {.py .python linenums="1" title="Type structure"}
+    Literal["debug", "info", "warning", "error", "critical"]
+    ```
+"""
 
 
 # ---------------------------------------------------------------------------- #
@@ -265,38 +275,20 @@ def print_or_log_output(
     return None
 
 
-@overload
 @typechecked
 def list_columns(
-    obj: Union[any_list, any_set, any_tuple, Generator],
+    obj: Union[Collection[Any], Generator],
     cols_wide: int = 4,
     columnwise: bool = True,
     gap: int = 4,
-    print_output: Literal[False] = False,
-) -> str: ...
-@overload
-@typechecked
-def list_columns(
-    obj: Union[any_list, any_set, any_tuple, Generator],
-    cols_wide: int = 4,
-    columnwise: bool = True,
-    gap: int = 4,
-    print_output: Literal[True] = True,
-) -> None: ...
-@typechecked
-def list_columns(
-    obj: Union[any_list, any_set, any_tuple, Generator],
-    cols_wide: int = 4,
-    columnwise: bool = True,
-    gap: int = 4,
-    print_output: bool = False,
+    print_output: Literal[True, False] = False,
 ) -> Optional[str]:
     """
     !!! note "Summary"
         Print the given list in evenly-spaced columns.
 
     Params:
-        obj (Union[any_list, any_set, any_tuple, Generator]):
+        obj (Union[Collection[Any], Generator]):
             The list to be formatted.
 
         cols_wide (int, optional):
@@ -317,7 +309,7 @@ def list_columns(
             between columns based on the maximum `#!py len()` of the list items.<br>
             Defaults to: `#!py 4`.
 
-        print_output (bool, optional):
+        print_output (Literal[True, False], optional):
             Whether or not to print the output to the terminal.
 
             - `#!py True`: Will print and return.
@@ -433,7 +425,7 @@ def list_columns(
     assert_is_valid(gap, ">", 0)
 
     # Prepare the string representation of the object
-    string_list: str_list = [str(item) for item in obj]
+    string_list: list[str] = [str(item) for item in obj]
     cols_wide = min(cols_wide, len(string_list))
     max_len: int = max(len(item) for item in string_list)
 
@@ -442,7 +434,7 @@ def list_columns(
         cols_wide = int(ceil(len(string_list) / cols_wide))
 
     # Segment the list into chunks
-    segmented_list: list[str_list] = [
+    segmented_list: list[list[str]] = [
         string_list[index : index + cols_wide] for index in range(0, len(string_list), cols_wide)
     ]
 
@@ -450,7 +442,7 @@ def list_columns(
     if columnwise:
         if len(segmented_list[-1]) != cols_wide:
             segmented_list[-1].extend([""] * (len(string_list) - len(segmented_list[-1])))
-        combined_list: Union[list[str_list], Any] = zip(*segmented_list)
+        combined_list: Union[list[list[str]], Any] = zip(*segmented_list)
     else:
         combined_list = segmented_list
 

@@ -46,14 +46,14 @@ from typeguard import typechecked
 
 # ## Local First Party Imports ----
 from toolbox_python.checkers import is_type
-from toolbox_python.collection_types import str_list, str_list_tuple
 
 
 # ---------------------------------------------------------------------------- #
 #  Exports                                                                  ####
 # ---------------------------------------------------------------------------- #
 
-__all__: str_list = [
+
+__all__: list[str] = [
     "str_replace",
     "str_contains",
     "str_contains_any",
@@ -226,7 +226,7 @@ def str_contains(check_string: str, sub_string: str) -> bool:
 @typechecked
 def str_contains_any(
     check_string: str,
-    sub_strings: str_list_tuple,
+    sub_strings: Union[list[str], tuple[str, ...]],
 ) -> bool:
     """
     !!! note "Summary"
@@ -235,7 +235,7 @@ def str_contains_any(
     Params:
         check_string (str):
             The main string to check.
-        sub_strings (str_list_tuple):
+        sub_strings (Union[list[str], tuple[str, ...]]):
             The collection of substrings to check.
 
     Raises:
@@ -300,7 +300,7 @@ def str_contains_any(
 @typechecked
 def str_contains_all(
     check_string: str,
-    sub_strings: str_list_tuple,
+    sub_strings: Union[list[str], tuple[str, ...]],
 ) -> bool:
     """
     !!! note "Summary"
@@ -309,7 +309,7 @@ def str_contains_all(
     Params:
         check_string (str):
             The main string to check.
-        sub_strings (str_list_tuple):
+        sub_strings (Union[list[str], tuple[str, ...]]):
             The collection of substrings to check.
 
     Raises:
@@ -382,7 +382,7 @@ def str_contains_all(
 
 
 @typechecked
-def str_separate_number_chars(text: str) -> str_list:
+def str_separate_number_chars(text: str) -> list[str]:
     """
     !!! note "Summary"
         Take in a string that contains both numbers and letters, and output a list of strings, separated to have each element containing either entirely number or entirely letters.
@@ -400,7 +400,7 @@ def str_separate_number_chars(text: str) -> str_list:
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
-        (str_list):
+        (list[str]):
             The updated list, with each element of the list containing either entirely characters or entirely numbers.
 
     ???+ example "Examples"
@@ -474,12 +474,12 @@ def str_separate_number_chars(text: str) -> str_list:
 
 @overload
 @typechecked
-def str_to_list(obj: str) -> str_list: ...
+def str_to_list(obj: str) -> list[str]: ...
 @overload
 @typechecked
 def str_to_list(obj: Any) -> Any: ...
 @typechecked
-def str_to_list(obj: Any) -> Union[str_list, Any]:
+def str_to_list(obj: Any) -> Union[list[str], Any]:
     """
     !!! note "Summary"
         Convert a string to a list containing that string as the only element.
@@ -496,7 +496,7 @@ def str_to_list(obj: Any) -> Union[str_list, Any]:
             If `obj` is not a string or a list.
 
     Returns:
-        (Union[str_list, Any]):
+        (Union[list[str], Any]):
             If `obj` is a string, returns a list containing that string as the only element. If `obj` is not a string, returns it unchanged.
 
     ???+ example "Examples"

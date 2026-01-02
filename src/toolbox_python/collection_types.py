@@ -20,7 +20,7 @@
 
 # ## Python StdLib Imports ----
 from datetime import datetime
-from typing import Any, Literal, Union
+from typing import Any, Union
 
 
 ## --------------------------------------------------------------------------- #
@@ -40,7 +40,6 @@ __all__: list[str] = [
     "int_list",
     "int_tuple",
     "iterable",
-    "log_levels",
     "scalar",
     "str_collection",
     "str_dict",
@@ -126,17 +125,5 @@ dict_str_int = dict[
         Union[str, int],
         Union[str, int],
     ]
-    ```
-"""
-
-
-log_levels = Literal["debug", "info", "warning", "error", "critical"]
-"""
-!!! note "Summary"
-    To streamline other functions, this `type` alias is created for all of the `log` levels available.
-!!! abstract "Details"
-    The structure of the `type` is as follows:
-    ```pycon {.py .python linenums="1" title="Type structure"}
-    Literal["debug", "info", "warning", "error", "critical"]
     ```
 """

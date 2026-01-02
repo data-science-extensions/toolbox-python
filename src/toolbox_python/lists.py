@@ -39,27 +39,21 @@
 
 
 # ## Python StdLib Imports ----
+from collections.abc import Collection
 from itertools import product as itertools_product
-from typing import Any, Optional, Union
+from typing import Any, Optional
 
 # ## Python Third Party Imports ----
 from more_itertools import collapse as itertools_collapse
 from typeguard import typechecked
-
-# ## Local First Party Imports ----
-from toolbox_python.collection_types import (
-    any_list,
-    collection,
-    scalar,
-    str_list,
-)
 
 
 # ---------------------------------------------------------------------------- #
 #  Exports                                                                  ####
 # ---------------------------------------------------------------------------- #
 
-__all__: str_list = ["flatten", "flat_list", "product"]
+
+__all__: list[str] = ["flatten", "flat_list", "product"]
 
 
 # ---------------------------------------------------------------------------- #
@@ -71,10 +65,10 @@ __all__: str_list = ["flatten", "flat_list", "product"]
 
 @typechecked
 def flatten(
-    list_of_lists: Union[scalar, collection],
+    list_of_lists: Collection[Collection[Any]],
     base_type: Optional[type] = None,
     levels: Optional[int] = None,
-) -> any_list:
+) -> list[Any]:
     """
     !!! note "Summary"
         For a given `#!py list` of `#!py list`'s, flatten it out to be a single `#!py list`.
@@ -86,7 +80,7 @@ def flatten(
         [more_itertools.collapse]: https://more-itertools.readthedocs.io/en/stable/api.html#more_itertools.collapse
 
     Params:
-        list_of_lists (Union[scalar, collection]):
+        list_of_lists (Collection[Collection[Any]]):
             The input `#!py list` of `#!py list`'s that you'd like to flatten to a single-level `#!py list`.
         base_type (Optional[type], optional):
             Binary and text strings are not considered iterable and will not be collapsed. To avoid collapsing other types, specify `base_type`.<br>
@@ -195,7 +189,7 @@ def flatten(
     """
     return list(
         itertools_collapse(
-            iterable=list_of_lists,  # type: ignore
+            iterable=list_of_lists,
             base_type=base_type,
             levels=levels,
         )
@@ -203,7 +197,7 @@ def flatten(
 
 
 @typechecked
-def flat_list(*inputs: Any) -> any_list:
+def flat_list(*inputs: Any) -> list[Any]:
     """
     !!! note "Summary"
         Take in any number of inputs, and output them all in to a single flat `#!py list`.
@@ -217,7 +211,7 @@ def flat_list(*inputs: Any) -> any_list:
             If any of the inputs parsed to the parameters of this function are not the correct type. Uses the [`@typeguard.typechecked`](https://typeguard.readthedocs.io/en/stable/api.html#typeguard.typechecked) decorator.
 
     Returns:
-        (any_list):
+        (list[Any]):
             The input having been coerced to a single flat `#!py list`.
 
     ???+ example "Examples"

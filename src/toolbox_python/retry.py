@@ -53,7 +53,6 @@ from typeguard import typechecked
 # ## Local First Party Imports ----
 from toolbox_python.checkers import assert_is_valid
 from toolbox_python.classes import get_full_class_name
-from toolbox_python.collection_types import str_list
 from toolbox_python.output import print_or_log_output
 
 
@@ -62,7 +61,7 @@ from toolbox_python.output import print_or_log_output
 # ---------------------------------------------------------------------------- #
 
 
-__all__: str_list = ["retry"]
+__all__: list[str] = ["retry"]
 
 
 # ---------------------------------------------------------------------------- #
@@ -77,11 +76,15 @@ _exceptions = Union[
 ]
 """
 !!! note "Summary"
-    This
+    A type alias for a single or collection of `Exception` types.
 """
 
 
 R = TypeVar("R")
+"""
+!!! note "Summary"
+    A generic type variable to represent the return type of a function.
+"""
 
 
 # ---------------------------------------------------------------------------- #
