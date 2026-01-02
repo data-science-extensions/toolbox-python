@@ -577,7 +577,7 @@ def assert_value_of_type(value: Any, check_type: Union[type, Collection[type]]) 
         value (Any):
             The value to check.
         check_type (Union[type, Collection[type]]):
-            The type or tuple of types to check against.
+            The type or Collection of types to check against.
 
     Raises:
         (TypeError):
