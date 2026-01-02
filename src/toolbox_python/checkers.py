@@ -737,7 +737,7 @@ def assert_all_values_of_type(values: Collection[Any], check_type: Union[type, C
         invalid_types: list[str] = [f"'{type(value).__name__}'" for value in values if not is_type(value, check_type)]
         msg: str = f"Some elements {invalid_values} have the incorrect type {invalid_types}. "
         if isinstance(check_type, type):
-            msg += f"Must be '{check_type}'"
+            msg += f"Must be '{check_type.__name__}'"
         else:
             types: list[str] = [f"'{typ.__name__}'" for typ in check_type]
             msg += f"Must be: {' or '.join(types)}"
